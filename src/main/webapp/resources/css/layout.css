@@ -1,0 +1,54 @@
+@charset "UTF-8";
+header {
+	font-size: 1.5em;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+main>.container {
+	padding: 60px 15px;
+}
+
+.footer {
+	background-color: #f5f5f5;
+}
+
+.footer>.container {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+code {
+	font-size: 80%;
+}
+
+#login{
+	background: #525a6d;
+	padding: 15px;
+}
+
+#login input, #login button{
+	width: 100%;
+	font-size: 1.3em;
+	margin: 15px 0 15px 0;
+	padding-left: 10px;
+}
+
+#findUser{
+	text-align: center; 
+	font-size: 1.2em;
+}
+
+#sidebarMenu a{
+	color: white;
+}
+
+#findUser a{
+	color: #7a8394;
+}
