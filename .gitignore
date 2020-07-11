@@ -139,6 +139,6 @@ fabric.properties
 ###############
 ### Project ###
 ###############
-log4j.xml
+**/og4j.xml
 
 # End of https://www.gitignore.io/api/intellij
