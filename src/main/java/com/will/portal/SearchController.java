@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SearchController {
 	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
-	
-	@RequestMapping("/search/search")	
+
+	@RequestMapping("/search/search")
 	public void search(){
 		logger.info("검색창 띄우기");
-		
+
 	}
 }
