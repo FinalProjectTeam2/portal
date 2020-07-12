@@ -1,4 +1,5 @@
-<%@page language="java" import="java.io.*,com.daou.ppurio.SendMmsMessage.java" contentType="text/html;charset=euc-kr" %>
+<%@page import="com.daou.ppurio.SendMmsMessage"%>
+<%@page language="java" import="java.io.*" contentType="text/html;charset=euc-kr" %>
 <%
 
 
@@ -12,7 +13,7 @@ String msg = "[*이름*] 테스트 발송입니다";   // [필수] 문자내용 - 이름(names)값�
 String names = "홍길동";            // [선택] 이름 - 여러명일 경우 |로 구분 "홍길동|이순신|김철수"
 String appdate = "20190502093000";  // [선택] 예약발송 (현재시간 기준 10분이후 예약가능)
 String subject = "테스트";          // [선택] 제목 (30byte)
-String file1Path = "C:\\test.jpg"    // [선택]  포토발송 (jpg, jpeg만 지원  300 K  이하)
+String file1Path = "C:\\test.jpg";    // [선택]  포토발송 (jpg, jpeg만 지원  300 K  이하)
 
 try {
 	

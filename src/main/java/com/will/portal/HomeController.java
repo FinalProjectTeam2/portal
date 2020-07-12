@@ -17,7 +17,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/index")
 	public void home() {
 		logger.info("인덱스 페이지 보여주기");
 		
