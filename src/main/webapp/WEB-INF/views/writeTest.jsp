@@ -3,7 +3,7 @@
 <%@ include file="inc/top.jsp"%>
 
 
-<div style = "width:800px;">
+<div style = "width:900px;">
 내용
 <textarea id = "description" name = "description" rows = "5" cols = "80"></textarea> 
 <script>
@@ -15,7 +15,7 @@
 		
 		//CKEDITOR.replace와 id("description")를 잘 적어주면 그 태그가 smart editor 스타일로 바뀌게 된다. 
 		 
-		    filebrowserUploadUrl : "${path}/imageUpload"
+		    filebrowserUploadUrl : "<c:url value='/imageUpload'/>}"
 		
 		//파일을 업로드 해야하기 때문에 filebrowserUploadUrl을 사용하고, 서버쪽에 코드를 완성해주어야 한다.
 		
