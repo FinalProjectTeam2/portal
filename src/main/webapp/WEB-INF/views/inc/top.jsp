@@ -29,7 +29,7 @@
 <link href="<c:url value='/resources/css/layout.css' />" rel="stylesheet">
 
 <!-- ckeditor 사용하기 위함 -->
-<script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/ckeditor/ckeditor.js'/>"></script>
 
 
 
