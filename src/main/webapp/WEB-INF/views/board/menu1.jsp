@@ -7,79 +7,10 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/menu1.css'/>" />
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-// 1메뉴 - 드롭메뉴
-function myFunction() {
-	  document.getElementById("myDropdown").classList.toggle("show");
-	}
-	
-function filterFunction() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-}
-
-function myFunction2() {
-	  document.getElementById("myDropdown2").classList.toggle("show");
-}
-	
-function filterFunction2() {
-	  var input, filter, ul, li, a, i;
-	  input = document.getElementById("myInput");
-	  filter = input.value.toUpperCase();
-	  div = document.getElementById("myDropdown2");
-	  a = div.getElementsByTagName("a");
-	  for (i = 0; i < a.length; i++) {
-	    txtValue = a[i].textContent || a[i].innerText;
-	    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-	      a[i].style.display = "";
-	    } else {
-	      a[i].style.display = "none";
-	    }
-	}
-}
 </script>
-   
 <title>게시판</title>
 </head>
 <body>
-<!-- 1메뉴 드롭메뉴 -->
-<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Home</button>
-</div>
-
-<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">공지센터</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="#">공지센터</a>
-    <a href="#">포털자료실</a>
-    <a href="#">커뮤니티(게시판)</a>
-    <a href="#">서비스</a>
-  </div>
-</div>
-
-<div class="dropdown">
-  <button onclick="myFunction2()" class="dropbtn">포털공지</button>
-  <div id="myDropdown2" class="dropdown-content">
-    <a href="#">포털공지</a>
-    <a href="#">학사·국제공지</a>
-    <a href="#">>장학공지</a>
-    <a href="#">행사·참여공지</a>
-    <a href="#">홈페이지 공지</a>
-
-  </div>
-</div>
-
-
 <!-- ------------------------------------------------->
 <!-- 공지사항 -->
 <div class="NoticeContents">
@@ -99,7 +30,7 @@ function filterFunction2() {
 
 
 <!-- ------------------------------------------------->
-<!-- 2메뉴 -->
+<!-- 메뉴 -->
 <div class="topnav">
   <a href="#news">포털공지</a>
   <a href="#contact">학사·국제공지</a>
