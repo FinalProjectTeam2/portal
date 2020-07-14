@@ -222,7 +222,7 @@
 	    
 	    
     
-		<!-- Commons FileUpload -->
+		<!-- Commons FileUpload for ckeditor -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>

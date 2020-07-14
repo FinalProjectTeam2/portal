@@ -1,4 +1,4 @@
-package com.daou.ppurio;
+package com.will.portal.message;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -10,25 +10,25 @@ public class SendMmsMessage {
     /*
      * 뿌리오 발송 API 경로 - 서버측 인코딩과 응답형태에 따라 선택
      */
-    final String SEND_API_URL = "https://message.ppurio.com/api/send_euckr_text.php"; // EUC-KR 인코딩과 TEXT 응답용 호출 페이지
+//    final String SEND_API_URL = "https://message.ppurio.com/api/send_euckr_text.php"; // EUC-KR 인코딩과 TEXT 응답용 호출 페이지
 //    final String SEND_API_URL = "https://message.ppurio.com/api/send_euckr_json.php"; // EUC-KR 인코딩과 JSON 응답용 호출 페이지
 //    final String SEND_API_URL = "https://message.ppurio.com/api/send_euckr_xml.php";  // EUC-KR 인코딩과 XML 응답용 호출 페이지
-//    final String SEND_API_URL = "https://message.ppurio.com/api/send_utf8_text.php";  // UTF-8 인코딩과 TEXT 응답용 호출 페이지
+    final String SEND_API_URL = "https://message.ppurio.com/api/send_utf8_text.php";  // UTF-8 인코딩과 TEXT 응답용 호출 페이지
 //    final String SEND_API_URL = "https://message.ppurio.com/api/send_utf8_json.php";  // UTF-8 인코딩과 JSON 응답용 호출 페이지
 //    final String SEND_API_URL = "https://message.ppurio.com/api/send_utf8_xml.php";   // UTF-8 인코딩과 XML 응답용 호출 페이지
 
     /*
      * 뿌리오 예약취소 API 경로 - 서버측 인코딩과 응답형태에 따라 선택
      */
-    String CANCEL_API_URL = "https://message.ppurio.com/api/cancel_euckr_text.php";    // EUC-KR 인코딩과 TEXT 응답용 호출 페이지
+//    String CANCEL_API_URL = "https://message.ppurio.com/api/cancel_euckr_text.php";    // EUC-KR 인코딩과 TEXT 응답용 호출 페이지
 // String CANCEL_API_URL = "https://message.ppurio.com/api/cancel_euckr_json.php"; // EUC-KR 인코딩과 JSON 응답용 호출 페이지
 // String CANCEL_API_URL = "https://message.ppurio.com/api/cancel_euckr_xml.php";  // EUC-KR 인코딩과 XML 응답용 호출 페이지
-// String CANCEL_API_URL = "https://message.ppurio.com/api/cancel_utf8_text.php";  // UTF-8 인코딩과 TEXT 응답용 호출 페이지
+ String CANCEL_API_URL = "https://message.ppurio.com/api/cancel_utf8_text.php";  // UTF-8 인코딩과 TEXT 응답용 호출 페이지
 // String CANCEL_API_URL = "https://message.ppurio.com/api/cancel_utf8_json.php";  // UTF-8 인코딩과 JSON 응답용 호출 페이지
 // String CANCEL_API_URL = "https://message.ppurio.com/api/cancel_utf8_xml.php";   // UTF-8 인코딩과 XML 응답용 호출 페이지
 
     // application이 사용하는 character set에 따라 변경 ex> EUC-KR, UTF-8
-    private String charset = "EUC-KR";
+    private String charset = "UTF-8";
     private final String boundary;
     private static final String LINE_FEED = "\r\n";
 

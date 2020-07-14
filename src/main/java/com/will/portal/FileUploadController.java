@@ -27,7 +27,7 @@ public class FileUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 	
 	
-	@RequestMapping(value = "/portal/fileUpload", method = RequestMethod.POST)
+	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
 	@ResponseBody
 	public String fileUpload(HttpServletRequest request, HttpServletResponse response, 
 			MultipartHttpServletRequest multiFile) throws Exception{
