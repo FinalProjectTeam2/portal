@@ -5,7 +5,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/menu1.css'/>" />
-<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="<c:url value='js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript">
 // 1메뉴 - 드롭메뉴
 function myFunction() {
