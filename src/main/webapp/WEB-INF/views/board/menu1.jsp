@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/reset.css" />
-<link rel="stylesheet" type="text/css" href="css/menu1.css" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/menu1.css'/>" />
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 // 1메뉴 - 드롭메뉴

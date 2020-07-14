@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<link rel="stylesheet" type="text/css" href="css/reset.css" />
-<link rel="stylesheet" type="text/css" href="css/menu2.css" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/menu2.css'/>" />
 </head>
 <body>
 <title>게시판</title>

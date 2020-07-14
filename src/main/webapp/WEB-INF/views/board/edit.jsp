@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="css/reset.css" />
-<link rel="stylesheet" type="text/css" href="css/write.css" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/write.css'/>" />
 </head>
 <body>
 <div class="container">

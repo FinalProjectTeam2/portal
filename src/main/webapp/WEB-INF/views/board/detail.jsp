@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html lang="ko">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="css/reset.css" />
-<link rel="stylesheet" type="text/css" href="css/detail.css" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/detail.css'/>" />
 <title>게시물 보기</title>
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js'/>"></script>
 
