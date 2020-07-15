@@ -275,5 +275,6 @@ $RECYCLE.BIN/
 ### Project ###
 ###############
 log4j.xml
+pom.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,maven,react,node,git
