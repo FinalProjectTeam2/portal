@@ -15,7 +15,7 @@ height: 555px;
 margin-top: auto;
 margin-bottom: auto;
 width: 660px;
-background-color: rgba(0,0,0,0.5) !important;
+background-image: url("../images/color4.jpg");
 }
 
 .social_icon span{
@@ -77,13 +77,14 @@ margin-left: 4px;
 	width: 20%;
 	float: left;
 	padding: 5px;
-	color: white;
+	color: black;
 }
 
 #title{
 	font-size: 20px;
 	font-weight: bold;
-	color: white;
+	color: black;
+	margin: 0;
 }
 
 #keyboard{
