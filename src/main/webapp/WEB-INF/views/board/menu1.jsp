@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -8,45 +8,35 @@
 <script type="text/javascript" src="<c:url value='js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript">
 </script>
-<title>°Ô½ÃÆÇ</title>
+<title>ê²Œì‹œíŒ</title>
 </head>
 <body>
 <!-- ------------------------------------------------->
-<!-- °øÁö»çÇ× -->
+<!-- ê³µì§€ì‚¬í•­ -->
 <div class="NoticeContents">
-	<h1>Æ÷ÅÐ°øÁö</h1> <!-- Å¸ÀÌÆ²¸¸¸¸ ¹Ù²ñ(Æ÷ÅÐ°øÁö/ ÇÐ»ç¤ý±¹Á¦°øÁö/ ÀåÇÐ°øÁö/ Çà»ç¤ýÂü¿© °Ô½ÃÆÇ/ ÇÐ»ç¤ý±¹Á¦°øÁö  -->
+	<h1>í¬í„¸ê³µì§€</h1> <!-- íƒ€ì´í‹€ë§Œë§Œ ë°”ë€œ(í¬í„¸ê³µì§€/ í•™ì‚¬ã†êµ­ì œê³µì§€/ ìž¥í•™ê³µì§€/ í–‰ì‚¬ã†ì°¸ì—¬ ê²Œì‹œíŒ/ í•™ì‚¬ã†êµ­ì œê³µì§€  -->
+	<br>
 	<p style="line-height: 28px; font-size: 14px;">
-		È¨ÆäÀÌÁö °³Æí¿¡ µû¶ó °øÁö»çÇ×ÀÌ È¨ÆäÀÌÁö¿Í Æ÷ÅÐ °øÁö·Î ±¸ºÐµÇ¾î ¿î¿µµÇ¿À´Ï ÀÌ¿ë¿¡ Âü°íÇÏ¿© ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.<br>
-		- <strong>È¨ÆäÀÌÁö °øÁö</strong>&nbsp;: ´ë¿ÜÀûÀÎ Çà»ç µî ¿ÜºÎÀÎÀ» ´ë»óÀ¸·Î ÇÏ´Â ÀÏ¹Ý, Æ¯°­, Çà»ç, Ã¤¿ë µîÀ¸·Î ¿î¿µ<br>
+		í™ˆíŽ˜ì´ì§€ ê°œíŽ¸ì— ë”°ë¼ ê³µì§€ì‚¬í•­ì´ í™ˆíŽ˜ì´ì§€ì™€ í¬í„¸ ê³µì§€ë¡œ êµ¬ë¶„ë˜ì–´ ìš´ì˜ë˜ì˜¤ë‹ˆ ì´ìš©ì— ì°¸ê³ í•˜ì—¬ ì£¼ì‹œê¸° ë°”ëžë‹ˆë‹¤.<br>
+		- <strong>í™ˆíŽ˜ì´ì§€ ê³µì§€</strong>&nbsp;: ëŒ€ì™¸ì ì¸ í–‰ì‚¬ ë“± ì™¸ë¶€ì¸ì„ ëŒ€ìƒìœ¼ë¡œ í•˜ëŠ” ì¼ë°˜, íŠ¹ê°•, í–‰ì‚¬, ì±„ìš© ë“±ìœ¼ë¡œ ìš´ì˜<br>
 		- <span style="color: rgb(255, 240, 245);">
 			<strong>
-				<span style="background-color: rgb(61, 121, 194);">Æ÷ÅÐ °øÁö</span>
+				<span style="background-color: rgb(61, 121, 194);">í¬í„¸ ê³µì§€</span>
 			</strong>
 		</span>
-		&nbsp;: <strong>³»ºÎ ±¸¼º¿øÀ» À§ÇÑ °øÁö ¿µ¿ªÀ¸·Î&nbsp;</strong>
-		Æ÷°ýÀûÀÎ ³»¿ëÀÇ <strong>Æ÷ÅÐ °øÁö</strong>, ÇÐ»çÀü¿ëÀÇ <strong>ÇÐ»ç °øÁö</strong>, ÀåÇÐÀü¿ëÀÇ <strong>ÀåÇÐ °øÁö</strong>·Î ±¸ºÐÇÏ¿© ¿î¿µ
+		&nbsp;: <strong>ë‚´ë¶€ êµ¬ì„±ì›ì„ ìœ„í•œ ê³µì§€ ì˜ì—­ìœ¼ë¡œ&nbsp;</strong>
+		í¬ê´„ì ì¸ ë‚´ìš©ì˜ <strong>í¬í„¸ ê³µì§€</strong>, í•™ì‚¬ì „ìš©ì˜ <strong>í•™ì‚¬ ê³µì§€</strong>, ìž¥í•™ì „ìš©ì˜ <strong>ìž¥í•™ ê³µì§€</strong>ë¡œ êµ¬ë¶„í•˜ì—¬ ìš´ì˜
 	</p>
 </div>
 
-
+<hr>
 <!-- ------------------------------------------------->
-<!-- ¸Þ´º -->
-<div class="topnav">
-  <a href="#news">Æ÷ÅÐ°øÁö</a>
-  <a href="#contact">ÇÐ»ç¡¤±¹Á¦°øÁö</a>
-  <a href="#about">ÀåÇÐ°øÁö</a>
-  <a href="#about">Çà»ç¤ýÂü¿© °Ô½ÃÆÇ</a>
-  <a href="#about">È¨ÆäÀÌÁö°øÁö</a>
-</div>
 
-
-<!-- ------------------------------------------------->
-<!-- °Ô½ÃÆÇ -->
+<!-- ê²Œì‹œíŒ -->
 <%@ include file="menu2.jsp" %> 
-
  
 <!-- ------------------------------------------------->
-<!-- °ÇÀÇ -->
+<!-- ê±´ì˜ -->
 <%@ include file="menu1-4.jsp" %>   
 </body>
 </html>

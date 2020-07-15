@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@
   <form action="/action_page.php">
     <div class="row">
       <div class="col-25">
-        <label for="l_title">Á¦¸ñ</label>
+        <label for="l_title">ì œëª©</label>
       </div>
       <div class="col-75">
         <input type="text" id="title" name="title">
@@ -21,7 +21,7 @@
  
     <div class="row">
       <div class="col-25">
-        <label for="l_no">¹øÈ£</label>
+        <label for="l_no">ë²ˆí˜¸</label>
       </div>
       <div class="col-75">
         <input type="text" id="no" name="no">
@@ -29,19 +29,19 @@
     </div>  
        <div class="row">
       <div class="col-25">
-        <label for="l_category">ºÐ·ù</label>
+        <label for="l_category">ë¶„ë¥˜</label>
       </div>
       <div class="col-75">
         <select id="category" name="category">
-          <option value="">°øÅë</option>
-          <option value="">Á×Àü</option>
-          <option value="">Ãµ¾È</option>
+          <option value="">ê³µí†µ</option>
+          <option value="">ì£½ì „</option>
+          <option value="">ì²œì•ˆ</option>
         </select>
       </div>
     </div>
     <div class="row">
       <div class="col-25">
-        <label for="l_name">ÀÛ¼ºÀÚ</label>
+        <label for="l_name">ìž‘ì„±ìž</label>
       </div>
       <div class="col-75">
         <input type="text" id="name" name="name">
@@ -49,7 +49,7 @@
     </div>
     <div class="row">
       <div class="col-25">
-        <label for="l_date">ÀÛ¼ºÀÏ</label>
+        <label for="l_date">ìž‘ì„±ì¼</label>
       </div>
       <div class="col-75">
         <input type="text" id="date" name="date">
@@ -58,15 +58,15 @@
  
     <div class="row">
       <div class="col-25">
-        <label for="l_subject">³»¿ë</label>
+        <label for="l_subject">ë‚´ìš©</label>
       </div>
       <div class="col-75">
-        <textarea id="subject" name="subject" placeholder="³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä." style="height:200px"></textarea>
+        <textarea id="subject" name="subject" placeholder="ë‚´ìš©ì„ ìž…ë ¥í•˜ì„¸ìš”." style="height:200px"></textarea>
       </div>
     </div>
     <div class="row">
-      <input type="submit" value="¼öÁ¤">
-      <input type="button" value="¸ñ·Ï">
+      <input type="submit" value="ìˆ˜ì •">
+      <input type="button" value="ëª©ë¡">
     </div>
   </form>
 </div>
