@@ -37,5 +37,7 @@
 	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
 	     <beans:property name="order" value="0" />
 	</beans:bean>
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
 	
 </beans:beans>
