@@ -14,7 +14,7 @@ public class BoardController {
 
 	@RequestMapping("/menu1")
 	public String menu1_get() {
-		logger.info("게시판 메인화면");
+		logger.info("寃뚯떆�뙋 硫붿씤�솕硫�");
 
 		return "board/menu1";
 	}
@@ -52,6 +52,13 @@ public class BoardController {
 	@RequestMapping(value="/calendarDetail", method = RequestMethod.GET) 
 	public String calendarDetail_get() {
 		return "board/calendarDetail";
+
+	}
+	
+	@RequestMapping(value="/schedule1", method = RequestMethod.GET) public String
+	schedule1_get() {
+
+		return "board/schedule1";
 
 	}
 
