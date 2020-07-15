@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,15 +25,15 @@ input[type=button] {
 }
 
 </style>
-<title>´ñ±Û</title>
+<title>ëŒ“ê¸€</title>
 </head>
 <body>
 
 <div class="divText">
-<h4>´ñ±Û´Þ±â</h4>
-<input class="textbox" type="textbox" placeholder="·Î±×ÀÎÈÄ ÀÛ¼ºÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.
-ÀúÀÛ±Ç µî ´Ù¸¥ »ç¶÷ÀÇ ±Ç¸®¸¦ Ä§ÇØÇÏ°Å³ª ¸í¿¹¸¦ ÈÑ¼ÕÇÏ´Â °Ô½Ã¹°Àº ÀÌ¿ë¾à°ü ¹× °ü·Ã ¹ý·ü¿¡ ÀÇÇØ Á¦Àç¸¦ ¹ÞÀ» ¼ö ÀÖ½À´Ï´Ù."/>
-<input type="button" value="ÀÔ·Â" />
+<h4>ëŒ“ê¸€ë‹¬ê¸°</h4>
+<input class="textbox" type="textbox" placeholder="ë¡œê·¸ì¸í›„ ìž‘ì„±í•˜ì‹¤ ìˆ˜ ìžˆìŠµë‹ˆë‹¤.
+ì €ìž‘ê¶Œ ë“± ë‹¤ë¥¸ ì‚¬ëžŒì˜ ê¶Œë¦¬ë¥¼ ì¹¨í•´í•˜ê±°ë‚˜ ëª…ì˜ˆë¥¼ í›¼ì†í•˜ëŠ” ê²Œì‹œë¬¼ì€ ì´ìš©ì•½ê´€ ë° ê´€ë ¨ ë²•ë¥ ì— ì˜í•´ ì œìž¬ë¥¼ ë°›ì„ ìˆ˜ ìžˆìŠµë‹ˆë‹¤."/>
+<input type="button" value="ìž…ë ¥" />
  
 
 </div>

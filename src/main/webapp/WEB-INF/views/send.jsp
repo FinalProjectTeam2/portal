@@ -25,4 +25,3 @@
     "over_use_limit"               - 한달 사용금액을 초과한 경우
     "server_error"                 - 기타 서버 오류
  -->
-
