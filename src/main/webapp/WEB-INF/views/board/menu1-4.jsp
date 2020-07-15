@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,20 +41,20 @@
   transition: max-height 0.2s ease-out;
 }
 </style>
-<title>°Ô½ÃÆÇ</title>
+<title>ê²Œì‹œíŒ</title>
 </head>
 <body>
 
-<!-- ÇÏ´Ü ÀÇ°ß ¶Ç´Â ¿À·ù ½Å°í - ¾ÆÄÚµð¾ð¸Þ´º -->
+<!-- í•˜ë‹¨ ì˜ê²¬ ë˜ëŠ” ì˜¤ë¥˜ ì‹ ê³  - ì•„ì½”ë””ì–¸ë©”ë‰´ -->
 <button class="accordion">
-	<p>È¨ÆäÀÌÁö¿¡ ´ëÇÑ °³¼±/°ÇÀÇ»çÇ×ÀÌ ÀÖÀ¸¸é ¾Æ·¡¿¡ ³²°ÜÁÖ¼¼¿ä. ÇØ´ç ÆäÀÌÁöÀÇ °ü¸®ÀÚ¿¡°Ô Àü´ÞµË´Ï´Ù.<br> 
-	- <strong>°øÁö»çÇ× µî °Ô½ÃÆÇÀÇ °Ô½Ã ³»¿ë¿¡ ´ëÇÑ ¹®ÀÇ</strong>´Â ÇØ´ç °Ô½Ã¹°¿¡ Ç¥±âµÈ ¿¬¶ôÃ³³ª ´ã´çºÎ¼­(VOC)·Î ¹®ÀÇÇØ ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù. </p>
+	<p>í™ˆíŽ˜ì´ì§€ì— ëŒ€í•œ ê°œì„ /ê±´ì˜ì‚¬í•­ì´ ìžˆìœ¼ë©´ ì•„ëž˜ì— ë‚¨ê²¨ì£¼ì„¸ìš”. í•´ë‹¹ íŽ˜ì´ì§€ì˜ ê´€ë¦¬ìžì—ê²Œ ì „ë‹¬ë©ë‹ˆë‹¤.<br> 
+	- <strong>ê³µì§€ì‚¬í•­ ë“± ê²Œì‹œíŒì˜ ê²Œì‹œ ë‚´ìš©ì— ëŒ€í•œ ë¬¸ì˜</strong>ëŠ” í•´ë‹¹ ê²Œì‹œë¬¼ì— í‘œê¸°ëœ ì—°ë½ì²˜ë‚˜ ë‹´ë‹¹ë¶€ì„œ(VOC)ë¡œ ë¬¸ì˜í•´ ì£¼ì‹œê¸° ë°”ëžë‹ˆë‹¤. </p>
 </button>
 	
 <div class="panel">
-	<span>ÀÇ°ß ¶Ç´Â ¿À·ù½Å°í </span>
-	<textarea rows="10" cols="15" id="ir1" name="content" style="width:400px; height:40px; "> ·Î±×ÀÎ ÈÄ ÀÛ¼ºÀÌ °¡´ÉÇÕ´Ï´Ù. </textarea>
-	<button>Á¢¼ö</button>
+	<span>ì˜ê²¬ ë˜ëŠ” ì˜¤ë¥˜ì‹ ê³  </span>
+	<textarea rows="10" cols="15" id="ir1" name="content" style="width:400px; height:40px; "> ë¡œê·¸ì¸ í›„ ìž‘ì„±ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤. </textarea>
+	<button>ì ‘ìˆ˜</button>
 </div>
 
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>

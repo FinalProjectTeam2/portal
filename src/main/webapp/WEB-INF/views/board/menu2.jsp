@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -8,22 +8,25 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/menu2.css'/>" />
 </head>
 <body>
-<title>�Խ���</title>
+<title>게시판</title>
 </head>
 <body>
-<!-- �Խ��� -->
+<!-- 게시판 -->
 <div id="menu1" class="tabcontent">
 	<div class="listinfo1">
-		<span>��ü 1248 | ������ 1/84 </span>
+		<span>전체 1248 | 페이지 1/84 </span>
+	</div>
+	<div clss=divbt> <!-- 비회원은 버튼 안 보임! -->
+		<button class="bt">글쓰기</button>
 	</div>
 	<div class="listinfo2">	
-		<span>����:</span>
-		<a href="#" >������</a>
-		<a href="#" >�ۼ���</a>
+		<span>정렬:</span>
+		<a href="#" >수정일</a>
+		<a href="#" >작성일</a>
 	</div>	
 	<br><br>
 	
-	<!-- �Խ��� -->
+	<!-- 게시판 -->
 	<table id="myTable">
 		<colgroup>
 			<col style="width:40%;" />
@@ -33,48 +36,48 @@
 			<col style="width:20%;" />		
 		</colgroup>
 		<thead>
-		  <tr>
-		  		<th scope="col">����</th>
-		    	<th scope="col">��ȣ</th>
-		    	<th scope="col">�з�</th>
-		    	<th scope="col">�ۼ���</th>
-		    	<th scope="col">�ۼ���</th>
-		  		<th scope="col">��ȸ��</th>
+		  <tr class="maTable_tr1">
+		  		<th scope="col">제목</th>
+		    	<th scope="col">번호</th>
+		    	<th scope="col">분류</th>
+		    	<th scope="col">작성자</th>
+		    	<th scope="col">작성일</th>
+		  		<th scope="col">조회수</th>
 		  </tr>
 		</thead> 
 		<tbody>
 			<tr>
-				<td class="">[�����н����߼���] ����ο� ���л�Ȱ - CTL Letter 7��ȣ</td>
+				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
 				<td class="">NO.1</td>
-				<td class="">����</td>
-				<td class="">�̷��������ſ� �����н����߼��� ȫ�浿 </td>
+				<td class="">공통</td>
+				<td class="">미래교육혁신원 교수학습개발센터 홍길동 </td>
 				<td class="">2020-07-11</td>
 				<td class="">452</td>
 			</tr>
 			
 			<tr>
-				<td class="">[�����н����߼���] ����ο� ���л�Ȱ - CTL Letter 7��ȣ</td>
+				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
 				<td class="">NO.1</td>
-				<td class="">����</td>
-				<td class="">�̷��������ſ� �����н����߼��� ȫ�浿 </td>
+				<td class="">공통</td>
+				<td class="">미래교육혁신원 교수학습개발센터 홍길동 </td>
 				<td class="">2020-07-11</td>
 				<td class="">452</td>
 			</tr>
 			
 			<tr>
-				<td class="">[�����н����߼���] ����ο� ���л�Ȱ - CTL Letter 7��ȣ</td>
+				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
 				<td class="">NO.1</td>
-				<td class="">����</td>
-				<td class="">�̷��������ſ� �����н����߼��� ȫ�浿 </td>
+				<td class="">공통</td>
+				<td class="">미래교육혁신원 교수학습개발센터 홍길동 </td>
 				<td class="">2020-07-11</td>
 				<td class="">452</td>
 			</tr>	
 			
 			<tr>
-				<td class="">[�����н����߼���] ����ο� ���л�Ȱ - CTL Letter 7��ȣ</td>
+				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
 				<td class="">NO.1</td>
-				<td class="">����</td>
-				<td class="">�̷��������ſ� �����н����߼��� ȫ�浿 </td>
+				<td class="">공통</td>
+				<td class="">미래교육혁신원 교수학습개발센터 홍길동 </td>
 				<td class="">2020-07-11</td>
 				<td class="">452</td>
 			</tr>			
@@ -83,25 +86,25 @@
 </div>	
 	
 <br><br>
-<!-- ��������ȣ -->
+<!-- 페이지번호 -->
 <div class="divPage">
 	<< < 1 2 3 4 5 > >>
 </div>
 
 <br><br>
-<!-- �˻� -->
+<!-- 검색 -->
 <div class="divSearch">
    	<form name="frmSearch" method="post" action="">
         <select name="search">
-            <option value="title">����</option>
-            <option value="content">����</option>
-            <option value="name">�ۼ���</option>
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="name">작성자</option>
         </select>   
         
-        <input type="text" name="searchKeyword" title="�˻�">   
-		<input type="submit" value="�˻�"><br><br>
+        <input type="text" name="searchKeyword" title="검색">   
+		<input type="submit" value="검색"><br><br>
     
-    	<strong>�α�˻��� :</strong> ���� , ���� , ���� , �ܼҸ� 
+    	<strong>인기검색어 :</strong> 교직 , 토익 , 토익 , 단소리 
    </form>
 </div>
 
