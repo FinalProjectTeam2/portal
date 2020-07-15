@@ -20,7 +20,7 @@ public class SendController {
 		String names = "홍길동";            // [선택] 이름 - 여러명일 경우 |로 구분 "홍길동|이순신|김철수"
 		String appdate = "";  // [선택] 예약발송 (현재시간 기준 10분이후 예약가능)
 		String subject = "테스트";          // [선택] 제목 (30byte)
-		String file1Path = "D:\\lecture\\workspac_list\\sp_ws\\springherb\\src\\main\\webapp\\resources\\images\\best.gif";    // [선택]  포토발송 (jpg, jpeg만 지원  300 K  이하)
+		String file1Path = "";    // [선택]  포토발송 (jpg, jpeg만 지원  300 K  이하)
 		
 		
 		
