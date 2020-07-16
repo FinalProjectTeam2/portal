@@ -59,7 +59,14 @@ public class BoardController {
 	schedule1_get() {
 
 		return "board/schedule1";
-
 	}
+	
+	
+	@RequestMapping(value="/lectureSchedule1", method = RequestMethod.GET) public String
+	lectureSchedule1_get() {
+
+		return "board/lectureSchedule1";
+	}
+
 
 }
