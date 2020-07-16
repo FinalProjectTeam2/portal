@@ -1,0 +1,135 @@
+/* Made with love by Mutiullah Samim*/
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+.container{
+height: 100%;
+align-content: center;
+font-family: 'Numans', sans-serif;
+margin: 100px auto;
+
+}
+
+.card{
+height: 555px;
+margin-top: auto;
+margin-bottom: auto;
+width: 660px;
+background-color: rgba(0,0,0,0.5) !important;
+}
+
+.social_icon span{
+font-size: 60px;
+margin-left: 10px;
+color: white;
+}
+
+.social_icon span:hover{
+color: white;
+cursor: pointer;
+}
+
+.card-header h3{
+color: white;
+}
+
+.social_icon{
+position: absolute;
+right: 20px;
+top: -45px;
+}
+
+.input-group-prepend span{
+width: 50px;
+background-color: #01539d;
+color: black;
+border:0 !important;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+color: white;
+}
+
+.remember input
+{
+width: 16px;
+height: 16px;
+margin-left: 15px;
+margin-right: 5px;
+}
+
+
+.links{
+color: white;
+}
+
+.links a{
+margin-left: 4px;
+}
+
+.lab{
+	width: 20%;
+	float: left;
+	padding: 5px;
+	color: white;
+}
+
+#title{
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+}
+
+#keyboard{
+	background: white;
+	border: none;
+}
+
+#forId{
+	height: 180px;
+	background: rgba(236, 241, 247, 0.38);
+	margin:10px; 
+	padding: 15px;
+	padding-top: 60px;
+	border-radius: 5px;
+}
+
+#forPwd{
+	height: 180px;
+	background: rgba(236, 241, 247, 0.38);
+	margin:10px; 
+	padding: 15px;
+	padding-top: 40px;
+	border-radius: 5px;
+}
+
+#pwdBt{
+	text-align: center;
+	
+}
+
+#pwdBt{
+width: 150px;
+color: white;
+background-color: #01539d;
+border: none;
+height: 39.5px;
+padding: 6px 12px;
+border-radius: 5px;
+}
+
+#pwdBt:hover{
+color: black;
+background-color:white;
+}
+
+#pwdBtDiv{
+	margin-top: 30px;
+	text-align: center;
+}
