@@ -7,6 +7,7 @@ public class DepartmentVO {
 	private String buildingCode;
 	private int facultyNo;
 	private int totalCredit;
+	
 	public int getDepNo() {
 		return depNo;
 	}
