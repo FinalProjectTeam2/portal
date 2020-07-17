@@ -698,7 +698,7 @@ ALTER TABLE open_subject
 
 ALTER TABLE subj_timetable
 	ADD
-		CONSTRAINT FK_timetable_TO_subj_timetable
+		CONSTRAINT FK_timet_TO_subj_timet
 		FOREIGN KEY (
 			timetable_code
 		)
@@ -708,7 +708,7 @@ ALTER TABLE subj_timetable
 
 ALTER TABLE subj_timetable
 	ADD
-		CONSTRAINT FK_open_subject_TO_subj_timetable
+		CONSTRAINT FK_open_subj_TO_subj_timet
 		FOREIGN KEY (
 			open_sub_code
 		)
@@ -718,7 +718,7 @@ ALTER TABLE subj_timetable
 
 ALTER TABLE subj_timetable
 	ADD
-		CONSTRAINT FK_classroom_TO_subj_timetable
+		CONSTRAINT FK_classr_TO_subj_timet
 		FOREIGN KEY (
 			classroom_code
 		)
@@ -748,7 +748,7 @@ ALTER TABLE syllabus
 
 ALTER TABLE registration
 	ADD
-		CONSTRAINT FK_open_subject_TO_registration
+		CONSTRAINT FK_open_subject_TO_regist
 		FOREIGN KEY (
 			sub_code
 		)
@@ -782,7 +782,7 @@ ALTER TABLE evaluation
 
 ALTER TABLE subj_evaluation
 	ADD
-		CONSTRAINT FK_registration_TO_subj_evaluation
+		CONSTRAINT FK_regist_TO_subj_eval
 		FOREIGN KEY (
 			sub_code,
 			stu_no,
