@@ -25,13 +25,15 @@
 				$('#pwd').focus();
 				event.preventDefault();
 			}
+		
+		
 			
 	});
 	
 </script>
 
 <div class="divForm" style="width: 800px">
-<form name="frmWrite" method="post" action="<c:url value='/fileUpload'/>" >
+<form name="frmWrite" method="post" action="<c:url value='/fileUpload'/>" enctype="multipart/form-data">
  <fieldset>
 	<legend>글쓰기</legend>
         <div class="firstDiv">
@@ -63,7 +65,7 @@
 		
 		//CKEDITOR.replace와 id("description")를 잘 적어주면 그 태그가 smart editor 스타일로 바뀌게 된다. 
 		 
-		    filebrowserUploadUrl : "${pageContext.request.contextPath}/fileUpload/"
+		    filebrowserUploadUrl : "${pageContext.request.contextPath}/fileUpload"
 		
 		//파일을 업로드 해야하기 때문에 filebrowserUploadUrl을 사용하고, 서버쪽에 코드를 완성해주어야 한다.
 		

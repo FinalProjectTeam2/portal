@@ -1,121 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/menu1.css'/>" />
-<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="<c:url value='js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript">
-// 1¸Ş´º - µå·Ó¸Ş´º
-function myFunction() {
-	  document.getElementById("myDropdown").classList.toggle("show");
-	}
-	
-function filterFunction() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-}
-
-function myFunction2() {
-	  document.getElementById("myDropdown2").classList.toggle("show");
-}
-	
-function filterFunction2() {
-	  var input, filter, ul, li, a, i;
-	  input = document.getElementById("myInput");
-	  filter = input.value.toUpperCase();
-	  div = document.getElementById("myDropdown2");
-	  a = div.getElementsByTagName("a");
-	  for (i = 0; i < a.length; i++) {
-	    txtValue = a[i].textContent || a[i].innerText;
-	    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-	      a[i].style.display = "";
-	    } else {
-	      a[i].style.display = "none";
-	    }
-	}
-}
 </script>
-   
-<title>°Ô½ÃÆÇ</title>
+<title>ê²Œì‹œíŒ</title>
 </head>
 <body>
-<!-- 1¸Ş´º µå·Ó¸Ş´º -->
-<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Home</button>
-</div>
-
-<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">°øÁö¼¾ÅÍ</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="#">°øÁö¼¾ÅÍ</a>
-    <a href="#">Æ÷ÅĞÀÚ·á½Ç</a>
-    <a href="#">Ä¿¹Â´ÏÆ¼(°Ô½ÃÆÇ)</a>
-    <a href="#">¼­ºñ½º</a>
-  </div>
-</div>
-
-<div class="dropdown">
-  <button onclick="myFunction2()" class="dropbtn">Æ÷ÅĞ°øÁö</button>
-  <div id="myDropdown2" class="dropdown-content">
-    <a href="#">Æ÷ÅĞ°øÁö</a>
-    <a href="#">ÇĞ»ç¡¤±¹Á¦°øÁö</a>
-    <a href="#">>ÀåÇĞ°øÁö</a>
-    <a href="#">Çà»ç¡¤Âü¿©°øÁö</a>
-    <a href="#">È¨ÆäÀÌÁö °øÁö</a>
-
-  </div>
-</div>
-
-
-<!-- ------------------------------------------------->
-<!-- °øÁö»çÇ× -->
+<!-- ê³µì§€ì‚¬í•­ -->
 <div class="NoticeContents">
-	<h1>Æ÷ÅĞ°øÁö</h1> <!-- Å¸ÀÌÆ²¸¸¸¸ ¹Ù²ñ(Æ÷ÅĞ°øÁö/ ÇĞ»ç¤ı±¹Á¦°øÁö/ ÀåÇĞ°øÁö/ Çà»ç¤ıÂü¿© °Ô½ÃÆÇ/ ÇĞ»ç¤ı±¹Á¦°øÁö  -->
+	<h1>í¬í„¸ê³µì§€</h1> <!-- íƒ€ì´í‹€ë§Œë§Œ ë°”ë€œ(í¬í„¸ê³µì§€/ í•™ì‚¬ã†êµ­ì œê³µì§€/ ì¥í•™ê³µì§€/ í–‰ì‚¬ã†ì°¸ì—¬ ê²Œì‹œíŒ/ í•™ì‚¬ã†êµ­ì œê³µì§€  -->
+	<br>
 	<p style="line-height: 28px; font-size: 14px;">
-		È¨ÆäÀÌÁö °³Æí¿¡ µû¶ó °øÁö»çÇ×ÀÌ È¨ÆäÀÌÁö¿Í Æ÷ÅĞ °øÁö·Î ±¸ºĞµÇ¾î ¿î¿µµÇ¿À´Ï ÀÌ¿ë¿¡ Âü°íÇÏ¿© ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.<br>
-		- <strong>È¨ÆäÀÌÁö °øÁö</strong>&nbsp;: ´ë¿ÜÀûÀÎ Çà»ç µî ¿ÜºÎÀÎÀ» ´ë»óÀ¸·Î ÇÏ´Â ÀÏ¹İ, Æ¯°­, Çà»ç, Ã¤¿ë µîÀ¸·Î ¿î¿µ<br>
+		í™ˆí˜ì´ì§€ ê°œí¸ì— ë”°ë¼ ê³µì§€ì‚¬í•­ì´ í™ˆí˜ì´ì§€ì™€ í¬í„¸ ê³µì§€ë¡œ êµ¬ë¶„ë˜ì–´ ìš´ì˜ë˜ì˜¤ë‹ˆ ì´ìš©ì— ì°¸ê³ í•˜ì—¬ ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.<br>
+		- <strong>í™ˆí˜ì´ì§€ ê³µì§€</strong>&nbsp;: ëŒ€ì™¸ì ì¸ í–‰ì‚¬ ë“± ì™¸ë¶€ì¸ì„ ëŒ€ìƒìœ¼ë¡œ í•˜ëŠ” ì¼ë°˜, íŠ¹ê°•, í–‰ì‚¬, ì±„ìš© ë“±ìœ¼ë¡œ ìš´ì˜<br>
 		- <span style="color: rgb(255, 240, 245);">
 			<strong>
-				<span style="background-color: rgb(61, 121, 194);">Æ÷ÅĞ °øÁö</span>
+				<span style="background-color: rgb(61, 121, 194);">í¬í„¸ ê³µì§€</span>
 			</strong>
 		</span>
-		&nbsp;: <strong>³»ºÎ ±¸¼º¿øÀ» À§ÇÑ °øÁö ¿µ¿ªÀ¸·Î&nbsp;</strong>
-		Æ÷°ıÀûÀÎ ³»¿ëÀÇ <strong>Æ÷ÅĞ °øÁö</strong>, ÇĞ»çÀü¿ëÀÇ <strong>ÇĞ»ç °øÁö</strong>, ÀåÇĞÀü¿ëÀÇ <strong>ÀåÇĞ °øÁö</strong>·Î ±¸ºĞÇÏ¿© ¿î¿µ
+		&nbsp;: <strong>ë‚´ë¶€ êµ¬ì„±ì›ì„ ìœ„í•œ ê³µì§€ ì˜ì—­ìœ¼ë¡œ&nbsp;</strong>
+		í¬ê´„ì ì¸ ë‚´ìš©ì˜ <strong>í¬í„¸ ê³µì§€</strong>, í•™ì‚¬ì „ìš©ì˜ <strong>í•™ì‚¬ ê³µì§€</strong>, ì¥í•™ì „ìš©ì˜ <strong>ì¥í•™ ê³µì§€</strong>ë¡œ êµ¬ë¶„í•˜ì—¬ ìš´ì˜
 	</p>
 </div>
 
-
+<hr>
 <!-- ------------------------------------------------->
-<!-- 2¸Ş´º -->
-<div class="topnav">
-  <a href="#news">Æ÷ÅĞ°øÁö</a>
-  <a href="#contact">ÇĞ»ç¡¤±¹Á¦°øÁö</a>
-  <a href="#about">ÀåÇĞ°øÁö</a>
-  <a href="#about">Çà»ç¤ıÂü¿© °Ô½ÃÆÇ</a>
-  <a href="#about">È¨ÆäÀÌÁö°øÁö</a>
-</div>
 
-
-<!-- ------------------------------------------------->
-<!-- °Ô½ÃÆÇ -->
+<!-- ê²Œì‹œíŒ -->
 <%@ include file="menu2.jsp" %> 
-
  
 <!-- ------------------------------------------------->
-<!-- °ÇÀÇ -->
+<!-- ê±´ì˜ -->
 <%@ include file="menu1-4.jsp" %>   
 </body>
 </html>
