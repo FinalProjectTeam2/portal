@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body{
+	min-width: 1400px;
+}
 header {
 	font-size: 1.5em;
 }
@@ -51,4 +54,19 @@ code {
 
 #findUser a{
 	color: #7a8394;
+}
+
+@media (min-width: 768px)
+.col-md-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 21%;
+    min-width: 290px;
+}
+@media (min-width: 992px)
+.col-lg-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+    min-width: 900px;
 }

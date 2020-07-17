@@ -13,7 +13,7 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v4.0.1">
-<link rel="stylesheet" href="<c:url value='resources/css/reset.css'/>">
+<link rel="stylesheet" href="<c:url value='/resources/css/reset.css'/>">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="canonical"
