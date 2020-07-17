@@ -5,6 +5,8 @@
 
 
 <article>
+<script src="<c:url value='/resouces/js/jquery.ml-keyboard.min.js'/>"></script>	
+	
 <script type="text/javascript">
 	$(function(){
 		$('.btList').click(function(){
@@ -25,12 +27,19 @@
 				$('#pwd').focus();
 				event.preventDefault();
 			}
+	
+		$('#title').mlKeyboard({layout: 'es_ES'});		
 		
-		
-			
 	});
 	
+		
+	
+		
 </script>
+
+
+
+
 
 <div class="divForm" style="width: 800px">
 <form name="frmWrite" method="post" action="<c:url value='/fileUpload'/>" enctype="multipart/form-data">
