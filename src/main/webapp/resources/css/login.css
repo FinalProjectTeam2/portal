@@ -10,7 +10,6 @@ margin: 100px auto;
 }
 
 .card{
-height: 555px;
 margin-top: auto;
 margin-bottom: auto;
 width: 660px;
@@ -88,7 +87,6 @@ margin-left: 4px;
 	width: 20%;
 	float: left;
 	padding: 5px;
-	color: white;
 	color: black; /*hmm*/
 }
 
@@ -113,8 +111,8 @@ margin-left: 4px;
 #title{
 	font-size: 20px;
 	font-weight: bold;
-	color: white;
-	color: black; /*hmm*/
+	color: black;
+	margin: 0;
 }
 
 #loginBt{
@@ -122,7 +120,7 @@ margin-left: 4px;
 }
 
 #chk{
-display: inline-block;
+	display: inline-block;
 	color: black; /*hmm*/
 }
 

@@ -34,7 +34,7 @@
 								<div class="input-group form-group">
 									<label for="stuNo" class="lab">아이디</label>
 									<div class="input-group-prepend">
-										<span class="input-group-text"><i class="fas fa-user"></i></span>
+										<span class="input-group-text"><i class="fas fa-user" style="color: white;"></i></span>
 									</div>
 									<input type="text" class="form-control" placeholder="아이디를 입력하세요"
 										name="stuNo"> <span class="input-group-btn">
@@ -52,7 +52,7 @@
 									<div class="input-group form-group">
 										<label for="pwd" class="lab">비밀번호</label>
 										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fas fa-key"></i></span>
+											<span class="input-group-text"><i class="fas fa-key" style="color: white;"></i></span>
 										</div>
 										<input type="password" class="form-control" placeholder="영문, 숫자 조합하여 8자이상 "
 											name="pwd"> <span class="input-group-text"
@@ -62,7 +62,7 @@
 									<div class="input-group form-group">
 										<label for="pwd" class="lab">비밀번호 확인</label>
 										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fas fa-key"></i></span>
+											<span class="input-group-text"><i class="fas fa-key" style="color: white;"></i></span>
 										</div>
 										<input type="password" class="form-control"
 											name="pwd"> <span class="input-group-text"
