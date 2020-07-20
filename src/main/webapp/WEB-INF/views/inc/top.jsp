@@ -13,12 +13,12 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v4.0.1">
-<link rel="stylesheet" href="<c:url value='resources/css/reset.css'/>">
+<link rel="stylesheet" href="<c:url value='/resources/css/reset.css'/>">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/4.5/examples/sticky-footer-navbar/">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
