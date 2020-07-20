@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body{
+	min-width: 1400px;
+}
 header {
 	font-size: 1.5em;
 }
@@ -35,14 +38,14 @@ code {
 
 #login input, #login button{
 	width: 100%;
-	font-size: 1.3em;
+	font-size: 1.2em;
 	margin: 15px 0 15px 0;
 	padding-left: 10px;
 }
 
 #findUser{
-	text-align: center; 
-	font-size: 1.2em;
+	text-align: center;
+	font-size: 1em;
 }
 
 #sidebarMenu a{
@@ -51,4 +54,20 @@ code {
 
 #findUser a{
 	color: #7a8394;
+}
+
+.col-md-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 21%;
+}
+.col-lg-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 17%;
+    min-width: 250px;
+}
+
+.flex-shrink-0 {
+    margin: 0 auto;
 }
