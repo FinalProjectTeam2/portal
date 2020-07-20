@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/mainSidebar.jsp"%>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>ÇÐ»çÀÏÁ¤-¿ä¾àº¸±â</title>
+<title>í•™ì‚¬ì¼ì •-ìš”ì•½ë³´ê¸°</title> -->
 <style type="text/css">
 .calendar_head{
 	position:relative;
@@ -273,29 +275,27 @@
 }
 .exchange_student11 .ct1 b{font-weight:500;color:#1e386f}
 </style>
-</head>
-<body>
-<!-- ÇÐ»çÀÏÁ¤ -->
+<!-- í•™ì‚¬ì¼ì • -->
 <article class="calendar">
 	<div class="calendar_head">
 		<h2 id="SCH_YEAR">< 2020 ></h2>
 		<p>
-			<a href="#;" class="typeCal" title="¿ùº° Ä¶¸°´õ È­¸éÀ¸·Î ÀÌµ¿">¿ùº°Ä¶¸°´õ</a>
-			<a href="#;" class="typeSum on" title="¿ä¾àº¸±â : ¼±ÅÃµÊ">¿ä¾àº¸±â</a>
+			<a href="#;" class="typeCal" title="ì›”ë³„ ìº˜ë¦°ë” í™”ë©´ìœ¼ë¡œ ì´ë™">ì›”ë³„ìº˜ë¦°ë”</a>
+			<a href="#;" class="typeSum on" title="ìš”ì•½ë³´ê¸° : ì„ íƒë¨">ìš”ì•½ë³´ê¸°</a>
 		</p>
 		<ul>
-			<li><a href="#month1" title="1¿ù">1</a></li>
-			<li><a href="#month2" title="2¿ù">2</a></li>
-			<li><a href="#month3" title="3¿ù">3</a></li>
-			<li><a href="#month4" title="4¿ù">4</a></li>
-			<li><a href="#month5" title="5¿ù">5</a></li>
-			<li><a href="#month6" title="6¿ù">6</a></li>
-			<li><a href="#month7" title="7¿ù:¼±ÅÃµÊ" class="on">7</a></li>
-			<li><a href="#month8" title="8¿ù">8</a></li>
-			<li><a href="#month9" title="9¿ù">9</a></li>
-			<li><a href="#month10" title="10¿ù">10</a></li>
-			<li><a href="#month11" title="11¿ù">11</a></li>
-			<li><a href="#month12" title="12¿ù">12</a></li>
+			<li><a href="#month1" title="1ì›”">1</a></li>
+			<li><a href="#month2" title="2ì›”">2</a></li>
+			<li><a href="#month3" title="3ì›”">3</a></li>
+			<li><a href="#month4" title="4ì›”">4</a></li>
+			<li><a href="#month5" title="5ì›”">5</a></li>
+			<li><a href="#month6" title="6ì›”">6</a></li>
+			<li><a href="#month7" title="7ì›”:ì„ íƒë¨" class="on">7</a></li>
+			<li><a href="#month8" title="8ì›”">8</a></li>
+			<li><a href="#month9" title="9ì›”">9</a></li>
+			<li><a href="#month10" title="10ì›”">10</a></li>
+			<li><a href="#month11" title="11ì›”">11</a></li>
+			<li><a href="#month12" title="12ì›”">12</a></li>
 		</ul>
 	</div>
 	<div class="calendar_summary" id="month1">
@@ -303,47 +303,47 @@
 		<ul class="calView_tb">
 			<li>
 				<time>01.01</time>
-				½ÅÁ¤(°øÈÞÀÏ)
+				ì‹ ì •(ê³µíœ´ì¼)
 			</li>
 			<li>
 				<time>01.03</time>
-				2020³â 1ÇÐ±â Àü°ø°³¹æ¸ðÁý Èñ¸ÁÀü°øÁ¤Á¤
+				2020ë…„ 1í•™ê¸° ì „ê³µê°œë°©ëª¨ì§‘ í¬ë§ì „ê³µì •ì •
 			</li>
 			<li>
 				<time>01.06~01.10</time>
-				2020³â 1ÇÐ±â ÀçÀÔÇÐ ¿ø¼­Á¢¼ö
+				2020ë…„ 1í•™ê¸° ìž¬ìž…í•™ ì›ì„œì ‘ìˆ˜
 			</li>
 			<li>
 				<time>01.08~01.10</time>
-				2020³â Àü°ú(ºÎ) ¿ø¼­Á¢¼ö
+				2020ë…„ ì „ê³¼(ë¶€) ì›ì„œì ‘ìˆ˜
 			</li>
 			<li>
 				<time>01.20~01.28</time>
-				2020³â 1ÇÐ±â º¹ÇÐ½Å
+				2020ë…„ 1í•™ê¸° ë³µí•™ì‹ 
 			</li>
 			<li>
 				<time>01.20~04.10</time>
-				2020³â 1ÇÐ±â ÈÞÇÐ½ÅÃ»
+				2020ë…„ 1í•™ê¸° íœ´í•™ì‹ ì²­
 			</li>
 			<li>
 				<time>01.24~01.27</time>
-				¼³³¯(°øÈÞÀÏ) 27ÀÏ ´ëÃ¼ÈÞÀÏ(°øÈÞÀÏ)
+				ì„¤ë‚ (ê³µíœ´ì¼) 27ì¼ ëŒ€ì²´íœ´ì¼(ê³µíœ´ì¼)
 			</li>
 			<li>
 				<time>01.29~01.30</time>
-				2020³â 1ÇÐ±â ¼ö°­½ÅÃ» Àå¹Ù±¸´Ï ´ã±â
+				2020ë…„ 1í•™ê¸° ìˆ˜ê°•ì‹ ì²­ ìž¥ë°”êµ¬ë‹ˆ ë‹´ê¸°
 			</li>
 			<li>
 				<time>12.23~01.15</time>
-				µ¿°è °èÀýÇÐ±â
+				ë™ê³„ ê³„ì ˆí•™ê¸°
 			</li>
 			<li>
 				<time>12.27~01.02</time>
-				2019³â 2ÇÐ±â ¼ºÀûÁ¶È¸
+				2019ë…„ 2í•™ê¸° ì„±ì ì¡°íšŒ
 			</li>
 			<li>
 				<time>12.30~01.02</time>
-				2019³â 2ÇÐ±â ¼ºÀûÁ¤Á¤
+				2019ë…„ 2í•™ê¸° ì„±ì ì •ì •
 			</li>
 		</ul>
 	</div>
@@ -354,18 +354,18 @@
 		<ul class="calView_tb">
 			<li>
 				<time>02.04</time>
-				2020³â 1ÇÐ±â ¼ö°­½ÅÃ» Àå¹Ù±¸´Ï ¼öÁ¤</li>
+				2020ë…„ 1í•™ê¸° ìˆ˜ê°•ì‹ ì²­ ìž¥ë°”êµ¬ë‹ˆ ìˆ˜ì •</li>
 			<li>
 				<time>02.12~02.14</time>
-				2020³â 1ÇÐ±â ¼ö°­½ÅÃ»
+				2020ë…„ 1í•™ê¸° ìˆ˜ê°•ì‹ ì²­
 			</li>
 			<li>
 				<time>02.24~02.27</time>
-				2020³â 1ÇÐ±â ÀçÇÐ»ý µî·Ï
+				2020ë…„ 1í•™ê¸° ìž¬í•™ìƒ ë“±ë¡
 			</li>
 			<li>
 				<time>12.23~02.29</time>
-				°Ü¿ï¹æÇÐ
+				ê²¨ìš¸ë°©í•™
 			</li>
 			</ul>
 	</div>
@@ -375,31 +375,31 @@
 		<ul class="calView_tb">
 			<li>
 				<time>03.01</time>
-				2020ÇÐ³âµµ 1ÇÐ±â °³½ÃÀÏ
+				2020í•™ë…„ë„ 1í•™ê¸° ê°œì‹œì¼
 			</li>
 			<li>
 				<time>03.01</time>
-				»ïÀÏÀý(°øÈÞÀÏ)
+				ì‚¼ì¼ì ˆ(ê³µíœ´ì¼)
 			</li>
 			<li>
 				<time>03.16</time>
-				2020³â 1ÇÐ±â °³°­
+				2020ë…„ 1í•™ê¸° ê°œê°•
 			</li>
 			<li>
 				<time>03.16~03.28</time>
-				2020³â 1ÇÐ±â ¼ö°­½ÅÃ» Á¤Á¤
+				2020ë…„ 1í•™ê¸° ìˆ˜ê°•ì‹ ì²­ ì •ì •
 			</li>
 			<li>
 				<time>03.16~05.09</time>
-				À¯¿¬ÇÐ±â Term1(8ÁÖ)
+				ìœ ì—°í•™ê¸° Term1(8ì£¼)
 			</li>
 			<li>
 				<time>03.30~04.05</time>
-				2020³â 1ÇÐ±â ¼ö°­°ú¸ñ Ãë¼Ò
+				2020ë…„ 1í•™ê¸° ìˆ˜ê°•ê³¼ëª© ì·¨ì†Œ
 			</li>
 			<li>
 				<time>03.30~04.10</time>
-				2020³â 1ÇÐ±â °­ÀÇ Feedback ½Ç½Ã
+				2020ë…„ 1í•™ê¸° ê°•ì˜ Feedback ì‹¤ì‹œ
 			</li>
 		</ul>
 	</div>
@@ -409,11 +409,11 @@
 		<ul class="calView_tb">
 			<li>
 				<time>04.15</time>
-				21´ë ±¹È¸ÀÇ¿ø ¼±°Å(°øÈÞÀÏ)
+				21ëŒ€ êµ­íšŒì˜ì› ì„ ê±°(ê³µíœ´ì¼)
 			</li>
 			<li>
 				<time>04.30</time>
-				¼®°¡Åº½ÅÀÏ(°øÈÞÀÏ)
+				ì„ê°€íƒ„ì‹ ì¼(ê³µíœ´ì¼)
 			</li>
 		</ul>
 	</div>
@@ -423,23 +423,23 @@
 		<ul class="calView_tb">
 			<li>
 				<time>05.04~05.09</time>
-				2020³â 1ÇÐ±â Áß°£½ÃÇè(8ÁÖÂ÷)
+				2020ë…„ 1í•™ê¸° ì¤‘ê°„ì‹œí—˜(8ì£¼ì°¨)
 			</li>
 			<li>
 				<time>05.05</time>
-				¾î¸°ÀÌ³¯(°øÈÞÀÏ)
+				ì–´ë¦°ì´ë‚ (ê³µíœ´ì¼)
 			</li>
 			<li>
 				<time>05.11~06.27</time>
-				À¯¿¬ÇÐ±â Term2(7ÁÖ)
+				ìœ ì—°í•™ê¸° Term2(7ì£¼)
 			</li>
 			<li>
 				<time>05.18~05.22</time>
-				Á¹¾÷³í¹® Á¦Ãâ
+				ì¡¸ì—…ë…¼ë¬¸ ì œì¶œ
 			 </li>
 			<li>
 				<time>05.18~05.29</time>
-				2020³â 2ÇÐ±â ´ÙÀü°ø ½ÅÃ»(º¹¼ö,À¶ÇÕ,¿¬°è,ÀÚ±â¼³°è,ºÎÀü°ø)
+				2020ë…„ 2í•™ê¸° ë‹¤ì „ê³µ ì‹ ì²­(ë³µìˆ˜,ìœµí•©,ì—°ê³„,ìžê¸°ì„¤ê³„,ë¶€ì „ê³µ)
 			</li>
 		</ul>
 	</div>
@@ -449,31 +449,31 @@
 		<ul class="calView_tb">
 			<li>
 				<time>06.03</time>
-				2020³â ÇÏ°è °èÀýÇÐ±â ½ÃÇà °øÁö
+				2020ë…„ í•˜ê³„ ê³„ì ˆí•™ê¸° ì‹œí–‰ ê³µì§€
 			</li>
 			<li>
 				<time>06.06</time>
-				ÇöÃæÀÏ(°øÈÞÀÏ)
+				í˜„ì¶©ì¼(ê³µíœ´ì¼)
 			</li>
 			<li>
 				<time>06.08~06.15</time>
-				2020³â 2ÇÐ±â Àü°ø°³¹æ¸ðÁý Èñ¸ÁÀü°ø ½ÅÃ»
+				2020ë…„ 2í•™ê¸° ì „ê³µê°œë°©ëª¨ì§‘ í¬ë§ì „ê³µ ì‹ ì²­
 			</li>
 			<li>
 				<time>06.15~07.17</time>
-				2020³â 1ÇÐ±â °­ÀÇÆò°¡
+				2020ë…„ 1í•™ê¸° ê°•ì˜í‰ê°€
 			</li>
 			<li>
 				<time>06.22~07.03</time>
-				2020³â 1ÇÐ±â ±â¸»½ÃÇè(ÀÌ·Ð)
+				2020ë…„ 1í•™ê¸° ê¸°ë§ì‹œí—˜(ì´ë¡ )
 			</li>
 			<li>
 				<time>06.22~07.10</time>
-				2020³â 1ÇÐ±â ±â¸»½ÃÇè(½ÇÇè,½Ç½À,½Ç±â)
+				2020ë…„ 1í•™ê¸° ê¸°ë§ì‹œí—˜(ì‹¤í—˜,ì‹¤ìŠµ,ì‹¤ê¸°)
 			</li>
 			<li>
 				<time>06.25~07.17</time>
-				2020³â 1ÇÐ±â ¼ºÀûÀÔ·Â
+				2020ë…„ 1í•™ê¸° ì„±ì ìž…ë ¥
 			</li>
 		</ul>
 	</div>
@@ -483,31 +483,31 @@
 		<ul class="calView_tb">
 			<li>
 				<time>07.06~07.10</time>
-				2020³â 2ÇÐ±â ÀçÀÔÇÐ ¿ø¼­ Á¢¼ö
+				2020ë…„ 2í•™ê¸° ìž¬ìž…í•™ ì›ì„œ ì ‘ìˆ˜
 			</li>
 			<li>
 				<time>07.11~08.31</time>
-				2020³â ¿©¸§¹æÇÐ
+				2020ë…„ ì—¬ë¦„ë°©í•™
 			</li>
 			<li>
 				<time>07.13~07.29</time>
-				2020³â ÇÏ°è °èÀýÇÐ±â
+				2020ë…„ í•˜ê³„ ê³„ì ˆí•™ê¸°
 			</li>
 			<li>
 				<time>07.20~07.23</time>
-				2020³â 1ÇÐ±â ¼ºÀûÁ¶È¸
+				2020ë…„ 1í•™ê¸° ì„±ì ì¡°íšŒ
 			</li>
 			<li>
 				<time>07.22~07.23</time>
-				2020³â 1ÇÐ±â ¼ºÀûÁ¤Á¤
+				2020ë…„ 1í•™ê¸° ì„±ì ì •ì •
 			</li>
 			<li>
 				<time>07.24</time>
-				2020³â 1ÇÐ±â ¼ºÀû È®Á¤(º¸°ü¼ºÀû ÀÌ°ü)
+				2020ë…„ 1í•™ê¸° ì„±ì  í™•ì •(ë³´ê´€ì„±ì  ì´ê´€)
 			</li>
 			<li>
 				<time>07.24</time>
-				2020³â 2ÇÐ±â Àü°ø°³¹æ¸ðÁý Èñ¸ÁÀü°ø Á¤Á¤
+				2020ë…„ 2í•™ê¸° ì „ê³µê°œë°©ëª¨ì§‘ í¬ë§ì „ê³µ ì •ì •
 			</li>
 		</ul>
 	</div>
@@ -517,39 +517,39 @@
 		<ul class="calView_tb">
 			<li>
 				<time>08.03~08.09</time>
-				2020³â 2ÇÐ±â º¹ÇÐ½ÅÃ»
+				2020ë…„ 2í•™ê¸° ë³µí•™ì‹ ì²­
 			</li>
 			<li>
 				<time>08.03~09.28</time>
-				2020³â 2ÇÐ±â ÈÞÇÐ½ÅÃ»
+				2020ë…„ 2í•™ê¸° íœ´í•™ì‹ ì²­
 			</li>
 			<li>
 				<time>08.05~08.06</time>
-				2020³â 2ÇÐ±â ¼ö°­½ÅÃ» Àå¹Ù±¸´Ï ´ã±â
+				2020ë…„ 2í•™ê¸° ìˆ˜ê°•ì‹ ì²­ ìž¥ë°”êµ¬ë‹ˆ ë‹´ê¸°
 			</li>
 			<li>
 				<time>08.11</time>
-				2020³â 2ÇÐ±â ¼ö°­½ÅÃ» Àå¹Ù±¸´Ï ¼öÁ¤
+				2020ë…„ 2í•™ê¸° ìˆ˜ê°•ì‹ ì²­ ìž¥ë°”êµ¬ë‹ˆ ìˆ˜ì •
 			</li>
 			<li>
 				<time>08.15</time>
-				±¤º¹Àý(°øÈÞÀÏ)
+				ê´‘ë³µì ˆ(ê³µíœ´ì¼)
 			</li>
 			<li>
 				<time>08.17~08.21</time>
-				ÇÐÀ§¼ö¿©½Ä
+				í•™ìœ„ìˆ˜ì—¬ì‹
 			</li>
 			<li>
 				<time>08.18~08.20</time>
-				2020³â 2ÇÐ±â ¼ö°­½ÅÃ»
+				2020ë…„ 2í•™ê¸° ìˆ˜ê°•ì‹ ì²­
 			</li>
 			<li>
 				<time>08.21</time>
-				2020³â 8¿ù ÇÐÀ§¼ö¿©ÀÚ Á¹¾÷±âÁØÀÏ
+				2020ë…„ 8ì›” í•™ìœ„ìˆ˜ì—¬ìž ì¡¸ì—…ê¸°ì¤€ì¼
 			</li>
 			<li>
 				<time>08.24~08.28</time>
-				2020³â 2ÇÐ±â ÀçÇÐ»ý µî·Ï
+				2020ë…„ 2í•™ê¸° ìž¬í•™ìƒ ë“±ë¡
 			</li>
 		</ul>
 	</div>
@@ -559,27 +559,27 @@
 			<ul class="calView_tb">
 			<li>
 				<time>09.01</time>
-				2020³â 2ÇÐ±â °³½ÃÀÏ/°³°­ÀÏ
+				2020ë…„ 2í•™ê¸° ê°œì‹œì¼/ê°œê°•ì¼
 			</li>
 			<li>
 				<time>09.01~09.07</time>
-				2020³â 2ÇÐ±â ¼ö°­½ÅÃ» Á¤Á¤
+				2020ë…„ 2í•™ê¸° ìˆ˜ê°•ì‹ ì²­ ì •ì •
 			</li>
 			<li>
 				<time>09.01~10.26</time>
-				À¯¿¬ÇÐ±â Term3(8ÁÖ)
+				ìœ ì—°í•™ê¸° Term3(8ì£¼)
 			</li>
 			<li>
 				<time>09.22~09.28</time>
-				2020³â 2ÇÐ±â ¼ö°­°ú¸ñ Ãë¼Ò(4ÁÖÂ÷)
+				2020ë…„ 2í•™ê¸° ìˆ˜ê°•ê³¼ëª© ì·¨ì†Œ(4ì£¼ì°¨)
 			</li>
 			<li>
 				<time>09.22~10.05</time>
-				2020³â 2ÇÐ±â °­ÀÇ Feedback ½Ç½Ã
+				2020ë…„ 2í•™ê¸° ê°•ì˜ Feedback ì‹¤ì‹œ
 			</li>
 			<li>
 				<time>09.30~10.02</time>
-				Ãß¼®(°øÈÞÀÏ)
+				ì¶”ì„(ê³µíœ´ì¼)
 			</li>
 		</ul>
 	</div>
@@ -589,23 +589,23 @@
 			<ul class="calView_tb">
 				<li>
 					<time>10.03</time>
-					°³ÃµÀý(°øÈÞÀÏ)
+					ê°œì²œì ˆ(ê³µíœ´ì¼)
 				</li>
 				<li>
 					<time>10.09</time>
-					ÇÑ±Û³¯(°øÈÞÀÏ)
+					í•œê¸€ë‚ (ê³µíœ´ì¼)
 				</li>
 				<li>
 					<time>10.11</time>
-					°³±³102ÁÖ³â±â³äÀÏ
+					ê°œêµ102ì£¼ë…„ê¸°ë…ì¼
 				</li>
 				<li>
 					<time>10.20~10.26</time>
-					2020³â 2ÇÐ±â Áß°£½ÃÇè(8ÁÖÂ÷)
+					2020ë…„ 2í•™ê¸° ì¤‘ê°„ì‹œí—˜(8ì£¼ì°¨)
 				</li>
 				<li>
 					<time>10.27~12.21</time>
-					À¯¿¬ÇÐ±â Term4(8ÁÖ)
+					ìœ ì—°í•™ê¸° Term4(8ì£¼)
 				</li>
 			</ul>
 	</div>
@@ -615,14 +615,14 @@
 		<ul class="calView_tb">
 			<li>
 				<time>11.02</time>
-				2020³â µ¿°è °èÀýÇÐ±â ½ÃÇà °øÁö</li>
+				2020ë…„ ë™ê³„ ê³„ì ˆí•™ê¸° ì‹œí–‰ ê³µì§€</li>
 			<li>
 				<time>11.09~11.13</time>
-				Á¹¾÷³í¹® Á¦Ãâ
+				ì¡¸ì—…ë…¼ë¬¸ ì œì¶œ
 			</li>
 			<li>
 				<time>11.16~11.27</time>
-				2021³â 1ÇÐ±â ´ÙÀü°ø ½ÅÃ»(º¹¼ö,À¶ÇÕ,¿¬°è,ÀÚ±â¼³°è,ºÎÀü°ø)
+				2021ë…„ 1í•™ê¸° ë‹¤ì „ê³µ ì‹ ì²­(ë³µìˆ˜,ìœµí•©,ì—°ê³„,ìžê¸°ì„¤ê³„,ë¶€ì „ê³µ)
 			</li>
 		</ul>
 	</div>
@@ -630,46 +630,45 @@
 		<h3><b>12</b>Desember</h3>
 		<ul class="calView_tb">
 			<li>
-				<time>12.01~12.07</time>2021³â 1ÇÐ±â Àü°ø°³¹æ¸ðÁý Èñ¸ÁÀü°ø ½ÅÃ»
+				<time>12.01~12.07</time>2021ë…„ 1í•™ê¸° ì „ê³µê°œë°©ëª¨ì§‘ í¬ë§ì „ê³µ ì‹ ì²­
 			</li>
 			<li>
 				<time>12.01~12.25</time>
-				2020³â 2ÇÐ±â °­ÀÇÆò°¡ ½Ç½Ã
+				2020ë…„ 2í•™ê¸° ê°•ì˜í‰ê°€ ì‹¤ì‹œ
 			</li>
 			<li>
 				<time>12.15~12.21</time>
-				2020³â 2ÇÐ±â ±â¸»½ÃÇè(16ÁÖÂ÷)
+				2020ë…„ 2í•™ê¸° ê¸°ë§ì‹œí—˜(16ì£¼ì°¨)
 			</li>
 			<li>
 				<time>12.18~12.26</time>
-				2020³â 2ÇÐ±â ¼ºÀûÀÔ·Â
+				2020ë…„ 2í•™ê¸° ì„±ì ìž…ë ¥
 			</li>
 			<li>
 				<time>12.22~02.28</time>
-				°Ü¿ï¹æÇÐ
+				ê²¨ìš¸ë°©í•™
 			</li>
 			<li>
 				<time>12.23~01.15</time>
-				µ¿°è °èÀýÇÐ±â
+				ë™ê³„ ê³„ì ˆí•™ê¸°
 			</li>
-			<li><time>12.25</time>¼ºÅºÀý(°øÈÞÀÏ)
+			<li><time>12.25</time>ì„±íƒ„ì ˆ(ê³µíœ´ì¼)
 			</li>
 			<li>
 				<time>12.28~12.31</time>
-				2020³â 2ÇÐ±â ¼ºÀûÁ¶È¸
+				2020ë…„ 2í•™ê¸° ì„±ì ì¡°íšŒ
 			</li>
 			<li>
 				<time>12.30~12.31</time>
-				2020³â 2ÇÐ±â ¼ºÀûÁ¤Á¤
+				2020ë…„ 2í•™ê¸° ì„±ì ì •ì •
 			</li>
 		</ul>
 	</div>
 	
 	<div class="box_caution">
 		<ul class="list_dot blue">
-			<li>À§ ÇÐ»çÀÏÁ¤Àº ÇÐºÎ ÇÐ»çÀÏÁ¤ÀÔ´Ï´Ù.<br>´ëÇÐ¿ø ÇÐ»çÀÏÁ¤Àº °¢ ´ëÇÐ¿ø È¨ÆäÀÌÁö¸¦ Âü°íÇÏ½Ã±â ¹Ù¶ø´Ï´Ù.</li>
+			<li>ìœ„ í•™ì‚¬ì¼ì •ì€ í•™ë¶€ í•™ì‚¬ì¼ì •ìž…ë‹ˆë‹¤.<br>ëŒ€í•™ì› í•™ì‚¬ì¼ì •ì€ ê° ëŒ€í•™ì› í™ˆíŽ˜ì´ì§€ë¥¼ ì°¸ê³ í•˜ì‹œê¸° ë°”ëžë‹ˆë‹¤.</li>
 		</ul>
 	</div>
 </article>
-</body>
-</html>
+<%@ include file="../inc/bottom.jsp"%>
