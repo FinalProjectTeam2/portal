@@ -18,6 +18,12 @@ public class LoginController {
 		return "login/login";
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login_post() {
+		logger.info("로그인 처리 ");
+		return "login/login";
+	}
+	
 	@RequestMapping(value = "/findPwd", method = RequestMethod.GET)
 	public String findPwd_get() {
 		logger.info("로그인 화면 보여주기");
