@@ -314,6 +314,11 @@ body>.wrap-loader{position:fixed}
 .btn-layer-close:hover{opacity:1}
 
 
+.h-100 {
+    margin-top: 30px;
+    margin-left: 60px;
+
+}
 #cancelBt{
 	background-color: #444;
 	color: white;
@@ -323,4 +328,5 @@ body>.wrap-loader{position:fixed}
 #cancelBt:hover{
 	background-color: white;
 	color: black;
+	border: 1px solid black;
 }
