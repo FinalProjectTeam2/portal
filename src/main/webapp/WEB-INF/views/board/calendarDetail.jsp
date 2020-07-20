@@ -1,9 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>학사일정-자세히보기</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/mainSidebar.jsp"%>
+<link href="<c:url value='/resources/css/index.css' />" rel="stylesheet">
 <style type="text/css">
 .calendar_head{
 	position:relative;
@@ -15,7 +13,7 @@
 	font-size:48px;letter-spacing:-2px;vertical-align:top;line-height:1em;
 }
 
-.calendar_head button.next{background-image:url(../img/common/btn_next.png)}
+.calendar_head button.next{}
 .calendar_head ul{
 	border-top:2px solid #2d313e;
 	text-align:center;font-size:0
@@ -40,20 +38,16 @@
 .calendar_head p a{
 	display:inline-block;height:15px;line-height:15px;
 	padding-left:35px;
-	background:url(../img/common/ico_calendar.png) no-repeat 10px center;
 	font-size:15px;color:#333;
 }
 .calendar_head p a.on{
-	background-image:url(../img/common/ico_calendar_on.png);
 	color:#1e71c0
 }
 .calendar_head p a+a{
 	margin-left:10px;
-	background-image:url(../img/common/ico_list.png);
 	border-left:1px solid #dfdfdf;
 }
 .calendar_head p a+a.on{
-	background-image:url(../img/common/ico_list_on.png);
 }
 
 .calendar_list{
@@ -103,7 +97,6 @@
 	position:absolute;top:5px;right:0;
 	display:inline-block;width:110px;box-sizing:border-box;
 	padding-left:23px;
-	background:url(../img/common/ico_calendar2.png) no-repeat 0 3px;
 	font-size:15px;color:#666
 }
 .calendar_list>ul li+li{margin-top:20px}
@@ -146,7 +139,6 @@
 	position:absolute;left:0;top:0;
 	width:140px;height:100%;box-sizing:border-box;
 	padding:15px 0 0 40px;
-	background:url(../img/common/ico_calendar2.png) no-repeat 18px 18px;
 	border-right:1px solid #dddfe5;
 	color:#666;font-size:15px
 }
@@ -155,8 +147,8 @@
 	text-align:center;color:#888
 }
 </style>
-</head>
-<body>
+<main role="main" class="flex-shrink-0">
+<div class="container">
 <article class="calendar">
 	<div class="calendar_head">
 		<h2 id="SCH_YEAR">< 2020 ></h2>
@@ -233,5 +225,4 @@
 		</ul>
 	</div>
 </article>
-</body>
-</html>
+<%@ include file="../inc/bottom.jsp"%>

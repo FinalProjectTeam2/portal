@@ -38,14 +38,14 @@ code {
 
 #login input, #login button{
 	width: 100%;
-	font-size: 1.3em;
+	font-size: 1.2em;
 	margin: 15px 0 15px 0;
 	padding-left: 10px;
 }
 
 #findUser{
 	text-align: center; 
-	font-size: 1.2em;
+	font-size: 1em;
 }
 
 #sidebarMenu a{
@@ -56,17 +56,18 @@ code {
 	color: #7a8394;
 }
 
-@media (min-width: 768px)
 .col-md-3 {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
     max-width: 21%;
-    min-width: 290px;
 }
-@media (min-width: 992px)
 .col-lg-2 {
     -ms-flex: 0 0 16.666667%;
     flex: 0 0 16.666667%;
-    max-width: 16.666667%;
-    min-width: 900px;
+    max-width: 17%;
+    min-width: 250px;
+}
+
+.flex-shrink-0 {
+    margin: 0 auto;
 }

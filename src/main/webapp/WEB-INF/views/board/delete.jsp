@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/mainSidebar.jsp"%>
+<link href="<c:url value='/resources/css/index.css' />" rel="stylesheet">
 <style type="text/css">
 /* Style all input fields */
 input {
@@ -44,16 +43,22 @@ input[type=submit] {
   content: "✖";
 }
 
+form[name=frmDelete]{
+	margin: 0 auto;
+	width: 1000px;
+}
 </style>
 
 </head>
 <body>
+
+<main role="main" class="flex-shrink-0">
 <div class="container">
-  <form action="/action_page.php">
+
+  <form action="" method="post" name="frmDelete">
     <label>게시물을 삭제하시겠습니까?<br> 비밀번호를 입력하세요.</label><br>
     <input type="password" id="psw" name="pwd" required>
     <input type="submit" value="삭제">
   </form>
-</div>	
-</body>
-</html>
+
+<%@ include file="../inc/bottom.jsp"%>
