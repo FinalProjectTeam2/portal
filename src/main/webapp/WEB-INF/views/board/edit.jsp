@@ -1,13 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ include file="../inc/top.jsp"%>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/write.css'/>" />
-</head>
-<body>
+<style>
+	.container-fluid{
+		margin-top: 100px;
+	}
+</style>
 <div class="container">
   <form action="/action_page.php">
     <div class="row">
@@ -71,5 +72,4 @@
   </form>
 </div>
 
-</body>
-</html>
+<%@ include file="../inc/bottom.jsp"%>
