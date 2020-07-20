@@ -68,5 +68,27 @@ public class BoardController {
 		return "board/lectureSchedule1";
 	}
 
+	@RequestMapping(value="/privacy1", method = RequestMethod.GET) public String
+	privacy1_get() {
 
+		return "board/privacy1";
+	}
+	
+	@RequestMapping(value="/privacy2", method = RequestMethod.GET) public String
+	privacy2_get() {
+		
+		return "board/privacy2";
+	}
+
+	@RequestMapping(value="/issueacertificate", method = RequestMethod.GET) public String
+	issueacertificate_get() {
+		
+		return "board/issueacertificate";
+	}
+	
+	@RequestMapping(value="/lectureScheduleLogin", method = RequestMethod.GET) public String
+	lectureScheduleLogin_get() {
+		
+		return "board/lectureScheduleLogin";
+	}
 }
