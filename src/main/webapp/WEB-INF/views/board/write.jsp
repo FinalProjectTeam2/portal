@@ -18,7 +18,6 @@
         <input type="text" id="title" name="title">
       </div>
     </div>
- 
     <div class="row">
       <div class="col-25">
         <label for="l_no">번호</label>
