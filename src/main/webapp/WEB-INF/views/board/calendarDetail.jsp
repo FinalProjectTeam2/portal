@@ -175,7 +175,6 @@
 }
 .campusinfo_undergraduate ul li dd{
 	padding-left:10px;margin-top:7px;
-	background:url(../img/common/bul_red.png) no-repeat 0 7px;
 }
 .campusinfo_undergraduate ul li dd a{font-size:15px}
 .campusinfo_undergraduate ul li dd a:hover{border-bottom:1px solid #333}
@@ -212,7 +211,6 @@
 	content:'';
 	position:absolute;top:0;right:20px;
 	display:block;width:17px;height:100%;
-	background:url(../img/common/ico_down.png) no-repeat center;
 }
 
 .campusinfo_regulations{text-align:center; }
@@ -243,15 +241,11 @@
 	position:absolute;bottom:-30px;right:-30px;
 	display:block;width:100px;height:100px;
 	border:10px solid #fff;border-radius:50%;
-	background:url(../img/campusinfo/exchange_student1_step1.png) no-repeat;
 }
 .exchange_student_step li.li2:after,
 .exchange_student_step li.li4:after{right:auto;left:-30px;}
 .exchange_student_step li.li3:after,
 .exchange_student_step li.li4:after{bottom:auto;top:-30px;}
-.exchange_student_step li.li2:after{background-image:url(../img/campusinfo/exchange_student1_step2.png)}
-.exchange_student_step li.li3:after{background-image:url(../img/campusinfo/exchange_student1_step3.png)}
-.exchange_student_step li.li4:after{background-image:url(../img/campusinfo/exchange_student1_step4.png)}
 .exchange_student_step li:nth-child(even){margin-left:10%;padding:20px 15px 20px 100px;}
 .exchange_student_step li span{
 	display:table-cell;height:130px;
