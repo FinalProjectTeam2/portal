@@ -14,9 +14,6 @@ a.bottom {
 	left: 95%;
 	bottom: 100px;
 }
-#scrolling a svg{
-	color: #28a745;
-}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -45,9 +42,9 @@ a.bottom {
 		});
 	}); /*  $('html, body').scrollTop( $(document).height() ); */
 </script>
-<div id="scrolling" >
+<div>
 	<a href="#" class="top"> 
-	<svg width="2em" height="2em" viewBox="0 0 16 16" 
+	<svg width="2em" height="2em" viewBox="0 0 16 16"
 			class="bi bi-arrow-up-square-fill" fill="currentColor"
 			xmlns="http://www.w3.org/2000/svg">
  		 <path fill-rule="evenodd"
