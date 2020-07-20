@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/login")
@@ -19,8 +20,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login_post() {
-		logger.info("로그인 처리 ");
+	public String login_post(@RequestParam String userid, @RequestParam String pwd,
+			@RequestParam String url) {
+		logger.info("로그인 처리, 파라미터 userid={}, pwd={}",userid,pwd);
+		logger.info("url={}",url);
+		
+		
 		return "login/login";
 	}
 	
