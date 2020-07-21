@@ -6,28 +6,40 @@
 <style type="text/css">
 a.top {
 	position: fixed;
-	left: 95%;
+	left: 96%;
 	bottom: 150px;
 }
+
 a.bottom {
 	position: fixed;
-	left: 95%;
+	left: 96%;
 	bottom: 100px;
 }
-#scrolling a svg{
+
+#scrolling a svg {
 	color: #28a745;
 }
 </style>
 <script type="text/javascript">
 	$(function() {
-		
+
 		$('.top').hide();
-		
+
 		$("body").scroll(function() {
 			if ($(this).scrollTop() > 200) {
 				$('.top').fadeIn();
 			} else {
 				$('.top').fadeOut();
+			}
+
+			var scrollTop = $(this).scrollTop();
+			var innerHeight = $(this).innerHeight();
+			var scrollHeight = $(this).prop('scrollHeight');
+
+			if (scrollTop + innerHeight >= scrollHeight-100) {
+				$(".bottom").fadeOut();
+			} else {
+				$(".bottom").fadeIn();
 			}
 		});
 
@@ -39,17 +51,16 @@ a.bottom {
 		});
 		$('.bottom').click(function() {
 			$('html, body').animate({
-				scrollTop :  $(document).height()
-			},500);
+				scrollTop : $(document).height()
+			}, 500);
 			return false;
 		});
 	}); /*  $('html, body').scrollTop( $(document).height() ); */
 </script>
-<div id="scrolling" >
-	<a href="#" class="top"> 
-	<svg width="2em" height="2em" viewBox="0 0 16 16" 
-			class="bi bi-arrow-up-square-fill" fill="currentColor"
-			xmlns="http://www.w3.org/2000/svg">
+<div id="scrolling">
+	<a href="#" class="top"> <svg width="2em" height="2em"
+			viewBox="0 0 16 16" class="bi bi-arrow-up-square-fill"
+			fill="currentColor" xmlns="http://www.w3.org/2000/svg">
  		 <path fill-rule="evenodd"
 				d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 8.354a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 6.207V11a.5.5 0 0 1-1 0V6.207L5.354 8.354z" />
 	</svg>

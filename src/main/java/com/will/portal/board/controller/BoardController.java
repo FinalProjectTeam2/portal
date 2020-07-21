@@ -8,10 +8,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/portal/board")
 public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
+	@RequestMapping("/boardMain")
+	public void boardMain() {
+		logger.info("게시판 메인 페이지");
+		
+	}
+	
 	@RequestMapping("/menu1")
 	public String menu1_get() {
 		logger.info("寃뚯떆�뙋 硫붿씤�솕硫�");
