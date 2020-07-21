@@ -14,6 +14,7 @@ public class StudentVO {
 	private Timestamp graduationDate;
 	private String identityState;
 	private int minor;
+	
 	public String getStuNo() {
 		return stuNo;
 	}

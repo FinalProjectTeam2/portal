@@ -1,4 +1,4 @@
-package com.will.portal.official_info;
+package com.will.portal.official_info.model;
 
 public class Official_infoVO {
 	private String officialNo;
@@ -13,6 +13,11 @@ public class Official_infoVO {
 	private String ssn;
 	private String gender;
 	private String certiCode;
+	private String imageUrl;
+	
+	
+	
+	
 	public String getOfficialNo() {
 		return officialNo;
 	}
@@ -85,16 +90,20 @@ public class Official_infoVO {
 	public void setCertiCode(String certiCode) {
 		this.certiCode = certiCode;
 	}
+	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	@Override
 	public String toString() {
 		return "Official_infoVO [officialNo=" + officialNo + ", hp1=" + hp1 + ", hp2=" + hp2 + ", hp3=" + hp3
 				+ ", email1=" + email1 + ", email2=" + email2 + ", zipcode=" + zipcode + ", address=" + address
 				+ ", addrDetail=" + addrDetail + ", ssn=" + ssn + ", gender=" + gender + ", certiCode=" + certiCode
-				+ "]";
+				+ ", imageUrl=" + imageUrl + "]";
 	}
-	
-	
-	
-	
+
 	
 }
