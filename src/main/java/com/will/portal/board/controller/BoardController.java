@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-	@RequestMapping("/boardMain")
+	@RequestMapping("/main")
 	public void boardMain() {
 		logger.info("게시판 메인 페이지");
 		
