@@ -5,17 +5,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.will.portal.board.model.BoardService;
 
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-
+	private BoardService boardService;
+	
 	@RequestMapping("/menu1")
 	public String menu1_get() {
 		logger.info("寃뚯떆�뙋 硫붿씤�솕硫�");
-
+		
 		return "board/menu1";
 	}
 	@RequestMapping(value="/menu2", method = RequestMethod.GET) 
