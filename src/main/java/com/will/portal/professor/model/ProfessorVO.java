@@ -11,6 +11,7 @@ public class ProfessorVO {
 	private Timestamp startDate;
 	private Timestamp resignationDate;
 	private String identityState;
+	
 	public String getProfNo() {
 		return profNo;
 	}

@@ -492,7 +492,7 @@ ALTER TABLE outbox
 CREATE TABLE inbox (
 	no NUMBER NOT NULL, /* 번호 */
 	msg_no NUMBER NOT NULL, /* 족지번호 */
-	addressee VARCHAR2(100) NOT NULL, /* 수신인번호 */
+	address VARCHAR2(100) NOT NULL, /* 수신인번호 */
 	read_date DATE, /* 읽은날짜 */
 	keep_flag CHAR(5) DEFAULT 'N' /* 보관여부 */
 );
@@ -925,22 +925,15 @@ ALTER TABLE student
 /* 시퀀스 생성 */
 
 /*
-board에 board_no
-
-reply에 reply_no
-
-qna에 qna_no
-
-message에 msg_no
-
-notice에 notice_no
-
-tuition에 no
-
-scholarship에 scholarship_no
-
-award에 no
-
+board 	bd_no  
+prof_position 	position_no
+reply 	reply_no    
+tuition	no  
+scholarship	scholarship_no  
+award	no  
+outbox	msg_no  
+inbox	no  
+files	no
 
 */
 /*board*/
@@ -955,19 +948,19 @@ INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
-/*message*/
-CREATE SEQUENCE message_seq
+/*inbox*/
+CREATE SEQUENCE inbox_seq
 INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
-/*notice*/
-CREATE SEQUENCE notice_seq
+/*outbox*/
+CREATE SEQUENCE outbox_seq
 INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
-/*tuition*/
+/*tuition*/ 
 CREATE SEQUENCE tuition_seq
 INCREMENT BY 1
 START WITH 1
@@ -979,8 +972,20 @@ INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
-/*award*/
+/*award*/ 
 CREATE SEQUENCE award_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE; 
+
+/*prof_position*/ 
+CREATE SEQUENCE prof_position_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE; 
+
+/*files*/ 
+CREATE SEQUENCE files_seq
 INCREMENT BY 1
 START WITH 1
 NOCACHE; 

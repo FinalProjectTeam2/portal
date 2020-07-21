@@ -11,6 +11,7 @@ public class EmployeeVO {
 	private String empName;
 	private Timestamp resignationDate;
 	private String identityState;
+	
 	public String getEmpNo() {
 		return empNo;
 	}
