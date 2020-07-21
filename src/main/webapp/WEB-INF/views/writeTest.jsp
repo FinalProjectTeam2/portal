@@ -5,7 +5,6 @@
 
 
 <article>
-<script src="<c:url value='/resouces/js/jquery.ml-keyboard.min.js'/>"></script>	
 	
 <script type="text/javascript">
 	$(function(){
@@ -68,8 +67,6 @@
         <script>
 //CKEDITOR.replace("description"); //태그의 id
 //이미지 업로드를 할 경우
-	
-		
 		CKEDITOR.replace("description",{
 		
 		//CKEDITOR.replace와 id("description")를 잘 적어주면 그 태그가 smart editor 스타일로 바뀌게 된다. 
@@ -77,7 +74,6 @@
 		    filebrowserUploadUrl : "${pageContext.request.contextPath}/fileUpload"
 		
 		//파일을 업로드 해야하기 때문에 filebrowserUploadUrl을 사용하고, 서버쪽에 코드를 완성해주어야 한다.
-		
 		});
 
 </script>
