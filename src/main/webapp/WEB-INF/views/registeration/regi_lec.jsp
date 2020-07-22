@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/reset.css'/>">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/regi_lec.css'/>">
-
-
+<%@ include file="../inc/mainSidebar.jsp"%>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/regi_lec.css'/>">
+<script type="text/javascript">
+	
+</script>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+<div id="regi">
 	<div class="content-panel">
 		<div class="pnl-search">
 			<table>
@@ -34,12 +36,6 @@
 					<col width="70px;">
 					<!-- 조회 -->
 				</colgroup>
-				<form name="form" id="form"></form>
-				<input type="hidden" id="menu" name="menu" value="1">
-				<input type="hidden" id="lecture_cd" name="lecture_cd" value="">
-				<input type="hidden" id="search_div" name="search_div" value="T">
-
-				<input type="hidden" name="p_graduate" id="p_graduate" value="H">
 				<!--  H : 학부 ,  D : 대학원 -->
 
 				<tbody>
@@ -161,7 +157,7 @@
 				</tbody>
 			</table>
 			<div class="buttonset">
-				<button class="btn-search" onclick="javascript:gridLecture('Y');">조회</button>
+				<button class="btn-search" onclick="javascript:gridLecture('Y');" id="selectBt" style="width: 40px;">조회</button>
 			</div>
 		</div>
 
@@ -192,7 +188,7 @@
 									<tr class="ui-jqgrid-labels" role="row">
 										<th id="gridLecture_rn" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 40px;">
+											style="width: 5%;">
 											<div id="jqgh_gridLecture_rn">
 												<span class="s-ico" style="display: none"> <span
 													sort="asc"
@@ -204,7 +200,7 @@
 										</th>
 										<th id="gridLecture_lecture_cd_disp" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px;"><span
+											style="width: 9%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 											<div id="jqgh_gridLecture_lecture_cd_disp"
@@ -217,7 +213,7 @@
 											</div></th>
 										<th id="gridLecture_subjt_name" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 250px;"><span
+											style="width: 15%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 											<div id="jqgh_gridLecture_subjt_name"
@@ -230,7 +226,7 @@
 											</div></th>
 										<th id="gridLecture_lect_grade" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 80px;"><span
+											style="width: 5%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_lect_grade"
@@ -243,7 +239,7 @@
 											</div></th>
 										<th id="gridLecture_asign_pcnt" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 80px;"><span
+											style="width: 5%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_asign_pcnt"
@@ -256,7 +252,7 @@
 											</div></th>
 										<th id="gridLecture_teach_na" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px;"><span
+											style="width: 9%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_teach_na" class="ui-jqgrid-sortable">
@@ -268,7 +264,7 @@
 											</div></th>
 										<th id="gridLecture_unit_num" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 80px;"><span
+											style="width: 5%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_unit_num" class="ui-jqgrid-sortable">
@@ -280,7 +276,7 @@
 											</div></th>
 										<th id="gridLecture_timetable" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 250px;"><span
+											style="width: 14%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_timetable"
@@ -293,7 +289,7 @@
 											</div></th>
 										<th id="gridLecture_field_gb" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 80px;"><span
+											style="width: 6%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_field_gb" class="ui-jqgrid-sortable">
@@ -305,7 +301,7 @@
 											</div></th>
 										<th id="gridLecture_eng_yn_nm" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px;"><span
+											style="width: 9%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_eng_yn_nm"
@@ -318,7 +314,7 @@
 											</div></th>
 										<th id="gridLecture_bigo" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px;"><span
+											style="width: 9%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_bigo" class="ui-jqgrid-sortable">
@@ -330,73 +326,11 @@
 											</div></th>
 										<th id="gridLecture_lectPlan" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 100px;"><span
+											style="width: 12%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_lectPlan" class="ui-jqgrid-sortable">
 												강의계획서<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_params" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px; display: none;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_params" class="ui-jqgrid-sortable">
-												params<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_teach_cd" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px; display: none;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_teach_cd" class="ui-jqgrid-sortable">
-												teach_cd<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_lecture_cd" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px; display: none;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_lecture_cd"
-												class="ui-jqgrid-sortable">
-												lecture_cd<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_subjt_cd" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px; display: none;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_subjt_cd" class="ui-jqgrid-sortable">
-												subjt_cd<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_haksu_code" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 150px; display: none;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_haksu_code"
-												class="ui-jqgrid-sortable">
-												haksu_code<span class="s-ico" style="display: none"><span
 													sort="asc"
 													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
 													sort="desc"
@@ -414,19 +348,19 @@
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
-									<tr class="jqgfirstrow" role="row">
-										<td role="gridcell" style="height: 0px; width: 40px;"><button id="cancelBt">신청</button></td>
-										<td role="gridcell" style="height: 0px; width: 150px;">dsad</td>
-										<td role="gridcell" style="height: 0px; width: 250px;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 80px;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 80px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 150px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 80px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 250px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 80px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 150px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 150px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 100px;">s</td>
+									<tr class="jqgfirstrow" role="row" id="applyContent">
+										<td role="gridcell" style="height: 0px; width: 5%;"><button id="applyBt">신청</button></td>
+										<td role="gridcell" style="height: 0px; width: 9%;">dsad</td>
+										<td role="gridcell" style="height: 0px; width: 15%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 5%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 14%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 6%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 12%;">s</td>
 									</tr>
 								</tbody>
 							</table>
@@ -441,276 +375,200 @@
 			</div>
 			<!-- 수강신청 -->
 			<div class="wrap-grid">
-				<div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all"
-					id="gbox_gridLecture" dir="ltr" style="width: 100%;">
-					<div class="ui-widget-overlay jqgrid-overlay" id="lui_gridLecture"></div>
-					<div class="loading ui-state-default ui-state-active"
-						id="load_gridLecture" style="display: none;">Loading ...</div>
-					<div class="ui-jqgrid-view" role="grid" id="gview_gridLecture"
+			<div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all"
+				id="gbox_gridLecture" dir="ltr" style="width: 100%;">
+					<div class="ui-state-default ui-jqgrid-hdiv ui-corner-top"
 						style="width: 100%;">
-						<div
-							class="ui-jqgrid-titlebar ui-jqgrid-caption ui-widget-header ui-corner-top ui-helper-clearfix"
-							style="display: none;">
-							<a role="link"
-								class="ui-jqgrid-titlebar-close ui-corner-all HeaderButton"
-								style="right: 0px;"> <span
-								class="ui-icon ui-icon-circle-triangle-n"></span></a><span
-								class="ui-jqgrid-title"></span>
+						<div class="ui-jqgrid-hbox">
+							<table class="ui-jqgrid-htable ui-common-table" role="presentation"
+								aria-labelledby="gbox_gridLecture">
+								<thead>
+									<tr class="ui-jqgrid-labels" role="row">
+										<th id="gridLecture_rn" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 5%;">
+											<div id="jqgh_gridLecture_rn">
+												<span class="s-ico" style="display: none"> <span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span>
+													<span sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span>
+												</span>
+											</div>
+										</th>
+										<th id="gridLecture_lecture_cd_disp" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 9%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+											<div id="jqgh_gridLecture_lecture_cd_disp"
+												class="ui-jqgrid-sortable">
+												학수번호-분반<span class="s-ico" style="display: none"> <span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span>
+													<span sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_subjt_name" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 15%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+											<div id="jqgh_gridLecture_subjt_name"
+												class="ui-jqgrid-sortable">
+												강좌명<span class="s-ico" style="display: none"> <span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span>
+													<span sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_lect_grade" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 5%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_lect_grade"
+												class="ui-jqgrid-sortable">
+												대상학년<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_asign_pcnt" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 5%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_asign_pcnt"
+												class="ui-jqgrid-sortable">
+												정원<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_teach_na" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 9%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_teach_na" class="ui-jqgrid-sortable">
+												교수명<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_unit_num" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 5%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_unit_num" class="ui-jqgrid-sortable">
+												학점<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_timetable" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 14%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_timetable"
+												class="ui-jqgrid-sortable">
+												강의시간/강의실<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_field_gb" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 6%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_field_gb" class="ui-jqgrid-sortable">
+												이수구분<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_eng_yn_nm" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 9%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_eng_yn_nm"
+												class="ui-jqgrid-sortable">
+												언어구분<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_bigo" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 9%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_bigo" class="ui-jqgrid-sortable">
+												특이사항<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										<th id="gridLecture_lectPlan" role="columnheader"
+											class="ui-state-default ui-th-column ui-th-ltr"
+											style="width: 12%;"><span
+											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
+											style="cursor: col-resize;">&nbsp;</span>
+										<div id="jqgh_gridLecture_lectPlan" class="ui-jqgrid-sortable">
+												강의계획서<span class="s-ico" style="display: none"><span
+													sort="asc"
+													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
+													sort="desc"
+													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
+											</div></th>
+										
+									</tr>
+								</thead>
+							</table>
 						</div>
-						<div class="ui-state-default ui-jqgrid-hdiv ui-corner-top"
-							style="width: 100%;">
-							<div class="ui-jqgrid-hbox">
-								<table class="ui-jqgrid-htable ui-common-table" role="presentation"
-									aria-labelledby="gbox_gridLecture">
-									<thead>
-										<tr class="ui-jqgrid-labels" role="row">
-											<th id="gridLecture_rn" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 40px;">
-												<div id="jqgh_gridLecture_rn">
-													<span class="s-ico" style="display: none"> <span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span>
-														<span sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span>
-													</span>
-												</div>
-											</th>
-											<th id="gridLecture_lecture_cd_disp" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-												<div id="jqgh_gridLecture_lecture_cd_disp"
-													class="ui-jqgrid-sortable">
-													학수번호-분반<span class="s-ico" style="display: none">
-												</div></th>
-											<th id="gridLecture_subjt_name" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 250px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-												<div id="jqgh_gridLecture_subjt_name"
-													class="ui-jqgrid-sortable">
-													강좌명<span class="s-ico" style="display: none"> <span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span>
-														<span sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_lect_grade" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 80px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_lect_grade"
-													class="ui-jqgrid-sortable">
-													대상학년<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_asign_pcnt" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 80px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_asign_pcnt"
-													class="ui-jqgrid-sortable">
-													정원<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_teach_na" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_teach_na"
-													class="ui-jqgrid-sortable">
-													교수명<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_unit_num" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 80px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_unit_num"
-													class="ui-jqgrid-sortable">
-													학점<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_timetable" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 250px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_timetable"
-													class="ui-jqgrid-sortable">
-													강의시간/강의실<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_field_gb" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 80px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_field_gb"
-													class="ui-jqgrid-sortable">
-													이수구분<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_eng_yn_nm" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_eng_yn_nm"
-													class="ui-jqgrid-sortable">
-													언어구분<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_bigo" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_bigo" class="ui-jqgrid-sortable">
-													특이사항<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_lectPlan" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 100px;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_lectPlan"
-													class="ui-jqgrid-sortable">
-													강의계획서<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_params" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px; display: none;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_params" class="ui-jqgrid-sortable">
-													params<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_teach_cd" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px; display: none;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_teach_cd"
-													class="ui-jqgrid-sortable">
-													teach_cd<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_lecture_cd" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px; display: none;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_lecture_cd"
-													class="ui-jqgrid-sortable">
-													lecture_cd<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_subjt_cd" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px; display: none;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_subjt_cd"
-													class="ui-jqgrid-sortable">
-													subjt_cd<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-											<th id="gridLecture_haksu_code" role="columnheader"
-												class="ui-state-default ui-th-column ui-th-ltr"
-												style="width: 150px; display: none;"><span
-												class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-												style="cursor: col-resize;">&nbsp;</span>
-											<div id="jqgh_gridLecture_haksu_code"
-													class="ui-jqgrid-sortable">
-													haksu_code<span class="s-ico" style="display: none"><span
-														sort="asc"
-														class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-														sort="desc"
-														class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-												</div></th>
-										</tr>
-									</thead>
-								</table>
-							</div>
-						</div>
-						<div class="ui-jqgrid-bdiv" >
+					</div>
+					<div class="ui-jqgrid-bdiv" >
 						<div style="position: relative;">
 							<table id="gridLecture" tabindex="0" cellspacing="0"
 								cellpadding="0" border="0" role="presentation"
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
-									<tr class="jqgfirstrow" role="row">
-										<td role="gridcell" style="height: 0px; width: 40px;"><button id="cancelBt">삭제</button></td>
-										<td role="gridcell" style="height: 0px; width: 150px;">dsad</td>
-										<td role="gridcell" style="height: 0px; width: 250px;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 80px;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 80px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 150px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 80px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 250px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 80px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 150px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 150px;">s</td>
-										<td role="gridcell" style="height: 0px; width: 100px;">s</td>
+									<tr class="jqgfirstrow" role="row" id="applyContent">
+										<td role="gridcell" style="height: 0px; width: 5%;"><button id="cancelBt">삭제</button></td>
+										<td role="gridcell" style="height: 0px; width: 9%;">dsad</td>
+										<td role="gridcell" style="height: 0px; width: 15%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 5%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 14%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 6%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 12%;">s</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					</div>
 				</div>
+				<div class="ui-jqgrid-resize-mark" id="rs_mgridLecture">&nbsp;</div>
 			</div>
+
 			<div style="margin-bottom: 20px; margin-top: 10px;">
 				<form action="" style="float: right;">
 					<label>신청과목수 : </label>
@@ -722,4 +580,6 @@
 				</form>
 			</div>
 		</div>
+	</div>
+		
 <%@ include file="../inc/bottom.jsp"%>

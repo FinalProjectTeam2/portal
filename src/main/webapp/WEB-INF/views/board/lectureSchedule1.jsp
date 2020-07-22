@@ -1,6 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
-
+<%@ include file="../inc/mainSidebar.jsp"%>
 <!-- 호환성보기로 인해 디자인 깨짐 방지 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
 <meta http-equiv="Cache-Control" content="no-cache"/>
@@ -8,11 +8,6 @@
 <meta http-equiv="Pragma" content="no-cache"/>
 <style type="text/css">
 /* 상단 탭 간격 줄이기 */
-.h-100 {
-    margin-top: 30px;
-    margin-left: 60px;
-
-}
 
 
 
@@ -331,7 +326,8 @@ body>.wrap-loader{position:fixed}
 
 
 </style>
-
+<main role="main" class="flex-shrink-0">
+	<div class="container">
 <div class="content-panel">
 	<div class="pnl-search">
 		<table>
@@ -491,6 +487,6 @@ body>.wrap-loader{position:fixed}
 	</div>
 	<!-- E: 안내문구 -->
 </div>
-
-
+</div>
+</main>
 <%@ include file="../inc/bottom.jsp"%>
