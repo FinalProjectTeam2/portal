@@ -1,14 +1,11 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/mainSidebar.jsp"%>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/write.css'/>" />
-<style>
-	.container-fluid{
-		margin-top: 100px;
-	}
-</style>
+
 <div class="container">
   <form action="/action_page.php">
     <div class="row">

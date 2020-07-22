@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/reset.css'/>">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/regi_lec.css'/>">
-
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/regi_lec.css'/>">
+<script type="text/javascript">
+	
+</script>
 
 	<div class="content-panel">
 		<div class="pnl-search">
@@ -34,12 +34,6 @@
 					<col width="70px;">
 					<!-- 조회 -->
 				</colgroup>
-				<form name="form" id="form"></form>
-				<input type="hidden" id="menu" name="menu" value="1">
-				<input type="hidden" id="lecture_cd" name="lecture_cd" value="">
-				<input type="hidden" id="search_div" name="search_div" value="T">
-
-				<input type="hidden" name="p_graduate" id="p_graduate" value="H">
 				<!--  H : 학부 ,  D : 대학원 -->
 
 				<tbody>
@@ -414,8 +408,8 @@
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
-									<tr class="jqgfirstrow" role="row">
-										<td role="gridcell" style="height: 0px; width: 40px;"><button id="cancelBt">신청</button></td>
+									<tr class="jqgfirstrow" role="row" id="applyContent">
+										<td role="gridcell" style="height: 0px; width: 40px;"><button id="applyBt">신청</button></td>
 										<td role="gridcell" style="height: 0px; width: 150px;">dsad</td>
 										<td role="gridcell" style="height: 0px; width: 250px;">sd</td>
 										<td role="gridcell" style="height: 0px; width: 80px;">sd</td>

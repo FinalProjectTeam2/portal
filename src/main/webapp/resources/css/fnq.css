@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+#fnq .bar{
+	background-color: #1f54a2;;
+	color: white;
+	overflow: hidden;
+	text-align: center;
+	height: 45px;
+	border-radius: 5px;
+
+}
+
+#fnq .bar div{
+	float: left;
+	padding: 1%;
+}
+
+#fnq .panel-title{
+	overflow: hidden;
+}
+#fnq .ing{
+	
+	text-align: center;
+
+}
+
+#fnq .ing div{
+	float: left;
+}
+
+#fnq li{
+	border: 1px solid #ccc;
+	list-style: none;
+	float: left;
+	padding: 8px ;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 25%;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 0 5px 0;
+    
+}
+#fnq li:hover{
+	background-color: #fff;
+    color: #1f54a2;
+
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+	
+}
+#fnq li:active{
+	border: 1px solid #1f54a2;
+	
+}
+
+#fnq a:hover{
+    text-decoration: none;
+	
+}
+
+
+#fnq ul{
+	clear: both;
+	overflow: hidden;
+	
+}
+
+#fnq .panel-group .panel+.panel {
+    margin: 0;
+}
+
+#fnq .panel-default>.panel-heading {
+    color: #333;
+    background-color: #ffffff;
+    border-color: #ddd;
+}    
+    
+#fnq .panel-default {
+    background: #fafafa;
+}
+
+#fnq .panel-group .panel {
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px;
+}
+
+#searchDiv{
+	text-align: center;
+}
+
+#searchBt:hover{
+	color: black;
+	background: white;
+}
+#searchBt{
+	background:  #1f54a2;
+	color: white;
+	width:50px;
+	padding: 10px;
+	padding-bottom: 7px;
+	padding-top: 7px;
+	border: 1px solid #ddd;
+}
+
+#fnq .label-primary {
+    background-color: green;
+}
+
+#searchFrm{
+	margin-left: 40%;
+}

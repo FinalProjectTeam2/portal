@@ -13,7 +13,7 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v4.0.1">
-<link rel="stylesheet" href="<c:url value='resources/css/reset.css'/>">
+<link rel="stylesheet" href="<c:url value='/resources/css/reset.css'/>">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="canonical"
@@ -34,7 +34,9 @@
 
 
 <style type="text/css">
-
+	.logo{
+		width: 150px;
+	}
 </style>
 <meta name="theme-color" content="#563d7c">
 </head>
@@ -43,7 +45,7 @@
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<a class="navbar-brand" href="<c:url value='/index.do'/>"
-				style="border-right: 1px solid white; padding: 0 20px 0 0;">로고</a>
+				style="border-right: 1px solid white; padding: 0 20px 0 0;"><img class="logo" src="<c:url value='/resources/images/logo.png'/>"></a>
 			<div class="collapse navbar-collapse" id="navbarCollapse" style="max-width: 1400px;">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active" style="color: white;">PORTAL <span
