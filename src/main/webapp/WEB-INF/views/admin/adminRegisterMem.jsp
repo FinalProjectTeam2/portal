@@ -17,7 +17,7 @@
 								<div class="form-group">
 									<div>
 										<label for="sort">회원 구분</label> <select name="sort">
-											<option value="0">선택</option>
+											<option disabled selected>선택</option>
 											<option value="student">학생</option>
 											<option value="professor">교수</option>
 											<option value="staff">임직원</option>

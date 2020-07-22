@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #boardDetail {
-	width: 900px;	
+	width: 900px;
 }
 #boardDetail * {
   box-sizing: border-box;
