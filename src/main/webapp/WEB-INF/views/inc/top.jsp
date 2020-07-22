@@ -141,7 +141,7 @@
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<a class="navbar-brand" href="<c:url value='/index.do'/>"
-				style="border-right: 1px solid white; padding: 0 20px 0 0;"> 
+				style="border-right: 1px solid white; padding: 0 20px 0 0;">
 				<img class="logo" alt="로고" src="<c:url value='/resources/images/logo.png' />" >
 			</a>
 			<div class="collapse navbar-collapse" id="navbarCollapse"

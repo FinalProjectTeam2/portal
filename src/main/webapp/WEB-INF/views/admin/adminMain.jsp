@@ -3,6 +3,7 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link href="<c:url value='/resources/css/index.css' />" rel="stylesheet">
+<link href="<c:url value='/resources/css/admin/adminMain.css' />" rel="stylesheet">
 <main role="main" class="flex-shrink-0">
 	<button class="adminRegi btn btn-outline-success" type="submit">회원 등록</button>
 	<button class="adminRegi btn btn-outline-success" type="submit">회원 관리</button>
