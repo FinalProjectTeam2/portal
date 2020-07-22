@@ -37,6 +37,22 @@ public class Official_infoDAOMybatis implements Official_infoDAO{
 	public ProfessorVO selectProfByNo(String officialNo) {
 		return sqlSession.selectOne(namespace+"selectProfByNo", officialNo);
 	}
+
+	@Override
+	public int updateCode(StudentVO vo) {
+		return sqlSession.update(namespace+"updateCode", vo);
+	}
+
+	@Override
+	public String selectCode(String stuNo) {
+		return sqlSession.selectOne(namespace+"selectCode", stuNo);
+	}
+
+	@Override
+	public int updateIdentState(String stuNo) {
+		return sqlSession.update(namespace+"updateIdentState", stuNo);
+	}
+	
 	
 	
 

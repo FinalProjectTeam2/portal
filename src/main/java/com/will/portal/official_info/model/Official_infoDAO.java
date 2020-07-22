@@ -9,4 +9,7 @@ public interface Official_infoDAO {
 	int countProfByNo(String officialNo);
 	StudentVO selectStuByNo(String officialNo);
 	ProfessorVO selectProfByNo(String officialNo);
+	int updateCode(StudentVO vo);
+	String selectCode(String stuNo);
+	int updateIdentState(String stuNo);
 }

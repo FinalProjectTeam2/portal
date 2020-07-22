@@ -1,20 +1,27 @@
 package com.will.portal.official_info.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.will.portal.common.MessageVO;
 import com.will.portal.message.SendMmsMessage;
 import com.will.portal.official_info.model.Official_infoService;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.student.model.StudentVO;
 
 @Controller
 public class IdentifyController {
@@ -22,21 +29,21 @@ public class IdentifyController {
 	@Autowired
 	private Official_infoService infoService;
 	
-	@RequestMapping("/member/changPwd")
-	public void changePwd(@RequestParam String officialNo) {
+	@RequestMapping("/member/changePwd")
+	public void changePwd(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
 		//추후 세션으로 대체예정 지금은 파라미터로 시험중
 		logger.info("최초 비밀번호 변경 화면으로 이동");
 	}
 	
 	@RequestMapping(value = "/member/identify", method = RequestMethod.GET)
-	public void identify_get(@RequestParam String officialNo) {
+	public void identify_get(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
 		logger.info("본인인증 화면 ");
 	}
 	
-	@RequestMapping("/member/sendCode")
+	@RequestMapping(value = "/member/sendCode", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String sendSms(@RequestParam String officialNo) {
-		String userid = "fe5882";           // [필수] 뿌리오 아이디
+	public String sendSms(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
+		String userid = "fe588";           // [필수] 뿌리오 아이디
 		String callback = "01038225882";    // [필수] 발신번호 - 숫자만
 		
 		Official_infoVO vo = infoService.selectByNo(officialNo);
@@ -72,6 +79,11 @@ public class IdentifyController {
 			String str = response_str.substring(0, 6);
 			if(str.equals("ok|sms")) {
 				result = "인증번호를 발송했습니다.";
+				StudentVO sVo = new StudentVO();
+				sVo.setStuNo(officialNo);
+				sVo.setIdentifyCode(code);
+				int cnt = infoService.updateCode(sVo);
+				logger.info("인증번호 업데이트 매개변수 code={}", sVo.getIdentifyCode());
 			}else {
 				result = "인증번호 발송 실패";
 			}
@@ -112,7 +124,29 @@ public class IdentifyController {
 	
 	
 	@RequestMapping(value = "/member/identify", method = RequestMethod.POST)
-	public void identify_post(@RequestParam String inputCode) {
+	@ResponseBody
+	public MessageVO identify_post(@RequestParam String inputCode, @RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState, Model model) {
+		logger.info("인증번호 확인 페이지 파라미터 code={}, 학번={}", inputCode, officialNo);
+		StudentVO vo = new StudentVO();
+		String dbCode = infoService.selectCode(officialNo);
+		String message="인증 실패 인증번호를 확인하세요";
+		logger.info("파라미터 인증번호={}, db인증번호={}", inputCode, dbCode);
+		if(inputCode.equals(dbCode)) {
+			message="인증 성공";
+			identState="Y";
+			infoService.updateIdentState(officialNo);
+		}
+		
+		MessageVO mVo = new MessageVO();
+		mVo.setIdentState(identState);
+		mVo.setMessage(message);
+		
+		
+
+		
+		
+		return mVo;
+		
 		
 	}
 	

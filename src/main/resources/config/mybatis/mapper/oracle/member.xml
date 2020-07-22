@@ -28,7 +28,20 @@
 		where prof_no=#{officialNo}
 	</select>
 	
-	
+	<update id="updateCode" parameterType="studentVo">
+		update student
+		set IDENTIFY_CODE=#{identifyCode}
+		where stu_no=#{stuNo}
+	</update>
+	<select id="selectCode" parameterType="string" resultType="string">
+		select identify_code from student
+		where stu_no=#{stuNo}
+	</select>
+	<update id="updateIdentState" parameterType="string">
+		update student
+		set IDENTITY_STATE = 'Y'
+		where stu_no=#{stuNo}
+	</update>
    
 </mapper>
 
