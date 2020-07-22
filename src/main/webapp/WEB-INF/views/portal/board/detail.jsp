@@ -6,13 +6,29 @@
 <!-- sidebar -->
 <%@ include file="../../inc/portalSidebar.jsp"%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/detail.css'/>" />
+<script type="text/javascript">
+	$(function() {
+		$("#edit").click(function() {
+			location.href = "<c:url value='/portal/board/edit'/>";
+		});
+		$("#delete").click(function() {
+			location.href = "<c:url value='/portal/board/delete'/>";
+		});
+		$("#list").click(function() {
+			location.href = "<c:url value='/portal/board/list'/>";
+		});
+	});
+</script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="boardDetail">
 			<div class="row1">
-				<div class="col">2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육]</div>
+				<div class="col">
+					<h3>2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육]</h3>
+				</div>
 			</div>
 
 			<div class="row1">
@@ -47,20 +63,20 @@
 			</div>
 
 			<div class="row1">
-				<div class="col-25">
-					<label for="l_subject">내용</label>
-				</div>
-				<div class="col-75">2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회
-					의무교육] 2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육] 2020년 인터넷 스마트폰
-					과의존 예방 교육 안내 [학부생, 연1회 의무교육] 2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회
-					의무교육] 2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육] 2020년 인터넷 스마트폰
-					과의존 예방 교육 안내 [학부생, 연1회 의무교육] 2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회
-					의무교육] 2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육]</div>
+				<label for="l_subject">내용</label>
 			</div>
-			<div class="">
-				<input type="button" value="수정">
-				<input type="button" value="삭제">
-				<input type="button" value="목록">
+			<div class="row1 content">
+				2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육] <br> 2020년 인터넷 스마트폰
+				과의존 예방 교육 안내 [학부생, 연1회 의무교육]<br>2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회
+				의무교육] 2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육] <br>2020년 인터넷 스마트폰 과의존
+				예방 교육 안내 [학부생, 연1회 의무교육] <br>2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육]
+				<br>2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육] <br>2020년 인터넷 스마트폰 과의존 예방 교육
+				안내 [학부생, 연1회 의무교육]
+			</div>
+
+			<div class="bts">
+				<input type="button" id="edit" value="수정"> <input type="button" id="delete"
+					value="삭제"> <input type="button" value="목록" id="list">
 			</div>
 		</div>
 		<!-- bottom -->
