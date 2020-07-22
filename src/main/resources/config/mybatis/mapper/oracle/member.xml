@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.member">
+	<select id="selectOfficialByNo" parameterType="string" resultType="Official_infoVo">
+		select * from official_info
+		where official_no=#{officialNo}	
+	</select>
+	
+	<select id="countStuByNo" parameterType="string" resultType="int">
+		select count(*) from student
+		where stu_no=#{officialNo}
+	</select>
+
+	<select id="countProfByNo" parameterType="string" resultType="int">
+		select count(*) from professor
+		where prof_no=#{officialNo}
+	</select>
+	
+	<select id="selectStuByNo" parameterType="String" resultType="studentVo">
+		select * from student
+		where stu_no=#{officialNo}
+	</select>
+	
+	<select id="selectProfByNo" parameterType="String" resultType="professorVo">
+		select * from professor
+		where prof_no=#{officialNo}
+	</select>
+	
+	
+   
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
