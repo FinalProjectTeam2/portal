@@ -118,7 +118,7 @@
 		$(".zeta-menu ul li:has(ul)").find("a:first").append(
 				"<p style='float:right;margin:-3px'>&#9656;</p>");
 
-		$(document).click(function(e) { 
+		$(document).click(function(e) {
 			if (e.target.className == "zeta-menu") {
 				return false
 			}else if(e.target.className == "nav-link"){
