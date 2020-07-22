@@ -23,7 +23,6 @@ public class SendController {
 		String file1Path = "";    // [선택]  포토발송 (jpg, jpeg만 지원  300 K  이하)
 		
 		
-		
 		try {
 			
 		    SendMmsMessage sendMmsMessage = new SendMmsMessage();
