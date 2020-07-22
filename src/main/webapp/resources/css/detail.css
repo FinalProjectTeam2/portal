@@ -1,15 +1,13 @@
-@charset "EUC-KR";
-@charset "EUC-KR";
-body{
-	padding:5px;
-	margin:5px;
- }
- 
-* {
+@charset "UTF-8";
+
+#boardDetail {
+	width: 900px;	
+}
+#boardDetail * {
   box-sizing: border-box;
 }
 
-input[type=text], select, textarea {
+#boardDetail input[type=text], select, textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -17,12 +15,12 @@ input[type=text], select, textarea {
   resize: vertical;
 }
 
-label {
+#boardDetail label {
   padding: 12px 12px 12px 0;
   display: inline-block;
 }
 
-input[type=button] {
+#boardDetail input[type=button] {
   background-color: skyblue;
   color: white;
   padding: 12px 20px;
@@ -32,11 +30,11 @@ input[type=button] {
   float: right;
 }
 
-input[type=button]:hover {
+#boardDetail input[type=button]:hover {
   background-color: blue;
 }
 
-input[type=submit] {
+#boardDetail input[type=submit] {
   background-color: skyblue;
   color: white;
   padding: 12px 20px;
@@ -46,23 +44,17 @@ input[type=submit] {
   float: right;
 }
 
-input[type=submit]:hover {
+#boardDetail input[type=submit]:hover {
   background-color: blue;
 }
 
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-
-.col-25 {;
+#boardDetail .col-25 {;
   float: left;
   width: 25%;
   margin-top: 6px;
 }
 
-.col-75 {
+#boardDetail .col-75 {
   float: left;
   width: 75%;
   margin-top: 6px;
@@ -70,28 +62,28 @@ input[type=submit]:hover {
   padding: 2% 1%
 }
 
-.col {
+#boardDetail .col {
 	width: 100%;
 	background-color: white;
 	padding: 2% 1%
 }
 
 /* Clear floats after the columns */
-.row:after {
+#boardDetail .row1:after {
   content: "";
   display: table;
   clear: both;
 }
 
 /*------------------------------*/
-.dvi1 {
+#boardDetail .dvi1 {
 	background-color: white;
 }
 
-.dvi2 {
+#boardDetail .dvi2 {
 	background-color: white;
 }
 
-.dvi3 {
+#boardDetail .dvi3 {
 	background-color: white;
 }

@@ -35,7 +35,11 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
+				<td class="">
+					<a href="<c:url value='/portal/board/detail'/>" >
+					[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호
+					</a>
+				</td>
 				<td class="">NO.1</td>
 				<td class="">공통</td>
 				<td class="">미래교육혁신원 교수학습개발센터 홍길동</td>

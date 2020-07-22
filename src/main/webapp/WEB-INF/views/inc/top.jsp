@@ -14,7 +14,9 @@
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v4.0.1">
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+	rel="stylesheet">
 
 <link rel="stylesheet" href="<c:url value='/resources/css/reset.css'/>">
 <link rel="stylesheet"
@@ -26,21 +28,21 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<title>index.jsp</title>
+<title>척척학사</title>
 
 <link href="<c:url value='/resources/css/offcanvas.css' />"
 	rel="stylesheet">
 <link href="<c:url value='/resources/css/layout.css' />"
 	rel="stylesheet">
-
+<link rel="shortcut icon" href="<c:url value='/resources/images/logoIcon.ico' />">
 <!-- ckeditor 사용하기 위함 -->
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 
 
 <style type="text/css">
-	.logo{
-		width: 150px;
-	}
+.logo {
+	height: 35px;
+}
 
 .zeta-menu {
 	margin: 0;
@@ -81,7 +83,6 @@
 .zeta-menu ul li:hover {
 	background: #28a74594;
 }
-
 
 .zeta-menu ul li:last-of-type:hover {
 	background: #28a74594;
@@ -126,7 +127,7 @@
 		$(document).click(function(e) {
 			if (e.target.className == "zeta-menu") {
 				return false
-			}else if(e.target.className == "nav-link"){
+			} else if (e.target.className == "nav-link") {
 				return false
 			}
 			$(".zeta-menu li ul").slideUp();
@@ -140,8 +141,9 @@
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<a class="navbar-brand" href="<c:url value='/index.do'/>"
-
-				style="border-right: 1px solid white; padding: 0 20px 0 0;">로고</a>
+				style="border-right: 1px solid white; padding: 0 20px 0 0;"> 
+				<img class="logo" alt="로고" src="<c:url value='/resources/images/logo.png' />" >
+			</a>
 			<div class="collapse navbar-collapse" id="navbarCollapse"
 				style="max-width: 1400px;">
 

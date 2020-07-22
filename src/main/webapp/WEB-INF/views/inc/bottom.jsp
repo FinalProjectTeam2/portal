@@ -27,9 +27,9 @@ a.bottom {
 
 		$("body").scroll(function() {
 			if ($(this).scrollTop() > 200) {
-				$('.top').fadeIn();
+				$('.top').fadeIn(300);
 			} else {
-				$('.top').fadeOut();
+				$('.top').fadeOut(300);
 			}
 
 			var scrollTop = $(this).scrollTop();
@@ -37,9 +37,9 @@ a.bottom {
 			var scrollHeight = $(this).prop('scrollHeight');
 
 			if (scrollTop + innerHeight >= scrollHeight-100) {
-				$(".bottom").fadeOut();
+				$(".bottom").fadeOut(300);
 			} else {
-				$(".bottom").fadeIn();
+				$(".bottom").fadeIn(300);
 			}
 		});
 

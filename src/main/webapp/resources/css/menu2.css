@@ -1,26 +1,23 @@
-@charset "EUC-KR";
-body {
-	background-color: white;
-	margin: 1% 1% 1% 1%;
-}
-/* ÆäÀÌÁöÁ¤º¸ °ü·Ã (ÀüÃ¼ °Ô½Ã¹° °³¼ö, Á¤·Ä) ½ºÅ¸ÀÏ*/
-.listinfo1 {
+@charset "UTF-8";
+/* í˜ì´ì§€ì •ë³´ ê´€ë ¨ (ì „ì²´ ê²Œì‹œë¬¼ ê°œìˆ˜, ì •ë ¬) ìŠ¤íƒ€ì¼*/
+.container .listinfo1 {
 	padding:1%;
 	text-align: left;
 }
 
-.listinfo2 {
+.container .listinfo2 {
 	text-align: right;
 	margin-right: 1%;
+	margin-bottom: 10px;
 }
 
-/* ÆäÀÌÁö¹øÈ£ ½ºÅ¸ÀÏ */
-.divPage {
+/* í˜ì´ì§€ë²ˆí˜¸ ìŠ¤íƒ€ì¼ */
+.container .divPage {
 	text-align: center;
 }
 
-/* °Ë»ö ½ºÅ¸ÀÏ */
-.divSearch {
+/* ê²€ìƒ‰ ìŠ¤íƒ€ì¼ */
+.container .divSearch {
 	background-color: #eee;
 	text-align: center;
 	width: 100%;
@@ -28,39 +25,44 @@ body {
 	padding: 2%;
 }
 
-/* ±Û¾²±â ¹öÆ°*/
-.bt {
-	margin: -1.5% 1%;
-	padding: 0.5% 1%;
+/* ê¸€ì“°ê¸° ë²„íŠ¼*/
+.container .bt {
+	margin-top: 10px;
 	
 }
 /*--------------------------------------------*/
 
-/* Å×ÀÌºí ½ºÅ¸ÀÏ */
-* {
+/* í…Œì´ë¸” ìŠ¤íƒ€ì¼ */
+.container * {
   box-sizing: border-box;
 }
 
-#myTable {
+.container #myTable {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #ddd;
-  font-size: 18px;
+  font-size: 0.9em;
 }
 
-.maTable_tr1 {
+.container .maTable_tr1 {
 	background-color: #eee;
 	
 }
-#myTable th, #myTable td {
+.container #myTable th, .container #myTable td {
   text-align: left;
   padding: 12px;
 }
 
-#myTable tr {
+.container #myTable tr {
   border-bottom: 1px solid #ddd;
 }
 
-#myTable tr.header, #myTable tr:hover {
+.container #myTable tr.header, .container #myTable tr:hover {
   background-color: #f1f1f1;
+}
+.container #menu1{
+	overflow: hidden;
+}
+.container .divbt{
+	float: right;
 }
