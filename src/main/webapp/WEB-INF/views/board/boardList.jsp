@@ -6,9 +6,9 @@
 <meta charset="EUC-KR">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/menu2.css'/>" />
+<title>게시판</title>
 </head>
 <body>
-<title>게시판</title>
 </head>
 <body>
 <!-- 게시판 -->
@@ -16,7 +16,7 @@
 	<div class="listinfo1">
 		<span>전체 1248 | 페이지 1/84 </span>
 	</div>
-	<div clss=divbt> <!-- 비회원은 버튼 안 보임! -->
+	<div class=divbt> <!-- 비회원은 버튼 안 보임! -->
 		<button class="bt">글쓰기</button>
 	</div>
 	<div class="listinfo2">	

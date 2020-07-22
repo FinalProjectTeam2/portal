@@ -30,7 +30,7 @@
 	rel="stylesheet">
 <link href="<c:url value='/resources/css/layout.css' />"
 	rel="stylesheet">
-
+<link rel="shortcut icon" href="#">
 <!-- ckeditor 사용하기 위함 -->
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 

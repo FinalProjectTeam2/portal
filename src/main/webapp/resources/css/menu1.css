@@ -1,24 +1,24 @@
-@charset "EUC-KR";
+@charset "UTF-8";
 
-/* °øÁö»çÇ× ³»¿ë */
-.NoticeContents {
+/* ê³µì§€ì‚¬í•­ ë‚´ìš© */
+.container .NoticeContents {
 	padding: 1% 1% 1% 1%;
 	background-color:white;
 }
 
-.NoticeContents h1{
+.container .NoticeContents h1{
 	font-size: 14pt;
 }
 
 
 /* ---------------------------------------------------------*/
-/* ¸Þ´º */
-.topnav {
+/* ë©”ë‰´ */
+.container .topnav {
   overflow: hidden;
   background-color: #f6f6f6;
 }
 
-.topnav a {
+.container .topnav a {
   float: left;
   color: blue;
   text-align: center;
@@ -27,12 +27,12 @@
   font-size: 17px;
 }
 
-.topnav a:hover {
+.container .topnav a:hover {
   background-color: blue;
   color: white;
 }
 
-.topnav a.active {
+.container .topnav a.active {
   background-color: #4CAF50;
   color: white;
 }

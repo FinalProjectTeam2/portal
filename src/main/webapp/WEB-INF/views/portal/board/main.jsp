@@ -62,7 +62,7 @@ a.more {
 					<li class="list-group-item">5번글</li>
 					<li class="list-group-item">6번글</li>
 				</ul>
-				<a href="#" class="more"></a>
+				<a href="<c:url value='/portal/board/list'/>" class="more"></a>
 			</div>
 
 			<div class="indexDOM_large">
