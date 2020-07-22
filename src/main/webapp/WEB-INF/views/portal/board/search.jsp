@@ -36,6 +36,18 @@
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+textarea#ir1 {
+    float: left;
+    margin: 0 5px;
+}
+.container .panel span {
+    float: left;
+    padding: 10px 5px 0 0;
+}
+.container .panel button {
+    float: left;
+    margin: 5px 0 0 5px;
+}
 </style>
 
 <!-- 하단 의견 또는 오류 신고 - 아코디언메뉴 -->
@@ -46,7 +58,7 @@
 	
 <div class="panel">
 	<span>의견 또는 오류신고 </span>
-	<textarea rows="10" cols="15" id="ir1" name="content" style="width:400px; height:40px; "> 로그인 후 작성이 가능합니다. </textarea>
+	<textarea rows="10" cols="15" id="ir1" name="content" style="width:400px; height:40px; " placeholder="내용을 입력하세요"></textarea>
 	<button>접수</button>
 </div>
 

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-</div>
-</main>
 <!-- main 끝 -->
 <style type="text/css">
 a.top {
@@ -20,6 +18,7 @@ a.bottom {
 	color: #28a745;
 }
 </style>
+
 <script type="text/javascript">
 	$(function() {
 
@@ -73,7 +72,7 @@ a.bottom {
 	</a>
 </div>
 </div>
-</div>
+</main>
 <!-- footer 시작 -->
 <footer class="footer mt-auto py-3">
 	<div class="container">

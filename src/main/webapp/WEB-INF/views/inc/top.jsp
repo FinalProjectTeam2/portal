@@ -132,6 +132,10 @@
 			}
 			$(".zeta-menu li ul").slideUp();
 		});
+		
+		$("#btLogin").click(function() {
+			location.href = "<c:url value='/login/login' />";
+		});
 	});
 </script>
 <meta name="theme-color" content="#563d7c">
@@ -152,7 +156,7 @@
 						class="sr-only">(current)</span>
 					</li>
 				</ul>
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">로그인</button>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="btLogin">로그인</button>
 				<select class="custom-select"
 					style="margin: 0 0 0 15px; font-size: 0.7em; width: 100px;">
 					<option>한국어</option>

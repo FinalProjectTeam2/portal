@@ -103,4 +103,5 @@ a.more {
 			</div>
 
 		</div>
+		<%@ include file="search.jsp"%>
 		<%@ include file="../../inc/bottom.jsp"%>

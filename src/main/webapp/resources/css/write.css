@@ -1,10 +1,15 @@
-@charset "EUC-KR";
+@charset "UTF-8";
 
 * {
   box-sizing: border-box;
 }
 
-input[type=text], select, textarea {
+#boardFrm {
+	margin: 0 auto;
+	width: 90%;
+}
+
+#boardFrm input[type=text], #boardFrm select, #boardFrm textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -12,12 +17,12 @@ input[type=text], select, textarea {
   resize: vertical;
 }
 
-label {
+#boardFrm label {
   padding: 12px 12px 12px 0;
   display: inline-block;
 }
 
-input[type=button] {
+#boardFrm input[type=button] {
   background-color: skyblue;
   color: white;
   padding: 12px 20px;
@@ -27,11 +32,11 @@ input[type=button] {
   float: right;
 }
 
-input[type=button]:hover {
+#boardFrm input[type=button]:hover {
   background-color: blue;
 }
 
-input[type=submit] {
+#boardFrm input[type=submit] {
   background-color: skyblue;
   color: white;
   padding: 12px 20px;
@@ -41,37 +46,47 @@ input[type=submit] {
   float: right;
 }
 
-input[type=submit]:hover {
+#boardFrm input[type=submit]:hover {
   background-color: blue;
 }
 
-.container {
+main .container {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
 }
 
-.col-25 {
+#boardFrm .col-25 {
   float: left;
   width: 25%;
   margin-top: 6px;
 }
 
-.col-75 {
+#boardFrm .col-75 {
   float: left;
   width: 75%;
   margin-top: 6px;
 }
 
 /* Clear floats after the columns */
-.row:after {
+#boardFrm .row1{
+	overflow: hidden;
+}
+#boardFrm .row1:after {
   content: "";
   display: table;
   clear: both;
 }
-.writeFrm{
+#boardFrm .writeFrm{
 	width: 1000px;
 	padding: 0 5%;
 }
 
+#boardFrm .bts {
+	margin-bottom: 100px;
+	margin-top: 30px;
+}
+
+#boardFrm .bts input[type=button]{
+	margin: 0 5px;
 }

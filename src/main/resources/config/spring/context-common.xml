@@ -23,7 +23,7 @@
     </bean>
 
     <alias name="spring.RegularCommonsMultipartResolver" alias="multipartResolver" />
-	<!-- 
+	
 	<util:properties id="fileUploadProperties" location="classpath:/config/props/fileUpload.properties"></util:properties>
-	 -->
+	
 </beans>

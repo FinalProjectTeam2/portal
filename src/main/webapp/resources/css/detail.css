@@ -1,14 +1,13 @@
 @charset "UTF-8";
 
 #boardDetail {
-	width: 900px;
+	width: 90%;
 }
 #boardDetail * {
   box-sizing: border-box;
 }
 
 #boardDetail input[type=text], select, textarea {
-  width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -63,7 +62,6 @@
 }
 
 #boardDetail .col {
-	width: 100%;
 	background-color: white;
 	padding: 2% 1%
 }
@@ -86,4 +84,16 @@
 
 #boardDetail .dvi3 {
 	background-color: white;
+}
+#boardDetail .bts {
+	margin-bottom: 100px;
+	margin-top: 30px;
+}
+
+#boardDetail .bts input[type=button]{
+	margin: 0 5px;
+}
+
+#boardDetail .content {
+	padding: 10px 20px;
 }

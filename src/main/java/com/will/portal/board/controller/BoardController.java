@@ -46,18 +46,18 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String write_get() {
-		return "board/write";
+	public void write_get() {
+		logger.info("게시글 작성 페이지");
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String edit_get() {
-		return "board/edit";
+	public void edit_get() {
+		logger.info("게시글 수정 페이지");
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete_get() {
-		return "board/delete";
+	public void delete_get() {
+		logger.info("게시글 삭제 페이지");
 	}
 
 	@RequestMapping(value = "/re", method = RequestMethod.GET)
