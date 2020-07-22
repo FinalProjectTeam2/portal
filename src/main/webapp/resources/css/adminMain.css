@@ -1,0 +1,17 @@
+.adminRegi {
+	width: 150px;
+	height: 60px;
+	font-size: 1.3em;
+	color: #248dd2;
+	border-color: #248dd2;
+	margin: 12px 15px 12px 12px;
+}
+
+.adminRegi:hover {
+	background-color: #59b1eb;
+	color: white;
+}
+
+main>.container {
+	padding: 12px 15px 60px 15px;
+}
