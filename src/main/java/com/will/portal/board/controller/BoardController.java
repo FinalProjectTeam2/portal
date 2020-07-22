@@ -26,6 +26,12 @@ public class BoardController {
 		logger.info("게시판 목록 페이지");
 
 	}
+	
+	@RequestMapping("/detail")
+	public void detail() {
+		logger.info("게시판 상세보기 페이지");
+
+	}
 
 	@RequestMapping("/menu1")
 	public String menu1_get() {
@@ -42,12 +48,6 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String write_get() {
 		return "board/write";
-	}
-
-	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String detail_get() {
-		return "board/detail";
-
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
