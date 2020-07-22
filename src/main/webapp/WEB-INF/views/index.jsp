@@ -21,6 +21,7 @@
 					Back to <a href="/docs/4.5/examples/sticky-footer/">the default
 						sticky footer</a> minus the navbar.
 				</p>
+			
 			</div>
 			<div class="indexDOM_small">
 				<h1 class="mt-1">Sticky footer with fixed navbar</h1>
