@@ -24,7 +24,6 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <title>index.jsp</title>
-
 <link href="<c:url value='/resources/css/offcanvas.css' />" rel="stylesheet">
 <link href="<c:url value='/resources/css/layout.css' />" rel="stylesheet">
 

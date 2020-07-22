@@ -2,11 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
-<!-- <!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>학사일정-요약보기</title> -->
 <style type="text/css">
 .calendar_head{
 	position:relative;
