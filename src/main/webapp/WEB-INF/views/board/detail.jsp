@@ -1,16 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE HTML>
-<html lang="ko">
-<head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!-- top -->
+<%@ include file="../inc/top.jsp"%>
+<!-- sidebar -->
+<%@ include file="../inc/mainSidebar.jsp"%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/reset.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/detail.css'/>" />
-<title>게시물 보기</title>
-<script type="text/javascript" src="../js/jquery-3.5.1.min.js'/>"></script>
-
-</head>
-<body>
+<main role="main" class="flex-shrink-0">
 <div class="container">
   <form action="/action_page.php">
     <div class="row">
@@ -78,5 +75,6 @@
       <input type="submit" value="목록">
     </div>
   </form>
-</body>
-</html>
+ 
+<!-- bottom -->		
+<%@ include file="../inc/bottom.jsp"%>

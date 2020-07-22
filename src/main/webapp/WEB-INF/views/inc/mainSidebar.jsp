@@ -8,6 +8,7 @@
         	LOGIN</div>
          <div id="login" >
          	<form action="">
+         		<input type="hidden" name="url" value="${requestScope['javax.servlet.forward.servlet_path']}">
 	          	<input class="form-control" type="text" id="userid" name="userid" placeholder="아이디">
 				<input class="form-control" type="password" id="pwd" name="pwd" placeholder="비밀번호" >  
 				<button type="submit" class="btn btn-outline-success">로그인</button>         	
