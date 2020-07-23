@@ -4,6 +4,13 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/menu2.css'/>" />
 <title>게시판</title>
+<script type="text/javascript">
+	$(function() {
+		$("#boardWrite").click(function() {
+			location.href = "<c:url value='/portal/board/write'/>";
+		});
+	});
+</script>
 <!-- 게시판 -->
 <div id="menu1" class="tabcontent">
 	<div class="listinfo1">
@@ -35,7 +42,11 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
+				<td class="">
+					<a href="<c:url value='/portal/board/detail'/>" >
+					[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호
+					</a>
+				</td>
 				<td class="">NO.1</td>
 				<td class="">공통</td>
 				<td class="">미래교육혁신원 교수학습개발센터 홍길동</td>
@@ -73,7 +84,7 @@
 	</table>
 	<div class="divbt">
 		<!-- 비회원은 버튼 안 보임! -->
-		<button class="btn btn-outline-success bt">글쓰기</button>
+		<button class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
 	</div>
 </div>
 <br>

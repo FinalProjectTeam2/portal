@@ -10,6 +10,8 @@
 .adminRegi:hover {
 	background-color: #59b1eb;
 	color: white;
+	border-color: #248dd2;
+
 }
 
 main>.container {

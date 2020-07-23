@@ -14,6 +14,7 @@ public class StudentVO {
 	private Timestamp graduationDate;
 	private String identityState;
 	private int minor;
+	private String identifyCode;
 	
 	public String getStuNo() {
 		return stuNo;
@@ -81,12 +82,20 @@ public class StudentVO {
 	public void setMinor(int minor) {
 		this.minor = minor;
 	}
+	public String getIdentifyCode() {
+		return identifyCode;
+	}
+	public void setIdentifyCode(String identifyCode) {
+		this.identifyCode = identifyCode;
+	}
 	@Override
 	public String toString() {
 		return "StudentVO [stuNo=" + stuNo + ", pwd=" + pwd + ", name=" + name + ", major=" + major + ", semester="
 				+ semester + ", credits=" + credits + ", state=" + state + ", admissionDate=" + admissionDate
-				+ ", graduationDate=" + graduationDate + ", identityState=" + identityState + ", minor=" + minor + "]";
+				+ ", graduationDate=" + graduationDate + ", identityState=" + identityState + ", minor=" + minor
+				+ ", identifyCode=" + identifyCode + "]";
 	}
+	
 	
 	
 	
