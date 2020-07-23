@@ -8,6 +8,7 @@
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 
+
 		<div id="editStu">
 		<fieldset>
 		<legend>정보조회 및 개인정보 변경</legend>
