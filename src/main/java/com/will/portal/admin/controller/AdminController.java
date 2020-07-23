@@ -23,11 +23,16 @@ public class AdminController {
 		logger.info("adminMain, Get");
 	}
 	@RequestMapping(value = "/adminManageMem",method = RequestMethod.GET)
-	public void adminManage() {
+	public void adminManageMem() {
 		logger.info("adminManageMem, Get");
 	}
+	@RequestMapping(value = "/adminManageLec",method = RequestMethod.GET)
+	public void adminManageLec() {
+		logger.info("adminManageLec, Get");
+	}
+
 	@RequestMapping(value = "/test",method = RequestMethod.GET)
 	public void test() {
-		logger.info("adminMain, Get");
+		logger.info("test, Get");
 	}
 }

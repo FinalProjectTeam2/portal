@@ -217,7 +217,6 @@ CREATE TABLE official_info (
 	addr_detail VARCHAR2(100), /* 주소상세 */
 	ssn VARCHAR2(100), /* 주민번호 */
 	gender VARCHAR2(20), /* 성별 */
-	certi_code VARCHAR2(30), /* 인증코드 */
 	image_url VARCHAR2(150) DEFAULT 'default.jpg' /* 사진 */
 );
 
@@ -238,7 +237,7 @@ CREATE TABLE professor (
 	start_date DATE DEFAULT sysdate, /* 임용일 */
 	resignation_date DATE, /* 퇴직일 */
 	identity_state CHAR(4) DEFAULT 'N' /* 본인인증상태 */
-	identity_code VARCHAR2(20) /* 본인인증코드 */
+	identify_code VARCHAR2(30) /*인증코드*/
 );
 
 ALTER TABLE professor
@@ -581,7 +580,7 @@ CREATE TABLE student (
 	graduation_date DATE, /* 졸업일 */
 	identity_state CHAR(5) DEFAULT 'N', /* 본인인증상태 */
 	minor NUMBER /* 부전공 */
-	identity_code VARCHAR2(20) /* 본인인증코드 */
+	identify_code VARCHAR2(30) /*인증코드*/
 );
 
 ALTER TABLE student
@@ -923,18 +922,18 @@ ALTER TABLE student
 			dep_no
 		);
 
-		
+
 /* 시퀀스 생성 */
 
 /*
-board 	bd_no  
+board 	bd_no
 prof_position 	position_no
-reply 	reply_no    
-tuition	no  
-scholarship	scholarship_no  
-award	no  
-outbox	msg_no  
-inbox	no  
+reply 	reply_no
+tuition	no
+scholarship	scholarship_no
+award	no
+outbox	msg_no
+inbox	no
 files	no
 
 */
@@ -962,7 +961,7 @@ INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
-/*tuition*/ 
+/*tuition*/
 CREATE SEQUENCE tuition_seq
 INCREMENT BY 1
 START WITH 1
@@ -974,20 +973,40 @@ INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
-/*award*/ 
+/*award*/
 CREATE SEQUENCE award_seq
 INCREMENT BY 1
 START WITH 1
-NOCACHE; 
+NOCACHE;
 
-/*prof_position*/ 
+/*prof_position*/
 CREATE SEQUENCE prof_position_seq
 INCREMENT BY 1
 START WITH 1
-NOCACHE; 
+NOCACHE;
 
-/*files*/ 
+/*files*/
 CREATE SEQUENCE files_seq
 INCREMENT BY 1
 START WITH 1
-NOCACHE; 
+NOCACHE;
+
+
+/*뷰 생성*/
+/*board_view*/
+create or replace view board_view as
+select p.*, f.no, f.file_name, f.file_size, f.original_file_name, f.down_count, f.upfile_date
+from posts p join files f
+on p.post_code = f.post_code;
+
+/*student_view*/
+create or replace view student_view as
+select s.*, o.hp1, o.hp2, o.hp3, o.email1, o.email2, o.zipcode, o.address, o.addr_detail, o.ssn, o.gender, o.image_url
+from student s join official_info o
+on s.stu_no=o.official_no;
+
+/*professor_view*/
+create or replace view professor_view as
+select p.*, o.hp1, o.hp2, o.hp3, o.email1, o.email2, o.zipcode, o.address, o.addr_detail, o.ssn, o.gender, o.image_url
+from professor p join official_info o
+on p.prof_no=o.official_no;

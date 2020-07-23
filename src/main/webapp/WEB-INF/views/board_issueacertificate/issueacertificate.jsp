@@ -1,13 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>증명서발급 안내</title>
 <style>
-@charset "UTF-8";
-
-
 /*TITILE*/
 .tit_sub{
 	margin-bottom:30px;
@@ -3890,8 +3887,5 @@ content: '';
       </table>
       </div>
    </article>
-
-
-
 </body>
 </html>

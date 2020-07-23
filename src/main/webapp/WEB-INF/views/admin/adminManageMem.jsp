@@ -59,18 +59,18 @@
 			<form name="frmList" method="post" action="<c:url value='/admin'/>">
 				<div class="divRight">
 					조회조건 <select name="">
-						<option disabled selected>---</option>
+						<option disabled selected>&nbsp;--</option>
 						<option value="">학생</option>
 						<option value="">교수</option>
 						<option value="">임직원</option>
 					</select>
 					학부 <select name="">
-						<option disabled selected>---</option>
+						<option disabled selected>&nbsp;--</option>
 						<option value="">공대</option>
 						<option value="">미대</option>
 					</select>
 					학과 <select name="">
-						<option disabled selected>---</option>
+						<option disabled selected>&nbsp;--</option>
 						<option value="">경제</option>
 						<option value="">컴공</option>
 					</select>
@@ -180,7 +180,10 @@
 					<!--  페이지 번호 끝 -->
 				</div>
 
-				<div class="divRight">
+				<div class="btdiv">
+					<input type="button" class="btn btn-primary btn-lg login-button" id="btMultiDel" value="회원 추가"><br>
+				</div>
+				<div class="btdiv">
 					<input type="button" class="btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 회원 삭제"><br>
 				</div>
 			</form>

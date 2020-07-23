@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+#upfile{
+	width: 200px;
+	margin: 0;
+	
+}
+
+#editStu legend{
+	width: 0;
+}
+
+#editStu{
+	width: 100%;
+
+}
+
+#info{
+	margin-top: 23px;
+}
+#editStu th{
+	font-weight: bold;
+}
+
+#info th{
+	width: 10%;
+}
+
+#editStu fieldset{
+	border: 2px solid #01539d;
+	/* width: 1070px;
+	height: 600px; */
+}
+
+#studentImg{
+	border : 1px solid #ccc;
+	width: 200px;
+    height: 200px;
+	margin-top: 30px;
+}
+
+#canEdit th{
+	width: 10%;
+
+}
+#canEdit td{
+	width: 25%;
+	padding: 0 0.05%;;
+
+}
+
+#editStu legend {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0 10px;
+	padding: 0 10px;
+}
+
+
+#imgDiv{
+	margin: 1% auto;
+	text-align: center;
+}
+
+#findZipBt, #upfile{
+	background-color: #ccc;
+	color:black;
+	padding: 0 5px;
+	height: 25px;
+	font-size: 13px;
+	border: none;
+	border-radius: 2px;
+}
+#findZipBt:hover{
+	font-weight: bold;
+	
+}
+#editBt:hover{
+	font-weight: bold;
+	
+}
+
+#editBt{
+	background-color: #01539d;
+	color: white;
+	height: 40px;;
+    line-height: 0.5;
+    margin-top: 10px;
+    border-radius: 7px;
+	padding: 9px;
+}
