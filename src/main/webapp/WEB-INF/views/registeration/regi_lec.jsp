@@ -188,7 +188,7 @@
 									<tr class="ui-jqgrid-labels" role="row">
 										<th id="gridLecture_rn" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 5%;">
+											style="width: 7%;">
 											<div id="jqgh_gridLecture_rn">
 												<span class="s-ico" style="display: none"> <span
 													sort="asc"
@@ -213,7 +213,7 @@
 											</div></th>
 										<th id="gridLecture_subjt_name" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 15%;"><span
+											style="width: 13%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 											<div id="jqgh_gridLecture_subjt_name"
@@ -226,7 +226,7 @@
 											</div></th>
 										<th id="gridLecture_lect_grade" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 5%;"><span
+											style="width: 7%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_lect_grade"
@@ -326,7 +326,7 @@
 											</div></th>
 										<th id="gridLecture_lectPlan" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 12%;"><span
+											style="width: 10%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_lectPlan" class="ui-jqgrid-sortable">
@@ -348,11 +348,11 @@
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
-									<tr class="jqgfirstrow" role="row" id="applyContent">
-										<td role="gridcell" style="height: 0px; width: 5%;"><button id="applyBt">신청</button></td>
+									<tr class="jqgfirstrow" role="row" id="subjects">
+										<td role="gridcell" style="height: 0px; width: 7%;"><button id="applyBt">신청</button></td>
 										<td role="gridcell" style="height: 0px; width: 9%;">dsad</td>
-										<td role="gridcell" style="height: 0px; width: 15%;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 5%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 13%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 7%;">sd</td>
 										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
@@ -360,7 +360,7 @@
 										<td role="gridcell" style="height: 0px; width: 6%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 12%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 10%;">s</td>
 									</tr>
 								</tbody>
 							</table>
@@ -374,7 +374,7 @@
 				<span style="font-weight: bold; font-size: 15px;">신청과목</span>
 			</div>
 			<!-- 수강신청 -->
-			<div class="wrap-grid">
+					<div class="wrap-grid">
 			<div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all"
 				id="gbox_gridLecture" dir="ltr" style="width: 100%;">
 					<div class="ui-state-default ui-jqgrid-hdiv ui-corner-top"
@@ -386,7 +386,7 @@
 									<tr class="ui-jqgrid-labels" role="row">
 										<th id="gridLecture_rn" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 5%;">
+											style="width: 7%;">
 											<div id="jqgh_gridLecture_rn">
 												<span class="s-ico" style="display: none"> <span
 													sort="asc"
@@ -411,7 +411,7 @@
 											</div></th>
 										<th id="gridLecture_subjt_name" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 15%;"><span
+											style="width: 13%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 											<div id="jqgh_gridLecture_subjt_name"
@@ -424,7 +424,7 @@
 											</div></th>
 										<th id="gridLecture_lect_grade" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 5%;"><span
+											style="width: 7%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_lect_grade"
@@ -524,7 +524,7 @@
 											</div></th>
 										<th id="gridLecture_lectPlan" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 12%;"><span
+											style="width: 10%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_lectPlan" class="ui-jqgrid-sortable">
@@ -534,7 +534,6 @@
 													sort="desc"
 													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
 											</div></th>
-										
 									</tr>
 								</thead>
 							</table>
@@ -548,10 +547,10 @@
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
 									<tr class="jqgfirstrow" role="row" id="applyContent">
-										<td role="gridcell" style="height: 0px; width: 5%;"><button id="cancelBt">삭제</button></td>
+										<td role="gridcell" style="height: 0px; width: 7%;"><button id="cancelBt">삭제</button></td>
 										<td role="gridcell" style="height: 0px; width: 9%;">dsad</td>
-										<td role="gridcell" style="height: 0px; width: 15%;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 5%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 13%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 7%;">sd</td>
 										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
@@ -559,7 +558,7 @@
 										<td role="gridcell" style="height: 0px; width: 6%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 12%;">s</td>
+										<td role="gridcell" style="height: 0px; width: 10%;">s</td>
 									</tr>
 								</tbody>
 							</table>
