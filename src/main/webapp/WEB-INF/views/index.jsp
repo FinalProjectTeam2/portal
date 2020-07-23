@@ -24,9 +24,9 @@
 
 <!-- main 시작 -->
 <main role="main" class="flex-shrink-0">
-	<div id="cont">
+	
 	<div class="container">
-		<input type="button" value="pdf저장" id="pdfDown">
+		
 		<div style="overflow: hidden;">
 			<div class="indexDOM_large">
 				<h1 class="mt-1">Sticky footer with fixed navbar</h1>
@@ -178,7 +178,6 @@
 					Back to <a href="/docs/4.5/examples/sticky-footer/">the default
 						sticky footer</a> minus the navbar.
 				</p>
-			</div>
 			</div>
 		</div>
 		<%@ include file="inc/bottom.jsp"%>
