@@ -5,10 +5,7 @@
 	font-size: 0.1em;
 }
 
-#adminMngMem .divList,
-.divRight,
-.divPage,
-.divList table {
+#adminMngMem .divList, .divRight, .divPage, .divList table {
 	width: 1000px;
 }
 
@@ -29,6 +26,7 @@
 #adminMngMem table {
 	width: 1000px;
 	text-align: center;
+	margin-top: 20px;
 }
 
 #adminMngMem table td {
@@ -36,12 +34,12 @@
 	border-top: solid;
 	border-bottom: solid;
 	border-width: 1px;
-	border-color: #a2a7ad;
+	border-color: #e5e5e5;
 }
 
 #adminMngMem th {
 	text-align: inherit;
-	padding: 30px 0 10px 0;
+	padding: 10px 0 10px 0;
 	font-weight: bold;
 }
 
@@ -51,11 +49,11 @@ main>.container {
 }
 
 #btSearch {
-	width: 60px;
-	height: 35px;
+	width: 50px;
+	height: 31px;
 	font-size: 1em;
 	padding: 0;
-	margin: -6px 19px 0 20px;
+	margin: -6px 19px 0 18px;
 }
 
 #btMultiDel {
@@ -68,4 +66,21 @@ main>.container {
 
 .divRight select {
 	margin: 0 20px 0 3px;
+	text-align: right;
+}
+
+.box2 thead {
+	background-color: #f2f5fc;
+	border-top: 1px solid #70bded;
+}
+
+.btdiv {
+	float: right;
+	margin: 10px;
+}
+
+.btCustom {
+	color: #fff;
+	background-color: #01539d;
+	border-color: #01539d;
 }

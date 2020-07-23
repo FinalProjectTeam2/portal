@@ -2,187 +2,95 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
-<link href="<c:url value='/resources/css/admin/adminManageMem.css'/>" rel="stylesheet">
-<script type="text/javascript">
-	$(function(){
-		$('#btMultiDel').click(function(){
-			var len=$('tbody input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('삭제하려는 회원을 먼저 체크하세요');
-				return;
-			}
-			
-			$('form[name=frmList]')
-	.prop("action","<c:url value='/admin/product/deleteMulti.do'/>");
-			$('form[name=frmList]').submit();
-		});	
-		
-		$("input[name=chkAll]").click(function(){
-			$('tbody input[type=checkbox]')
-				.prop('checked', this.checked);	
-		});
-		
-		$('#btMultiAdd').click(function(){
-			var len=$('tbody input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('상태를 변경하려는 회원을 먼저 체크하세요');
-				return;
-			}
-			
-			$('form[name=frmList]')
-	.prop("action","<c:url value='/admin/product/eventMulti.do'/>");
-			$('form[name=frmList]').submit();
-		});	
-	});//document.ready
-	
-	function boardList(curPage){
-		$("input[name=currentPage]").val(curPage);
-		$('form[name=frmPage]').submit();
-	}
-</script>
+<link href="<c:url value='/resources/css/admin/adminRegisterMem.css' />" rel="stylesheet">
 <main role="main" class="flex-shrink-0">
 	<div class="container">
+		<div id="regiMember">
+			<div class="container">
+				<div class="row main">
+					<div id="sel">
+						<div id="header">
+							<h3>강의 등록</h3>
+						</div>
+						<div class="main-login main-center">
+							<form class="form-horizontal" method="post" action="#">
+								<div class="form-group">
+									<div>
+										<label for="sort">회원 구분</label> <select name="sort">
+											<option disabled selected>선택</option>
+											<option value="student">학생</option>
+											<option value="professor">교수</option>
+											<option value="staff">임직원</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="name" class="cols-sm-2 control-label">이름</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-user fa" aria-hidden="true"></i></span> <input
+												type="text" class="form-control" name="name" id="name"
+												placeholder="이름을 입력하세요" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="password" class="cols-sm-2 control-label">비밀번호</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-lock fa-lg" aria-hidden="true"></i></span> <input
+												type="password" class="form-control" name="password"
+												id="password" placeholder="비밀번호를 입력하세요" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="confirm" class="cols-sm-2 control-label">비밀번호
+										확인 </label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-lock fa-lg" aria-hidden="true"></i></span> <input
+												type="password" class="form-control" name="confirm"
+												id="confirm" placeholder="비밀번호 확인" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="email" class="cols-sm-2 control-label">전화번호</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
+												type="text" class="form-control" name="tel" id="tel"
+												placeholder="-는 빼고 입력해주세요" />
+										</div>
+									</div>
+								</div>
 
-
-		<div id="adminMngMem">
-			<h2>회원 관리</h2>
-			<p>조회결과 : {}건</p>
-
-
-			<!-- 페이징 처리를 위한 form 시작-->
-			<form name="frmPage" method="post" action="<c:url value='/admin'/>">
-				<input type="hidden" name="" value="${param.eventName }"> <input
-					type="hidden" name="">
-			</form>
-			<!-- 페이징 처리 form 끝 -->
-
-			<form name="frmList" method="post" action="<c:url value='/admin'/>">
-				<div class="divRight">
-					조회조건 <select name="">
-						<option disabled selected>---</option>
-						<option value="">학생</option>
-						<option value="">교수</option>
-						<option value="">임직원</option>
-					</select>
-					학부 <select name="">
-						<option disabled selected>---</option>
-						<option value="">공대</option>
-						<option value="">미대</option>
-					</select>
-					학과 <select name="">
-						<option disabled selected>---</option>
-						<option value="">경제</option>
-						<option value="">컴공</option>
-					</select>
-					이름 <input type="text" size="8" name="searchKeyword">
-					<button class="btn btn-primary btn-lg login-button" id="btSearch">검색</button>
-				<div class="divList">
-					<table class="box2"
-						summary="회원 목록">
-						<caption>회원 목록</caption>
-						<colgroup>
-							<col style="width: 5%" />
-							<col style="width: 10%" />
-							<col style="width: 15%" />
-							<col style="width: 14%" />
-							<col style="width: 20%" />
-							<col style="width: 20%" />
-							<col style="width: 8%" />
-							<col style="width: 8%" />
-						</colgroup>
-						<thead>
-							<tr>
-								<th><input type="checkbox" name="chkAll"></th>
-								<th scope="col">이름</th>
-								<th scope="col">(if)번호</th>
-								<th scope="col">직책(if)</th>
-								<th scope="col">학부</th>
-								<th scope="col">학과</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%-- <c:if test="${empty list }">
-								<tr>
-									<td colspan="8">결과가 없습니다.</td>
-								</tr>
-							</c:if> --%>
-							<%-- <c:if test="${!empty list }">
-								<!-- 반복 시작 -->
-								<c:set var="idx" value="0" />
-								<c:forEach var="vo" items="${list }"> --%>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>우등생</td>
-										<td>007</td>
-										<td>일짱</td>
-										<td>관현학부</td>
-										<td>리코더</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>최교수</td>
-										<td>007</td>
-										<td>이짱</td>
-										<td>관현학부</td>
-										<td>피콜로</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>일개직원</td>
-										<td>007</td>
-										<td>삼짱</td>
-										<td>관현학부</td>
-										<td>손오반</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-
-							<%-- 		<c:set var="idx" value="${idx+1 }" />
-								</c:forEach>
-								<!-- 반복 끝 -->
-							</c:if> --%>
-						</tbody>
-					</table>
+								<div class="form-group">
+									<label for="username" class="cols-sm-2 control-label">info1</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-users fa" aria-hidden="true"></i></span> <input
+												type="text" class="form-control" name="info1" id="info1"
+												placeholder="Enter your info1" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group ">
+									<button type="button"
+										class="btn btn-primary btn-lg btn-block login-button"
+										id="btRegi">등록</button>
+								</div>
+								<div class="login-register"></div>
+							</form>
+						</div>
+					</div>
 				</div>
-				<div class="divPage">
-					<!-- 페이지 번호 추가 -->
-					<c:if test="${pagingInfo.firstPage>1 }">
-						<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"> <img
-							src='<c:url value="/resources/images/first.JPG" />' border="0">
-						</a>
-					</c:if>
-
-					<!-- [1][2][3][4][5][6][7][8][9][10] -->
-					<c:forEach var="i" begin="${pagingInfo.firstPage }"
-						end="${pagingInfo.lastPage }">
-						<c:if test="${i==pagingInfo.currentPage }">
-							<span style="color: blue; font-weight: bold">${i }</span>
-						</c:if>
-						<c:if test="${i!=pagingInfo.currentPage }">
-							<a href="#" onclick="boardList(${i})"> [${i }] </a>
-						</c:if>
-					</c:forEach>
-
-					<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-						<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"> <img
-							src="<c:url value="/resources/images/last.JPG" />" border="0">
-						</a>
-					</c:if>
-					<!--  페이지 번호 끝 -->
-				</div>
-
-				<div class="divRight">
-					<input type="button" class="btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 회원 삭제"><br>
-				</div>
-			</form>
+			</div>
 		</div>
 		<%@ include file="../inc/bottom.jsp"%>
