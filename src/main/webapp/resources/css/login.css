@@ -1,11 +1,11 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-.container{
+main .container{
 height: 100%;
 align-content: center;
 font-family: 'Numans', sans-serif;
-margin: 100px auto;
+margin: 0 auto;
 
 }
 
