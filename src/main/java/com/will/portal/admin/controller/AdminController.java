@@ -34,4 +34,5 @@ public class AdminController {
 	public void test() {
 		logger.info("test, Get");
 	}
+	
 }
