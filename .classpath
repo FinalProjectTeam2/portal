@@ -30,5 +30,27 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/lecture/poi/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/commons-codec-1.13.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/commons-compress-1.19.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/curvesapi-1.06.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/geronimo-stax-api_1.0_spec-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/jaxb-api-2.3.1.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/jaxb-core-2.3.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/jaxb-impl-2.3.2.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/ooxml-schemas-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/poi-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/poi-contrib-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/poi-ooxml-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/poi-scratchpad-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/SparseBitSet-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="D:/lecture/poi/xmlbeans-3.1.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

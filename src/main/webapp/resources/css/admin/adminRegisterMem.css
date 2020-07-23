@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #sel {
-	margin: 0 0 0 50%;
+	margin: auto;
 }
 
 #header {
@@ -40,8 +40,7 @@
 	margin-bottom: 15px;
 }
 
-#regiMember input,
-#regiMember input::-webkit-input-placeholder {
+#regiMember input, #regiMember input::-webkit-input-placeholder {
 	font-size: 11px;
 	padding-top: 3px;
 }
