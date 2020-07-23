@@ -49,11 +49,6 @@ public class BoardController {
 		return "board/re";
 	}
 	
-	@RequestMapping(value="/calendarDetail", method = RequestMethod.GET) 
-	public String calendarDetail_get() {
-		return "board/calendarDetail";
-
-	}
 	
 	@RequestMapping(value="/schedule1", method = RequestMethod.GET) public String
 	schedule1_get() {
@@ -68,27 +63,19 @@ public class BoardController {
 		return "board/lectureSchedule1";
 	}
 
-	@RequestMapping(value="/privacy1", method = RequestMethod.GET) public String
-	privacy1_get() {
-
-		return "board/privacy1";
-	}
-	
-	@RequestMapping(value="/privacy2", method = RequestMethod.GET) public String
-	privacy2_get() {
-		
-		return "board/privacy2";
-	}
-
-	@RequestMapping(value="/issueacertificate", method = RequestMethod.GET) public String
-	issueacertificate_get() {
-		
-		return "board/issueacertificate";
-	}
 	
 	@RequestMapping(value="/lectureScheduleLogin", method = RequestMethod.GET) public String
 	lectureScheduleLogin_get() {
 		
 		return "board/lectureScheduleLogin";
 	}
+	
+	@RequestMapping(value="/foodMenuDetail", method = RequestMethod.GET) public String
+	foodMenuDetail_get() {
+		
+		return "board/foodMenuDetail";
+	}
+	
+
+	
 }
