@@ -10,7 +10,7 @@
 				<div class="row main">
 					<div id="sel">
 						<div id="header">
-							<h3>회원 등록</h3>
+							<h3>강의 등록</h3>
 						</div>
 						<div class="main-login main-center">
 							<form class="form-horizontal" method="post" action="#">

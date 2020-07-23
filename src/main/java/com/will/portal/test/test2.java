@@ -10,6 +10,8 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 
 public class test2 {
 
@@ -29,14 +31,14 @@ public class test2 {
 			test1VO vo;
 			
 			for(int sheetIndex=0; sheetIndex < workbook.getNumberOfSheets(); sheetIndex++) {
-				curSheet = workbook.getSheet(sheetIndex);
+				curSheet = workbook.getSheetAt(sheetIndex);
 				
 				for (int rowIndex=0; rowIndex < curSheet.getPhysicalNumberOfRows(); rowIndex++) {
 					if(rowIndex!=0) {
 						curRow = curSheet.getRow(rowIndex);
 						vo=new test1VO();
 						String value;
-						
+
 						if(!"".equals(curRow.getCell(0).getStringCellValue())) {
 							for(int cellIndex=0; cellIndex<curRow.getPhysicalNumberOfCells(); cellIndex++) {
 								curCell = curRow.getCell(cellIndex);
@@ -44,20 +46,20 @@ public class test2 {
 								if(true) {
 									value="";
 									switch (curCell.getCellType()) {
-										case HSSFCell.CELL_TYPE_FORMULA:
+										case FORMULA:
 											value=curCell.getCellFormula();
 											break;
-										case HSSFCell.CELL_TYPE_NUMERIC:
+										case NUMERIC:
 											value=curCell.getNumericCellValue()+"";
 											break;
 											
-										case HSSFCell.CELL_TYPE_STRING:
+										case STRING:
 											value=curCell.getStringCellValue()+"";
 											break;	
-										case HSSFCell.CELL_TYPE_BLANK:
+										case BLANK:
 											value=curCell.getBooleanCellValue()+"";
 											break;
-										case HSSFCell.CELL_TYPE_ERROR:
+										case ERROR:
 											value=curCell.getErrorCellValue()+"";
 											break;	
 									
