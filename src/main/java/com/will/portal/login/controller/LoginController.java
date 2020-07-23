@@ -40,4 +40,10 @@ public class LoginController {
 		logger.info("로그인 화면 보여주기");
 		return "login/findId";
 	}
+	
+	@RequestMapping(value = "/inputChgPwd")
+	public String inputChgPwd() {
+		logger.info("비밀번호 변경 화면 보여주기");
+		return "login/inputChgPwd";
+	}
 }
