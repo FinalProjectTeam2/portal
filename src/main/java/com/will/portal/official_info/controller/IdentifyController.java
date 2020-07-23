@@ -1,7 +1,6 @@
 package com.will.portal.official_info.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.will.portal.common.MessageVO;
 import com.will.portal.message.SendMmsMessage;
 import com.will.portal.official_info.model.Official_infoService;
@@ -43,7 +38,7 @@ public class IdentifyController {
 	@RequestMapping(value = "/member/sendCode", produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String sendSms(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
-		String userid = "fe588";           // [필수] 뿌리오 아이디
+		String userid = "fe5882";           // [필수] 뿌리오 아이디
 		String callback = "01038225882";    // [필수] 발신번호 - 숫자만
 		
 		Official_infoVO vo = infoService.selectByNo(officialNo);
@@ -149,5 +144,12 @@ public class IdentifyController {
 		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

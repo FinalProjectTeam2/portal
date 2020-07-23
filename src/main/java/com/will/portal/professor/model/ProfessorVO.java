@@ -11,6 +11,7 @@ public class ProfessorVO {
 	private Timestamp startDate;
 	private Timestamp resignationDate;
 	private String identityState;
+	private String identifyCode;
 	
 	public String getProfNo() {
 		return profNo;
@@ -60,11 +61,19 @@ public class ProfessorVO {
 	public void setIdentityState(String identityState) {
 		this.identityState = identityState;
 	}
+	
+	
+	public String getIdentifyCode() {
+		return identifyCode;
+	}
+	public void setIdentifyCode(String identifyCode) {
+		this.identifyCode = identifyCode;
+	}
 	@Override
 	public String toString() {
 		return "ProfessorVO [profNo=" + profNo + ", pwd=" + pwd + ", profName=" + profName + ", depNo=" + depNo
 				+ ", positionNo=" + positionNo + ", startDate=" + startDate + ", resignationDate=" + resignationDate
-				+ ", identityState=" + identityState + "]";
+				+ ", identityState=" + identityState + ", identifyCode=" + identifyCode + "]";
 	}
 	
 	
