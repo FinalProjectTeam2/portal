@@ -25,13 +25,13 @@ public class BoardController {
 		logger.info("게시판 메인 페이지");
 
 	}
-	
+
 	@RequestMapping("/list")
 	public void board() {
 		logger.info("게시판 목록 페이지");
-		
+
 	}
-	
+
 	@RequestMapping("/detail")
 	public void detail(@RequestParam String postCode) {
 		logger.info("게시판 상세보기 페이지");
