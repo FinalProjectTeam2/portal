@@ -75,7 +75,7 @@
 						<option value="">컴공</option>
 					</select>
 					이름 <input type="text" size="8" name="searchKeyword">
-					<button class="btn btn-primary btn-lg login-button" id="btSearch">검색</button>
+					<button class="btCustom btn btn-primary btn-lg login-button" id="btSearch">검색</button>
 				<div class="divList">
 					<table class="box2"
 						summary="회원 목록">
@@ -181,10 +181,10 @@
 				</div>
 
 				<div class="btdiv">
-					<input type="button" class="btn btn-primary btn-lg login-button" id="btMultiDel" value="회원 추가"><br>
+					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="회원 추가"><br>
 				</div>
 				<div class="btdiv">
-					<input type="button" class="btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 회원 삭제"><br>
+					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 회원 삭제"><br>
 				</div>
 			</form>
 		</div>
