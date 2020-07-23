@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.will.portal.board.model.BoardVO" project="portal" 
-    file="/portal/src/main/java/com/will/portal/board/model/BoardVO.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="798" y="222"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="2" language="java" name="com.will.portal.board.model.BoardDAO" project="portal" 
+  <interface id="1" language="java" name="com.will.portal.board.model.BoardDAO" project="portal" 
     file="/portal/src/main/java/com/will/portal/board/model/BoardDAO.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="447" y="-158"/>    
+    <position height="-1" width="-1" x="269" y="209"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="com.will.portal.board.model.BoardDAOMybatis" project="portal" 
+  <class id="2" language="java" name="com.will.portal.board.model.BoardDAOMybatis" project="portal" 
     file="/portal/src/main/java/com/will/portal/board/model/BoardDAOMybatis.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="353" y="-9"/>    
+    <position height="-1" width="-1" x="158" y="-51"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="4" language="java" name="com.will.portal.board.model.BoardService" project="portal" 
+  <interface id="3" language="java" name="com.will.portal.board.model.BoardService" project="portal" 
     file="/portal/src/main/java/com/will/portal/board/model/BoardService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="63" width="123" x="382" y="238"/>    
+    <position height="-1" width="-1" x="390" y="-105"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="5" language="java" name="com.will.portal.board.model.BoardServiceImpl" project="portal" 
+  <class id="4" language="java" name="com.will.portal.board.model.BoardServiceImpl" project="portal" 
     file="/portal/src/main/java/com/will/portal/board/model/BoardServiceImpl.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="630" y="-138"/>    
+    <position height="-1" width="-1" x="628" y="287"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.will.portal.board.model.BoardVO" project="portal" 
+    file="/portal/src/main/java/com/will/portal/board/model/BoardVO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="701" width="169" x="796" y="-203"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -49,7 +49,7 @@
   <class id="6" language="java" name="com.will.portal.board.controller.BoardController" project="portal" 
     file="/portal/src/main/java/com/will/portal/board/controller/BoardController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="351" width="190" x="39" y="-221"/>    
+    <position height="-1" width="-1" x="677" y="2"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,29 +57,29 @@
     </display>  
   </class>  
   <realization id="7">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="4"/>  
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
   </realization>  
   <association id="8">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="9" name="boardService"/>      
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="9" name="boardDao"/>      
       <multiplicity id="10" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="11">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
-  <association id="12">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="13" name="boardDao"/>      
-      <multiplicity id="14" minimum="0" maximum="1"/>    
+  <association id="11">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="12" name="boardService"/>      
+      <multiplicity id="13" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <realization id="14">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

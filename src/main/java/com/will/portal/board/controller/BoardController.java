@@ -2,15 +2,20 @@ package com.will.portal.board.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.portal.board.model.BoardService;
+import com.will.portal.posts.model.PostsService;
 
 @Controller
 @RequestMapping("/portal/board")
 public class BoardController {
+	@Autowired
+	private PostsService postsService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	private BoardService boardService;
@@ -24,13 +29,13 @@ public class BoardController {
 	@RequestMapping("/list")
 	public void board() {
 		logger.info("게시판 목록 페이지");
-
+		
 	}
 	
 	@RequestMapping("/detail")
-	public void detail() {
+	public void detail(@RequestParam String postCode) {
 		logger.info("게시판 상세보기 페이지");
-
+		postsService.SelectByCode(postCode);
 	}
 
 	@RequestMapping("/menu1")
