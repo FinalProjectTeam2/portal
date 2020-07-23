@@ -30,8 +30,9 @@ public class AdminController {
 	public void adminManageLec() {
 		logger.info("adminManageLec, Get");
 	}
+
 	@RequestMapping(value = "/test",method = RequestMethod.GET)
 	public void test() {
-		logger.info("adminMain, Get");
+		logger.info("test, Get");
 	}
 }
