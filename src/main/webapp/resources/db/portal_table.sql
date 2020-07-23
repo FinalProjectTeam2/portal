@@ -238,6 +238,7 @@ CREATE TABLE professor (
 	start_date DATE DEFAULT sysdate, /* 임용일 */
 	resignation_date DATE, /* 퇴직일 */
 	identity_state CHAR(4) DEFAULT 'N' /* 본인인증상태 */
+	identity_code VARCHAR2(20) /* 본인인증코드 */
 );
 
 ALTER TABLE professor
@@ -580,6 +581,7 @@ CREATE TABLE student (
 	graduation_date DATE, /* 졸업일 */
 	identity_state CHAR(5) DEFAULT 'N', /* 본인인증상태 */
 	minor NUMBER /* 부전공 */
+	identity_code VARCHAR2(20) /* 본인인증코드 */
 );
 
 ALTER TABLE student
