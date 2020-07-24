@@ -36,18 +36,17 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="SSN" class="cols-sm-2 control-label">주민번호</label>
+									<label for="ssn" class="cols-sm-2 control-label">주민번호</label>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i
 												class="fa fa-user fa" aria-hidden="true"></i></span> <input
-												type="text" class="form-control" name="SSN" id="SSN"
-												placeholder="-는 빼고 입력하세요" />
+												type="text" class="form-control" name="ssn" id="ssn" placeholder="-는 빼고 입력하세요" />
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="hp1" class="cols-sm-2 control-label">전화번호</label>
+									<label for="hp2" class="cols-sm-2 control-label">전화번호</label>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i

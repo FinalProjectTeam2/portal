@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.portal.employee.model.EmployeeVO;
+import com.will.portal.official_info.model.Official_infoVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,13 +24,14 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/adminRegisterMemberEmployee",method = RequestMethod.POST)
-	public String adminRegisterMember_post(@ModelAttribute EmployeeVO vo, 
-			@RequestParam int sort, @RequestParam String hp1, @RequestParam String hp2,
-			@RequestParam String hp3, @RequestParam String SSN) {
-		logger.info("adminRegisterMember_post, param: sort={}, vo={}",sort,vo);
+	public String adminRegisterMember_post(@ModelAttribute EmployeeVO employeeVo, 
+			@ModelAttribute Official_infoVO officialVo) {
+		logger.info("adminRegisterMember_post, param: {}",employeeVo);
+		logger.info("adminRegisterMember_post, param: {}",officialVo);
 		
-		vo.setPwd("0000");
-
+		
+		employeeVo.setPwd("0000");
+		
 		
 		return null;
 	}
