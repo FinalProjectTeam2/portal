@@ -193,12 +193,12 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-
+		-->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
-		</dependency> -->
+		</dependency>
 
 	    <!-- Jackson -->
 	   <!-- <dependency>
@@ -212,13 +212,13 @@
 	      <artifactId>jackson-core</artifactId>
 	      <version>2.7.5</version>
 	    </dependency>
-	
+	-->
 	    <dependency>
 	      <groupId>com.fasterxml.jackson.core</groupId>
 	      <artifactId>jackson-databind</artifactId>
 	      <version>2.9.10.5</version>
 	    </dependency> 
-	    -->
+	   
 	    
 	    
     
@@ -294,7 +294,13 @@
 			<groupId>org.mindrot</groupId>
 			<artifactId>jbcrypt</artifactId>
 			<version>0.4</version>
-		</dependency>             
+		</dependency>
+		<!-- 실시간채팅을 위한 websocket -->
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>${org.springframework-version}</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<!-- <repository>

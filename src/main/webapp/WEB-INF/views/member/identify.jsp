@@ -28,6 +28,7 @@ h1{
 </style>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/member.js'/>"></script>
 <script type="text/javascript">
 	var num = 180; // 몇분을 설정할지의 대한 변수 선언
     var myVar;
@@ -54,24 +55,43 @@ h1{
     }
 	$(function() {
 		if(${param.identState=='N' || empty param.identState}){
-		
 		//인증번호 발송 버튼을 누르면 해당버튼 사라짐
 		//인증번호 발송 동시에 인증번호 입력창과 버튼이 생김
 		$("#countdown").hide();
-		$('#getCode').click(function() {
-			$("#countdown").show();
-			$(this).hide();
-		    time();
+		$('#btcode').click(function() {
+			if(!validate_ssn($("#ssn1").val()) || !validate_ssn($("#ssn2").val())){
+				alert('주민번호는 숫자만 입력이 가능합니다.');
+				$("#ssn1").focus();
+				return;
+			}else if($("#ssn1").val().length < 1 || $("#ssn2").val().length < 1){
+				alert('주민번호 앞자리와 뒷자리의 첫째자리를 입력해주세요.');
+				$("#ssn1").focus();
+				return;
+			}
+			
 			$.ajax({
-				url:"<c:url value='/member/sendCode'/>",
-				type:"get",
-				data:"officialNo="+${param.officialNo},
+				url:"<c:url value='/member/identSsn'/>",
+				type:"post",
+				data:{
+					officialNo:$('#offNo').val(),
+					ssn1:$('#ssn1').val(),
+					ssn2:$('#ssn2').val(),
+					identSsn:$('#identSsn').val()
+					
+				},
+				dataType:"json",
 				success:function(res){
-					alert(res);
+					if(res.identSsn=='N'){
+						alert(res.message);
+					}else if(res.identSsn=='Y'){
+						ident();
+					}
+					
 				},
 				error:function(xhr, status, error){
-					alert(status+","+error);
+					alert(error);
 				}
+				
 				
 			});
 
@@ -115,20 +135,50 @@ h1{
 			self.close();
 		}
 	});
+function ident(){
+	$("#showSsn").hide();
+	$("#countdown").show();
+	$("#getCode").hide();
+    time();
+	$.ajax({
+		url:"<c:url value='/member/sendCode'/>",
+		type:"post",
+		data:{officialNo:$('#offNo').val(),
+			ssn1:$('#ssn1').val(),
+			ssn2:$('#ssn2').val()
+		},
+		success:function(res){
+			alert(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+","+error);
+		}
+		
+	});
+}
 </script>
 </head>
 <body>
 	<h1>휴대폰 본인인증</h1>
 	<form method="post" action="<c:url value='/member/identify'/>" name="frmGetCode">
+		<div id="showSsn">	
+			주민번호 입력 : 
+			<input type="text" name="ssn1" id="ssn1" size="6" maxlength="6" /><span>&nbsp;-&nbsp;</span>
+			<input type="text" name="ssn2" id="ssn2" size="1" maxlength="1" />****** <br>
+		</div>
 		<div id="countdown" style="display: hide">
 			<input type="text" id="code" name="inputCode" /> 
 			<input type="button" id="btSubmit" value="확인" /> 
 			<input type="hidden" id ="offNo" name="officialNo" value="${param.officialNo }" />
 			<input type="hidden" name="checkCode" value="N" />
+			<input type="hidden" name="identSsn" id="identSsn" value="N" />
 			
-			<lable class="input"></lable>
+			<lable class="input" style="color:red"></lable>
 		</div>
 	</form>
-	<input type="button" id="getCode" value="인증번호 받기" />
+	<div id="getCode">
+		
+		<input type="button" id="btcode" value="인증번호 받기" style="margin-top: 20px;" />
+	</div>
 </body>
 </html>
