@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>등록금</title>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
+
+
 <style type="text/css">
 body {
 	margin: 2%; 50%;
@@ -70,8 +72,8 @@ body {
 
 
 </style>
-</head>
-<body>
+
+<div id="tuition1">
 <h1>대학 등록금 납부 내역 조회 </h1>
 <form name="frmWrite" method="post" action="<c:url value=''/>" >
 	<div class="divTable" > 
@@ -149,5 +151,6 @@ body {
 </div>
 </form>
 </div>
-</body>
-</html>
+</div>
+
+<%@ include file="../inc/bottom.jsp"%>

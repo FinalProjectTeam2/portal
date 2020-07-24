@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>등록금납입고지서&영수증</title>
@@ -68,11 +69,8 @@ td, th, tr {
 }
 </style>
 
-
-
-</head>
-<body>
 <h1>납입금고지서&납입금영수증 </h1>
+<div id="tuition1">
 <!-- 인쇄버튼 -->
 <div class="divbtn">
 	<button class="btn" onclick="window.print()"><i class="fa fa-download"></i>납입내역출력하기</button> 
@@ -153,7 +151,7 @@ td, th, tr {
 						▣  납입기간 : 2020년 3월 10일 ~ 2020년 3월 20일(16:00) <br>
 						＊유의사항: 은행업무 시간 내에만 납부 가능 <br>
 						▣  가상계좌 : 국민은행(1111-1111)<br>
-						<img src="<c:url value='/resources/images/stamp1.png'/> align="stamp">
+						<img src="<c:url value='/resources/images/stamp1.png'/>">
 						
 					</td>
 				</tr>
@@ -230,7 +228,7 @@ td, th, tr {
 				<tr>
 					<td colspan="4">
 						<h5>년	월	일</h5>						
-						<img src="<c:url value='/resources/images/stamp1.png'/> align="stamp">
+						<img src="<c:url value='/resources/images/stamp1.png'/>">
 					</td>
 				</tr>
 		</tbody>
@@ -280,7 +278,7 @@ td, th, tr {
 						＊유의사항: 은행업무 시간 내에만 납부 가능 <br>
 						▣  가상계좌 : 국민은행(1111-1111)
 						
-						<img src="<c:url value='/resources/images/stamp2.png'/> align="stamp">
+						<img src="<c:url value='/resources/images/stamp2.png'/>">
 					</td>
 				</tr>
 		</tbody>
@@ -332,12 +330,12 @@ td, th, tr {
 					<td colspan="4">
 						<h5>년 월 일</h5>
 						
-						<img src="<c:url value='/resources/images/stamp2.png'/> align="stamp">
+						<img src="<c:url value='/resources/images/stamp2.png'/>">
 					</td>
 				</tr>
 		</tbody>
 </table>
 </div>
 </div>
-</body>
-</html>
+</div>
+<%@ include file="../inc/bottom.jsp"%>

@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>등록금</title>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
 <style type="text/css">
 .divTable { 
 	display: table; 
@@ -62,12 +62,10 @@
 	padding: 4px;
 	
 }
-
-
 </style>
-</head>
-<body>
+
 <h1>등록금 납부 내역 조회 </h1>
+<div id="tuition1">
 <form name="frmWrite" method="post" action="<c:url value=''/>" >
 	<div class="divTable" > 
 		<div class="divTableBody"> 
@@ -100,7 +98,7 @@
 	</div>
 	</div>
 </div>
-		
+</form>		
 		
 <br><br><br>
 <div class="divTable">
@@ -215,6 +213,7 @@
 		</tbody>
 </table>
 </div>
+
 <input type="submit" value="영수증으로 보기" id="bt">
-</body>
-</html>
+</div>
+<%@ include file="../inc/bottom.jsp"%>

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
 <title>식단메뉴</title>
 <style type="text/css">
 .food-portlet *{font-size:13px}
@@ -45,8 +47,9 @@
 .food-portlet .type_food td:nth-of-type(2){width:100%;padding:25px 15px 25px 30px;box-sizing:border-box}}
 
 </style>
-</head>
-<body>
+
+<div id="tuition1">
+
 <div class="portlet-boundary portlet-boundary_Food_WAR_foodportlet_  portlet-static portlet-static-end portlet-borderless food-portlet " id="p_p_id_Food_WAR_foodportlet_">
 <span id="p_Food_WAR_foodportlet"></span>
 <div class="portlet-borderless-container" style="">
@@ -210,5 +213,5 @@
  </div> 
  </div> 
  </div>
-</body>
-</html>
+</div>
+<%@ include file="../inc/bottom.jsp"%>
