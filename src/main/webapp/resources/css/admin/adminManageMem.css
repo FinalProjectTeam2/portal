@@ -84,3 +84,8 @@ main>.container {
 	background-color: #01539d;
 	border-color: #01539d;
 }
+#adminMngMem input[type="checkbox"]{
+    width: 15px;
+    height: 15px;
+    vertical-align: unset;
+}
