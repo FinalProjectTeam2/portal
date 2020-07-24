@@ -1,188 +1,109 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
-<link href="<c:url value='/resources/css/admin/adminManageMem.css'/>" rel="stylesheet">
-<script type="text/javascript">
-	$(function(){
-		$('#btMultiDel').click(function(){
-			var len=$('tbody input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('삭제하려는 회원을 먼저 체크하세요');
-				return;
-			}
-			
-			$('form[name=frmList]')
-	.prop("action","<c:url value='/admin/product/deleteMulti.do'/>");
-			$('form[name=frmList]').submit();
-		});	
-		
-		$("input[name=chkAll]").click(function(){
-			$('tbody input[type=checkbox]')
-				.prop('checked', this.checked);	
-		});
-		
-		$('#btMultiAdd').click(function(){
-			var len=$('tbody input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('상태를 변경하려는 회원을 먼저 체크하세요');
-				return;
-			}
-			
-			$('form[name=frmList]')
-	.prop("action","<c:url value='/admin/product/eventMulti.do'/>");
-			$('form[name=frmList]').submit();
-		});	
-	});//document.ready
-	
-	function boardList(curPage){
-		$("input[name=currentPage]").val(curPage);
-		$('form[name=frmPage]').submit();
-	}
-</script>
+    <link rel="stylesheet" href="<c:url value='/resources/css/studentEdit.css' />">
+    <link rel="stylesheet" href="<c:url value='/resources/css/materialize.min.css' />">
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 
+		<div id="editStu">
+		<fieldset>
+		<legend>정보조회 및 개인정보 변경</legend>
+			<!-- contents -->
+		<form name="editFrm" method="post" enctype="multipart/form-data">
+			   <div class="rowa">
+			      <!-- 기존정보 -->
+			      <div class="cola s3" id="imgDiv">
+			      	<img id="studentImg" alt="" src="<c:url value='/resources/images/student.png'/>">
+					   <div class="rowa" style=" margin-top: 20px;">
+					   		<label for="upfile">사진수정</label>
+					      	<input type="file" name="upfile" id="upfile" >
+						</div>			      	
+			      </div>
+			      <div class="cola s9" id="info">
+			      	<table>
+			      		<tr>
+			      			<th>학번</th>
+			      			<td>2014110498 / 입학날짜 : 2014-03-01</td>
+			      		</tr>
+			      		<tr>
+			      			<th>학생</th>
+			      			<td>홍길동 / 1995-03-28 / 여 / 대한민국</td>
+			      		</tr>
+			      		<tr>
+			      			<th>소속</th>
+			      			<td>사회과학대학/ 제1전공 : 경영학과</td>
+			      		</tr>
+			      		<tr>
+			      			<th>과정</th>
+			      			<td>학사: 정규학생/ 9학기 / 재학</td>
+			      		</tr>
+			      		<tr>
+			      			<th>기타</th>
+			      			<td>010-1234-1234/ shn6314@gmail.com / 서울시 영등포구 / 우리은행 1002-000-0000(예금주명)</td>
+			      		</tr>
+			      	</table>
+			      </div>
+			      <!--  -->
+			      <div class="rowa">
+			      
+			      </div>
+			      <!-- 기본정보 -->
+			      <div class="cola s12" id="canEdit">
+			      <hr><!-- style="border: 0.5px solid #01539d -->
 
-		<div id="adminMngMem">
-			<h2>회원 관리</h2>
-			<p>조회결과 : {}건</p>
+				      	<table>
+										      	
+				      		<tr>
+				      			<th>이름</th>
+				      			<td><input placeholder="이름" name="name" type="text" class="validate" readonly="readonly" value="홍길동"></td>
+								<th>학번</th>
+								<td><input placeholder="학번" name="stuNo" type="text" class="validate" readonly="readonly" value="2014110498"></td>
+				      			<th>주민번호</th>
+				      			<td><input placeholder="주민번호" name="jumin" type="text" class="validate" readonly="readonly" value="950328*******"></td>
+				      		</tr>
+				      		<tr>
+				      			<th>은행명</th>
+				      			<td>
+			      				    <select class="browser-default" name="bank">
+								      <option>우리은행</option>
+								      <option>신한은행</option>
+								      <option>하나은행</option>
+								    </select>
+				      			</td>
+				      			<th>계좌번호</th>
+				      			<td><input placeholder="계좌번호" name="accountNo" type="text" class="validate" value="1002-0000-00000"></td>
+				      			<th>예금주</th>
+				      			<td><input placeholder="예금주명" name="accountOwner" type="text" class="validate" value="신희나"></td>
+				      		</tr>
+				      		<tr>
+				      			<th>우편번호</th>
+				      			<td><input placeholder="우편번호" name="zipcode" type="text" class="validate" value="12345">
+				      			  <button  id="findZipBt" type="button">우편번호 찾기</button></td>
+				      			<th>주소</th>
+				      			<td><input placeholder="주소" name="addr" type="text" class="validate" value="서울시영등포구"></td>
+				      			<th>상세주소</th>
+				      			<td><input placeholder="상세주소" name="addrDetail" type="text" class="validate" value="땡떙아파트"></td>
+				      		</tr>
+				      		<tr>
+				      			<th>이메일</th>
+								<td><input placeholder="이메일" name="email" type="text" class="validate" value="shn6314@gmail.com"></td>
+								<th>전화번호</th>
+								<td><input placeholder="핸두폰번호" name="hp" type="text" class="validate" value="010-1234-1234"></td>
+				      		</tr>
+				      	
 
-
-			<!-- 페이징 처리를 위한 form 시작-->
-			<form name="frmPage" method="post" action="<c:url value='/admin'/>">
-				<input type="hidden" name="" value="${param.eventName }"> <input
-					type="hidden" name="">
+				      	</table>
+				      	<div style="text-align: center; margin-top: 10px;">
+				      			<input type="submit" id="editBt" value="정보수정" style="color: white;">
+			    		</div>
+			      </div>
+			   </div>
 			</form>
-			<!-- 페이징 처리 form 끝 -->
-
-			<form name="frmList" method="post" action="<c:url value='/admin'/>">
-				<div class="divRight">
-					조회조건 <select name="">
-						<option disabled selected>---</option>
-						<option value="">학생</option>
-						<option value="">교수</option>
-						<option value="">임직원</option>
-					</select>
-					학부 <select name="">
-						<option disabled selected>---</option>
-						<option value="">공대</option>
-						<option value="">미대</option>
-					</select>
-					학과 <select name="">
-						<option disabled selected>---</option>
-						<option value="">경제</option>
-						<option value="">컴공</option>
-					</select>
-					이름 <input type="text" size="8" name="searchKeyword">
-					<button class="btn btn-primary btn-lg login-button" id="btSearch">검색</button>
-				<div class="divList">
-					<table class="box2"
-						summary="회원 목록">
-						<caption>회원 목록</caption>
-						<colgroup>
-							<col style="width: 5%" />
-							<col style="width: 10%" />
-							<col style="width: 15%" />
-							<col style="width: 14%" />
-							<col style="width: 20%" />
-							<col style="width: 20%" />
-							<col style="width: 8%" />
-							<col style="width: 8%" />
-						</colgroup>
-						<thead>
-							<tr>
-								<th><input type="checkbox" name="chkAll"></th>
-								<th scope="col">이름</th>
-								<th scope="col">(if)번호</th>
-								<th scope="col">직책(if)</th>
-								<th scope="col">학부</th>
-								<th scope="col">학과</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%-- <c:if test="${empty list }">
-								<tr>
-									<td colspan="8">결과가 없습니다.</td>
-								</tr>
-							</c:if> --%>
-							<%-- <c:if test="${!empty list }">
-								<!-- 반복 시작 -->
-								<c:set var="idx" value="0" />
-								<c:forEach var="vo" items="${list }"> --%>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>우등생</td>
-										<td>007</td>
-										<td>일짱</td>
-										<td>관현학부</td>
-										<td>리코더</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>최교수</td>
-										<td>007</td>
-										<td>이짱</td>
-										<td>관현학부</td>
-										<td>피콜로</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>일개직원</td>
-										<td>007</td>
-										<td>삼짱</td>
-										<td>관현학부</td>
-										<td>손오반</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-
-							<%-- 		<c:set var="idx" value="${idx+1 }" />
-								</c:forEach>
-								<!-- 반복 끝 -->
-							</c:if> --%>
-						</tbody>
-					</table>
-				</div>
-				<div class="divPage">
-					<!-- 페이지 번호 추가 -->
-					<c:if test="${pagingInfo.firstPage>1 }">
-						<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"> <img
-							src='<c:url value="/resources/images/first.JPG" />' border="0">
-						</a>
-					</c:if>
-
-					<!-- [1][2][3][4][5][6][7][8][9][10] -->
-					<c:forEach var="i" begin="${pagingInfo.firstPage }"
-						end="${pagingInfo.lastPage }">
-						<c:if test="${i==pagingInfo.currentPage }">
-							<span style="color: blue; font-weight: bold">${i }</span>
-						</c:if>
-						<c:if test="${i!=pagingInfo.currentPage }">
-							<a href="#" onclick="boardList(${i})"> [${i }] </a>
-						</c:if>
-					</c:forEach>
-
-					<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-						<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"> <img
-							src="<c:url value="/resources/images/last.JPG" />" border="0">
-						</a>
-					</c:if>
-					<!--  페이지 번호 끝 -->
-				</div>
-
-				<div class="divRight">
-					<input type="button" class="btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 회원 삭제"><br>
-				</div>
-			</form>
+			</fieldset>
 		</div>
-		<%@ include file="../inc/bottom.jsp"%>
+
+	
+<%@ include file="../inc/bottom.jsp"%>

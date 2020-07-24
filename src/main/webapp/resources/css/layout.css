@@ -1,6 +1,9 @@
 @charset "UTF-8";
+body{
+	min-width: 1400px;
+}
 header {
-	font-size: 1.5em;
+	font-size: 1.2em;
 }
 
 .left {
@@ -17,6 +20,7 @@ main>.container {
 
 .footer {
 	background-color: #f5f5f5;
+	width: 100%;
 }
 
 .footer>.container {
@@ -31,18 +35,19 @@ code {
 #login{
 	background: #525a6d;
 	padding: 15px;
+	margin-bottom: 20px;
 }
 
 #login input, #login button{
 	width: 100%;
-	font-size: 1.3em;
+	font-size: 1em;
 	margin: 15px 0 15px 0;
 	padding-left: 10px;
 }
 
 #findUser{
-	text-align: center; 
-	font-size: 1.2em;
+	text-align: center;
+	font-size: 1em;
 }
 
 #sidebarMenu a{
@@ -51,4 +56,84 @@ code {
 
 #findUser a{
 	color: #7a8394;
+}
+
+.col-md-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 21%;
+}
+.col-lg-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 17%;
+    min-width: 250px;
+}
+
+.flex-shrink-0 {
+    margin: 0 auto;
+    width: 80%;
+    padding: 20px 0;
+}
+
+.nav-scroller {
+    overflow-y: inherit;
+}
+
+.nav-underline .nav-link {
+    font-size: 1rem;
+}
+
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+#sidebarMenu ul{
+	margin-bottom: 20px;
+}
+
+#sidebarMenu li:hover{
+	background: #ffffffbf;
+}
+
+#sidebarMenu li:hover a{
+	color: #626d80;
+}
+#sidebarMenu li{
+	text-indent: 0.6em;
+}
+.category{
+	cursor: pointer;
+	text-shadow: 1px 1px 0.5px #343a40;
+	color: white; 
+	padding-left: 20px; 
+	padding-bottom: 10px; 
+	font-size: 1.5em; 
+	font-weight: bold; 
+	border-bottom: 1px solid white;
 }

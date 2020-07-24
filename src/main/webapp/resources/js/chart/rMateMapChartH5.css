@@ -1,0 +1,136 @@
+/******************************************************
+ *
+ *			MapChart
+ *
+ *****************************************************/
+
+.rMateH5__Root  {
+	-moz-box-sizing : border-box;
+	-webkit-box-sizing : border-box;
+	box-sizing : border-box;
+	webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.rMateH5__Root * {
+	-moz-box-sizing : border-box;
+	-webkit-box-sizing : border-box;
+	box-sizing : border-box;
+}
+
+.rMateH5__MapChart {
+	font-family : "맑은 고딕", 돋움, Verdana;
+	font-size : 12px;
+	line-height : normal;
+	overflow:hidden;
+}
+
+/* cursor */
+.rMateH5__CursorPointer{
+	cursor:pointer;
+}
+
+/* DataTip */
+.rMateH5__DivDataTip {
+	background-opacity: 0.3;
+	background-color: #ffffff;
+	padding : 15px 0px 10px 0px;
+	border : 1px solid #e0e0e0;
+	border-radius: 10px;
+	pointer-events:none;
+	cursor:Default;
+}
+
+/******************************************************
+ *
+ *			MapLegend
+ *
+ *****************************************************/
+
+/* MapLegend */
+.rMateH5__MapLegend, .rMateH5__SubMapLegend{
+	border:1px solid #ccc;
+	font-size:11px;
+	font-weight:bold;
+	color:#767676;
+	background-color:#f7f7f7;
+	cursor:default;
+}
+
+/* MapLegend - ContentPane */
+.rMateH5__MapLegend .rMateH5__ContentPane, .rMateH5__SubMapLegend .rMateH5__ContentPane{
+	padding:5px;
+}
+
+.rMateH5__MapLegendItem, .rMateH5__CheckableMapLegendItem{
+	padding-left:0px;
+	padding-top:0px;
+	padding-right:0px;
+	padding-bottom:0px;
+	border:0px none;
+	background-color:rgba(255, 255, 255, 0);
+	white-space:nowrap;
+}
+
+/* unchecked */
+.rMateH5__UnChecked{
+	color:#ccc;
+}
+
+/******************************************************
+ *
+ *			MapSelected Items
+ *
+ *****************************************************/
+@keyframes rMateMapChartH5_SelectedMap {
+  0%        {opacity: 0}
+  50% {opacity: 1}
+100% {opacity: 0}
+}
+
+.rMateMapChartH5_SelectedMap {
+  animation: rMateMapChartH5_SelectedMap 1.5s ease infinite;
+}
+
+@keyframes plotMark {
+  0%        {opacity: 0}
+  60%  {opacity: 1}
+  100% {opacity: 0}
+}
+
+#plotMark {
+	animation: plotMark 1.5s ease infinite;
+}
+
+#DataRange_Label {
+	font-family : 맑은 고딕, Arial;
+}
+
+/******************************************************
+ *
+ *			MapChart Text
+ *
+ *****************************************************/
+svg text {
+	letter-spacing: -1px;
+}
+
+/*
+@-webkit-keyframes am-moving-dashes {
+  100% {
+    stroke-dashoffset: -31px;
+  }
+}
+@keyframes am-moving-dashes {
+  100% {
+    stroke-dashoffset: -31px;
+  }
+}
+
+-webkit-animation: am-moving-dashes 1s linear infinite;
+animation: am-moving-dashes 1s linear infinite;
+
+*/

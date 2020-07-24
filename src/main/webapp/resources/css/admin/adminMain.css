@@ -11,9 +11,12 @@
 	background-color: #59b1eb;
 	color: white;
 	border-color: #248dd2;
-
 }
 
 main>.container {
 	padding: 12px 15px 60px 15px;
+}
+
+#btRegi {
+	margin: 0 0 0 14%;
 }
