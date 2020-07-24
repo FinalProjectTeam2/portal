@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
-<link href="<c:url value='/resources/css/admin/adminManageMem.css'/>" rel="stylesheet">
+<link href="<c:url value='/resources/css/admin/adminManageMember.css'/>" rel="stylesheet">
 <style>
 #searchSelect{
 	margin: 0 5px 0 3px;
