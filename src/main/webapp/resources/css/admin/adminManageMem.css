@@ -49,11 +49,11 @@ main>.container {
 }
 
 #btSearch {
-	width: 60px;
-	height: 35px;
+	width: 50px;
+	height: 31px;
 	font-size: 1em;
 	padding: 0;
-	margin: -6px 19px 0 20px;
+	margin: -6px 19px 0 18px;
 }
 
 #btMultiDel {
@@ -73,7 +73,19 @@ main>.container {
 	background-color: #f2f5fc;
 	border-top: 1px solid #70bded;
 }
+
 .btdiv {
-    float: right;
-    margin: 10px;
+	float: right;
+	margin: 10px;
+}
+
+.btCustom {
+	color: #fff;
+	background-color: #01539d;
+	border-color: #01539d;
+}
+#adminMngMem input[type="checkbox"]{
+    width: 15px;
+    height: 15px;
+    vertical-align: unset;
 }

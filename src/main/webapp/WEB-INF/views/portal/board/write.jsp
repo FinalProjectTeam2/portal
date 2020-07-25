@@ -33,14 +33,6 @@
 			</div>
 			<div class="row1">
 				<div class="col-25">
-					<label for="l_no">번호</label>
-				</div>
-				<div class="col-75">
-					<input type="text" id="no" name="no">
-				</div>
-			</div>
-			<div class="row1">
-				<div class="col-25">
 					<label for="l_category">분류</label>
 				</div>
 				<div class="col-75">
@@ -75,16 +67,18 @@
 				</div>
 			<div class="row1" style="padding-left: 2%; ">
 				<textarea id="subject" name="subject" placeholder="내용을 입력하세요."
-					style="height: 200px"></textarea>
+					style="height: 600px"></textarea>
 			</div>
 				<script type="text/javascript">
 					//CKEDITOR.replace("description"); //태그의 id
 					//이미지 업로드를 할 경우
 					CKEDITOR.replace("subject",{
 						//CKEDITOR.replace와 id("description")를 잘 적어주면 그 태그가 smart editor 스타일로 바뀌게 된다. 
-						filebrowserUploadUrl : "${pageContext.request.contextPath}/imageUpload"
+						filebrowserUploadUrl : "${pageContext.request.contextPath}/imageUpload",
 						//파일을 업로드 해야하기 때문에 filebrowserUploadUrl을 사용하고, 서버쪽에 코드를 완성해주어야 한다.
+						height: "500px"
 					});
+					
 				</script>
 			<div class="bts">
 				<input type="button" id="write" value="등록"> 

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
-<%@ include file="../inc/mainSidebar.jsp"%>
+<%@ include file="../../inc/top.jsp"%>
+<%@ include file="../../inc/mainSidebar.jsp"%>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/fnq.css'/>" >
@@ -119,4 +119,4 @@
     <!--/panel-group-->
     
 
-<%@ include file="../inc/bottom.jsp"%>
+<%@ include file="../../inc/bottom.jsp"%>

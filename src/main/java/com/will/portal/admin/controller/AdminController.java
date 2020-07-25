@@ -13,26 +13,31 @@ public class AdminController {
 	private static final Logger logger
 	= LoggerFactory.getLogger(AdminController.class);
 	
-	@RequestMapping(value = "/adminRegisterMem", method = RequestMethod.GET)
-	public void adminRegisterMem() {
-		logger.info("adminRegisterMem, GET");
+	@RequestMapping(value = "/adminRegisterMember", method = RequestMethod.GET)
+	public void adminRegisterMember() {
+		logger.info("adminRegisterMember, GET");
+	}
+	@RequestMapping(value = "/adminRegisterLecture", method = RequestMethod.GET)
+	public void adminRegisterLecture() {
+		logger.info("adminRegisterLecture, GET");
 	}
 	
 	@RequestMapping(value = "/adminMain",method = RequestMethod.GET)
 	public void adminMain() {
 		logger.info("adminMain, Get");
 	}
-	@RequestMapping(value = "/adminManageMem",method = RequestMethod.GET)
-	public void adminManageMem() {
-		logger.info("adminManageMem, Get");
+	@RequestMapping(value = "/adminManageMember",method = RequestMethod.GET)
+	public void adminManageMember() {
+		logger.info("adminManageMember, Get");
 	}
-	@RequestMapping(value = "/adminManageLec",method = RequestMethod.GET)
+	@RequestMapping(value = "/adminManageLecture",method = RequestMethod.GET)
 	public void adminManageLec() {
-		logger.info("adminManageLec, Get");
+		logger.info("adminManageLecture, Get");
 	}
-
 	@RequestMapping(value = "/test",method = RequestMethod.GET)
 	public void test() {
 		logger.info("test, Get");
 	}
+	
+	
 }

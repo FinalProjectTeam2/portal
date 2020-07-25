@@ -65,7 +65,7 @@
         <td>강의계획서</td>
         <td>syllabus</td>
         <td>N/A</td>
-        <td>CLOB</td>
+        <td>VARCHAR2(100)</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -88,7 +88,7 @@
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="6" class="header">강의시간표 (subj_timetable)</td>
+        <td colspan="6" class="header">강의시간표 (subj_time)</td>
     </tr>
     <tr class="column-header">
         <td>논리명</td>
@@ -170,7 +170,7 @@
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="6" class="header">강의평가 (subj_evaluation)</td>
+        <td colspan="6" class="header">강의평가 (subj_eval)</td>
     </tr>
     <tr class="column-header">
         <td>논리명</td>
@@ -279,7 +279,7 @@
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="6" class="header">개설교과과정 (open_subject)</td>
+        <td colspan="6" class="header">개설교과과정 (open_subj)</td>
     </tr>
     <tr class="column-header">
         <td>논리명</td>
@@ -431,7 +431,7 @@
         <td>조회수</td>
         <td>read_count</td>
         <td>N/A</td>
-        <td>DATE</td>
+        <td>NUMBER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -853,14 +853,6 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>인증코드</td>
-        <td>certi_code</td>
-        <td>N/A</td>
-        <td>VARCHAR2(30)</td>
-        <td>N</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
         <td>사진</td>
         <td>image_url</td>
         <td>N/A</td>
@@ -942,6 +934,14 @@
         <td>identity_state</td>
         <td>N/A</td>
         <td>CHAR(4)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>본인인증코드</td>
+        <td>COL</td>
+        <td>N/A</td>
+        <td>VARCHAR2(20)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1195,8 +1195,40 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>등록금액</td>
+        <td>입학금</td>
+        <td>admission_fee</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>수강료</td>
         <td>tuition</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>실습비</td>
+        <td>practice_cost</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>학생회비</td>
+        <td>student_fee</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>총등록금액</td>
+        <td>total_tuition</td>
         <td>N/A</td>
         <td>NUMBER</td>
         <td>N</td>
@@ -1817,7 +1849,7 @@
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="6" class="header">파일 (file)</td>
+        <td colspan="6" class="header">파일 (files)</td>
     </tr>
     <tr class="column-header">
         <td>논리명</td>
@@ -1829,9 +1861,9 @@
     </tr>
     <tr>
         <td>고유번호(PK)</td>
-        <td>COL2</td>
+        <td>no</td>
         <td>N/A</td>
-        <td>N/A</td>
+        <td>NUMBER</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -1877,9 +1909,9 @@
     </tr>
     <tr>
         <td>업로드 날짜</td>
-        <td>COL3</td>
+        <td>upfile_date</td>
         <td>N/A</td>
-        <td>N/A</td>
+        <td>DATE</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -2071,6 +2103,14 @@
         <td>minor</td>
         <td>N/A</td>
         <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>본인인증코드</td>
+        <td>identity_code</td>
+        <td>N/A</td>
+        <td>VARCHAR2(20)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
