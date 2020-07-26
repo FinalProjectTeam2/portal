@@ -3,11 +3,25 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.admin">
-<select id="selectSeq" resultType="int" parameterType="string">
-select 
-<if test="">
-EMPLOYEE_SEQ.nextval
-</if>
-from dual
-</select>
+	<select id="selectSeq" resultType="int" parameterType="int">
+		select
+		<if test="_parameter ==1">
+			EMPLOYEE_SEQ.nextval
+		</if>
+		<if test="_parameter ==2">
+			PROFESSOR_SEQ.nextval
+		</if>
+		<if test="_parameter ==3">
+			STUDENT_SEQ.nextval
+		</if>
+		from dual
+	</select>
+	<insert id="insertOfficial" parameterType="official_infoVO">
+		insert into OFFICIAL_INFO(official_no,hp1,hp2,hp3,ssn)
+		values(#{officialNo},#{hp1},#{hp2},#{hp3},#{ssn})
+	</insert>
+	<insert id="insertEmployee" parameterType="employeeVO">
+		insert into employee(emp_no,pwd,dep_code,emp_name,position_code)
+		values(#{empNo},#{pwd},#{depCode},#{empName},#{positionCode})
+	</insert>
 </mapper>

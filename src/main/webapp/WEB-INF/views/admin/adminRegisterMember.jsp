@@ -13,7 +13,8 @@
 							<h3>회원 등록</h3>
 						</div>
 						<div class="main-login main-center">
-							<form class="form-horizontal" method="post" action="<c:url value='/admin/adminRegisterMemberEmployee'/>">
+						<!--  -->
+							<form class="form-horizontal" method="post" action="<c:url value='/admin/adminRegisterEmployee'/>">
 								<div class="form-group">
 									<div>
 										<label for="sort">회원 구분</label> <select name="sort">

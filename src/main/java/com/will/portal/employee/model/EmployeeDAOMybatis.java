@@ -9,4 +9,15 @@ public class EmployeeDAOMybatis implements EmployeeDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private String namespace="";
+	private String namespaceAdmin="config.mybatis.mapper.oracle.admin.";
+	@Override
+	public int selectSeq(int sort) {
+		
+		return sqlSession.selectOne(namespaceAdmin+"selectSeq",sort);
+	}
+	@Override
+	public int insertEmployee(EmployeeVO employeeVo) {
+		return sqlSession.insert(namespaceAdmin+"insertEmployee",employeeVo);
+	}
+	
 }
