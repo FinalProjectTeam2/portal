@@ -22,57 +22,103 @@
 	
 		//아이디확인
 		$('#chkIdBt').click(function() {
-			$.ajax({
-				url : "<c:url value='/login/chkId'/>",
-				type:"post",
-				data : "stuNo=" +  $('#stuNo').val(),
-				success:function(res){
-					alert(res);
- 					if(res){
-						$('#errorId').html('본인인증을 해주세요');
-						$("#chkId").val("Y");
-						$('#forIdnt').show();
-						
-					}else{
-						$('#error').html('해당 아이디가 존재하지 않습니다');
-						$("#chkId").val("N");	
-					}  
-				},
-				error:function(xhr,status,error){
-					alert(status + ", " + error);
-				}
+			if($('#stuNo').val()==''){
+				alert('학번을 입력해주세요');
+				$('#stuNo').focus();
+				event.preventDefault();
+			}else{
+				$.ajax({
+					url : "<c:url value='/login/chkId'/>",
+					type:"post",
+					data : "stuNo=" +  $('#stuNo').val(),
+					success:function(res){
+						alert(res);
+	 					if(res){
+							$('#errorId').html('본인인증을 완료해주세요');
+							$("#chkId").val("Y");
+							$('#forIdnt').show();
+							
+						}else{
+							$('#error').html('※해당 아이디가 존재하지 않습니다');
+							$("#chkId").val("N");	
+						}  
+					},
+					error:function(xhr,status,error){
+						alert(status + ", " + error);
+					}
+					
+				});
 				
-			});
+			}
+			
 		});
 		
 		//본인확인
 		$('#idntBt').click(function() {
-
-			$.ajax({
-				url : "<c:url value='/login/idnt'/>",
-				type:"post",
-				data : $('#idntF').serialize(),
-				success:function(res){
-					alert(res);
- 					if(res){
-						$('#errorIdnt').html('비밀번호를 변경해주세요');
-						$("#idnt").val("Y");
-						$('#forPwd').show();
-						
-					}else{
-						$('#errorIdnt').html('해당 아이디가 존재하지 않습니다');
-						$("#idnt").val("N");	
-					}  
-				},
-				error:function(xhr,status,error){
-					alert(status + ", " + error);
-				}
+			if($('#name').val() == ''){
+				alert('이름을 입력해주세요');
+				$('#name').focus();
+				event.preventDefault();
+			}else if($('#ssn1').val() == '' || $('#ssn2').val() == '' ){
+				alert('주민번호를 입력해주세요');
+				$('#ssn1').focus();
+				event.preventDefault();
+			}else if(!validate_number($('#ssn1').val()) || !validate_number($('#ssn2').val())){
+				alert('주민번호는 숫자만 입력가능합니다');
+				$('#ssn1').focus();
+				event.preventDefault();
+			}else{
+				$.ajax({
+					url : "<c:url value='/login/idnt'/>",
+					type:"post",
+					data : $('#idntF').serialize(),
+					success:function(res){
+						alert(res);
+	 					if(res){
+							$('#errorIdnt').html('비밀번호를 변경해주세요');
+							$("#idnt").val("Y");
+							$('#forPwd').show();
+							
+						}else{
+							$('#errorIdnt').html('※본인인증 실패');
+							$("#idnt").val("N");	
+						}  
+					},
+					error:function(xhr,status,error){
+						alert(status + ", " + error);
+					}
+					
+				});
 				
-			});
+			}
+			
 		});
 		
+		$('form[name=chgPwdFrm]').submit(function() {
+			if($('#pwd1').val()!= $('#pwd2').val()){
+				$('#errorPwd').html('※비밀번호가 일치하지 않습니다.');					
+				$('#pwd1').focus();
+				event.preventDefault();
+			}else if($('#pwd1').val()==''){
+				alert('비밀번호를 입력해주세요');
+				$('#pwd1').focus();
+				event.preventDefault();
+			}else if($('#pwd2').val()==''){
+				alert('비밀번호를 확인해주세요');
+				$('#pwd2').focus();
+				event.preventDefault();
+				
+			}
+		});
+
 		
 	});
+
+	//숫자만 입력가능
+	function validate_number(number) {
+		var pattern = new RegExp(/^[0-9]*$/);
+		return pattern.test(number);
+	}
 </script>
 <!-- main 시작 -->
 <main role="main" class="flex-shrink-0">
@@ -102,7 +148,7 @@
 							</div>
 							<input type="hidden" id="chkId" >
 			
-							<div id="errorId" style="color: red; text-align: center;"></div>
+							<div id="errorId" class="error" ></div>
 						</form>
 					</div>
 
@@ -114,19 +160,19 @@
 							<form name="idntFrm" id="idntF">
 								<div class="input-group form-group">
 									<label for="name" class="lab">이름</label> <input type="text"
-										class="form-control" placeholder="이름을 입력하세요" name="name">
+										class="form-control" placeholder="이름을 입력하세요" name="name" id="name">
 								</div>
 								<div class="input-group form-group">
 									<label for="ssn" class="lab">주민번호</label> <input type="text"
-										class="form-control" name="ssn1" maxlength="6">- <input
-										type="text" class="form-control" name="ssn2" maxlength="1"
+										class="form-control" name="ssn1" maxlength="6" id="ssn1">- <input
+										type="text" class="form-control" name="ssn2" id="ssn2" maxlength="1"
 										style="width: 10px;">******
 								</div>
 								<div class="form-group" id="idntDiv">
 									<input type="button" value="본인인증" id="idntBt">
 								</div>
 								<input type="hidden" id="idnt" >
-								<div id="errorIdnt" style="color: red; text-align: center;"></div>
+								<div id="errorIdnt" class="error" ></div>
 							</form>
 						</div>
 
@@ -134,27 +180,27 @@
 						<div id="forPwd">
 							<form name="chgPwdFrm">
 								<div class="input-group form-group">
-									<label for="pwd" class="lab">비밀번호</label>
+									<label for="pwd1" class="lab">비밀번호</label>
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i class="fas fa-key"
 											style="color: white;"></i></span>
 									</div>
 									<input type="password" class="form-control"
-										placeholder="영문, 숫자 조합하여 8자이상 " name="pwd"> 
+										placeholder="영문, 숫자 조합하여 8자이상 " name="pwd1" id="pwd1"> 
 								</div>
 								<div class="input-group form-group">
-									<label for="pwd" class="lab">비밀번호 확인</label>
+									<label for="pwd2" class="lab">비밀번호 확인</label>
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i class="fas fa-key"
 											style="color: white;"></i></span>
 									</div>
-									<input type="password" class="form-control" name="pwd">
+									<input type="password" class="form-control" name="pwd2" id="pwd2">
 
 								</div>
+									<div id="errorPwd" class="error" ></div>
 								<div class="form-group" id="pwdBtDiv">
 									<input type="submit" value="비밀번호 변경" id="pwdBt">
 								</div>
-								
 							</form>
 						</div>
 					<!-- block -->

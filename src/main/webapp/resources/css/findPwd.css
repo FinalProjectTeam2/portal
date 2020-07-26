@@ -101,12 +101,12 @@ margin-left: 4px;
 }
 
 #forPwd{
-	height: 180px;
 	background: rgba(236, 241, 247, 0.38);
 	margin:10px; 
 	padding: 15px;
 	padding-top: 40px;
 	border-radius: 5px;
+
 }
 
 #pwdBt{
@@ -133,4 +133,10 @@ background-color:white;
 	margin-top: 5px;
 	margin-bottom:5px;
 	text-align: center;
+}
+
+.error{
+	font-size: 14px;
+	color: orange;
+		
 }
