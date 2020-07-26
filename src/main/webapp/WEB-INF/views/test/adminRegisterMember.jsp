@@ -4,13 +4,76 @@
 <%@ include file="../inc/mainSidebar.jsp"%>
 <script type="text/javascript">
 	$(function () {
-		$('#form').submit(function () {
-			if($('#sort').val()==null){
+
+		$('#btRegi').click(function () {
+			var sort = $('#sort').val();
+			if(sort == 1){
+				check();
+				$('#form').prop("action","<c:url value='/admin/adminRegisterMemberEmployee' />");
+			}else if(sort == 2){
+				check();
+				$('#form').prop("action","<c:url value='/admin/adminRegisterMemberProfessor' />");
+			}else if(sort == 3){
+				check();
+				$('#form').prop("action","<c:url value='/admin/adminRegisterMemberStudent' />");
+			}else if(sort == null){
 				alert('회원구분을 선택해주세요');
-			}else if(){
-				
+				$('#sort').focus();
+				event.preventDefault();
 			}
-		});
+		});	 
+		
+		
+		function check() {
+			if($('#name').val() == ""){
+				alert('이름을 입력해주세요');
+				$('#name').focus();
+				event.preventDefault();
+			}else if($('#SSN').val() == ""){
+				alert('주민번호를 입력해주세요');
+				$('#SSN').focus();
+				event.preventDefault();
+			}else if($('#hp1').val() == ""){
+				alert('전화번호를 입력해주세요');
+				$('#hp1').focus();
+				event.preventDefault();
+			}else if($('#hp2').val() == ""){
+				alert('전화번호를 입력해주세요');
+				$('#hp2').focus();
+				event.preventDefault();
+			}else if($('#hp3').val() == ""){
+				alert('전화번호를 입력해주세요');
+				$('#hp3').focus();
+				event.preventDefault();
+			}else if($('#depCode').val() == null){
+				alert('부서를 선택해주세요');
+				$('#depCode').focus();
+				event.preventDefault();
+			}else if($('#authCode').val() == null){
+				alert('권한을 선택해주세요');
+				$('#authCode').focus();
+				event.preventDefault();
+			}else if($('#positionCode').val() == null){
+				alert('직책을 선택해주세요');
+				$('#positionCode').focus();
+				event.preventDefault();
+			}else if(!validate_number($('#hp1').val()) || !validate_number($('#hp2').val())|| !validate_number($('#hp3').val())){
+				alert('전화번호는 숫자만 가능합니다.');
+				$('#hp1').focus();
+				event.preventDefault();
+			}else if(!validate_number($('#SSN').val())){
+				alert('주민번호는 숫자만 가능합니다.');
+				$('#SSN').focus();
+				event.preventDefault();
+			}
+		}
+		
+		//숫자만 입력가능
+		function validate_number(number) {
+			var pattern = new RegExp(/^[0-9]*$/);
+			return pattern.test(number);
+		}
+		
 
 	});
 </script>
@@ -53,28 +116,39 @@
                                  <span class="input-group-addon"><i
                                     class="fa fa-user fa" aria-hidden="true"></i></span> <input
                                     type="text" class="form-control" name="SSN" id="SSN"
-                                    placeholder="-는 빼고 입력하세요" />
+                                    placeholder="-는 빼고 입력하세요" /><span id="ssnError"></span>
                               </div>
                            </div>
-                        </div>
-                        <div class="form-group">
-                           <label for="email" class="cols-sm-2 control-label">전화번호</label>
-                           <div class="cols-sm-10">
-                              <div class="input-group">
-                                 <span class="input-group-addon"><i
-                                    class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
-                                    type="text" class="form-control" name="tel" id="tel"
-                                    placeholder="-는 빼고 입력해주세요" />
-                              </div>
-                           </div>
-                        </div>            
+                        </div>         
                         <div class="form-group">
                            <label for="email" class="cols-sm-2 control-label">hp1</label>
                            <div class="cols-sm-10">
                               <div class="input-group">
                                  <span class="input-group-addon"><i
                                     class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
-                                    type="text" class="form-control" name="tel" id="tel"
+                                    type="text" class="form-control" name="tel" id="hp1"
+                                    placeholder="-는 빼고 입력해주세요" />
+                              </div>
+                           </div>
+                        </div>            
+                        <div class="form-group">
+                           <label for="email" class="cols-sm-2 control-label">hp2</label>
+                           <div class="cols-sm-10">
+                              <div class="input-group">
+                                 <span class="input-group-addon"><i
+                                    class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
+                                    type="text" class="form-control" name="tel" id="hp2"
+                                    placeholder="-는 빼고 입력해주세요" />
+                              </div>
+                           </div>
+                        </div>            
+                        <div class="form-group">
+                           <label for="email" class="cols-sm-2 control-label">hp3</label>
+                           <div class="cols-sm-10">
+                              <div class="input-group">
+                                 <span class="input-group-addon"><i
+                                    class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
+                                    type="text" class="form-control" name="tel" id="hp3"
                                     placeholder="-는 빼고 입력해주세요" />
                               </div>
                            </div>
@@ -83,7 +157,7 @@
                         <hr id="selLine">
                         <div class="form-group">
                            <div>
-                              <label for="depCode">부서</label> <select name="depCode">
+                              <label for="depCode">부서</label> <select name="depCode" id="depCode">
                                  <option disabled selected>선택</option>
                                  <option value="1">교학처</option>
                                  <option value="2">기획처</option>
@@ -95,7 +169,7 @@
                         </div>
                         <div class="form-group">
                            <div>
-                              <label for="authCode">권한</label> <select name="authCode">
+                              <label for="authCode">권한</label> <select name="authCode" id="authCode">
                                  <option disabled selected>선택</option>
                                  <option value="1">admin</option>
                                  <option value="2">manager</option>
@@ -105,7 +179,7 @@
                         </div>
                         <div class="form-group">
                            <div>
-                              <label for="positionCode">직책</label> <select name="positionCode">
+                              <label for="positionCode">직책</label> <select name="positionCode" id="positionCode">
                                  <option disabled selected>선택</option>
                                  <option value="1">부장</option>
                                  <option value="2">주임</option>

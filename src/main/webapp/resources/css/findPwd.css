@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 main .container{
-height: 100%;
+
 align-content: center;
 font-family: 'Numans', sans-serif;
 margin: 0 auto;
@@ -11,7 +11,7 @@ margin: 0 auto;
 }
 
 .card{
-height: 555px;
+
 margin-top: auto;
 margin-bottom: auto;
 width: 660px;
@@ -92,12 +92,11 @@ margin-left: 4px;
 	border: none;
 }
 
-#forId{
-	height: 180px;
+#forId, #forIdnt{
 	background: rgba(236, 241, 247, 0.38);
 	margin:10px; 
 	padding: 15px;
-	padding-top: 60px;
+	padding-top: 40px;
 	border-radius: 5px;
 }
 
@@ -115,7 +114,7 @@ margin-left: 4px;
 	
 }
 
-#pwdBt{
+#pwdBt, #idntBt{
 width: 150px;
 color: white;
 background-color: #01539d;
@@ -125,12 +124,13 @@ padding: 6px 12px;
 border-radius: 5px;
 }
 
-#pwdBt:hover{
+#pwdBt:hover, #idntBt:hover{
 color: black;
 background-color:white;
 }
 
-#pwdBtDiv{
-	margin-top: 30px;
+#pwdBtDiv, #idntDiv{
+	margin-top: 5px;
+	margin-bottom:5px;
 	text-align: center;
 }
