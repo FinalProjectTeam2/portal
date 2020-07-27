@@ -1,5 +1,7 @@
 package com.will.portal.faculty.model;
 
-public interface FacultyDAO {
+import java.util.List;
 
+public interface FacultyDAO {
+	public List<FacultyVO> selectFaculty();
 }
