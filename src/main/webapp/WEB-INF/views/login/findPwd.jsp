@@ -18,7 +18,7 @@
 <script>
 	$(function() {
 		$('#forIdnt').hide();
-		$('#forPwd').hide();
+		$('#sendInfo').hide();
 	
 		//아이디확인
 		$('#chkIdBt').click(function() {
@@ -37,6 +37,7 @@
 							$('#errorId').html('본인인증을 완료해주세요');
 							$("#chkId").val("Y");
 							$('#forIdnt').show();
+							
 							
 						}else{
 							$('#error').html('※해당 아이디가 존재하지 않습니다');
@@ -75,9 +76,11 @@
 					success:function(res){
 						alert(res);
 	 					if(res){
-							$('#errorIdnt').html('비밀번호를 변경해주세요');
 							$("#idnt").val("Y");
-							$('#forPwd').show();
+							$('#forId').hide();
+							$('#forIdnt').hide();
+							$('#sendInfo').show();
+							$('#msg').html('본인인증성공! 가입한 이메일로 비밀번호가 전송되었습니다. 확인바랍니다.');
 							
 						}else{
 							$('#errorIdnt').html('※본인인증 실패');
@@ -94,7 +97,11 @@
 			
 		});
 		
-		$('form[name=chgPwdFrm]').submit(function() {
+		$('#toLogin').click(function() {
+			location.href="<c:url value='/login/login' />";
+		});
+		
+		/* $('form[name=chgPwdFrm]').submit(function() {
 			if($('#pwd1').val()!= $('#pwd2').val()){
 				$('#errorPwd').html('※비밀번호가 일치하지 않습니다.');					
 				$('#pwd1').focus();
@@ -109,7 +116,7 @@
 				event.preventDefault();
 				
 			}
-		});
+		}); */
 
 		
 	});
@@ -152,7 +159,6 @@
 						</form>
 					</div>
 
-
 					<!-- 아이디 확인 후 -->
 
 						<!-- 본인인증 -->
@@ -175,9 +181,12 @@
 								<div id="errorIdnt" class="error" ></div>
 							</form>
 						</div>
-
+						<div id="sendInfo">
+							<p id="msg"></p>
+							<button type="button" id="toLogin">로그인페이지로 이동</button>
+						</div>
 						<!-- pwd -->
-						<div id="forPwd">
+						<!-- <div id="forPwd">
 							<form name="chgPwdFrm">
 								<div class="input-group form-group">
 									<label for="pwd1" class="lab">비밀번호</label>
@@ -202,7 +211,7 @@
 									<input type="submit" value="비밀번호 변경" id="pwdBt">
 								</div>
 							</form>
-						</div>
+						</div> -->
 					<!-- block -->
 				</div>
 			</div>

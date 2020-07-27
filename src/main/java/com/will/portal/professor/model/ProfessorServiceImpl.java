@@ -15,7 +15,7 @@ import com.will.portal.official_info.model.Official_infoVO;
 public class ProfessorServiceImpl implements ProfessorService{
 	@Autowired
 	private ProfessorDAO professorDao;
-	
+
 	@Autowired private Official_infoDAO officialDao;
 	@Autowired private CommonDAO commonDao;
 
@@ -41,5 +41,26 @@ public class ProfessorServiceImpl implements ProfessorService{
 			cnt2 = officialDao.insertOfficial(officialVo);
 		}
 		return cnt2;
+	}
+	@Override
+	public int loginCheck(String officicalNo, String pwd) {
+		String dbPwd = professorDao.selectPwd(officicalNo);
+		int result = 0;
+		if(dbPwd != null && !dbPwd.isEmpty() ) {
+			if(pwd.equals(dbPwd)) {
+				result = LOGIN_OK;
+			}else {
+				result = PWD_DISAGREE;
+			}
+		}else {
+			result = ID_NONE;
+		}
+
+		return result;
+	}
+
+	@Override
+	public ProfessorVO selectByProfNo(String profNo) {
+		return professorDao.selectByProfNo(profNo);
 	}
 }

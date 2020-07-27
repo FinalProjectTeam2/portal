@@ -41,4 +41,27 @@ public class EmployeeServiceImpl implements EmployService {
 		return cnt2;
 	}
 
+	@Override
+	public int loginCheck(String officicalNo, String pwd) {
+
+		String dbPwd = employeeDao.selectPwd(officicalNo);
+		int result = 0;
+		if(dbPwd != null && !dbPwd.isEmpty() ) {
+			if(pwd.equals(dbPwd)) {
+				result = LOGIN_OK;
+			}else {
+				result = PWD_DISAGREE;
+			}
+		}else {
+			result = ID_NONE;
+		}
+
+		return result;
+
+	}
+
+	@Override
+	public EmployeeVO selectByEmpNo(String empNo) {
+		return employeeDao.selectByEmpNo(empNo);
+	}
 }

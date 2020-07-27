@@ -6,15 +6,22 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class StudentDAOMybatis implements StudentDAO{
-
-	@Autowired SqlSessionTemplate sqlSession;
-	private String namespace="";
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private String namespace = "config.mybatis.mapper.oracle.student.";
 	private String namespaceAdmin="config.mybatis.mapper.oracle.admin.";
 
 	@Override
 	public int insertStudent(StudentVO studentVo) {
 		return sqlSession.insert(namespaceAdmin+"insertStudent",studentVo);
 	}
-	
-	
+
+	public String selectPwd(String stuNo) {
+		return sqlSession.selectOne(namespace + "selectPwd", stuNo);
+	}
+
+	@Override
+	public StudentVO selectByStuNo(String stuNo) {
+		return sqlSession.selectOne(namespace + "selectByStuNo", stuNo);
+	}
 }
