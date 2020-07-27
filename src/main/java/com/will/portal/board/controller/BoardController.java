@@ -3,6 +3,8 @@ package com.will.portal.board.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.collections4.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +88,19 @@ public class BoardController {
 		
 		medel.addAttribute("vo", vo);
 		medel.addAttribute("list", list);
+	}
+	
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	public String write_post(@RequestParam String title, @RequestParam String contents, @RequestParam String officialNo,
+			@RequestParam String bdCode, HttpServletRequest request,Model medel) {
+		PostsVO vo = new PostsVO();
+		vo.setBdCode(bdCode);
+		vo.setContents(contents);
+		vo.setTitle(title);
+		vo.setOfficialNo(officialNo);
+		logger.info("게시글 작성 처리, 파라미터 vo={}",vo);
+		
+		return "redirect:/portal/board/list?bdCode="+vo.getBdCode();
 	}
 	
 	@RequestMapping("/ajax/findBoard")

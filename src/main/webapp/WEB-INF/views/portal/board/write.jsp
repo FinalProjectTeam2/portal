@@ -34,6 +34,20 @@ button[name=delFile]:hover {
 			$("#fileList").hide();
 		}
 		
+		$("#boardFrm").submit(function() {
+			if($("#title").val().length < 1){
+				alert("제목을 작성하셔야 합니다.");
+				return false;
+			}
+			if($("#bdCode").val().length < 1){
+				alert("분류를 선택하셔야 합니다.");
+				return false;
+			}
+			
+			$("#contents").val(CKEDITOR.instances.subject.getData());
+			$("#subject").remove();
+		});
+		
 		$("#list").click(function() {
 			location.href = "<c:url value='/portal/board/list?bdCode="+$("#bdCode").val()+"'/>";
 		});
@@ -98,9 +112,10 @@ button[name=delFile]:hover {
 </script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-		<form action="<c:url value='/portal/board/write'/>" class="writeFrm" id="boardFrm"
-			enctype="multipart/data">
+		<form action="<c:url value='/portal/board/write'/>" class="writeFrm" id="boardFrm" method="post"
+			enctype="multipart/form-data">
 			<input type="text" value="${sessionScope.officialNo }" name="officialNo">
+			<input type="text" id="contents" name="contents">
 			<div class="row1">
 				<div class="col-25">
 					<label for="l_title" class="formTitle">제목</label>

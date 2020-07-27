@@ -3,38 +3,21 @@ package com.will.portal.posts.model;
 import java.sql.Timestamp;
 
 public class PostsVO {
-	private String postCode;
-	private String postNo;
+	private int postNo;
+	private String officialNo;
 	private String title;
 	private String contents;
 	private Timestamp regDate;
 	private int readCount;
 	private String delFlag;
-	private int bdCode;
-	private String authCode;
+	private String bdCode;
 	private int newImgTerm;
 
-	public int getNewImgTerm() {
-		return newImgTerm;
-	}
-
-	public void setNewImgTerm(int newImgTerm) {
-		this.newImgTerm = newImgTerm;
-	}
-
-	public String getPostCode() {
-		return postCode;
-	}
-
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-
-	public String getPostNo() {
+	public int getPostNo() {
 		return postNo;
 	}
 
-	public void setPostNo(String postNo) {
+	public void setPostNo(int postNo) {
 		this.postNo = postNo;
 	}
 
@@ -78,27 +61,35 @@ public class PostsVO {
 		this.delFlag = delFlag;
 	}
 
-	public int getBdCode() {
+	public String getBdCode() {
 		return bdCode;
 	}
 
-	public void setBdCode(int bdCode) {
+	public void setBdCode(String bdCode) {
 		this.bdCode = bdCode;
 	}
 
-	public String getAuthCode() {
-		return authCode;
+	public int getNewImgTerm() {
+		return newImgTerm;
 	}
 
-	public void setAuthCode(String authCode) {
-		this.authCode = authCode;
+	public void setNewImgTerm(int newImgTerm) {
+		this.newImgTerm = newImgTerm;
+	}
+
+	public String getOfficialNo() {
+		return officialNo;
+	}
+
+	public void setOfficialNo(String officialNo) {
+		this.officialNo = officialNo;
 	}
 
 	@Override
 	public String toString() {
-		return "PostsVO [postCode=" + postCode + ", postNo=" + postNo + ", title=" + title + ", contents=" + contents
-				+ ", regDate=" + regDate + ", readCount=" + readCount + ", delFlag=" + delFlag + ", bdCode=" + bdCode
-				+ ", authCode=" + authCode + ", newImgTerm=" + newImgTerm + "]";
+		return "PostsVO [postNo=" + postNo + ", officialNo=" + officialNo + ", title=" + title + ", contents="
+				+ contents + ", regDate=" + regDate + ", readCount=" + readCount + ", delFlag=" + delFlag + ", bdCode="
+				+ bdCode + ", newImgTerm=" + newImgTerm + "]";
 	}
 
 }
