@@ -6,6 +6,9 @@
 	<select id="selectDepartment" resultType="departmentVO">
 		select * from department
 	</select>
+	<select id="selectDepartmentByFaculty" parameterMap="string" resultType="departmentVO">
+		select * from department where facultyNo=#{facultyNo}
+	</select>
 </mapper>
 
 

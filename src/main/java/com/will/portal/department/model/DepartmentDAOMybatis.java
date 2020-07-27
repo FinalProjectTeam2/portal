@@ -16,5 +16,10 @@ public class DepartmentDAOMybatis implements DepartmentDAO{
 	public List<DepartmentVO> selectDepartment() {
 		return sqlSession.selectList(namespace+"selectDepartment");
 	}
+
+	@Override
+	public List<DepartmentVO> selectDepartmentByFaculty(int facultyNo) {
+		return sqlSession.selectList(namespace+"selectDepartmentByFaculty",facultyNo);
+	}
 	
 }

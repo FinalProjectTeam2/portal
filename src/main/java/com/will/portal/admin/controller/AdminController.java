@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.portal.department.model.DepartmentService;
 import com.will.portal.department.model.DepartmentVO;
@@ -50,6 +51,7 @@ public class AdminController {
 		List<Prof_positionVO> profPositionList=profPositionService.selectProfPosition();
 		
 		
+		
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList",departmentList);
@@ -57,6 +59,16 @@ public class AdminController {
 		
 		return "admin/adminRegisterMember";
 				
+	}
+	
+	@RequestMapping("/departmentList")
+	@ResponseBody
+	public List<DepartmentVO> departmentList(int facultyNo){
+		logger.info("ajax-departmentList, param: {}",facultyNo);
+		
+		List<DepartmentVO> departmentList= departmentService.selectDepartmentByFaculty(facultyNo);
+		
+		return departmentList;
 	}
 	
 	@RequestMapping(value = "/adminRegisterEmployee",method = RequestMethod.POST)
