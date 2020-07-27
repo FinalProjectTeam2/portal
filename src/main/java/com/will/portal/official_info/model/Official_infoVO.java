@@ -18,6 +18,9 @@ public class Official_infoVO {
 	
 	
 	
+	public Official_infoVO() {
+		super();
+	}
 	public String getOfficialNo() {
 		return officialNo;
 	}

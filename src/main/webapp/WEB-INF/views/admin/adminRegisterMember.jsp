@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
-<link href="<c:url value='/resources/css/admin/adminRegisterMem.css' />" rel="stylesheet">
+<link href="<c:url value='/resources/css/admin/adminRegisterMember.css' />" rel="stylesheet">
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="regiMember">
@@ -13,78 +13,100 @@
 							<h3>회원 등록</h3>
 						</div>
 						<div class="main-login main-center">
-							<form class="form-horizontal" method="post" action="#">
+						<!--  -->
+							<form class="form-horizontal" method="post" action="<c:url value='/admin/adminRegisterEmployee'/>">
 								<div class="form-group">
 									<div>
 										<label for="sort">회원 구분</label> <select name="sort">
 											<option disabled selected>선택</option>
-											<option value="student">학생</option>
-											<option value="professor">교수</option>
-											<option value="staff">임직원</option>
+											<option value="3">학생</option>
+											<option value="2">교수</option>
+											<option value="1">임직원</option>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="name" class="cols-sm-2 control-label">이름</label>
+									<label for="empName" class="cols-sm-2 control-label">이름</label>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i
 												class="fa fa-user fa" aria-hidden="true"></i></span> <input
-												type="text" class="form-control" name="name" id="name"
+												type="text" class="form-control" name="empName" id="empName"
 												placeholder="이름을 입력하세요" />
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="password" class="cols-sm-2 control-label">비밀번호</label>
+									<label for="ssn" class="cols-sm-2 control-label">주민번호</label>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i
-												class="fa fa-lock fa-lg" aria-hidden="true"></i></span> <input
-												type="password" class="form-control" name="password"
-												id="password" placeholder="비밀번호를 입력하세요" />
+												class="fa fa-user fa" aria-hidden="true"></i></span> <input
+												type="text" class="form-control" name="ssn" id="ssn" placeholder="-는 빼고 입력하세요" />
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="confirm" class="cols-sm-2 control-label">비밀번호
-										확인 </label>
+									<label for="hp2" class="cols-sm-2 control-label">전화번호</label>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i
-												class="fa fa-lock fa-lg" aria-hidden="true"></i></span> <input
-												type="password" class="form-control" name="confirm"
-												id="confirm" placeholder="비밀번호 확인" />
+												class="fa fa-envelope fa" aria-hidden="true"></i></span> 
+												<input type="text" class="form-control" name="hp1" id="hp1" value="010"/>
+												<input type="text" class="form-control" name="hp2" id="hp2" />
+												<input type="text" class="form-control" name="hp3" id="hp3" />
 										</div>
+									</div>
+								</div>				
+								<hr id="selLine">
+								<div class="form-group">
+									<div>
+										<label for="depCode">부서</label> <select name="depCode">
+											<option disabled selected>선택</option>
+											<option value="1">교학처</option>
+											<option value="2">기획처</option>
+											<option value="3">학생처</option>
+											<option value="4">입학홍보처</option>
+											<option value="5">사무처</option>
+										</select>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="email" class="cols-sm-2 control-label">전화번호</label>
-									<div class="cols-sm-10">
-										<div class="input-group">
-											<span class="input-group-addon"><i
-												class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
-												type="text" class="form-control" name="tel" id="tel"
-												placeholder="-는 빼고 입력해주세요" />
-										</div>
+									<div>
+										<label for="authCode">권한</label> <select name="authCode">
+											<option disabled selected>선택</option>
+											<option value="1">admin</option>
+											<option value="2">manager</option>
+											<option value="3">staff</option>
+										</select>
 									</div>
 								</div>
-
 								<div class="form-group">
-									<label for="username" class="cols-sm-2 control-label">info1</label>
+									<div>
+										<label for="positionCode">직책</label> <select name="positionCode">
+											<option disabled selected>선택</option>
+											<option value="1">부장</option>
+											<option value="2">주임</option>
+											<option value="3">사원</option>
+										</select>
+									</div>
+								</div>
+								 <!-- <div class="form-group">
+									<label for="" class="cols-sm-2 control-label"></label>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i
-												class="fa fa-users fa" aria-hidden="true"></i></span> <input
-												type="text" class="form-control" name="info1" id="info1"
-												placeholder="Enter your info1" />
+												class="fa fa-user fa" aria-hidden="true"></i></span> <input
+												type="text" class="form-control" name="" id=""
+												placeholder="-는 빼고 입력하세요" />
 										</div>
 									</div>
-								</div>
+								</div> -->
+								
 								<div class="form-group ">
-									<button type="button"
+								<input type="submit"
 										class="btn btn-primary btn-lg btn-block login-button"
-										id="btRegi">등록</button>
+										id="btRegi">
 								</div>
 								<div class="login-register"></div>
 							</form>

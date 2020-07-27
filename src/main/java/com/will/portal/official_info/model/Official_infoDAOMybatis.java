@@ -12,10 +12,16 @@ public class Official_infoDAOMybatis implements Official_infoDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private String namespace="config.mybatis.mapper.oracle.member.";
+	private String namespaceAdmin="config.mybatis.mapper.oracle.admin.";
 	
 	@Override
 	public Official_infoVO selectByNo(String officialNo) {
 		return sqlSession.selectOne(namespace+"selectOfficialByNo", officialNo);
+	}
+
+	@Override
+	public int insertOfficial(Official_infoVO officialVo) {
+		return sqlSession.insert(namespaceAdmin+"insertOfficial",officialVo);
 	}
 
 	@Override
