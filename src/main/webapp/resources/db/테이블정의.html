@@ -45,7 +45,7 @@
     <tr>
         <td colspan="6" class="header">강의계획 (syllabus)</td>
     </tr>
-    <tr class="column-header">
+     <tr class="column-header">
         <td>논리명</td>
         <td>물리명</td>
         <td>도메인</td>
@@ -389,15 +389,15 @@
     </tr>
     <tr>
         <td>게시글코드(PK)</td>
-        <td>post_code</td>
+        <td>post_no</td>
         <td>N/A</td>
-        <td>VARCHAR2(20)</td>
+        <td>NUMBER</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
     <tr>
         <td>관계자번호</td>
-        <td>post_no</td>
+        <td>official_no</td>
         <td>N/A</td>
         <td>VARCHAR2(150)</td>
         <td>N</td>
@@ -447,15 +447,7 @@
         <td>게시판코드(FK)</td>
         <td>bd_code</td>
         <td>N/A</td>
-        <td>NUMBER</td>
-        <td>N</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>관리코드(FK)</td>
-        <td>auth_code</td>
-        <td>N/A</td>
-        <td>VARCHAR2(50)</td>
+        <td>VARCHAR2(10)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -474,9 +466,9 @@
     </tr>
     <tr>
         <td>게시판코드(PK)</td>
-        <td>bd_no</td>
+        <td>bd_code</td>
         <td>N/A</td>
-        <td>NUMBER</td>
+        <td>VARCHAR2(10)</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -582,6 +574,14 @@
         <td>N/A</td>
         <td>VARCHAR2(10)</td>
         <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>권한코드(FK)</td>
+        <td>auth_code</td>
+        <td>N/A</td>
+        <td>VARCHAR2(50)</td>
+        <td>N</td>
         <td>&nbsp;</td>
     </tr>
 </table>
@@ -939,7 +939,7 @@
     </tr>
     <tr>
         <td>본인인증코드</td>
-        <td>COL</td>
+        <td>identity_code</td>
         <td>N/A</td>
         <td>VARCHAR2(20)</td>
         <td>N</td>
@@ -988,7 +988,7 @@
         <td>설명</td>
     </tr>
     <tr>
-        <td>관리코드(PK)</td>
+        <td>권한코드(PK)</td>
         <td>auth_code</td>
         <td>N/A</td>
         <td>VARCHAR2(50)</td>
@@ -996,7 +996,7 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>관리명</td>
+        <td>권한명</td>
         <td>auth_name</td>
         <td>N/A</td>
         <td>VARCHAR2(30)</td>
@@ -1151,9 +1151,9 @@
     </tr>
     <tr>
         <td>게시글코드(FK)</td>
-        <td>post_code</td>
+        <td>post_no</td>
         <td>N/A</td>
-        <td>VARCHAR2(20)</td>
+        <td>NUMBER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1276,14 +1276,6 @@
         <td>dep_name</td>
         <td>N/A</td>
         <td>VARCHAR2(100)</td>
-        <td>Y</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>직책코드(FK)</td>
-        <td>position_code</td>
-        <td>N/A</td>
-        <td>VARCHAR2(50)</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -1553,7 +1545,15 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>관리코드(FK)</td>
+        <td>직책코드(FK)</td>
+        <td>position_code</td>
+        <td>N/A</td>
+        <td>VARCHAR2(50)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>권한코드(FK)</td>
         <td>auth_code</td>
         <td>N/A</td>
         <td>VARCHAR2(50)</td>
@@ -1869,9 +1869,9 @@
     </tr>
     <tr>
         <td>게시글코드(FK)</td>
-        <td>post_code</td>
+        <td>post_no</td>
         <td>N/A</td>
-        <td>VARCHAR2(20)</td>
+        <td>NUMBER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
