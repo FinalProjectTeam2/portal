@@ -61,7 +61,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public StudentVO selectByStuNo(String stuNo) {
-		return dao.selectByStuNo(stuNo);
+		return studentDao.selectByStuNo(stuNo);
 	}
 
 }
