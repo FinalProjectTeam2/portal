@@ -7,4 +7,5 @@ import com.will.portal.category.model.CategoryListVO;
 public interface BoardDAO {
 	 List<CategoryListVO> selectCategoryList();
 	 BoardVO selectBoardByBdCode(String bdCode);
+	 List<BoardVO> selectBoardByCategoryInline(String bdCode);
 }

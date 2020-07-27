@@ -20,4 +20,9 @@ public class BoardServiceImpl implements BoardService{
 	public BoardVO selectBoardByBdCode(String bdCode) {
 		return boardDao.selectBoardByBdCode(bdCode);
 	}
+
+	@Override
+	public List<BoardVO> selectBoardByCategoryInline(String bdCode) {
+		return boardDao.selectBoardByCategoryInline(bdCode);
+	}
 }

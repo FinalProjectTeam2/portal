@@ -25,6 +25,11 @@ public class BoardDAOMybatis implements BoardDAO{
 	public BoardVO selectBoardByBdCode(String bdCode) {
 		return sqlSession.selectOne(namespace + "selectBoardByBdCode", bdCode);
 	}
+
+	@Override
+	public List<BoardVO> selectBoardByCategoryInline(String bdCode) {
+		return sqlSession.selectList(namespace+"selectBoardByCategoryInline", bdCode);
+	}
 	
 	
 }

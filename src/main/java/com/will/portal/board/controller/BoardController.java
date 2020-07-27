@@ -37,54 +37,68 @@ public class BoardController {
 
 	@RequestMapping("/main")
 	public void boardMain(@RequestParam(defaultValue = "B") String categoryCode) {
-		logger.info("게시판 메인 페이지, 파라미터 categoryCode={}",categoryCode);
+		logger.info("게시판 메인 페이지, 파라미터 categoryCode={}", categoryCode);
 
 	}
 
 	@RequestMapping("/list")
 	public void board(@RequestParam(defaultValue = "F") String bdCode, Model model) {
-		logger.info("게시판 목록 페이지, 파라미터 bdCode={}",bdCode);
-		
+		logger.info("게시판 목록 페이지, 파라미터 bdCode={}", bdCode);
+
 		BoardVO boardVo = boardService.selectBoardByBdCode(bdCode);
-		logger.info("게시판 검색 결과, boardVo={}",boardVo);
+		logger.info("게시판 검색 결과, boardVo={}", boardVo);
 		model.addAttribute("boardVo", boardVo);
 	}
-	
+
 	@RequestMapping("/ajax/list")
 	@ResponseBody
 	public Map<String, Object> ajaxList(@ModelAttribute BoardSearchVO bdSearchVo) {
-		logger.info("게시판 조회, 파라미터 bdSearchVo={}",bdSearchVo);
-		
+		logger.info("게시판 조회, 파라미터 bdSearchVo={}", bdSearchVo);
+
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
 		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
 		pagingInfo.setCurrentPage(bdSearchVo.getCurrentPage());
-		
+
 		bdSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		bdSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
-		
+
 		List<PostsVO> list = postsService.selectPostsList(bdSearchVo);
 		int totalCount = postsService.selectPostsCount(bdSearchVo);
-		
+
 		pagingInfo.setTotalRecord(totalCount);
-		
+
 		Map<String, Object> map = new HashedMap<String, Object>();
 		map.put("list", list);
 		map.put("pagingInfo", pagingInfo);
-		
+
 		return map;
+
+	}
+
+	@RequestMapping(value = "/write", method = RequestMethod.GET)
+	public void write_get(@RequestParam(defaultValue = "F") String bdCode, Model medel) {
+		logger.info("게시글 작성 페이지, 파라미터 bdCode={}",bdCode);
 		
+		BoardVO vo = boardService.selectBoardByBdCode(bdCode);
+		List<BoardVO> list = boardService.selectBoardByCategoryInline(bdCode);
+		logger.info("게시판 검색 결과 list.size={}, vo={}",list.size(),vo);
+		
+		medel.addAttribute("vo", vo);
+		medel.addAttribute("list", list);
+	}
+	
+	@RequestMapping("/ajax/findBoard")
+	@ResponseBody
+	public BoardVO findBoard(@RequestParam String bdCode) {
+		logger.info("ajax - findBoard 실행, 파라미터 bdCode={}",bdCode);
+		return boardService.selectBoardByBdCode(bdCode);
 	}
 
 	@RequestMapping("/detail")
 	public void detail(@RequestParam String postCode) {
 		logger.info("게시판 상세보기 페이지");
 		postsService.SelectByCode(postCode);
-	}
-
-	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public void write_get() {
-		logger.info("게시글 작성 페이지");
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)

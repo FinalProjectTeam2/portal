@@ -9,17 +9,33 @@
 .col-25 {
 	padding-left: 2%;
 }
+#addFile{
+	margin: 5px 0 0 5px;
+    font-size: 1em;
+    padding: 0px 4px;
+    float: left;
+}
+button[name=delFile] {
+    background-color: #ffffff00;
+    border: 0;
+    padding: 0 5px;
+}
+button[name=delFile]:hover {
+	color: red;
+}
 </style>
 <script type="text/javascript">
 	
 	var count = 1;
-	var maxCount = 4;
+	var maxCount = ${vo.maxUpfile};
 	$(function() {
-		$("#write").click(function() {
-			location.href = "<c:url value='/portal/board/edit'/>";
-		});
+		
+		if(${vo.isUpload == 'N'}){
+			$("#fileList").hide();
+		}
+		
 		$("#list").click(function() {
-			location.href = "<c:url value='/portal/board/list'/>";
+			location.href = "<c:url value='/portal/board/list?bdCode="+$("#bdCode").val()+"'/>";
 		});
 		
 		$("#addFile").click(function() {
@@ -37,28 +53,54 @@
 				+' aria-describedby="inputGroupFileAddon01"> <label '
 				+'class="custom-file-label" for="inputGroupFile0'+count+'">파일을 선택하세요</label>'
 				+'</div>'
-				+ '<button type="button" name="delFile">파일 삭제</button>'
+				+ '<button type="button" onclick="$.delFile(this)" name="delFile">'
+				+ '<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">'
+				+ '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'
+				+ '<path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>'
+				+ '</svg>' + '</button>'
 				+'</div>';
 			$("#fileList").append(fileTag);
-			
-			$("button[name=delFile]").click(function() {
-				$(this).parent().hide();
-				return false;
-			});
 			
 			return false;
 		});
 		
-		
+		$("#bdCode").change(function() {
+			if($(this).val() != ''){
+				$.ajax({
+					url: "<c:url value='/portal/board/ajax/findBoard'/>",
+					data: {bdCode: $(this).val()},
+					dataType: "json",
+					type: "get",
+					success: function(res) {
+						maxCount = res.maxUpfile;
+						$("button[name=delFile]").each(function() {
+							$(this).parent().remove();
+						});
+						if(res.isUpload == 'N'){
+							$("#fileList").hide();
+						}else{
+							$("#fileList").show();
+						}
+						count = 1;
+					}
+				});
+			}
+			
+			return false;
+		});
 	});
+	
+	$.delFile = function(self) {
+		$(self).parent().remove();
+		count = count - 1;
+		return false;
+	}
 </script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-		<form action="/action_page.php" class="writeFrm" id="boardFrm"
+		<form action="<c:url value='/portal/board/write'/>" class="writeFrm" id="boardFrm"
 			enctype="multipart/data">
 			<input type="text" value="${sessionScope.officialNo }" name="officialNo">
-			<input type="text" value="${param.categoryCode }" name="categoryCode">
-			<input type="text" value="${param.bdCode }" name="bdCode">
 			<div class="row1">
 				<div class="col-25">
 					<label for="l_title" class="formTitle">제목</label>
@@ -72,17 +114,22 @@
 					<label for="l_category"  class="formTitle">분류</label>
 				</div>
 				<div class="col-75">
-					<select id="category" name="category">
-						<option value="">공통</option>
-						<option value="">죽전</option>
-						<option value="">천안</option>
+					<select id="bdCode" name="bdCode">
+						<option value="">선택하세요</option>
+						<c:forEach var="vo" items="${list }">
+							<option value="${vo.bdCode }" 
+							<c:if test="${param.bdCode == vo.bdCode }">
+								selected="selected"
+							</c:if>
+							>${vo.bdName }</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>
 			<div class="row1" id="fileList">
 				<div class="col-25">
 					<label for="l_date"  class="formTitle">파일</label>
-					<button type="button" id="addFile">파일 추가</button>
+					<button type="button" id="addFile" class="btn btn-info">파일 추가</button>
 				</div>
 				<div class="input-group mb-3 col-75">
 					<div class="input-group-prepend">
@@ -93,12 +140,6 @@
 							aria-describedby="inputGroupFileAddon01"> <label
 							class="custom-file-label" for="inputGroupFile01">파일을 선택하세요</label>
 					</div>
-				</div>
-			</div>
-
-			<div class="row1">
-				<div class="col-25">
-					<label for="l_subject"  class="formTitle">내용</label>
 				</div>
 			</div>
 			<div class="row1" style="padding-left: 2%;">
@@ -119,7 +160,7 @@
 								});
 			</script>
 			<div class="bts">
-				<input type="button" id="write" value="등록"> <input
+				<input type="submit" id="write" value="등록"> <input
 					type="button" value="목록" id="list">
 			</div>
 		</form>

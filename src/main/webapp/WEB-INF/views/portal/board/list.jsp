@@ -20,7 +20,7 @@
 		});
 
 		$("#boardWrite").click(function() {
-			location.href = "<c:url value='/portal/board/write'/>";
+			location.href = "<c:url value='/portal/board/write?bdCode=${boardVo.bdCode}'/>";
 		});
 	});
 
@@ -40,8 +40,7 @@
 	}
 
 	function makeList(obj) {
-		$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+" | 페이지 "+obj.pagingInfo.currentPage+"/"
-				+obj.pagingInfo.totalPage+ "</span>");
+		
 		var str = "<tbody>";
 		
 		if(obj.pagingInfo.totalRecord == 0){
@@ -49,7 +48,8 @@
 				+ '<td colspan="6">게시물이 없습니다.</td>'
 			+ "</tr>";
 		}else{
-			
+			$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+" | 페이지 "+obj.pagingInfo.currentPage+"/"
+					+obj.pagingInfo.totalPage+ "</span>");
 		}
 		str += "</tbody>";
 		
@@ -147,17 +147,6 @@
 						<th scope="col">조회수</th>
 					</tr>
 				</thead>
-				<%-- <tbody>
-					<tr>
-						<td class=""><a href="<c:url value='/portal/board/detail'/>">
-								[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호 </a></td>
-						<td class="">NO.1</td>
-						<td class="">공통</td>
-						<td class="">미래교육혁신원 교수학습개발센터 홍길동</td>
-						<td class="">2020-07-11</td>
-						<td class="">452</td>
-					</tr>
-				</tbody> --%>
 			</table>
 			<div class="divbt">
 				<!-- 비회원은 버튼 안 보임! -->
@@ -172,7 +161,7 @@
 		<!-- 검색 -->
 		<div class="divSearch">
 			<form name="frmSearch" method="post" action="">
-				<input type="text" name="currentPage" value="1" id="currentPage" />
+				<input type="hidden" name="currentPage" value="1" id="currentPage" />
 				<!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
 				<input type="hidden" name="countPerPage" value="5" id="countPerPage" />
 				<!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
