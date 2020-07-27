@@ -44,7 +44,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public int loginCheck(String officicalNo, String pwd) {
-		String dbPwd = dao.selectPwd(officicalNo);
+		String dbPwd = studentDao.selectPwd(officicalNo);
 		int result = 0;
 		if(dbPwd != null && !dbPwd.isEmpty() ) {
 			if(pwd.equals(dbPwd)) {
