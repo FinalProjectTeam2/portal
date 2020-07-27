@@ -27,7 +27,7 @@
 			<li class="nav-item"><a class="nav-link"
 				href="<c:url value='/portal/board/list'/>"><span class="bullets"></span>자유게시판
 			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#"> <span
+			<li class="nav-item"><a class="nav-link" href="<c:url value='/portal/board/list'/>"> <span
 					class="bullets"></span>분실물/습득물
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="#"> <span

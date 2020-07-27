@@ -1,8 +1,6 @@
 package com.will.portal.official_info.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -153,7 +151,8 @@ public class IdentifyController {
 	}
 	
 	@RequestMapping("/member/identSsn")
-	public @ResponseBody List<Map<String, Object>> identSsn(@RequestParam String officialNo, @RequestParam String ssn1,
+	@ResponseBody
+	public MessageVO identSsn(@RequestParam String officialNo, @RequestParam String ssn1,
 				@RequestParam String ssn2, @RequestParam(defaultValue = "N") String identSsn) {
 		Official_infoVO vo = infoService.selectByNo(officialNo);
 		String ssn = vo.getSsn();
@@ -169,15 +168,15 @@ public class IdentifyController {
 			identSsn = "N";
 		}
 		
-		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		logger.info("identSsn={}, message={}", identSsn, message);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("message", message);
-		map.put("identSsn", identSsn);
-		list.add(map);
+		MessageVO mVo = new MessageVO();
+		mVo.setIdentSsn(identSsn);
+		mVo.setOfficialNo(officialNo);
+		mVo.setMessage(message);
 		
-		return list;
+		return mVo;
 		
 	}
 	

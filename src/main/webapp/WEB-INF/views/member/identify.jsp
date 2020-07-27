@@ -26,8 +26,7 @@ h1{
 	margin-top: 50px;
 }
 </style>
-<script type="text/javascript"
-	src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/member.js'/>"></script>
 <script type="text/javascript">
 	var num = 180; // 몇분을 설정할지의 대한 변수 선언
@@ -55,8 +54,6 @@ h1{
     }
 	$(function() {
 		if(${param.identState=='N' || empty param.identState}){
-		//인증번호 발송 버튼을 누르면 해당버튼 사라짐
-		//인증번호 발송 동시에 인증번호 입력창과 버튼이 생김
 		$("#countdown").hide();
 		$('#btcode').click(function() {
 			if(!validate_ssn($("#ssn1").val()) || !validate_ssn($("#ssn2").val())){
@@ -84,6 +81,7 @@ h1{
 					if(res.identSsn=='N'){
 						alert(res.message);
 					}else if(res.identSsn=='Y'){
+						$('#offNo').val(res.officialNo)
 						ident();
 					}
 					
@@ -117,6 +115,7 @@ h1{
 						if(res.identState=='Y'){
 							self.close();
 						}else{
+							alert(res.message)
 							//실패시 입력창 그대로 남아있음
 							$('#code').val('');
 							$('#code').focus();
@@ -135,7 +134,10 @@ h1{
 			self.close();
 		}
 	});
+	
 function ident(){
+		//인증번호 발송 버튼을 누르면 해당버튼 사라짐
+		//인증번호 발송 동시에 인증번호 입력창과 버튼이 생김
 	$("#showSsn").hide();
 	$("#countdown").show();
 	$("#getCode").hide();
@@ -143,9 +145,8 @@ function ident(){
 	$.ajax({
 		url:"<c:url value='/member/sendCode'/>",
 		type:"post",
-		data:{officialNo:$('#offNo').val(),
-			ssn1:$('#ssn1').val(),
-			ssn2:$('#ssn2').val()
+		data:{
+			officialNo:$('#offNo').val()
 		},
 		success:function(res){
 			alert(res);
@@ -156,6 +157,7 @@ function ident(){
 		
 	});
 }
+
 </script>
 </head>
 <body>
