@@ -35,6 +35,7 @@ code {
 #login{
 	background: #525a6d;
 	padding: 15px;
+	margin-bottom: 20px;
 }
 
 #login input, #login button{
@@ -122,4 +123,17 @@ code {
 
 #sidebarMenu li:hover a{
 	color: #626d80;
+}
+#sidebarMenu li{
+	text-indent: 0.6em;
+}
+.category{
+	cursor: pointer;
+	text-shadow: 1px 1px 0.5px #343a40;
+	color: white; 
+	padding-left: 20px; 
+	padding-bottom: 10px; 
+	font-size: 1.5em; 
+	font-weight: bold; 
+	border-bottom: 1px solid white;
 }

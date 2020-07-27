@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+
+#inputChgPwd{
+
+	margin: 0 auto;
+}
+
+.card{
+	background-color: rgba(0,0,0,0.5) !important;
+	background-image: url("../images/color4.jpg");
+	margin-top: auto; 
+	margin: auto;
+	width: 660px;
+}
+
+#inputChgPwd .row{
+	border-bottom: 1px solid #ccc;
+	margin: 10px;
+}
+
+#pwdDiv label{
+	width: 35%;
+	float: left;
+}
+
+#pwdDiv button{
+	width: 32%;
+
+}
+
+#pwdDiv .form-control{
+	width: 380px;
+
+}
+
+#title{
+	font-size: 20px;
+	font-weight: bold;
+	color: black;
+	margin: 0;
+}
+
+#bt{
+	width: 100%;
+}
+
+#warn li{
+	font-size: 14px;
+}

@@ -1,9 +1,14 @@
-<%@page import="org.apache.poi.hssf.usermodel.HSSFCell"%>
-<%@page import="org.apache.poi.hssf.usermodel.HSSFRow"%>
-<%@page import="org.apache.poi.hssf.usermodel.HSSFSheet"%>
-<%@page import="org.apache.poi.hssf.usermodel.HSSFWorkbook"%>
+<%@page import="org.apache.poi.ss.usermodel.CellType"%>
+<%@page import="org.apache.poi.xssf.usermodel.XSSFCell"%>
+<%@page import="org.apache.poi.xssf.usermodel.XSSFRow"%>
+<%@page import="java.io.FileInputStream"%>
+<%@page import="org.apache.poi.xssf.usermodel.XSSFWorkbook"%>
+<%@page import="org.apache.poi.xssf.usermodel.XSSFSheet"%>
+<%@page import="java.io.File"%>
+<%@page import="java.nio.channels.FileChannel"%>
 <%@page import="org.apache.poi.poifs.filesystem.POIFSFileSystem"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,80 +16,85 @@
 <title>엑셀테스트</title>
 </head>
 <body>
-<% 
-	String excelfile = "d:\\lecture\\faculty.xlsx";
-
+	<%
+		String excelfile = "C:\\myoracle\\product.xlsx";
+	XSSFWorkbook workbook = null;
 	try {
-		POIFSFileSystem fs = new POIFSFileSystem(excelfile);
-		
-		HSSFWorkbook workbook = new HSSFWorkbook(fs);
-		unt sheetNum = workbook.getNumberOfSheets();
-		
-		for(int i=0; i<sheetNum; i++) {
-%>
-	<br><br>
-	Sheet Number <%=i %><br>			
-	Sheet Name <%=workbook.getSheetName(i) %><br>			
 
-<%
-	HSSFSheet sheet = workbook.getSheetAt(i);
-	int rows = sheet.getPhysicalNumberOfRows();
-	
-	for(int r =0; r<rows; r++) {
-		HSSFRow row = sheet.getRow(r);
-		if(row!=null) {
-			int cells = row.getPhysicalNumberOfCells();
-%>
+		workbook = new XSSFWorkbook(new FileInputStream(new File(excelfile)));
+		int sheetNum = workbook.getNumberOfSheets();
 
-	row <%=row.getRowNum() %><%=cells %><br><br>
+		for (int i = 0; i < sheetNum; i++) {
+			XSSFSheet sheet = workbook.getSheetAt(i);
+			%>
+			<br>
+			<br> Sheet Number
+			<%=i%><br> Sheet Name
+			<%=workbook.getSheetName(i)%><br>
+		
+			<%
+				
+			int rows = sheet.getPhysicalNumberOfRows();
+		
+			for (int r = 0; r < rows; r++) {
+				XSSFRow row = sheet.getRow(r);
+				if (row != null) {
+					int cells = row.getPhysicalNumberOfCells();
+			%>
 	
-<%
-	for(short c=0; c<cells; c++) {
-		HSSFCell cell = row.getCell(c);
-		if(cell!=null) {
-			String value = null;
+				row
+				<%=row.getRowNum()%><%=cells%><br>
+				<br>
 			
-			switch(cell.getCellType()) {
-				case HSSFCell.CELL_TYPE_FORMULA:
-					value=cell.getCellFormula();
-				break;
-				
-				case HSSFCell.CELL_TYPE_NUMERIC:
-					value=cell.getNumericCellValue();
-				break;
-				
-				case HSSFCell.CELL_TYPE_STRING:
-					value=cell.getStringCellValue();
-				break;
-				
-				case HSSFCell.CELL_TYPE_BLANK:
-					value=null;
-				break;
-				
-				case HSSFCell.CELL_TYPE_BOOLEAN:
-					value=cell.getBooleanCellValue();
-				break;
-				
-				case HSSFCell.CELL_TYPE_ERROR:
-					value=cell.getErrorCellValue();
-				break;
-			default:
-			}
-%>		
-
-	<%=cell.getCellNum()+value %><br>
-
-<%
-					}
-				}	
-			}
+				<%
+					for (int c = 0; c < cells; c++) {
+						XSSFCell cell = row.getCell(c);
+						if (cell != null) {
+							String value = null;
+							switch (cell.getCellType()) {
+							case FORMULA:
+								value = cell.getCellFormula();
+								break;
+						
+									case NUMERIC:
+								value = cell.getNumericCellValue() + "";
+								break;
+						
+									case STRING:
+								value = cell.getStringCellValue();
+								break;
+						
+									case BLANK:
+								value = null;
+								break;
+						
+									case BOOLEAN:
+								value = cell.getBooleanCellValue() + "";
+								break;
+						
+									case ERROR:
+								value = cell.getErrorCellValue() + "";
+								break;
+									default:
+							}
+				%>
+	
+					<%=cell.getColumnIndex() + value%><br>
 		
+			<%
+						}
+					}
+				}
+			}
+			
 		}
-	}
-} catch (Exception e) {
-	e.printStackTrace();
+	} catch (Exception e) {
+		e.printStackTrace();
 
-}
-%>
+	} finally {
+		if (workbook != null)
+		workbook.close();
+	}
+	%>
 </body>
 </html>

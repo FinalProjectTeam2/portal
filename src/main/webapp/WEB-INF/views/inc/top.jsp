@@ -112,7 +112,7 @@
 
 		$('.zeta-menu li ul').hide();
 
-		$(".zeta-menu li").click(function() {
+		$(".zeta-menu > li").click(function() {
 			$(".zeta-menu li").not($(this)).find("ul").slideUp();
 			$('ul:first', this).slideToggle();
 		});
