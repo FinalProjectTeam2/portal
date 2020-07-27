@@ -17,11 +17,22 @@
 		from dual
 	</select>
 	<insert id="insertOfficial" parameterType="official_infoVO">
-		insert into OFFICIAL_INFO(official_no,hp1,hp2,hp3,ssn)
+		insert into
+		OFFICIAL_INFO(official_no,hp1,hp2,hp3,ssn)
 		values(#{officialNo},#{hp1},#{hp2},#{hp3},#{ssn})
 	</insert>
 	<insert id="insertEmployee" parameterType="employeeVO">
-		insert into employee(emp_no,pwd,dep_code,emp_name,position_code)
+		insert into
+		employee(emp_no,pwd,dep_code,emp_name,position_code)
 		values(#{empNo},#{pwd},#{depCode},#{empName},#{positionCode})
+	</insert>
+	<insert id="insertProfessor" parameterType="professorVO">
+		insert into
+		professor(prof_no,pwd,prof_name,dep_no,position_no)
+		values(#{profNo},#{pwd},#{profName},#{depNo},#{positionNo})
+	</insert>
+	<insert id="insertStudent" parameterType="studentVO">
+		insert into student(stu_no,pwd,name,major)
+		values(#{stuNo},#{pwd},#{name},#{major})
 	</insert>
 </mapper>

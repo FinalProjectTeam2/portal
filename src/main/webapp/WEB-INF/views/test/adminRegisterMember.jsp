@@ -91,7 +91,7 @@
                         <div class="form-group">
                            <div>
                               <label for="sort">회원 구분</label> <select name="sort" id="sort">
-                                 <option disabled selected>선택</option>
+                                <option value="">선택</option>
                                  <option value="3">학생</option>
                                  <option value="2">교수</option>
                                  <option value="1">임직원</option>
@@ -158,7 +158,7 @@
                         <div class="form-group">
                            <div>
                               <label for="depCode">부서</label> <select name="depCode" id="depCode">
-                                 <option disabled selected>선택</option>
+                                 <option value="">선택</option>
                                  <option value="1">교학처</option>
                                  <option value="2">기획처</option>
                                  <option value="3">학생처</option>
@@ -170,7 +170,7 @@
                         <div class="form-group">
                            <div>
                               <label for="authCode">권한</label> <select name="authCode" id="authCode">
-                                 <option disabled selected>선택</option>
+                                <option value="">선택</option>
                                  <option value="1">admin</option>
                                  <option value="2">manager</option>
                                  <option value="3">staff</option>
@@ -180,7 +180,7 @@
                         <div class="form-group">
                            <div>
                               <label for="positionCode">직책</label> <select name="positionCode" id="positionCode">
-                                 <option disabled selected>선택</option>
+                               <option value="">선택</option>
                                  <option value="1">부장</option>
                                  <option value="2">주임</option>
                                  <option value="3">사원</option>

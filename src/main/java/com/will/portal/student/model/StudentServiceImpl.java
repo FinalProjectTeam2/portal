@@ -1,4 +1,4 @@
-package com.will.portal.professor.model;
+package com.will.portal.student.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,27 +12,26 @@ import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
 
 @Service
-public class ProfessorServiceImpl implements ProfessorService{
-	@Autowired
-	private ProfessorDAO professorDao;
-	
-	@Autowired private Official_infoDAO officialDao;
-	@Autowired private CommonDAO commonDao;
+public class StudentServiceImpl implements StudentService{
+
+	@Autowired StudentDAO studentDao;
+	@Autowired CommonDAO commonDao;
+	@Autowired Official_infoDAO officialDao;
 
 	@Transactional
-	public int insertProfessor(ProfessorVO professorVo, Official_infoVO officialVo, int sort) {
+	public int insertStudent(StudentVO studentVo, Official_infoVO officialVo, int sort) {
 
 		int seq = commonDao.selectSeq(sort);
 
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy");
 		Date time = new Date();
 
-		String userNo = format1.format(time) + sort + String.format("%03d", professorVo.getDepNo())
+		String userNo = format1.format(time) + sort + String.format("%03d", studentVo.getMajor())
 				+ String.format("%04d", seq);
-		professorVo.setProfNo(userNo);
-		professorVo.setPwd("0000");
+		studentVo.setStuNo(userNo);
+		studentVo.setPwd("0000");
 
-		int cnt = professorDao.insertProfessor(professorVo);
+		int cnt = studentDao.insertStudent(studentVo);
 
 		int cnt2 = 0;
 		if (cnt > 0) {

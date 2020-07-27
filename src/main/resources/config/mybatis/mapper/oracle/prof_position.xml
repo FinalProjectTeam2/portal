@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="config.mybatis.mapper.oracle.faculty">
-	<select id="selectFaculty" resultType="facultyVO">
-		select * from faculty
+<mapper namespace="config.mybatis.mapper.oracle.prof_position">
+	<select id="selectProfPosition" resultType="prof_positionVO">
+		select * from prof_position
 	</select>
+
 </mapper>
 
 
