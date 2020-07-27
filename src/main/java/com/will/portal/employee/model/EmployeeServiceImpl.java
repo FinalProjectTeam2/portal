@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
 
@@ -14,11 +15,12 @@ import com.will.portal.official_info.model.Official_infoVO;
 public class EmployeeServiceImpl implements EmployService {
 	@Autowired private EmployeeDAO employeeDao;
 	@Autowired private Official_infoDAO officialDao;
+	@Autowired private CommonDAO commonDao;
 
 	@Transactional
 	public int insertEmployee(EmployeeVO employeeVo, Official_infoVO officialVo, int sort) {
 
-		int seq = employeeDao.selectSeq(sort);
+		int seq = commonDao.selectSeq(sort);
 
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy");
 		Date time = new Date();

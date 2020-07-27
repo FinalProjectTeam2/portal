@@ -4,6 +4,9 @@ public class Prof_positionVO {
 	private int positionNo;
 	private String positionName;
 	
+	public Prof_positionVO() {
+		super();
+	}
 	public int getPositionNo() {
 		return positionNo;
 	}
@@ -20,8 +23,4 @@ public class Prof_positionVO {
 	public String toString() {
 		return "Prof_positionVO [positionNo=" + positionNo + ", positionName=" + positionName + "]";
 	}
-	
-	
-	
-	
 }

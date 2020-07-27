@@ -9,5 +9,12 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	@Autowired
 	private SqlSessionTemplate sqlsession;
 	private String namespace="";
+	private String namespaceAdmin="config.mybatis.mapper.oracle.admin.";
+	
+	@Override
+	public int insertProfessor(ProfessorVO profVo) {
+		return sqlsession.insert(namespaceAdmin+"insertProfessor",profVo);
+	}
+	
 	
 }

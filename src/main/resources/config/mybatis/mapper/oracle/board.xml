@@ -7,7 +7,6 @@
 		select * from board_view
 		where post_code=#{postCode}	
 	</select>
-   
 </mapper>
 
 

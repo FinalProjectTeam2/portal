@@ -5,7 +5,6 @@
 <%@ include file="../inc/mainSidebar.jsp"%>
 
 
-
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -530,9 +529,7 @@ button.ui-keyboard-button:hover {
 							<div class="d-flex justify-content-center" id="find">
 								<a href="<c:url value='/login/findId'/>"> &nbsp;아이디
 									찾기&nbsp;&nbsp;</a>| <a href="<c:url value='/login/findPwd'/>">
-									&nbsp;비밀번호 찾기(재설정)&nbsp;&nbsp;&nbsp;</a>| <a
-									href="<c:url value='/login/StuNoForNew'/>">&nbsp;&nbsp;신편입생
-									학번조회</a>
+									&nbsp;비밀번호 찾기(재설정)&nbsp;&nbsp;&nbsp;</a>
 							</div>
 						</div>
 					</div>
@@ -569,7 +566,7 @@ button.ui-keyboard-button:hover {
 								</div>
 								<div class="form-group">
 									<div class="row align-items-center remember" id="chk">
-										<input type="checkbox" name="saveStuNo">아이디 저장
+										<input type="checkbox" name="saveId">아이디 저장
 									</div>
 									<input type="submit" value="로그인"
 										class="btn float-right login_btn" id="loginBt">
@@ -600,10 +597,8 @@ button.ui-keyboard-button:hover {
 							</div>
 							<div class="d-flex justify-content-center" id="find">
 								<a href="<c:url value='/login/findId'/>"> &nbsp;아이디
-									찾기&nbsp;&nbsp;</a>| <a href="<c:url value='/login/findPwd'/>">
-									&nbsp;비밀번호 찾기(재설정)&nbsp;&nbsp;&nbsp;</a>| <a
-									href="<c:url value='/login/StuNoForNew'/>">&nbsp;&nbsp;신편입생
-									학번조회</a>
+									찾기&nbsp;&nbsp;</a>| <a href="<c:url value='/login/findPwdProf'/>">
+									&nbsp;비밀번호 찾기(재설정)&nbsp;&nbsp;&nbsp;</a>
 							</div>
 						</div>
 					</div>
@@ -626,5 +621,8 @@ $.isWindow = function(w) {
 </script>
 <script src="https://mottie.github.io/Keyboard/docs/js/jquery-ui-custom.min.js"></script>
 			</div>
+<div id="forAdmin" style="text-align: right;">
+	<a href="<c:url value='/login/adminLogin/' />">관리자 페이지로 이동</a>
+</div>
 <!-- bottom -->		
 <%@ include file="../inc/bottom.jsp"%>
