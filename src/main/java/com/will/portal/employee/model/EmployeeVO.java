@@ -11,7 +11,21 @@ public class EmployeeVO {
 	private String empName;
 	private Timestamp resignationDate;
 	private String identityState;
+	private String positionCode;
 	
+	
+	public EmployeeVO() {
+		super();
+	}
+	
+	public String getPositionCode() {
+		return positionCode;
+	}
+
+	public void setPositionCode(String positionCode) {
+		this.positionCode = positionCode;
+	}
+
 	public String getEmpNo() {
 		return empNo;
 	}
@@ -64,7 +78,7 @@ public class EmployeeVO {
 	public String toString() {
 		return "EmployeeVO [empNo=" + empNo + ", pwd=" + pwd + ", startDate=" + startDate + ", depCode=" + depCode
 				+ ", authCode=" + authCode + ", empName=" + empName + ", resignationDate=" + resignationDate
-				+ ", identityState=" + identityState + "]";
+				+ ", identityState=" + identityState + ", positionCode=" + positionCode + "]";
 	}
 	
 	

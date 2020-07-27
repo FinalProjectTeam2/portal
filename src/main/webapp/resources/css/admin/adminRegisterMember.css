@@ -90,3 +90,8 @@
     background-color: #01539d;
     border-color: #01539d;
 }
+#selLine{
+	width: 100% !important;
+	margin: 20px 0 20px 0;
+	
+}
