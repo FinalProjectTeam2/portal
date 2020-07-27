@@ -80,7 +80,7 @@ button.ui-keyboard-button:hover {
 	  // file. we're doing this just for this demo, so we can add "<3" to the
 	  // combo regex
 	  $.keyboard.language.love = $.extend($.keyboard.language.en);
-
+	  $('.icon').click(function() {
 	  $('.keyboard').keyboard({
 	      // set this to ISO 639-1 language code to override language set by
 	      // the layout: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -443,41 +443,69 @@ button.ui-keyboard-button:hover {
 	    parts :P */
 
 	  // Typing Extension
-	  $('.icon').click(function() {
+	  
 	    var kb = $(this).parent().find('.keyboard').getkeyboard();
 	    // typeIn( text, delay, callback );
 	    kb.reveal().typeIn();
 	    $("#keyboard_keyboard").hide();
 	    $("#keyboard_keyboard").slideDown(200);
 	  });
-
+	  
+		  $('form[name=loginStu]').submit(function() {
+			  if($('#officialNo').val()==''){
+				  alert('아이디를 입력하세요');
+				  $('#officialNo').focus();
+				  event.preventDefault();
+			  }else if($('input[name=pwdd]').val()==''){
+				  alert('비밀번호를 입력하세요');
+				  $('input[name=pwdd]').focus();
+				  event.preventDefault(); 
+			  }else{
+				$.ajax({
+					url : "<c:url value='/login/loginGO' />",
+					data : $(this).serialize(),
+					type:"post",
+					success:function(res){
+						$('#msg').html(res);
+						if(res=='student' || res=='professor'||res=='admin'){
+							$('#msg').hide();
+							location.href="<c:url value='/index' />";
+						}
+					},
+					error:function(xhr,status,error){
+						alert(status + ", " + error);
+					}
+				});	  
+					return false;
+			  }
+			  
+		});//submit
+	  
 	});
-
+	
 </script>
 <!-- main 시작 -->
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 			<div id="tabs">
 				<ul class="nav nav-pills nav-fill">
-					<li  class="nav-item"><a class="nav-link" href="#tabs-1">학부생</a></li>
-					<li  class="nav-item"><a class="nav-link" href="#tabs-2">교수</a></li>
+					<li  class="nav-item"></li>
+
 				</ul>
-				<div id="tabs-1">
 					<div class="card">
 						<div class="card-header">
-							<p id="title">학부생 로그인</p>
+							<p id="title">로그인</p>
 						</div>
 						<div class="card-body">
-							<form name="loginfrm" method="post"
-								action="<c:url value='/login/login'/>">
+							<form name="loginStu" method="post">
 								<div class="input-group form-group">
-									<label for="stuNo" class="lab">아이디</label>
+									<label for="officialNo" class="lab">아이디</label>
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i class="fas fa-user"
 											style="color: white;"></i></span>
 									</div>
 									<input type="text" class="form-control" placeholder="아이디"
-										name="stuNo">
+										name="officialNo" id="officialNo" value="${cookie.ck_officialNo.value }">
 
 								</div>
 								<!-- <div id="wrap">
@@ -491,13 +519,20 @@ button.ui-keyboard-button:hover {
 											style="color: white;"></i></span>
 									</div>
 									<input type="password" class="keyboard form-control" placeholder="비밀번호"
-										id="keyboard" name="pwd"> <span class="icon input-group-text"
+										 name="pwdd" id="keyboard"> <span class="icon input-group-text"
 										><a  id="icon" href="#"><i
 											class="fas fa-keyboard" style="color: gray;"></i></a></span>
 								</div>
+								<div style="text-align: center; color: orange;">
+									<span id="msg"></span>
+								</div>
 								<div class="form-group">
 									<div class="row align-items-center remember" id="chk">
-										<input type="checkbox" name="saveStuNo">아이디 저장
+										<input type="checkbox" name="saveNo"
+											<c:if test = "${!empty cookie.ck_officialNo.value }">
+												checked = "checked"
+											</c:if>
+										>아이디 저장
 									</div>
 									<input type="submit" value="로그인"
 										class="btn float-right login_btn" id="loginBt">
@@ -534,75 +569,7 @@ button.ui-keyboard-button:hover {
 						</div>
 					</div>
 				</div>
-
-				<div  id="tabs-2">
-					<div class="card">
-						<div class="card-header">
-							<p id="title">교수 로그인</p>
-						</div>
-						<div class="card-body">
-							<form name="loginfrm" method="post"
-								action="<c:url value='/login/login'/>">
-								<div class="input-group form-group">
-									<label for="stuNo" class="lab">아이디</label>
-									<div class="input-group-prepend">
-										<span class="input-group-text"><i class="fas fa-user"
-											style="color: white;"></i></span>
-									</div>
-									<input type="text" class="form-control" placeholder="아이디"
-										name="stuNo">
-
-								</div>
-								<div id="wrap" class="wrap input-group form-group">
-									<label for="pwd" class="lab">비밀번호</label>
-									<div class="input-group-prepend">
-										<span class="input-group-text"><i class="fas fa-key"
-											style="color: white;"></i></span>
-									</div>
-									<input type="password" class="keyboard form-control" placeholder="비밀번호"
-										id="keyboard" name="pwd"> <span class="icon input-group-text"
-										><a  id="icon" href="#"><i
-											class="fas fa-keyboard" style="color: gray;"></i></a></span>
-								</div>
-								<div class="form-group">
-									<div class="row align-items-center remember" id="chk">
-										<input type="checkbox" name="saveId">아이디 저장
-									</div>
-									<input type="submit" value="로그인"
-										class="btn float-right login_btn" id="loginBt">
-								</div>
-							</form>
-						</div>
-						<div class="card-footer">
-							<div class="d-flex justify-content-center links" id="rule">
-								<ul>
-									<li>* <em>아이디는 학번/교직원번호 입니다.</em></li>
-									<li>* <em>99학번 이전은 학번 규칙 변경(6자리->8자리)에 의하여 다음과 같이
-											조정하여 아이디를 입력 바랍니다.</em></li>
-									<li>&nbsp;&nbsp;&nbsp;- 서울 : 31 + 학번 / 천안 : 51 + 학번 / 대학원
-										: 71 + 학번</li>
-									<li>* <em>최초 비밀번호는 생년월일(예, 19961010) 또는 주민등록번호
-											뒤7자리(2015년 이전 구성원)입니다.</em></li>
-									<li>* <em>최초 비밀번호는 로그인 후 반드시 변경하시기 바랍니다.</em></li>
-									<li>* <em>안전한 비밀번호 만들기는 선택이 아닌 필수입니다.(관련근거:사용자보안 지침
-											제19조)</em></li>
-									<li>&nbsp;&nbsp;&nbsp;- 비밀번호는 학기별 1회 이상 변경한다.<br> <br>&nbsp;&nbsp;&nbsp;-
-										비밀번호는 재사용하지 않는다.<br> <br>&nbsp;&nbsp;&nbsp;- 비밀번호는
-										연속적인 숫자나 생일, 전화번호, 계정 등 추측하기 쉬운 정보를 사용하지 아니하도록 한다.
-									</li>
-									<li>* <a href="http://www.dankook.ac.kr/web/kor/privacy"
-										target="_blank" style="color: black;"><em>개인정보 처리방침</em></a></li>
-								</ul>
-
-							</div>
-							<div class="d-flex justify-content-center" id="find">
-								<a href="<c:url value='/login/findId'/>"> &nbsp;아이디
-									찾기&nbsp;&nbsp;</a>| <a href="<c:url value='/login/findPwdProf'/>">
-									&nbsp;비밀번호 찾기(재설정)&nbsp;&nbsp;&nbsp;</a>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 
 <script>
 /* Code to get jQuery UI to work with jQuery 3.4+ ... */

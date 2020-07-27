@@ -1,16 +1,16 @@
-package com.will.portal.professor.model;
+package com.will.portal.student.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProfessorServiceImpl implements ProfessorService{
+public class StudentServiceImpl implements StudentService{
 	@Autowired
-	private ProfessorDAO professorDao;
+	private StudentDAO dao;
 
 	@Override
 	public int loginCheck(String officicalNo, String pwd) {
-		String dbPwd = professorDao.selectPwd(officicalNo);
+		String dbPwd = dao.selectPwd(officicalNo);
 		int result = 0;
 		if(dbPwd != null && !dbPwd.isEmpty() ) {
 			if(pwd.equals(dbPwd)) {
@@ -26,7 +26,8 @@ public class ProfessorServiceImpl implements ProfessorService{
 	}
 
 	@Override
-	public ProfessorVO selectByProfNo(String profNo) {
-		return professorDao.selectByProfNo(profNo);
+	public StudentVO selectByStuNo(String stuNo) {
+		return dao.selectByStuNo(stuNo);
 	}
+	
 }

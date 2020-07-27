@@ -8,5 +8,13 @@ import org.springframework.stereotype.Repository;
 public class EmployeeDAOMybatis implements EmployeeDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	private String namespace="";
+	private String namespace="config.mybatis.mapper.oracle.employee.";
+	
+	public String selectPwd(String empNo) {
+		return sqlSession.selectOne(namespace + "selectPwd", empNo);
+	}
+	
+	public EmployeeVO selectByEmpNo(String empNo) {
+		return sqlSession.selectOne(namespace + "selectByEmpNo", empNo);
+	}
 }

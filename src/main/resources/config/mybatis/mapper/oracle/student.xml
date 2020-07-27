@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.student">
+	<select id="selectPwd" parameterType="String" resultType="String">
+		select pwd from student where stu_no=#{stuNo}
+	</select>
+   
+   	<select id="selectByStuNo" parameterType="String" resultType="studentVO">
+   		select * from student where stu_no=#{stuNo}
+   	</select>
+   
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

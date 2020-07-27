@@ -18,4 +18,5 @@ public class StudentController {
 		return "/student/studentEdit";
 	}
 	
+	
 }
