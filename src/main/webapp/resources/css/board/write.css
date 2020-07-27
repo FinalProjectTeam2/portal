@@ -18,7 +18,6 @@
 }
 
 #boardFrm label {
-  padding: 12px 12px 12px 0;
   display: inline-block;
 }
 
@@ -58,19 +57,20 @@ main .container {
 
 #boardFrm .col-25 {
   float: left;
-  width: 25%;
+  width: 15%;
   margin-top: 6px;
 }
 
 #boardFrm .col-75 {
-  float: left;
-  width: 75%;
+  float: right;
+  width: 85%;
   margin-top: 6px;
 }
 
 /* Clear floats after the columns */
 #boardFrm .row1{
 	overflow: hidden;
+	margin: 10px 0;
 }
 #boardFrm .row1:after {
   content: "";
@@ -89,4 +89,10 @@ main .container {
 
 #boardFrm .bts input[type=button]{
 	margin: 0 5px;
+}
+
+#boardFrm .formTitle{
+	padding: 3px 0 0 0;
+	font-weight: bold;
+	font-size: 1.2em;
 }

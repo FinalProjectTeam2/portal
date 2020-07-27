@@ -3,11 +3,39 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.board">
-	<select id="SelectByCode" parameterType="string" resultType="postsAllVo">
+	<select id="SelectByCode" parameterType="string"
+		resultType="postsAllVo">
 		select * from board_view
-		where post_code=#{postCode}	
+		where post_code=#{postCode}
 	</select>
-   
+	
+	<select id="selectBoardByBdCode" parameterType="String" resultType="boardVo">
+		select * from board where bd_Code = #{bdCode}
+	</select>
+	
+	<select id="selectBoardByCtCode" parameterType="string" resultType="boardVO">
+		select * from board where category_code = #{categoryCode}
+	</select>
+	
+	<resultMap type="categoryListVO" id="categoryListResultMap">
+		<association property="categoryVo" javaType="categoryVo"
+			column="category_Code">
+			<id column="category_Code" property="categoryCode"
+				jdbcType="VARCHAR" />
+			<result column="category_Name" jdbcType="VARCHAR"
+				property="categoryName" />
+			<result column="usage" jdbcType="VARCHAR" property="usage" />
+			<result column="regDate" jdbcType="TIMESTAMP"
+				property="regDate" />
+		</association>
+		<collection property="boardList" column="category_Code"
+			javaType="ArrayList" ofType="boardVO" select="selectBoardByCtCode">
+		</collection>
+	</resultMap>
+	<select id="selectCategoryList" resultMap="categoryListResultMap">
+		select * from category ORDER by category_name
+	</select>
+	
 </mapper>
 
 

@@ -991,6 +991,12 @@ INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
+/*posts*/
+CREATE SEQUENCE posts_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
+
 
 /*뷰 생성*/
 /*board_view*/

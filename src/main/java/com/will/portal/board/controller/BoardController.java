@@ -1,53 +1,85 @@
 package com.will.portal.board.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections4.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.portal.board.model.BoardSearchVO;
 import com.will.portal.board.model.BoardService;
+import com.will.portal.board.model.BoardVO;
+import com.will.portal.category.model.CategoryListVO;
+import com.will.portal.common.PaginationInfo;
+import com.will.portal.common.Utility;
 import com.will.portal.posts.model.PostsService;
+import com.will.portal.posts.model.PostsVO;
 
 @Controller
 @RequestMapping("/portal/board")
 public class BoardController {
 	@Autowired
 	private PostsService postsService;
+
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
+	@Autowired
 	private BoardService boardService;
 
 	@RequestMapping("/main")
-	public void boardMain() {
-		logger.info("게시판 메인 페이지");
+	public void boardMain(@RequestParam(defaultValue = "B") String categoryCode) {
+		logger.info("게시판 메인 페이지, 파라미터 categoryCode={}",categoryCode);
 
 	}
 
 	@RequestMapping("/list")
-	public void board() {
-		logger.info("게시판 목록 페이지");
-
+	public void board(@RequestParam(defaultValue = "F") String bdCode, Model model) {
+		logger.info("게시판 목록 페이지, 파라미터 bdCode={}",bdCode);
+		
+		BoardVO boardVo = boardService.selectBoardByBdCode(bdCode);
+		logger.info("게시판 검색 결과, boardVo={}",boardVo);
+		model.addAttribute("boardVo", boardVo);
+	}
+	
+	@RequestMapping("/ajax/list")
+	@ResponseBody
+	public Map<String, Object> ajaxList(@ModelAttribute BoardSearchVO bdSearchVo) {
+		logger.info("게시판 조회, 파라미터 bdSearchVo={}",bdSearchVo);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(bdSearchVo.getCurrentPage());
+		
+		bdSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		bdSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
+		
+		List<PostsVO> list = postsService.selectPostsList(bdSearchVo);
+		int totalCount = postsService.selectPostsCount(bdSearchVo);
+		
+		pagingInfo.setTotalRecord(totalCount);
+		
+		Map<String, Object> map = new HashedMap<String, Object>();
+		map.put("list", list);
+		map.put("pagingInfo", pagingInfo);
+		
+		return map;
+		
 	}
 
 	@RequestMapping("/detail")
 	public void detail(@RequestParam String postCode) {
 		logger.info("게시판 상세보기 페이지");
 		postsService.SelectByCode(postCode);
-	}
-
-	@RequestMapping("/menu1")
-	public String menu1_get() {
-		logger.info("寃뚯떆�뙋 硫붿씤�솕硫�");
-
-		return "board/menu1";
-	}
-
-	@RequestMapping(value = "/menu2", method = RequestMethod.GET)
-	public String menu2_get() {
-		return "board/menu2";
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -110,5 +142,11 @@ public class BoardController {
 	public String lectureScheduleLogin_get() {
 
 		return "board/lectureScheduleLogin";
+	}
+
+	@RequestMapping("/ajax/cateList")
+	@ResponseBody
+	public List<CategoryListVO> cateList() {
+		return boardService.selectCategoryList();
 	}
 }

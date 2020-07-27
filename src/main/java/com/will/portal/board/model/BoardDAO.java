@@ -1,5 +1,10 @@
 package com.will.portal.board.model;
 
-public interface BoardDAO {
+import java.util.List;
 
+import com.will.portal.category.model.CategoryListVO;
+
+public interface BoardDAO {
+	 List<CategoryListVO> selectCategoryList();
+	 BoardVO selectBoardByBdCode(String bdCode);
 }

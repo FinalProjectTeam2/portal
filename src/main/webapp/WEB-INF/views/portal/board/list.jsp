@@ -8,18 +8,100 @@
 	href="<c:url value='/resources/css/board/board.css'/>" />
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/menu2.css'/>" />
+
 <!-- 공지사항 -->
 <script type="text/javascript">
 	$(function() {
+		$.send(1);
+
+		$("form[name=frmSearch]").submit(function() {
+			$.send(1);
+			return false;
+		});
+
 		$("#boardWrite").click(function() {
 			location.href = "<c:url value='/portal/board/write'/>";
 		});
 	});
+
+	$.send = function(curPage) {
+		$("#currentPage").val(curPage);
+
+		$.ajax({
+			url : "<c:url value='/portal/board/ajax/list'/>",
+			data : $("form[name=frmSearch]").serializeArray(),
+			dataType : "json",
+			type : "post",
+			success : function(res) {
+				makeList(res);
+				pageMake(res); //페이징 처리 함수
+			}
+		});
+	}
+
+	function makeList(obj) {
+		$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+" | 페이지 "+obj.pagingInfo.currentPage+"/"
+				+obj.pagingInfo.totalPage+ "</span>");
+		var str = "<tbody>";
+		
+		if(obj.pagingInfo.totalRecord == 0){
+			str += "<tr>"
+				+ '<td colspan="6">게시물이 없습니다.</td>'
+			+ "</tr>";
+		}else{
+			
+		}
+		str += "</tbody>";
+		
+		$("#myTable").append(str);
+	}
+	
+	function pageMake(obj) {
+		var pagingInfo = obj.pagingInfo;
+
+		var str = "";
+
+		str += '<nav aria-label="Page navigation example">'
+				+ '<ul class="pagination">';
+		//이전블록
+		if (pagingInfo.firstPage > 1) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="$.send('
+					+ (pagingInfo.firstPage - 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
+		}
+
+		//페이지 처리
+		for (var i = pagingInfo.firstPage; i <= pagingInfo.lastPage; i++) {
+			if (i == pagingInfo.currentPage) {
+				str += '<li class="page-item"><a class="page-link" onclick="$.send('
+						+ i
+						+ ')"'
+						+ 'style="background: skyblue;" href="#">'
+						+ i + '</a></li>';
+			} else {
+				str += '<li class="page-item"><a class="page-link" onclick="$.send('
+						+ i + ')"' + ' href="#">' + i + '</a></li>';
+			}
+		}
+
+		//다음 블록
+		if (pagingInfo.lastPage < pagingInfo.totalPage) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="$.send(' + (pagingInfo.lastPage + 1)
+					+ ')">' + '<span aria-hidden="true">&laquo;</span>'
+					+ '</a></li>';
+		}
+
+		str += '</ul></nav>';
+
+		$("#divPage").html(str);
+	}
 </script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div class="NoticeContents">
-			<h1>게시판</h1>
+			<h1>${boardVo.bdName }</h1>
 			<!-- 타이틀만만 바뀜(포털공지/ 학사ㆍ국제공지/ 장학공지/ 행사ㆍ참여 게시판/ 학사ㆍ국제공지  -->
 			<br>
 			<p style="line-height: 28px; font-size: 14px;">
@@ -40,119 +122,90 @@
 
 		<!-- 게시판 -->
 		<div id="menu1" class="tabcontent">
-	<div class="listinfo1">
-		<span>전체 1248 | 페이지 1/84 </span>
-	</div>
-	<div class="listinfo2">
-		<span>정렬:</span> <a href="#">수정일</a> <a href="#">작성일</a>
-	</div>
+			<div class="listinfo1"></div>
+			<div class="listinfo2">
+				<span>정렬:</span> <a href="#">수정일</a> <a href="#">작성일</a>
+			</div>
 
-	<!-- 게시판 -->
-	<table id="myTable">
-		<colgroup>
-			<col width="35%">
-			<col width="6%">
-			<col width="6%">
-			<col width="30%">
-			<col width="15%">
-			<col width="8%">
-		</colgroup>
-		<thead>
-			<tr class="maTable_tr1">
-				<th scope="col">제목</th>
-				<th scope="col">번호</th>
-				<th scope="col">분류</th>
-				<th scope="col">작성자</th>
-				<th scope="col">작성일</th>
-				<th scope="col">조회수</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td class="">
-					<a href="<c:url value='/portal/board/detail'/>" >
-					[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호
-					</a>
-				</td>
-				<td class="">NO.1</td>
-				<td class="">공통</td>
-				<td class="">미래교육혁신원 교수학습개발센터 홍길동</td>
-				<td class="">2020-07-11</td>
-				<td class="">452</td>
-			</tr>
+			<!-- 게시판 -->
+			<table id="myTable">
+				<colgroup>
+					<col width="35%">
+					<col width="6%">
+					<col width="6%">
+					<col width="30%">
+					<col width="15%">
+					<col width="8%">
+				</colgroup>
+				<thead>
+					<tr class="maTable_tr1">
+						<th scope="col">제목</th>
+						<th scope="col">번호</th>
+						<th scope="col">분류</th>
+						<th scope="col">작성자</th>
+						<th scope="col">작성일</th>
+						<th scope="col">조회수</th>
+					</tr>
+				</thead>
+				<%-- <tbody>
+					<tr>
+						<td class=""><a href="<c:url value='/portal/board/detail'/>">
+								[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호 </a></td>
+						<td class="">NO.1</td>
+						<td class="">공통</td>
+						<td class="">미래교육혁신원 교수학습개발센터 홍길동</td>
+						<td class="">2020-07-11</td>
+						<td class="">452</td>
+					</tr>
+				</tbody> --%>
+			</table>
+			<div class="divbt">
+				<!-- 비회원은 버튼 안 보임! -->
+				<button class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
+			</div>
+		</div>
+		<br> <br>
+		<!-- 페이지번호 -->
+		<div class="divPage"></div>
 
-			<tr>
-				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
-				<td class="">NO.1</td>
-				<td class="">공통</td>
-				<td class="">미래교육혁신원 교수학습개발센터 홍길동</td>
-				<td class="">2020-07-11</td>
-				<td class="">452</td>
-			</tr>
+		<br> <br>
+		<!-- 검색 -->
+		<div class="divSearch">
+			<form name="frmSearch" method="post" action="">
+				<input type="text" name="currentPage" value="1" id="currentPage" />
+				<!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
+				<input type="hidden" name="countPerPage" value="5" id="countPerPage" />
+				<!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
+				<input type="hidden" name="bdCode" id="bdCode"
+					value="${boardVo.bdCode }" /> <select name="searchCondition">
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+					<option value="name">작성자</option>
+				</select> <input type="text" name="searchKeyword" title="검색"> <input
+					type="submit" value="검색"><br> <br> <strong>인기검색어
+					:</strong> 교직 , 토익 , 토익 , 단소리
+			</form>
+		</div>
 
-			<tr>
-				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
-				<td class="">NO.1</td>
-				<td class="">공통</td>
-				<td class="">미래교육혁신원 교수학습개발센터 홍길동</td>
-				<td class="">2020-07-11</td>
-				<td class="">452</td>
-			</tr>
-
-			<tr>
-				<td class="">[교수학습개발센터] 슬기로운 방학생활 - CTL Letter 7월호</td>
-				<td class="">NO.1</td>
-				<td class="">공통</td>
-				<td class="">미래교육혁신원 교수학습개발센터 홍길동</td>
-				<td class="">2020-07-11</td>
-				<td class="">452</td>
-			</tr>
-		</tbody>
-	</table>
-	<div class="divbt">
-		<!-- 비회원은 버튼 안 보임! -->
-		<button class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
-	</div>
-</div>
-<br>
-<br>
-<!-- 페이지번호 -->
-<div class="divPage"><< < 1 2 3 4 5 > >></div>
-
-<br>
-<br>
-<!-- 검색 -->
-<div class="divSearch">
-	<form name="frmSearch" method="post" action="">
-		<select name="search">
-			<option value="title">제목</option>
-			<option value="content">내용</option>
-			<option value="name">작성자</option>
-		</select> <input type="text" name="searchKeyword" title="검색"> <input
-			type="submit" value="검색"><br>
-		<br> <strong>인기검색어 :</strong> 교직 , 토익 , 토익 , 단소리
-	</form>
-</div>
-
-<script>
-	function myFunction() {
-		var filter, table, tr, td, i, txtValue;
-		filter = input.value.toUpperCase();
-		table = document.getElementById("myTable");
-		tr = table.getElementsByTagName("tr");
-		for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[0];
-			if (td) {
-				txtValue = td.textContent || td.innerText;
-				if (txtValue.toUpperCase().indexOf(filter) > -1) {
-					tr[i].style.display = "";
-				} else {
-					tr[i].style.display = "none";
+		<script>
+			function myFunction() {
+				var filter, table, tr, td, i, txtValue;
+				filter = input.value.toUpperCase();
+				table = document.getElementById("myTable");
+				tr = table.getElementsByTagName("tr");
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td")[0];
+					if (td) {
+						txtValue = td.textContent || td.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+						} else {
+							tr[i].style.display = "none";
+						}
+					}
 				}
 			}
-		}
-	}
-</script>
+		</script>
 
 		<!-- ------------------------------------------------->
 		<!-- 건의 -->
