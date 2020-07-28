@@ -31,6 +31,16 @@ public class PostsServiceImpl implements PostsService{
 	public PostsAllVO SelectByCodeE(int postNo) {
 		return postsDao.SelectByCodeE(postNo);
 	}
+
+	@Override
+	public PostsAllVO SelectByCodeS(int postNo) {
+		return postsDao.SelectByCodeS(postNo);
+	}
+
+	@Override
+	public PostsAllVO SelectByCodeP(int postNo) {
+		return postsDao.SelectByCodeP(postNo);
+	}
 	
 	
 }

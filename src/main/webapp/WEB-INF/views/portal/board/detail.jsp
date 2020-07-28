@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/detail.css'/>" />
+	href="<c:url value='/resources/css/board/detail.css'/>" />
 <style>
 .info{
 	overflow: hidden;
@@ -17,6 +17,19 @@
 #boardDetail {
     width: 90%;
     margin: 0 auto;
+}
+.content{
+	margin: 40px auto 20px auto;
+}
+
+.fileInfo{
+	margin: 10px 0;
+}
+.fileInfo > div{
+	float: right;
+}
+.fileInfo > div > div{
+	font-size: 0.8em;
 }
 </style>
 <script type="text/javascript">
@@ -37,17 +50,23 @@
 		<div id="boardDetail">
 			<div class="row1">
 				<div class="col">
-					<h3>2020년 인터넷 스마트폰 과의존 예방 교육 안내 [학부생, 연1회 의무교육]</h3>
+					<h3>${vo.postsVo.title }</h3>
 				</div>
 			</div>
 			<hr>
 			<div class="info">
-				<div style="float: left;">${vo.userName }</div>
-				<div style="float: right;">date</div>
+				<div style="float: left;">${vo.userName }(${vo.postsVo.officialNo })</div>
+				<div style="float: right;">${vo.postsVo.regDate }</div>
+			</div>
+			<div class="col fileInfo">
+				<div>
+					<div>1.aefaef</div>
+					<div>2.aefaef</div>
+				</div>
 			</div>
 
 			<div class="row1 content">
-			${vo.contents }
+			${vo.postsVo.contents }
 			</div>
 
 			<div class="bts">

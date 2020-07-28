@@ -151,12 +151,27 @@ public class BoardController {
 	}
 
 	@RequestMapping("/detail")
-	public void detail(@RequestParam int postNo, Model model) {
+	public String detail(@RequestParam(defaultValue = "0") int postNo, Model model) {
 		logger.info("게시판 상세보기 페이지");
+		if(postNo == 0) {
+			model.addAttribute("msg", "잘못된 경로입니다.");
+			model.addAttribute("url","/portal/board/list");
+			return "common/message";
+		}
+		
 		PostsAllVO vo = postsService.SelectByCodeE(postNo);
+		if(vo == null) {
+			vo = postsService.SelectByCodeS(postNo);
+			if(vo == null) {
+				vo = postsService.SelectByCodeP(postNo);
+			}
+		}
+		
 		logger.info("게시판 상세보기 조회 결과 vo={}",vo);
 		
 		model.addAttribute("vo", vo);
+		
+		return "/portal/board/detail";
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)

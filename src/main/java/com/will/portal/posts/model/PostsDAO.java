@@ -9,4 +9,6 @@ public interface PostsDAO {
 	int selectPostsCount(BoardSearchVO bdSearchVo);
 	int insertPosts(PostsVO vo);
 	PostsAllVO SelectByCodeE(int postNo);
+	PostsAllVO SelectByCodeS(int postNo);
+	PostsAllVO SelectByCodeP(int postNo);
 }
