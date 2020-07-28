@@ -16,6 +16,7 @@
 		</if>
 		from dual
 	</select>
+	
 	<insert id="insertOfficial" parameterType="official_infoVO">
 		insert into
 		OFFICIAL_INFO(official_no,hp1,hp2,hp3,ssn)

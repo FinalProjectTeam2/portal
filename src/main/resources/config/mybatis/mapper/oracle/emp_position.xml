@@ -4,7 +4,7 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.emp_position">
 	<select id="selectEmpPosition" resultType="emp_positionVO">
-		select * from faculty
+		select * from emp_position
 	</select>
 </mapper>
 

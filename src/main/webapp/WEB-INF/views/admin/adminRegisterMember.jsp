@@ -98,6 +98,13 @@
 				$('.prof').css('display', 'none');
 			}
 		});
+		
+		$('#email2').change(function() {
+			if($(this).val()== 'etc'){
+				$('#email3').val('');
+				$('#email3').css('visibility','visible');
+			}
+		});
 	});
 </script>
 <link
@@ -160,6 +167,22 @@
 										</div>
 									</div>
 								</div>
+								<div class="form-group">
+									<label for="ssn" class="cols-sm-2 control-label">이메일</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<input type="text" class="form-control" name="email" id="email1" />@
+											<select name="email" id="email2">
+												<option value="naver">naver.com</option>
+												<option value="gmail">gmail.com</option>
+												<option value="daum">daum.net</option>
+												<option value="etc">직접입력</option>
+											</select>
+											<input type="text" class="form-control" name="email" id="email3" style="visibility: hidden;"/>
+										</div>
+									</div>
+								</div>
+								
 								<!--공통입력 항목 구분선  -->
 								<hr id="selLine">
 								<div class="hid emp form-group">

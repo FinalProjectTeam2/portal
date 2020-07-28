@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.will.portal.student.model.StudentVO;
+import com.will.portal.test.model.ForPwdVO;
 
 @Service
 public class Official_infoServiceImpl implements Official_infoService{
@@ -40,8 +41,15 @@ public class Official_infoServiceImpl implements Official_infoService{
 		return infoDao.updateIdentState(stuNo);
 	}
 
-	
-	
-	
+	@Override
+	public int findPwd(ForPwdVO vo) {
+		return infoDao.findPwd(vo);
+	}
+
+	@Override
+	public int updateAnyPwd(ForPwdVO vo) {
+		return infoDao.updateAnyPwd(vo);
+	}
+
 	
 }
