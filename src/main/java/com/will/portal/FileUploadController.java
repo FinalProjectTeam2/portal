@@ -29,6 +29,7 @@ public class FileUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 	
 	private String fileDir = "/Users/Wooseok/Desktop/dev_wooseok/egovFrame/portal/src/main/webapp/ckImage/";
+
 	/**
      * @param multiFile
      * @param request
@@ -40,7 +41,7 @@ public class FileUploadController {
             HttpServletResponse response, MultipartHttpServletRequest multiFile
             , @RequestParam MultipartFile upload) throws Exception{
     	
-    	
+    	String realPath = request.getServletContext().getRealPath("/ckImage/");
         // 랜덤 문자 생성
         UUID uid = UUID.randomUUID();
         
@@ -58,7 +59,7 @@ public class FileUploadController {
             byte[] bytes = upload.getBytes();
             
             //이미지 경로 생성
-            String path = fileDir;// fileDir는 전역 변수라 그냥 이미지 경로 설정해주면 된다.
+            String path = realPath;// fileDir는 전역 변수라 그냥 이미지 경로 설정해주면 된다.
             String ckUploadPath = path + uid + "_" + fileName;
             File folder = new File(path);
             
@@ -113,8 +114,9 @@ public class FileUploadController {
         
         //서버에 저장된 이미지 경로
         String path = fileDir;
+    	String realPath = request.getServletContext().getRealPath("/ckImage/");
     
-        String sDirPath = path + uid + "_" + fileName;
+        String sDirPath = realPath + uid + "_" + fileName;
     
         File imgFile = new File(sDirPath);
         
