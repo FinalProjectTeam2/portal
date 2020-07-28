@@ -33,6 +33,10 @@
 	font-size: 0.8em;
 	text-align: right;
 }
+.col h3{
+	word-break: break-word;
+	line-height: 1.5em;
+}
 </style>
 <script type="text/javascript">
 	$(function() {
