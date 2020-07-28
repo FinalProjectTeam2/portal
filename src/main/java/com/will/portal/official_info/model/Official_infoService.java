@@ -9,4 +9,5 @@ public interface Official_infoService {
 	int updateCode(StudentVO vo);
 	String selectCode(String stuNo);
 	int updateIdentState(String stuNo);
+	int insertOfficial(Official_infoVO officialVo);
 }

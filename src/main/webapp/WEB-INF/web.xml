@@ -23,6 +23,8 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- for websocket -->
+		 <async-supported>true</async-supported>
 	</servlet>
 	
 	<!-- ckeditor image upload -->

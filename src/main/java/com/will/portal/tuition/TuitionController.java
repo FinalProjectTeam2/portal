@@ -9,29 +9,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.will.portal.board.controller.BoardController;
 
 @Controller
-@RequestMapping("/Tuition")
+@RequestMapping("/tuition")
 public class TuitionController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@RequestMapping(value="/tuition1", method = RequestMethod.GET) 
 	public String tuition1_get() {
-		return "Tuition/tuition1";
+		return "tuition/tuition1";
 	}
 	
 	
 	@RequestMapping(value="/tuition2", method = RequestMethod.GET) 
 	public String tuition2_get() {
-		return "Tuition/tuition2";
+		return "tuition/tuition2";
 	}
 	
 	@RequestMapping(value="/tuition3", method = RequestMethod.GET) 
 	public String tuition3_get() {
-		return "Tuition/tuition3";
+		return "tuition/tuition3";
 	}
 	
 	@RequestMapping(value="/tuition4", method = RequestMethod.GET) 
 	public String tuition4_get() {
-		return "Tuition/tuition4";
+		logger.info("등록금 영수증 확인");
+		return "tuition/tuition4";
 	}
 	
 }

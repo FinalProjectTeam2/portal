@@ -16,6 +16,11 @@ public class Official_infoServiceImpl implements Official_infoService{
 	}
 
 	@Override
+	public int insertOfficial(Official_infoVO officialVo) {
+		return infoDao.insertOfficial(officialVo);
+	}
+
+	@Override
 	public StudentVO selectStuByNo(String officialNo) {
 		return null;
 	}

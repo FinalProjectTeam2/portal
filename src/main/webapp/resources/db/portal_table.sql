@@ -117,27 +117,26 @@ ALTER TABLE building
 
 /* 게시글 */
 CREATE TABLE posts (
-	post_code VARCHAR2(20) NOT NULL, /* 게시글코드 */
-	post_no VARCHAR2(150), /* 관계자번호 */
+	post_no NUMBER NOT NULL, /* 게시글코드 */
+	official_no VARCHAR2(150), /* 관계자번호 */
 	title VARCHAR2(150), /* 제목 */
 	contents CLOB, /* 내용 */
 	reg_date DATE DEFAULT sysdate, /* 등록일 */
 	read_count NUMBER DEFAULT 0, /* 조회수 */
 	del_flag CHAR(5) DEFAULT 'N', /* 삭제여부 */
-	bd_code NUMBER, /* 게시판코드 */
-	auth_code VARCHAR2(50) /* 관리코드 */
+	bd_code VARCHAR2(10) /* 게시판코드 */
 );
 
 ALTER TABLE posts
 	ADD
 		CONSTRAINT posts
 		PRIMARY KEY (
-			post_code
+			post_no
 		);
 
 /* 게시판 */
 CREATE TABLE board (
-	bd_no NUMBER NOT NULL, /* 게시판코드 */
+	bd_code VARCHAR2(10) NOT NULL, /* 게시판코드 */
 	official_no VARCHAR2(100) NOT NULL, /* 관계자번호 */
 	bd_name VARCHAR2(150) NOT NULL, /* 게시판 이름 */
 	reg_date DATE DEFAULT sysdate, /* 게시판 등록일 */
@@ -150,14 +149,15 @@ CREATE TABLE board (
 	is_upload CHAR(5) DEFAULT 'N', /* 업로드 가능 여부 */
 	max_upfile NUMBER DEFAULT 1, /* 업로드 가능 개수 */
 	max_filesize NUMBER DEFAULT 1024*1024, /* 업로드 가능 파일사이즈 */
-	category_code VARCHAR2(10) NOT NULL /* 카테고리코드 */
+	category_code VARCHAR2(10) NOT NULL, /* 카테고리코드 */
+	auth_code VARCHAR2(50) /* 권한코드 */
 );
 
 ALTER TABLE board
 	ADD
 		CONSTRAINT PK_board
 		PRIMARY KEY (
-			bd_no
+			bd_code
 		);
 
 /* 계좌정보 */
@@ -236,8 +236,8 @@ CREATE TABLE professor (
 	position_no NUMBER NOT NULL, /* 직책번호 */
 	start_date DATE DEFAULT sysdate, /* 임용일 */
 	resignation_date DATE, /* 퇴직일 */
-	identity_state CHAR(4) DEFAULT 'N' /* 본인인증상태 */
-	identify_code VARCHAR2(30) /*인증코드*/
+	identity_state CHAR(4) DEFAULT 'N', /* 본인인증상태 */
+	identity_code VARCHAR2(20) /* 본인인증코드 */
 );
 
 ALTER TABLE professor
@@ -262,8 +262,8 @@ ALTER TABLE prof_position
 
 /* 권한 */
 CREATE TABLE authority (
-	auth_code VARCHAR2(50) NOT NULL, /* 관리코드 */
-	auth_name VARCHAR2(30) NOT NULL, /* 관리명 */
+	auth_code VARCHAR2(50) NOT NULL, /* 권한코드 */
+	auth_name VARCHAR2(30) NOT NULL, /* 권한명 */
 	auth_desc VARCHAR2(30), /* 설명 */
 	auth_level NUMBER NOT NULL, /* 레벨 */
 	reg_date DATE DEFAULT sysdate /* 등록일 */
@@ -301,7 +301,7 @@ CREATE TABLE reply (
 	sort_no NUMBER, /* 정렬번호 */
 	step NUMBER, /* 차수 */
 	del_flag CHAR(5) DEFAULT 'N', /* 삭제여부 */
-	post_code VARCHAR2(20) /* 게시글코드 */
+	post_no NUMBER /* 게시글코드 */
 );
 
 ALTER TABLE reply
@@ -316,7 +316,11 @@ CREATE TABLE tuition (
 	no NUMBER NOT NULL, /* 번호 */
 	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
 	semester NUMBER, /* 학기 */
-	tuition NUMBER, /* 등록금액 */
+	admission_fee NUMBER, /* 입학금 */
+	tuition NUMBER, /* 수강료 */
+	practice_cost NUMBER, /* 실습비 */
+	student_fee NUMBER, /* 학생회비 */
+	total_tuition NUMBER, /* 총등록금액 */
 	deposit_state CHAR(5) DEFAULT 'N', /* 납부여부 */
 	deposit_date DATE /* 납부일 */
 );
@@ -331,8 +335,7 @@ ALTER TABLE tuition
 /* 부서 */
 CREATE TABLE emp_depart (
 	dep_code VARCHAR2(50) NOT NULL, /* 부서코드 */
-	dep_name VARCHAR2(100) NOT NULL, /* 부서명 */
-	position_code VARCHAR2(50) NOT NULL /* 직책코드 */
+	dep_name VARCHAR2(100) NOT NULL /* 부서명 */
 );
 
 ALTER TABLE emp_depart
@@ -417,7 +420,8 @@ CREATE TABLE employee (
 	pwd VARCHAR2(150) NOT NULL, /* 비밀번호 */
 	start_date DATE DEFAULT sysdate, /* 입사일 */
 	dep_code VARCHAR2(50), /* 부서코드 */
-	auth_code VARCHAR2(50), /* 관리코드 */
+	position_code VARCHAR2(50), /* 직책코드 */
+	auth_code VARCHAR2(50), /* 권한코드 */
 	emp_name VARCHAR2(50) NOT NULL, /* 임직원명 */
 	resignation_date DATE, /* 퇴사일 */
 	Identity_state CHAR(5) DEFAULT 'N' /* 본인인증상태 */
@@ -492,7 +496,7 @@ ALTER TABLE outbox
 CREATE TABLE inbox (
 	no NUMBER NOT NULL, /* 번호 */
 	msg_no NUMBER NOT NULL, /* 족지번호 */
-	address VARCHAR2(100) NOT NULL, /* 수신인번호 */
+	addressee VARCHAR2(100) NOT NULL, /* 수신인번호 */
 	read_date DATE, /* 읽은날짜 */
 	keep_flag CHAR(5) DEFAULT 'N' /* 보관여부 */
 );
@@ -522,7 +526,7 @@ ALTER TABLE category
 /* 파일 */
 CREATE TABLE files (
 	no NUMBER NOT NULL, /* 고유번호 */
-	post_code VARCHAR2(20), /* 게시글코드 */
+	post_no NUMBER, /* 게시글코드 */
 	file_name VARCHAR2(100), /* 파일명 */
 	file_size NUMBER, /* 파일크기 */
 	original_file_name VARCHAR2(100), /* 원본파일명 */
@@ -579,8 +583,8 @@ CREATE TABLE student (
 	admission_date DATE DEFAULT sysdate, /* 입학일 */
 	graduation_date DATE, /* 졸업일 */
 	identity_state CHAR(5) DEFAULT 'N', /* 본인인증상태 */
-	minor NUMBER /* 부전공 */
-	identify_code VARCHAR2(30) /*인증코드*/
+	minor NUMBER, /* 부전공 */
+	identity_code VARCHAR2(20) /* 본인인증코드 */
 );
 
 ALTER TABLE student
@@ -676,22 +680,12 @@ ALTER TABLE open_subj
 
 ALTER TABLE posts
 	ADD
-		CONSTRAINT FK_authority_TO_posts
-		FOREIGN KEY (
-			auth_code
-		)
-		REFERENCES authority (
-			auth_code
-		);
-
-ALTER TABLE posts
-	ADD
 		CONSTRAINT FK_board_TO_posts
 		FOREIGN KEY (
 			bd_code
 		)
 		REFERENCES board (
-			bd_no
+			bd_code
 		);
 
 ALTER TABLE board
@@ -702,6 +696,16 @@ ALTER TABLE board
 		)
 		REFERENCES category (
 			category_code
+		);
+
+ALTER TABLE board
+	ADD
+		CONSTRAINT FK_authority_
+		FOREIGN KEY (
+			auth_code
+		)
+		REFERENCES authority (
+			auth_code
 		);
 
 ALTER TABLE account_info
@@ -772,10 +776,10 @@ ALTER TABLE reply
 	ADD
 		CONSTRAINT FK_posts_TO_reply
 		FOREIGN KEY (
-			post_code
+			post_no
 		)
 		REFERENCES posts (
-			post_code
+			post_no
 		);
 
 ALTER TABLE tuition
@@ -786,16 +790,6 @@ ALTER TABLE tuition
 		)
 		REFERENCES student (
 			stu_no
-		);
-
-ALTER TABLE emp_depart
-	ADD
-		CONSTRAINT FK_emp_position_TO_emp_depart
-		FOREIGN KEY (
-			position_code
-		)
-		REFERENCES emp_position (
-			position_code
 		);
 
 ALTER TABLE evaluation
@@ -852,6 +846,16 @@ ALTER TABLE employee
 			auth_code
 		);
 
+ALTER TABLE employee
+	ADD
+		CONSTRAINT FK_emp_position_
+		FOREIGN KEY (
+			position_code
+		)
+		REFERENCES emp_position (
+			position_code
+		);
+
 ALTER TABLE award
 	ADD
 		CONSTRAINT FK_student_TO_award
@@ -886,10 +890,10 @@ ALTER TABLE files
 	ADD
 		CONSTRAINT FK_posts_
 		FOREIGN KEY (
-			post_code
+			post_no
 		)
 		REFERENCES posts (
-			post_code
+			post_no
 		);
 
 ALTER TABLE department
@@ -921,7 +925,6 @@ ALTER TABLE student
 		REFERENCES department (
 			dep_no
 		);
-
 
 /* 시퀀스 생성 */
 
@@ -987,6 +990,12 @@ NOCACHE;
 
 /*files*/
 CREATE SEQUENCE files_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
+
+/*posts*/
+CREATE SEQUENCE posts_seq
 INCREMENT BY 1
 START WITH 1
 NOCACHE;

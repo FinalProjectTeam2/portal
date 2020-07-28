@@ -1,6 +1,8 @@
 package com.will.portal.official_info.controller;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,12 +39,15 @@ public class IdentifyController {
 	
 	@RequestMapping(value = "/member/sendCode", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String sendSms(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
+	public String sendSms(@RequestParam String officialNo, @RequestParam String ssn1,
+				@RequestParam String ssn2, @RequestParam(defaultValue = "N") String identState) {
 		String userid = "fe5882";           // [필수] 뿌리오 아이디
 		String callback = "01038225882";    // [필수] 발신번호 - 숫자만
 		
 		Official_infoVO vo = infoService.selectByNo(officialNo);
 		String phone = vo.getHp1()+vo.getHp2()+vo.getHp3();       // [필수] 수신번호 - 여러명일 경우 |로 구분 "010********|010********|010********"
+	
+		
 		
 		String code = ""; 
 		//6자리 인증코드 만들기
@@ -145,7 +150,35 @@ public class IdentifyController {
 		
 	}
 	
-	
+	@RequestMapping("/member/identSsn")
+	@ResponseBody
+	public MessageVO identSsn(@RequestParam String officialNo, @RequestParam String ssn1,
+				@RequestParam String ssn2, @RequestParam(defaultValue = "N") String identSsn) {
+		Official_infoVO vo = infoService.selectByNo(officialNo);
+		String ssn = vo.getSsn();
+		String [] sArr = ssn.split("-");
+		String dbSsn = sArr[0] + sArr[1].substring(0, 1);
+		String inputSsn = ssn1 + ssn2;
+		logger.info("db와 입력한 주민번호 확인 dbSsn={}, inputSsn={}", dbSsn, inputSsn);
+		String message = "";
+		identSsn = "Y";
+		
+		if(!inputSsn.equals(dbSsn)) {
+			message = "학생처에 저장된 주민번호와 다릅니다. \r\n ☎ 02-1234-0114로 문의해주세요.";
+			identSsn = "N";
+		}
+		
+		logger.info("identSsn={}, message={}", identSsn, message);
+		
+		
+		MessageVO mVo = new MessageVO();
+		mVo.setIdentSsn(identSsn);
+		mVo.setOfficialNo(officialNo);
+		mVo.setMessage(message);
+		
+		return mVo;
+		
+	}
 	
 	
 	

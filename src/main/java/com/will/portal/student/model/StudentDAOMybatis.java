@@ -9,7 +9,13 @@ public class StudentDAOMybatis implements StudentDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private String namespace = "config.mybatis.mapper.oracle.student.";
-	
+	private String namespaceAdmin="config.mybatis.mapper.oracle.admin.";
+
+	@Override
+	public int insertStudent(StudentVO studentVo) {
+		return sqlSession.insert(namespaceAdmin+"insertStudent",studentVo);
+	}
+
 	public String selectPwd(String stuNo) {
 		return sqlSession.selectOne(namespace + "selectPwd", stuNo);
 	}

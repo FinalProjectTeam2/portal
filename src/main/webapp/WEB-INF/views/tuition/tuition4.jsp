@@ -153,7 +153,7 @@ td, th, tr {
 						▣  납입기간 : 2020년 3월 10일 ~ 2020년 3월 20일(16:00) <br>
 						＊유의사항: 은행업무 시간 내에만 납부 가능 <br>
 						▣  가상계좌 : 국민은행(1111-1111)<br>
-						<img src="<c:url value='/resources/images/stamp1.png'/> align="stamp">
+						<img src="<c:url value='/resources/images/stamp1.png'/>">
 						
 					</td>
 				</tr>
@@ -230,7 +230,7 @@ td, th, tr {
 				<tr>
 					<td colspan="4">
 						<h5>년	월	일</h5>						
-						<img src="<c:url value='/resources/images/stamp1.png'/> align="stamp">
+						<img src="<c:url value='/resources/images/stamp1.png'/>">
 					</td>
 				</tr>
 		</tbody>
@@ -280,7 +280,7 @@ td, th, tr {
 						＊유의사항: 은행업무 시간 내에만 납부 가능 <br>
 						▣  가상계좌 : 국민은행(1111-1111)
 						
-						<img src="<c:url value='/resources/images/stamp2.png'/> align="stamp">
+						<img src="<c:url value='/resources/images/stamp2.png'/>">
 					</td>
 				</tr>
 		</tbody>
@@ -332,7 +332,7 @@ td, th, tr {
 					<td colspan="4">
 						<h5>년 월 일</h5>
 						
-						<img src="<c:url value='/resources/images/stamp2.png'/> align="stamp">
+						<img src="<c:url value='/resources/images/stamp2.png'/>">
 					</td>
 				</tr>
 		</tbody>

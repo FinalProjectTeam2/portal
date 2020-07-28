@@ -6,7 +6,6 @@
 	<select id="selectFaculty" resultType="facultyVO">
 		select * from faculty
 	</select>
-   
 </mapper>
 
 
