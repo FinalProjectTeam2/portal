@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.portal.authority.model.AuthorityService;
+import com.will.portal.authority.model.AuthorityVO;
 import com.will.portal.department.model.DepartmentService;
 import com.will.portal.department.model.DepartmentVO;
+import com.will.portal.emp_depart.model.Emp_departService;
+import com.will.portal.emp_depart.model.Emp_departVO;
+import com.will.portal.emp_position.model.Emp_positionService;
+import com.will.portal.emp_position.model.Emp_positionVO;
 import com.will.portal.employee.model.EmployService;
 import com.will.portal.employee.model.EmployeeVO;
 import com.will.portal.faculty.model.FacultyService;
@@ -40,6 +46,9 @@ public class AdminController {
 	@Autowired FacultyService facultyService;
 	@Autowired Prof_positionService profPositionService;
 	@Autowired StudentService studentService;
+	@Autowired Emp_departService empDepartService;
+	@Autowired AuthorityService authorityService;
+	@Autowired Emp_positionService empPositionService;
 	
 	@RequestMapping(value = "/adminRegisterMember", method = RequestMethod.GET)
 	public String adminRegisterMember(Model model) {
@@ -49,13 +58,18 @@ public class AdminController {
 		List<FacultyVO> facultyList= facultyService.selectFaculty();
 		List<DepartmentVO> departmentList=departmentService.selectDepartment();
 		List<Prof_positionVO> profPositionList=profPositionService.selectProfPosition();
-		
-		
+		List<Emp_departVO> empDepartList=empDepartService.selectEmpDepart();
+		List<AuthorityVO> authorityList=authorityService.selectAuthority();
+		List<Emp_positionVO> empPositionList=empPositionService.selectEmpPosition();
 		
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList",departmentList);
 		model.addAttribute("profPositionList",profPositionList);
+		model.addAttribute("empDepartList",empDepartList);
+		model.addAttribute("authorityList",authorityList);
+		model.addAttribute("empPositionList",empPositionList);
+		
 		
 		return "admin/adminRegisterMember";
 				
@@ -63,7 +77,7 @@ public class AdminController {
 	
 	@RequestMapping("/departmentList")
 	@ResponseBody
-	public List<DepartmentVO> departmentList(int facultyNo){
+	public List<DepartmentVO> departmentList(@RequestParam(defaultValue = "0") int facultyNo){
 		logger.info("ajax-departmentList, param: {}",facultyNo);
 		
 		List<DepartmentVO> departmentList= departmentService.selectDepartmentByFaculty(facultyNo);
@@ -73,13 +87,16 @@ public class AdminController {
 	
 	@RequestMapping(value = "/adminRegisterEmployee",method = RequestMethod.POST)
 	public String adminRegisterEmployee_post(@ModelAttribute EmployeeVO employeeVo, 
-			@ModelAttribute Official_infoVO officialVo,
+			@ModelAttribute Official_infoVO officialVo,@RequestParam(required = false) String email3,
 			@RequestParam String name, @RequestParam int sort) {
 		logger.info("adminRegisterEmployee_post, param: {}",employeeVo);
 		logger.info("adminRegisterEmployee_post, param: {}",officialVo);
 		logger.info("adminRegisterEmployee_post, param: sort={}",sort);
 		
 		employeeVo.setEmpName(name);
+		if(officialVo.getEmail2().equals("etc")) {
+			officialVo.setEmail2(email3);
+		}
 		int cnt=employeeService.insertEmployee(employeeVo, officialVo, sort);
 		
 		String url="";
@@ -93,7 +110,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/adminRegisterProfessor", method = RequestMethod.POST)
 	public String adminRegisterProfessor_post(@ModelAttribute ProfessorVO professorVo,
-			@ModelAttribute Official_infoVO officialVo,
+			@ModelAttribute Official_infoVO officialVo,@RequestParam(required = false) String email3,
 			@RequestParam String name,@RequestParam int sort) {
 		logger.info("adminRegisterProfessor_post, param: {}",professorVo);
 		logger.info("adminRegisterProfessor_post, param: {}",officialVo);
@@ -103,6 +120,9 @@ public class AdminController {
 		professorVo.setProfName(name);
 		logger.info("professorVo.setProfName(name), {}",professorVo);
 
+		if(officialVo.getEmail2().equals("etc")) {
+			officialVo.setEmail2(email3);
+		}
 		int cnt=professorService.insertProfessor(professorVo, officialVo, sort);
 		
 		String url="";
@@ -116,13 +136,15 @@ public class AdminController {
 	@RequestMapping(value = "/adminRegisterStudent", method = RequestMethod.POST)
 	public String adminRegisterStudent_post(@ModelAttribute StudentVO studentVo,
 			@ModelAttribute Official_infoVO officialVo,@RequestParam int depNo,
-			@RequestParam int sort) {
+			@RequestParam int sort,@RequestParam(required = false) String email3) {
 		studentVo.setMajor(depNo);
 		logger.info("adminRegisterStudent_post, param: {}",studentVo);
 		logger.info("adminRegisterStudent_post, param: {}",officialVo);
 		logger.info("adminRegisterStudent_post, param: sort={}",sort);
 		
-		
+		if(officialVo.getEmail2().equals("etc")) {
+			officialVo.setEmail2(email3);
+		}
 		int cnt=studentService.insertStudent(studentVo, officialVo, sort);
 		
 		String url="";
