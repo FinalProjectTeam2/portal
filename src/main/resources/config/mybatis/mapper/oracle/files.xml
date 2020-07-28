@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.files">
+	<insert id="insertFiles" parameterType="filesVo">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select FILES_SEQ.nextval from dual
+		</selectKey>
+		insert into files(NO,POST_NO,FILE_NAME,FILE_SIZE,ORIGINAL_FILE_NAME)
+		values(#{no},#{postNo},#{fileName},#{fileSize},#{originalFileName})
+	</insert>
+</mapper>
+

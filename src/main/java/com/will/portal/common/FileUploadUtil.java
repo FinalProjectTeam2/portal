@@ -53,7 +53,18 @@ public class FileUploadUtil {
 				//변경된 파일 명 구하기
 				String fileName = getUniqueFileName(originalFName);
 				//업로드 처리
+				
 				String upPath = getUploadPath(request, pathGb);
+				
+				File folder = new File(upPath);
+				if(!folder.exists()){
+	                try{
+	                    folder.mkdirs(); // 폴더 생성
+	                }catch(Exception e){
+	                    e.getStackTrace();
+	                }
+	            }
+				
 				File file = new File(upPath, fileName);
 				try {
 					tempFile.transferTo(file);

@@ -8,7 +8,11 @@
 	href="<c:url value='/resources/css/board/board.css'/>" />
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/menu2.css'/>" />
-
+<style type="text/css">
+ul.pagination {
+    display: inline-flex;
+}
+</style>
 <!-- 공지사항 -->
 <script type="text/javascript">
 	$(function() {
@@ -35,25 +39,57 @@
 			success : function(res) {
 				makeList(res);
 				pageMake(res); //페이징 처리 함수
+				$('body').scrollTop(0);
 			}
 		});
 	}
 
 	function makeList(obj) {
 		
-		var str = "<tbody>";
+		var str = '<table id="myTable">'
+			+ '<colgroup>'
+			+ '<col width="5%">'
+			+ '<col width="60%">'
+			+ '<col width="15%">'
+			+ '<col width="10%">'
+			+ '<col width="10%">'
+			+ '</colgroup>'
+			+ '<thead>'
+			+ '<tr class="maTable_tr1">'
+			+ '<th scope="col">번호</th>'
+			+ '<th scope="col">제목</th>'
+			+ '<th scope="col">작성자</th>'
+			+ '<th scope="col">작성일</th>'
+			+ '<th scope="col">조회수</th>'
+			+ '</tr>'
+			+ '</thead>';
+		
+		str += "<tbody>";
 		
 		if(obj.pagingInfo.totalRecord == 0){
 			str += "<tr>"
-				+ '<td colspan="6">게시물이 없습니다.</td>'
+				+ '<td colspan="5">게시물이 없습니다.</td>'
 			+ "</tr>";
 		}else{
 			$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+" | 페이지 "+obj.pagingInfo.currentPage+"/"
 					+obj.pagingInfo.totalPage+ "</span>");
+			
+			$.each(obj.list, function(idx, item) {
+				str += "<tr>";
+				str += "<td>"+ item.postNo +"</td>";
+				str += "<td><a href=\"<c:url value='/portal/board/detail'/>?postNo=" + item.postNo + "\">"
+					+ item.title +"</a></td>";
+				str += "<td>"+ item.officialNo +"</td>";
+				str += "<td>"+  moment(item.regDate).format('YYYY-MM-DD') +"</td>";
+				str += "<td>"+ item.readCount +"</td>";
+				str += "</tr>";
+			});
+			
 		}
 		str += "</tbody>";
+		str += '</table>';
 		
-		$("#myTable").append(str);
+		$("#tableList").html(str);
 	}
 	
 	function pageMake(obj) {
@@ -74,10 +110,8 @@
 		//페이지 처리
 		for (var i = pagingInfo.firstPage; i <= pagingInfo.lastPage; i++) {
 			if (i == pagingInfo.currentPage) {
-				str += '<li class="page-item"><a class="page-link" onclick="$.send('
-						+ i
-						+ ')"'
-						+ 'style="background: skyblue;" href="#">'
+				str += '<li class="page-item"><a class="page-link" '
+						+ 'style="background: skyblue; color: white;">'
 						+ i + '</a></li>';
 			} else {
 				str += '<li class="page-item"><a class="page-link" onclick="$.send('
@@ -128,36 +162,16 @@
 			</div>
 
 			<!-- 게시판 -->
-			<table id="myTable">
-				<colgroup>
-					<col width="35%">
-					<col width="6%">
-					<col width="6%">
-					<col width="30%">
-					<col width="15%">
-					<col width="8%">
-				</colgroup>
-				<thead>
-					<tr class="maTable_tr1">
-						<th scope="col">제목</th>
-						<th scope="col">번호</th>
-						<th scope="col">분류</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-						<th scope="col">조회수</th>
-					</tr>
-				</thead>
-			</table>
+			<div id="tableList"></div>
+			
 			<div class="divbt">
 				<!-- 비회원은 버튼 안 보임! -->
 				<button class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
 			</div>
 		</div>
-		<br> <br>
 		<!-- 페이지번호 -->
-		<div class="divPage"></div>
+		<div class="divPage" id="divPage"></div>
 
-		<br> <br>
 		<!-- 검색 -->
 		<div class="divSearch">
 			<form name="frmSearch" method="post" action="">

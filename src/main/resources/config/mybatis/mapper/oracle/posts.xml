@@ -33,5 +33,47 @@
         			|| #{searchKeyword} || '%'
         </if>
 	</select>
+	
+	<insert id="insertPosts" parameterType="postsVo">
+		<selectKey order="BEFORE" keyProperty="postNo" resultType="int">
+			select POSTS_SEQ.nextval from dual
+		</selectKey>
+		insert into posts(POST_NO,OFFICIAL_NO,TITLE,CONTENTS,BD_CODE)
+		values(#{postNo},#{officialNo},#{title},#{contents},#{bdCode})
+	</insert>
+	
+	<select id="selectFilesByNo" parameterType="int" resultType="filesVo">
+		select * from files where post_no = #{postNo}
+	</select>
+	
+	<resultMap type="postsAllVO" id="selectByCodeEResultMap">
+		<association property="postsVo" javaType="postsVo"
+			column="POST_NO">
+			<id column="POST_NO" property="postNo" jdbcType="NUMERIC" />
+			<result column="OFFICIAL_NO" jdbcType="VARCHAR" property="officialNo" />
+			<result column="title" jdbcType="VARCHAR" property="title" />
+			<result column="contents" jdbcType="CLOB" property="contents" />
+			<result column="reg_date" jdbcType="TIMESTAMP" property="regDate" />
+			<result column="READ_COUNT" jdbcType="NUMERIC" property="readCount" />
+			<result column="DEL_FLAG" jdbcType="CHAR" property="delFlag" />
+			<result column="BD_CODE" jdbcType="VARCHAR" property="bdCode" />
+			<result column="GROUP_NO" jdbcType="NUMERIC" property="groupNo" />
+			<result column="SORT_NO" jdbcType="NUMERIC" property="sortNo" />
+			<result column="step" jdbcType="NUMERIC" property="step" />
+			<result column="newImgTerm" jdbcType="NUMERIC" property="newImgTerm" />
+		</association>
+		<association property="userName" javaType="string" column="user_name">
+			<result column="user_name" jdbcType="VARCHAR" property="userName" />
+		</association>
+		<collection property="fileList" column="post_no"
+			javaType="ArrayList" ofType="filesVo" select="selectFilesByNo">
+		</collection>
+	</resultMap>
+	
+	<select id="SelectByCodeE" resultMap="selectByCodeEResultMap" parameterType="int">
+		select p.*, e.emp_name user_name, (sysdate-reg_date)*24 as newImgTerm 
+		from posts p join employee e on p.official_no=e.emp_no
+		where POST_NO = #{postNo}
+	</select>
 </mapper>
 

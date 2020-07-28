@@ -21,8 +21,12 @@ import com.will.portal.board.model.BoardSearchVO;
 import com.will.portal.board.model.BoardService;
 import com.will.portal.board.model.BoardVO;
 import com.will.portal.category.model.CategoryListVO;
+import com.will.portal.common.FileUploadUtil;
 import com.will.portal.common.PaginationInfo;
 import com.will.portal.common.Utility;
+import com.will.portal.files.model.FilesService;
+import com.will.portal.files.model.FilesVO;
+import com.will.portal.posts.model.PostsAllVO;
 import com.will.portal.posts.model.PostsService;
 import com.will.portal.posts.model.PostsVO;
 
@@ -36,6 +40,12 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+
+	@Autowired
+	private FileUploadUtil fileUploadUtil;
+	
+	@Autowired
+	private FilesService filesSercive;
 
 	@RequestMapping("/main")
 	public void boardMain(@RequestParam(defaultValue = "B") String categoryCode) {
@@ -80,40 +90,73 @@ public class BoardController {
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public void write_get(@RequestParam(defaultValue = "F") String bdCode, Model medel) {
-		logger.info("게시글 작성 페이지, 파라미터 bdCode={}",bdCode);
-		
+		logger.info("게시글 작성 페이지, 파라미터 bdCode={}", bdCode);
+
 		BoardVO vo = boardService.selectBoardByBdCode(bdCode);
 		List<BoardVO> list = boardService.selectBoardByCategoryInline(bdCode);
-		logger.info("게시판 검색 결과 list.size={}, vo={}",list.size(),vo);
-		
+		logger.info("게시판 검색 결과 list.size={}, vo={}", list.size(), vo);
+
 		medel.addAttribute("vo", vo);
 		medel.addAttribute("list", list);
 	}
-	
+
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write_post(@RequestParam String title, @RequestParam String contents, @RequestParam String officialNo,
-			@RequestParam String bdCode, HttpServletRequest request,Model medel) {
+			@RequestParam String bdCode, HttpServletRequest request, Model model) {
 		PostsVO vo = new PostsVO();
 		vo.setBdCode(bdCode);
 		vo.setContents(contents);
 		vo.setTitle(title);
 		vo.setOfficialNo(officialNo);
-		logger.info("게시글 작성 처리, 파라미터 vo={}",vo);
+		logger.info("게시글 작성 처리, 파라미터 vo={}", vo);
 		
-		return "redirect:/portal/board/list?bdCode="+vo.getBdCode();
+		int cnt = postsService.insertPosts(vo);
+		logger.info("게시글 작성 처리 결과, cnt={}, vo={}", cnt, vo);
+		
+		//파일 업로드 처리
+		List<Map<String, Object>> fileList
+		=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
+		
+		String msg = "게시글 작성 실패!", url = "/portal/board/write?bdCode=" + vo.getBdCode();
+		if(cnt >0) {
+			for(Map<String, Object> map : fileList) {
+				FilesVO fileVo = new FilesVO();
+				fileVo.setFileName((String) map.get("fileName"));
+				fileVo.setFileSize((Long) map.get("fileSize"));
+				fileVo.setOriginalFileName((String) map.get("originalFName"));
+				fileVo.setPostNo(vo.getPostNo());
+				
+				cnt = filesSercive.insertFiles(fileVo);
+				logger.info("파일 insert 처리 결과 cnt={}", cnt);
+				if(cnt > 0) {
+					url = "/portal/board/list?bdCode=" + vo.getBdCode();
+					msg = "게시글 작성 성공!";
+				}else {
+					url = "/portal/board/list?bdCode=" + vo.getBdCode();
+					msg = "파일 insert 처리 실패!";
+				}
+				
+			}
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "common/message";
 	}
-	
+
 	@RequestMapping("/ajax/findBoard")
 	@ResponseBody
 	public BoardVO findBoard(@RequestParam String bdCode) {
-		logger.info("ajax - findBoard 실행, 파라미터 bdCode={}",bdCode);
+		logger.info("ajax - findBoard 실행, 파라미터 bdCode={}", bdCode);
 		return boardService.selectBoardByBdCode(bdCode);
 	}
 
 	@RequestMapping("/detail")
-	public void detail(@RequestParam String postCode) {
+	public void detail(@RequestParam int postNo, Model model) {
 		logger.info("게시판 상세보기 페이지");
-		postsService.SelectByCode(postCode);
+		PostsAllVO vo = postsService.SelectByCodeE(postNo);
+		logger.info("게시판 상세보기 조회 결과 vo={}",vo);
+		
+		model.addAttribute("vo", vo);
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
