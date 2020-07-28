@@ -142,11 +142,11 @@ CREATE TABLE board (
 	reg_date DATE DEFAULT sysdate, /* 게시판 등록일 */
 	edit_date DATE, /* 게시판 수정일 */
 	bd_order NUMBER, /* 게시판 순서 */
-	usage CHAR(5) DEFAULT 'N', /* 사용 여부 */
-	is_reply CHAR(5) DEFAULT 'N', /* 댓글여부 */
-	is_comment CHAR(5) DEFAULT 'N', /* 답글여부 */
-	is_private CHAR(5) DEFAULT 'N', /* 비공개여부 */
-	is_upload CHAR(5) DEFAULT 'N', /* 업로드 가능 여부 */
+	usage CHAR(1) DEFAULT 'N', /* 사용 여부 */
+	is_reply CHAR(1) DEFAULT 'N', /* 댓글여부 */
+	is_comment CHAR(1) DEFAULT 'N', /* 답글여부 */
+	is_private CHAR(1) DEFAULT 'N', /* 비공개여부 */
+	is_upload CHAR(1) DEFAULT 'N', /* 업로드 가능 여부 */
 	max_upfile NUMBER DEFAULT 1, /* 업로드 가능 개수 */
 	max_filesize NUMBER DEFAULT 1024*1024, /* 업로드 가능 파일사이즈 */
 	category_code VARCHAR2(10) NOT NULL, /* 카테고리코드 */

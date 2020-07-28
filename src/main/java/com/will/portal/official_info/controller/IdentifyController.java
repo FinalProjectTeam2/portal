@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +27,16 @@ public class IdentifyController {
 	private static final Logger logger = LoggerFactory.getLogger(IdentifyController.class);
 	@Autowired
 	private Official_infoService infoService;
-	
+	/**
+	 * 최초 비밀번호 변경
+	 * @param officialNo
+	 * @param identState
+	 */
 	@RequestMapping("/member/changePwd")
-	public void changePwd(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
+	public void changePwd(HttpSession session) {
 		//추후 세션으로 대체예정 지금은 파라미터로 시험중
 		logger.info("최초 비밀번호 변경 화면으로 이동");
+		
 	}
 	
 	@RequestMapping(value = "/member/identify", method = RequestMethod.GET)
@@ -39,8 +46,7 @@ public class IdentifyController {
 	
 	@RequestMapping(value = "/member/sendCode", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String sendSms(@RequestParam String officialNo, @RequestParam String ssn1,
-				@RequestParam String ssn2, @RequestParam(defaultValue = "N") String identState) {
+	public String sendSms(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
 		String userid = "fe5882";           // [필수] 뿌리오 아이디
 		String callback = "01038225882";    // [필수] 발신번호 - 숫자만
 		
@@ -132,7 +138,7 @@ public class IdentifyController {
 		String message="인증 실패 인증번호를 확인하세요";
 		logger.info("파라미터 인증번호={}, db인증번호={}", inputCode, dbCode);
 		if(inputCode.equals(dbCode)) {
-			message="인증 성공";
+			message="인증 성공 비밀번호 변경 페이지로 이동합니다.";
 			identState="Y";
 			infoService.updateIdentState(officialNo);
 		}
