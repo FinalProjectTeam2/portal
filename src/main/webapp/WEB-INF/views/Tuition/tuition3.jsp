@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
 <main role="main" class="flex-shrink-0">
@@ -64,7 +65,7 @@
 }
 </style>
 
-<h1>등록금 납부 내역 조회 </h1>
+<h1>등록금 납부 상세 내역</h1>
 <div id="tuition1">
 <form name="frmWrite" method="post" action="<c:url value=''/>" >
 	<div class="divTable" > 
@@ -160,6 +161,15 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:if test="${empty list}">
+				<tr>
+					<td colspan="5" class="align_center">
+					조회 내용이 없습니다.
+					</td>
+				</tr>
+			</c:if>	
+			<c:if test="${!empty list}">
+			</c:if>	
 			<tr>
 				<td>입학금</td>
 				<td>0원</td>
