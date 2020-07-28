@@ -33,7 +33,7 @@
 			<img alt="주의 이미지" src="<c:url value='/resources/images/attention.png'/>" style="width: 200px; height: auto" >
 		</div>
 		<div class="secDiv">
-			<p>학번 : ${param.officialNo }</p>
+			<p>학번 : ${sessionScope.officialNo }, ${sessionScope.identState}</p>
 
 
 			<p>최초 로그인 후 반드시 본인인증을 하고 비밀번호를 변경해야 합니다.</p>
