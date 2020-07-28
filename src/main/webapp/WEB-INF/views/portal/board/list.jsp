@@ -12,6 +12,9 @@
 ul.pagination {
     display: inline-flex;
 }
+.title img{
+	margin: 0 5px 0 0;
+}
 </style>
 <!-- 공지사항 -->
 <script type="text/javascript">
@@ -77,8 +80,22 @@ ul.pagination {
 			$.each(obj.list, function(idx, item) {
 				str += "<tr>";
 				str += "<td>"+ item.postNo +"</td>";
-				str += "<td><a href=\"<c:url value='/portal/board/detail'/>?postNo=" + item.postNo + "\">"
-					+ item.title +"</a></td>";
+				str += "<td class='title'><a href=\"<c:url value='/portal/board/detail'/>?postNo="
+						+ item.postNo + "\" title=\""+item.title+"\">";
+				if(item.fileCount > 0){
+					str += "<img alt=\"file\" src=\"<c:url value='/resources/images/file.gif'/>\">";
+				}
+				str	+= '<span style="margin-right: 5px;">'
+				if(item.title.length >= 60){
+					str += item.title.substring(0,60) + "...";
+				}else{
+					str += item.title
+				}
+				str += '</span>';
+				if(item.newImgTerm < 24){
+					str += "<img alt=\"newPost\" src=\"<c:url value='/resources/images/new.gif'/>\">";
+				}
+				str += "</a></td>";
 				str += "<td>"+ item.officialNo +"</td>";
 				str += "<td>"+  moment(item.regDate).format('YYYY-MM-DD') +"</td>";
 				str += "<td>"+ item.readCount +"</td>";
@@ -189,7 +206,7 @@ ul.pagination {
 					:</strong> 교직 , 토익 , 토익 , 단소리
 			</form>
 		</div>
-
+		
 		<script>
 			function myFunction() {
 				var filter, table, tr, td, i, txtValue;

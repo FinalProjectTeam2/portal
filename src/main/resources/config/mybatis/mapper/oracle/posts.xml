@@ -11,8 +11,9 @@
 		    from(
 		        select post_no, official_no, title, reg_date,
 			    read_count, contents, del_flag, bd_code,
-			    (sysdate-reg_date)*24 as newImgTerm 
-			    from posts where bd_code=#{bdCode}
+			    (sysdate-reg_date)*24 as newImgTerm,
+			    (select count(*) from files f where f.post_no = p.post_no) file_count 
+			    from posts p where bd_code=#{bdCode}
 			    <if test="searchKeyword!=null and searchKeyword !=''">
 		        	where ${searchCondition} like '%' 
 		        			|| #{searchKeyword} || '%'

@@ -128,15 +128,9 @@ public class BoardController {
 				
 				cnt = filesSercive.insertFiles(fileVo);
 				logger.info("파일 insert 처리 결과 cnt={}", cnt);
-				if(cnt > 0) {
-					url = "/portal/board/list?bdCode=" + vo.getBdCode();
-					msg = "게시글 작성 성공!";
-				}else {
-					url = "/portal/board/list?bdCode=" + vo.getBdCode();
-					msg = "파일 insert 처리 실패!";
-				}
-				
 			}
+			url = "/portal/board/list?bdCode=" + vo.getBdCode();
+			msg = "게시글 작성 성공!";
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
