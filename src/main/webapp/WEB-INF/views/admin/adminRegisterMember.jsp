@@ -4,7 +4,6 @@
 <%@ include file="../inc/mainSidebar.jsp"%>
 <script type="text/javascript">
 	$(function() {
-
 		$('#btRegi')
 				.click(
 						function() {
@@ -32,54 +31,67 @@
 						});
 
 		function check() {
-			if($('#name').val() == ""){
+			if ($('#name').val() == "") {
 				alert('이름을 입력해주세요');
 				$('#name').focus();
 				event.preventDefault();
-			}else if($('#SSN').val() == ""){
+			} else if ($('#SSN').val() == "") {
 				alert('주민번호를 입력해주세요');
 				$('#SSN').focus();
 				event.preventDefault();
-			}else if($('#hp1').val() == ""){
+			} else if ($('#hp1').val() == "") {
 				alert('전화번호를 입력해주세요');
 				$('#hp1').focus();
 				event.preventDefault();
-			}else if($('#hp2').val() == ""){
+			} else if ($('#hp2').val() == "") {
 				alert('전화번호를 입력해주세요');
 				$('#hp2').focus();
 				event.preventDefault();
-			}else if($('#hp3').val() == ""){
+			} else if ($('#hp3').val() == "") {
 				alert('전화번호를 입력해주세요');
 				$('#hp3').focus();
 				event.preventDefault();
-		/* 	}else if($('#depCode').val() == null){
-				alert('부서를 선택해주세요');
-				$('#depCode').focus();
-				event.preventDefault();
-			}else if($('#authCode').val() == null){
-				alert('권한을 선택해주세요');
-				$('#authCode').focus();
-				event.preventDefault();
-			}else if($('#positionCode').val() == null){
-				alert('직책을 선택해주세요');
-				$('#positionCode').focus();
-				event.preventDefault(); */
-			}else if(!validate_number($('#hp1').val()) || !validate_number($('#hp2').val())|| !validate_number($('#hp3').val())){
+				/* 	}else if($('#depCode').val() == null){
+						alert('부서를 선택해주세요');
+						$('#depCode').focus();
+						event.preventDefault();
+					}else if($('#authCode').val() == null){
+						alert('권한을 선택해주세요');
+						$('#authCode').focus();
+						event.preventDefault();
+					}else if($('#positionCode').val() == null){
+						alert('직책을 선택해주세요');
+						$('#positionCode').focus();
+						event.preventDefault(); */
+			} else if (!validate_number($('#hp1').val())
+					|| !validate_number($('#hp2').val())
+					|| !validate_number($('#hp3').val())) {
 				alert('전화번호는 숫자만 가능합니다.');
 				$('#hp1').focus();
 				event.preventDefault();
-			}else if(!validate_number($('#SSN').val())){
+			} else if (!validate_number($('#SSN').val())) {
 				alert('주민번호는 숫자만 가능합니다.');
 				$('#SSN').focus();
 				event.preventDefault();
 			}
 		}
+		//이메일 직접입력
+		$('#email2').change(function() {
+	         if($(this).val()=='etc'){
+	            $('#email3').val('');
+	            $('#email3').css('visibility','visible');
+	            $('#email3').focus();
+	         }else{
+	            $('#email3').css('visibility','hidden');
+	            $('#email3').val('');
+	         }
+	      });
 		//숫자만 입력가능
 		function validate_number(number) {
 			var pattern = new RegExp(/^[0-9]*$/);
 			return pattern.test(number);
 		}
-		
+
 		//등록 구분 시 입력창
 		$('select[name=sort]').change(function() {
 			if ($('select[name=sort]').val() == 1) {
@@ -94,8 +106,37 @@
 			if ($('select[name=sort]').val() == 2) {
 				$('.prof').css('display', 'block');
 				$('.prof select').val("");
-			}else{
+			} else {
 				$('.prof').css('display', 'none');
+			}
+		});
+		//ajax 학과 검색
+		 $('#faculty').change(function() {
+			$('#department').find('option').each(function() {
+				$(this).remove();
+			});
+			$('#department').append("<option value=''>선택</option>");
+
+			var faculty = $(this).val();
+			if (faculty != "") {
+
+				$.ajax({
+					type:'get',
+					url: "<c:url value='/admin/departmentList'/>",
+					data:"facultyNo="+$('#faculty').val(),
+					dataType:"json",
+					success:function(res){
+						$(res).each(function(i){
+							$('#department').append("<option value=\""+
+								res[i].depNo+"\">"+res[i].depName+"</option>");
+						});
+					},error:function(xhr){
+						console.log(xhr.responseTest);
+						alert("오류");
+						return;
+					}
+					
+				})
 			}
 		});
 	});
@@ -160,27 +201,43 @@
 										</div>
 									</div>
 								</div>
+								<div class="form-group">
+									<label for="email1" class="cols-sm-2 control-label">이메일</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<input type="text" class="form-control" name="email1"
+												id="email1" />@ <select name="email2" id="email2">
+												<option value="naver.com">naver.com</option>
+												<option value="gmail.com">gmail.com</option>
+												<option value="daum.net">daum.net</option>
+												<option value="etc">직접입력</option>
+											</select> <input type="text" class="form-control" name="email3"
+												id="email3" style="visibility: hidden;" />
+										</div>
+									</div>
+								</div>
 								<!--공통입력 항목 구분선  -->
 								<hr id="selLine">
 								<div class="hid emp form-group">
 									<div>
-										<label for="depCode">부서</label> <select name="depCode" id="depCode">
+										<label for="depCode">부서</label> <select name="depCode"
+											id="depCode">
 											<option value="">선택</option>
-											<option value="1">교학처</option>
-											<option value="2">기획처</option>
-											<option value="3">학생처</option>
-											<option value="4">입학홍보처</option>
-											<option value="5">사무처</option>
+											<c:forEach var="vo" items="${empDepartList }">
+												<option value="${vo.depCode }">${vo.depName }</option>
+											</c:forEach>
+
 										</select>
 									</div>
 								</div>
 								<div class="hid emp form-group">
 									<div>
-										<label for="authCode">권한</label> <select name="authCode" id="authCode">
+										<label for="authCode">권한</label> <select name="authCode"
+											id="authCode">
 											<option value="">선택</option>
-											<option value="1">admin</option>
-											<option value="2">manager</option>
-											<option value="3">staff</option>
+											<c:forEach var="vo" items="${authorityList }">
+												<option value="${vo.authCode }">${vo.authName }</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
@@ -189,16 +246,17 @@
 										<label for="positionCode">직책</label> <select
 											name="positionCode" id="positionCode">
 											<option value="">선택</option>
-											<option value="1">부장</option>
-											<option value="2">주임</option>
-											<option value="3">사원</option>
+											<c:forEach var="vo" items="${empPositionList }">
+												<option value="${vo.positionCode }">${vo.positionName}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
 
 								<div class="stud faculty form-group">
 									<div>
-										<label for="faculty">학부</label> <select name="faculty">
+										<label for="faculty">학부</label> <select name="facultyNo"
+											id="faculty">
 											<option value="">선택</option>
 											<c:forEach var="facVo" items="${facultyList }">
 												<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
@@ -208,12 +266,8 @@
 								</div>
 								<div class="stud department form-group">
 									<div>
-										<label for="depNo">학과</label> <select name="depNo">
-											<option value="">선택</option>
-											<c:forEach var="depVo" items="${departmentList }">
-
-												<option value="${depVo.depNo }">${depVo.depName }</option>
-											</c:forEach>
+										<label for="depNo">학과</label> <select name="depNo"
+											id="department">
 										</select>
 									</div>
 								</div>
@@ -222,23 +276,11 @@
 										<label for="positionNo">교수직급</label> <select name="positionNo">
 											<option value="">선택</option>
 											<c:forEach var="positionVo" items="${profPositionList }">
-											<option value="${positionVo.positionNo }">${positionVo.positionName }</option>
+												<option value="${positionVo.positionNo }">${positionVo.positionName }</option>
 											</c:forEach>
 										</select>
 									</div>
 								</div>
-								<!-- <div class="form-group">
-									<label for="" class="cols-sm-2 control-label"></label>
-									<div class="cols-sm-10">
-										<div class="input-group">
-											<span class="input-group-addon"><i
-												class="fa fa-user fa" aria-hidden="true"></i></span> <input
-												type="text" class="form-control" name="" id=""
-												placeholder="-는 빼고 입력하세요" />
-										</div>
-									</div>
-								</div> -->
-
 								<div class="form-group ">
 									<button type="submit"
 										class="btn btn-primary btn-lg btn-block login-button"

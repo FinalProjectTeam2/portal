@@ -18,8 +18,8 @@
 	</select>
 	<insert id="insertOfficial" parameterType="official_infoVO">
 		insert into
-		OFFICIAL_INFO(official_no,hp1,hp2,hp3,ssn)
-		values(#{officialNo},#{hp1},#{hp2},#{hp3},#{ssn})
+		OFFICIAL_INFO(official_no,hp1,hp2,hp3,email1,email2,ssn)
+		values(#{officialNo},#{hp1},#{hp2},#{hp3},#{email1},#{email2},#{ssn})
 	</insert>
 	<insert id="insertEmployee" parameterType="employeeVO">
 		insert into

@@ -28,7 +28,7 @@ public class EmployeeServiceImpl implements EmployService {
 		String userNo = format1.format(time) + sort + String.format("%03d", Integer.parseInt(employeeVo.getDepCode()))
 				+ String.format("%04d", seq);
 		employeeVo.setEmpNo(userNo);
-		employeeVo.setPwd("0000");
+		employeeVo.setPwd(officialVo.getSsn().substring(0,6));
 
 		int cnt = employeeDao.insertEmployee(employeeVo);
 
