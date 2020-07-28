@@ -466,10 +466,12 @@ button.ui-keyboard-button:hover {
 					data : $(this).serialize(),
 					type:"post",
 					success:function(res){
-						$('#msg').html(res);
 						if(res=='student' || res=='professor'||res=='admin'){
-							$('#msg').hide();
 							location.href="<c:url value='/index' />";
+						}else if(res=='N'){
+							location.href="<c:url value='/member/changePwd'/>";
+						}else{	
+							$('#msg').html(res);
 						}
 					},
 					error:function(xhr,status,error){

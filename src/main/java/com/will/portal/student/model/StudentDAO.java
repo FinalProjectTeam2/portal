@@ -5,4 +5,5 @@ public interface StudentDAO {
 	int insertStudent(StudentVO studentVo);
 	public String selectPwd(String stuNo);
 	public StudentVO selectByStuNo(String stuNo);
+	String selectSsn(String officialNo);
 }

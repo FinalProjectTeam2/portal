@@ -10,6 +10,11 @@
    	<select id="selectByStuNo" parameterType="String" resultType="studentVO">
    		select * from student where stu_no=#{stuNo}
    	</select>
+   	
+   	<select id="selectSsn" parameterType="string" resultType="string">
+   		select ssn from official_info where official_no=#{officicalNo}
+   	</select>
+   
    
 </mapper>
 

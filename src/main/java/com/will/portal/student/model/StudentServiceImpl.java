@@ -43,34 +43,35 @@ public class StudentServiceImpl implements StudentService{
 		return cnt2;
 	}
 
-	   public int loginCheck(String officialNo, String pwd) {
-	      //최초 로그인시 비밀번호가 생년월일과 같기때문에 생년월일부터 받아온다
-	      String birthDay = studentDao.selectSsn(officialNo).substring(0, 6) ;
-	      String dbPwd = studentDao.selectPwd(officialNo);
-	      int result = 0;
-	      if(dbPwd != null && !dbPwd.isEmpty() ) {
-	         //최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
-	         //모든 패스워드 암호화할거기 때문에
-	         if(pwd.equals(birthDay)) {
-	            if(pwd.equals(dbPwd)) {
-	               result = LOGIN_OK;
-	            }else {
-	               result = PWD_DISAGREE;
-	            }
-	         }else {
-	            //비번 변경 후에는 암호화된 dbPwd와 비교해서 로그인 처리 한다.
-	            if(BCrypt.checkpw(pwd, dbPwd)){
-	               result = LOGIN_OK;
-	            }else if(!BCrypt.checkpw(pwd, dbPwd)){
-	               result = PWD_DISAGREE;   
-	            }
-	         }
-	      }else {
-	         result = ID_NONE;
-	      }
-	      
-	      return result;
-		   }
+	@Override
+	public int loginCheck(String officialNo, String pwd) {
+		//최초 로그인시 비밀번호가 생년월일과 같기때문에 생년월일부터 받아온다
+		String birthDay = studentDao.selectSsn(officialNo).substring(0, 6) ;
+		String dbPwd = studentDao.selectPwd(officialNo);
+		int result = 0;
+		if(dbPwd != null && !dbPwd.isEmpty() ) {
+			//최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
+			//모든 패스워드 암호화할거기 때문에
+			if(pwd.equals(birthDay)) {
+				if(pwd.equals(dbPwd)) {
+					result = LOGIN_OK;
+				}else {
+					result = PWD_DISAGREE;
+				}
+			}else {
+				//비번 변경 후에는 암호화된 dbPwd와 비교해서 로그인 처리 한다.
+				if(BCrypt.checkpw(pwd, dbPwd)){
+					result = LOGIN_OK;
+				}else if(!BCrypt.checkpw(pwd, dbPwd)){
+					result = PWD_DISAGREE;	
+				}
+			}
+		}else {
+			result = ID_NONE;
+		}
+		
+		return result;
+	}
 
 	@Override
 	public StudentVO selectByStuNo(String stuNo) {
