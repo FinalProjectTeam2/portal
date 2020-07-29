@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.portal.authority.model.AuthorityService;
 import com.will.portal.authority.model.AuthorityVO;
@@ -50,11 +49,11 @@ public class AdminMemberController {
 	@Autowired AuthorityService authorityService;
 	@Autowired Emp_positionService empPositionService;
 	
+	//회원등록 화면 보여주기_GET
 	@RequestMapping(value = "/adminRegisterMember", method = RequestMethod.GET)
 	public String adminRegisterMember(Model model) {
 		logger.info("adminRegisterMember, GET");
 		
-		//학생 select
 		List<FacultyVO> facultyList= facultyService.selectFaculty();
 		List<DepartmentVO> departmentList=departmentService.selectDepartment();
 		List<Prof_positionVO> profPositionList=profPositionService.selectProfPosition();
@@ -74,17 +73,7 @@ public class AdminMemberController {
 		return "admin/member/adminRegisterMember";
 				
 	}
-	
-	@RequestMapping("/departmentList")
-	@ResponseBody
-	public List<DepartmentVO> departmentList(@RequestParam(defaultValue = "0") int facultyNo){
-		logger.info("ajax-departmentList, param: {}",facultyNo);
-		
-		List<DepartmentVO> departmentList= departmentService.selectDepartmentByFaculty(facultyNo);
-		
-		return departmentList;
-	}
-	
+
 	@RequestMapping(value = "/adminRegisterEmployee",method = RequestMethod.POST)
 	public String adminRegisterEmployee_post(@ModelAttribute EmployeeVO employeeVo, 
 			@ModelAttribute Official_infoVO officialVo,@RequestParam(required = false) String email3,
@@ -156,8 +145,31 @@ public class AdminMemberController {
 		return url;
 	}
 	@RequestMapping(value = "/adminManageMember",method = RequestMethod.GET)
-	public void adminManageMember() {
+	public void adminManageMember(Model model) {
 		logger.info("adminManageMember, Get");
+		
+		List<FacultyVO> facultyList= facultyService.selectFaculty();
+		List<DepartmentVO> departmentList=departmentService.selectDepartment();
+		List<Prof_positionVO> profPositionList=profPositionService.selectProfPosition();
+		List<Emp_departVO> empDepartList=empDepartService.selectEmpDepart();
+		List<AuthorityVO> authorityList=authorityService.selectAuthority();
+		List<Emp_positionVO> empPositionList=empPositionService.selectEmpPosition();
+		
+		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
+		model.addAttribute("facultyList", facultyList);
+		model.addAttribute("departmentList",departmentList);
+		model.addAttribute("profPositionList",profPositionList);
+		model.addAttribute("empDepartList",empDepartList);
+		model.addAttribute("authorityList",authorityList);
+		model.addAttribute("empPositionList",empPositionList);
+		
+		
+	}
+	
+	@RequestMapping(value = "/adminEditMember",method = RequestMethod.GET)
+	public void adminEditMember(String userid) {
+		logger.info("adminEditMember, Get");
+		
 	}
 	
 }
