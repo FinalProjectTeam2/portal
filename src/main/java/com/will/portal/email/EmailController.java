@@ -1,5 +1,7 @@
 package com.will.portal.email;
 
+import java.util.UUID;
+
 import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
@@ -26,7 +28,12 @@ public class EmailController {
 	@ResponseBody
 	public void send() {
 		logger.info("메일발송 처리");
-
+		
+		UUID pwd = UUID.randomUUID();
+		
+		String code = pwd.toString().substring(0,6);
+		
+		
 		String subject = "문의에 대한 답변입니다";
 		String content = "이메일 내용입니다. 감사합니다";
 		String receiever = "shn6314@naver.com";

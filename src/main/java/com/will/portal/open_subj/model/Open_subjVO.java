@@ -8,6 +8,7 @@ public class Open_subjVO {
 	private Timestamp openDate;
 	private Timestamp closeDate;
 	private String profNo;
+	
 	public String getOpenSubCode() {
 		return openSubCode;
 	}

@@ -14,6 +14,7 @@ public class Official_infoDAOMybatis implements Official_infoDAO{
 	private String namespace="config.mybatis.mapper.oracle.member.";
 	private String namespaceAdmin="config.mybatis.mapper.oracle.admin.";
 	
+	
 	@Override
 	public Official_infoVO selectByNo(String officialNo) {
 		return sqlSession.selectOne(namespace+"selectOfficialByNo", officialNo);

@@ -13,22 +13,27 @@
 				str = '<div class="sidebar-sticky pt-3"'
 					+'style="background: #626d80; height: 100%;">'
 				$.each(res, function(idx, item) {
-					str += '<div class="category"'
-						+ "onclick=\"move('/portal/board/main?categoryCode="
-						+ item.categoryVo.categoryCode + "')\">"
-						+ item.categoryVo.categoryName + '</div>';
-					str += '<ul class="nav flex-column">';
-					var bdList = item.boardList;
-					$.each(bdList, function(idx, list) {
-						str += '<li class="nav-item">'
-						+ '<a class="nav-link" href="#" '
-						+ "onclick=\"move('/portal/board/list?"
-						+ 'bdCode=' + list.bdCode
-						+ "')\">"
-						+ '<span class="bullets"></span>' + list.bdName
-						+'</a></li>';
-					});
-					str += '</ul>';
+					if(item.categoryVo.usage == 'Y'){
+						str += '<div class="category"'
+							+ "onclick=\"move('/portal/board/main?categoryCode="
+							+ item.categoryVo.categoryCode + "')\">"
+							+ item.categoryVo.categoryName + '</div>';
+						str += '<ul class="nav flex-column">';
+						
+						var bdList = item.boardList;
+						$.each(bdList, function(idx, list) {
+							if(list.usage == 'Y'){
+								str += '<li class="nav-item">'
+									+ '<a class="nav-link" href="#" '
+									+ "onclick=\"move('/portal/board/list?"
+									+ 'bdCode=' + list.bdCode
+									+ "')\">"
+									+ '<span class="bullets"></span>' + list.bdName
+									+'</a></li>';
+							}
+						});
+						str += '</ul>';
+					}
 				});
 					
 				str += '<div class="category" style="cursor: default;">서비스</div>'

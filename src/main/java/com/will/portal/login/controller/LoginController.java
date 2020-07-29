@@ -92,6 +92,12 @@ public class LoginController {
 				request.getSession().setAttribute("officialNo", officialNo);
 				request.getSession().setAttribute("name", profVO.getProfName());
 				request.getSession().setAttribute("type", type);
+				request.getSession().setAttribute("identState", profVO.getIdentityState());
+				
+				if(profVO.getIdentityState().equals("N")) {
+					msg="N";
+				}
+				
 				
 				if(saveNo != null ) {
 					Cookie cookie = new Cookie("ck_officialNo", officialNo);
@@ -116,11 +122,21 @@ public class LoginController {
 			result= studentService.loginCheck(officialNo,pwdd);
 			
 			if(result == StudentService.LOGIN_OK) {
-				msg ="student";
+				
 				StudentVO vo = studentService.selectByStuNo(officialNo);
 				request.getSession().setAttribute("officialNo", officialNo);
 				request.getSession().setAttribute("name", vo.getName());
 				request.getSession().setAttribute("type", type);
+				request.getSession().setAttribute("identState", vo.getIdentityState());
+				
+				logger.info("vo= {}", vo);
+				
+				if(vo.getIdentityState().equals("N")) {
+					msg="N";
+				}else {
+					msg ="student";
+				}
+				
 				
 				if(saveNo != null ) {
 					Cookie cookie = new Cookie("ck_officialNo", officialNo);
@@ -140,7 +156,7 @@ public class LoginController {
 				msg = "존재하지 않는 아이디입니다";
 			}
 		}
-		
+		logger.info(msg);
 		return msg;
 	}
 	
