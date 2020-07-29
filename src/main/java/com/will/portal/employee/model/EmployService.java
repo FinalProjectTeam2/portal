@@ -11,4 +11,5 @@ public interface EmployService {
 	int loginCheck(String officicalNo, String pwd);
 	EmployeeVO selectByEmpNo(String empNo);
 	int insertEmployee(EmployeeVO employeeVo, Official_infoVO officialVo, int sort);
+	boolean loginCheckSec(String loginPwd, String password, String officialNo);
 }
