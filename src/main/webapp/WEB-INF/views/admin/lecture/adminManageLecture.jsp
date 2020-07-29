@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
-<%@ include file="../inc/mainSidebar.jsp"%>
+<%@ include file="../../inc/top.jsp"%>
+<%@ include file="../../inc/mainSidebar.jsp"%>
 <link href="<c:url value='/resources/css/admin/adminManageMember.css'/>" rel="stylesheet">
+<style>
+#searchSelect{
+	margin: 0 5px 0 3px;
+}
+
+</style>
 <script type="text/javascript">
 	$(function(){
 		$('#btMultiDel').click(function(){
 			var len=$('tbody input[type=checkbox]:checked').length;
 			if(len==0){
-				alert('삭제하려는 회원을 먼저 체크하세요');
+				alert('삭제하려는 강의를 먼저 체크하세요');
 				return;
 			}
 			
@@ -25,7 +31,7 @@
 		$('#btMultiAdd').click(function(){
 			var len=$('tbody input[type=checkbox]:checked').length;
 			if(len==0){
-				alert('상태를 변경하려는 회원을 먼저 체크하세요');
+				alert('상태를 변경하려는 강의를 먼저 체크하세요');
 				return;
 			}
 			
@@ -45,7 +51,7 @@
 
 
 		<div id="adminMngMem">
-			<h2>회원 관리</h2>
+			<h2>강의 관리</h2>
 			<p>조회결과 : {}건</p>
 
 
@@ -58,11 +64,10 @@
 
 			<form name="frmList" method="post" action="<c:url value='/admin'/>">
 				<div class="divRight">
-					조회조건 <select name="">
+					과목 <select name="">
 						<option disabled selected>&nbsp;--</option>
-						<option value="">학생</option>
-						<option value="">교수</option>
-						<option value="">임직원</option>
+						<option value="">전공</option>
+						<option value="">교양</option>
 					</select>
 					학부 <select name="">
 						<option disabled selected>&nbsp;--</option>
@@ -74,28 +79,33 @@
 						<option value="">경제</option>
 						<option value="">컴공</option>
 					</select>
-					이름 <input type="text" size="8" name="searchKeyword">
+					<select name="" id="searchSelect">
+						<option value="">과목명</option>
+						<option value="">교수명</option>
+						<option value="">강의번호</option>
+					</select>
+					<input type="text" size="8" name="searchKeyword">
 					<button class="btCustom btn btn-primary btn-lg login-button" id="btSearch">검색</button>
 				<div class="divList">
 					<table class="box2"
-						summary="회원 목록">
-						<caption>회원 목록</caption>
+						summary="강의 목록">
+						<caption>강의 목록</caption>
 						<colgroup>
-							<col style="width: 5%" />
+							<col style="width: 5%" />	
 							<col style="width: 10%" />
+							<col style="width: 23%" />
+							<col style="width: 16%" />
 							<col style="width: 15%" />
-							<col style="width: 14%" />
-							<col style="width: 20%" />
-							<col style="width: 20%" />
+							<col style="width: 15%" />
 							<col style="width: 8%" />
 							<col style="width: 8%" />
 						</colgroup>
 						<thead>
 							<tr>
 								<th><input type="checkbox" name="chkAll"></th>
-								<th scope="col">이름</th>
-								<th scope="col">(if)번호</th>
-								<th scope="col">직책(if)</th>
+								<th scope="col">강의 번호</th>
+								<th scope="col">과목명</th>
+								<th scope="col">교수명</th>
 								<th scope="col">학부</th>
 								<th scope="col">학과</th>
 								<th scope="col">수정</th>
@@ -115,36 +125,37 @@
 									<tr class="align_center">
 										<td><input type="checkbox"
 											name="" value="vo.no">
-										<td>우등생</td>
-										<td>007</td>
-										<td>일짱</td>
-										<td>관현학부</td>
-										<td>리코더</td>
+										<td>1010123</td>
+										<td>손쉬운 프론트엔드 디자인</td>
+										<td>양명숙</td>
+										<td>컴퓨터 공학부</td>
+										<td>게임학과</td>
 										<td><a href="#">수정</a></td>
 										<td><a href="#">삭제</a></td>
 									</tr>
 									<tr class="align_center">
 										<td><input type="checkbox"
 											name="" value="vo.no">
-										<td>최교수</td>
-										<td>007</td>
-										<td>이짱</td>
-										<td>관현학부</td>
-										<td>피콜로</td>
+										<td>1010113</td>
+										<td>어려운 프론트엔드 디자인</td>
+										<td>양명숙</td>
+										<td>컴퓨터 공학부</td>
+										<td>폰게임학과</td>
 										<td><a href="#">수정</a></td>
 										<td><a href="#">삭제</a></td>
 									</tr>
 									<tr class="align_center">
 										<td><input type="checkbox"
 											name="" value="vo.no">
-										<td>일개직원</td>
-										<td>007</td>
-										<td>삼짱</td>
-										<td>관현학부</td>
-										<td>손오반</td>
+										<td>1014423</td>
+										<td>적당한 프론트엔드 디자인</td>
+										<td>양명숙</td>
+										<td>컴퓨터 공학부</td>
+										<td>보드게임학과</td>
 										<td><a href="#">수정</a></td>
 										<td><a href="#">삭제</a></td>
 									</tr>
+									
 
 							<%-- 		<c:set var="idx" value="${idx+1 }" />
 								</c:forEach>
@@ -181,11 +192,11 @@
 				</div>
 
 				<div class="btdiv">
-					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="회원 추가"><br>
+					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="강의 추가"><br>
 				</div>
 				<div class="btdiv">
-					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 회원 삭제"><br>
+					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 강의 삭제"><br>
 				</div>
 			</form>
 		</div>
-		<%@ include file="../inc/bottom.jsp"%>
+		<%@ include file="../../inc/bottom.jsp"%>

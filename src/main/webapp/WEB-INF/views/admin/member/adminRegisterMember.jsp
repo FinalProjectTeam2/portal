@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
-<%@ include file="../inc/mainSidebar.jsp"%>
+<%@ include file="../../inc/top.jsp"%>
+<%@ include file="../../inc/mainSidebar.jsp"%>
 <script type="text/javascript">
 	$(function() {
 		$('#btRegi')
@@ -12,17 +12,17 @@
 								check();
 								$('#form')
 										.prop("action",
-												"<c:url value='/admin/adminRegisterEmployee' />");
+												"<c:url value='/admin/member/adminRegisterEmployee' />");
 							} else if (sort == 2) {
 								check();
 								$('#form')
 										.prop("action",
-												"<c:url value='/admin/adminRegisterProfessor' />");
+												"<c:url value='/admin/member/adminRegisterProfessor' />");
 							} else if (sort == 3) {
 								check();
 								$('#form')
 										.prop("action",
-												"<c:url value='/admin/adminRegisterStudent' />");
+												"<c:url value='/admin/member/adminRegisterStudent' />");
 							} else if (sort == null) {
 								alert('회원구분을 선택해주세요');
 								$('#sort').focus();
@@ -122,7 +122,7 @@
 
 				$.ajax({
 					type:'get',
-					url: "<c:url value='/admin/departmentList'/>",
+					url: "<c:url value='/admin/member/departmentList'/>",
 					data:"facultyNo="+$('#faculty').val(),
 					dataType:"json",
 					success:function(res){
@@ -268,6 +268,7 @@
 									<div>
 										<label for="depNo">학과</label> <select name="depNo"
 											id="department">
+											<option value="">선택</option>
 										</select>
 									</div>
 								</div>
@@ -293,4 +294,4 @@
 				</div>
 			</div>
 		</div>
-		<%@ include file="../inc/bottom.jsp"%>
+		<%@ include file="../../inc/bottom.jsp"%>
