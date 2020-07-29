@@ -1,8 +1,12 @@
 package com.will.portal.professor.model;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.will.portal.subject.model.SubjectVO;
 
 @Repository
 public class ProfessorDAOMybatis implements ProfessorDAO{
@@ -29,4 +33,13 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	public String selectSsn(String officialNo) {
 		return sqlsession.selectOne(namespace+"selectSsn", officialNo);
 	}
+
+	@Override
+	public List<SubjectVO> loadByProfNo(String profNo) {
+		return sqlsession.selectList(namespace+"loadByProfNo", profNo);
+	}
+	
+	
+	
+	
 }

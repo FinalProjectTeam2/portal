@@ -2,6 +2,7 @@ package com.will.portal.professor.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.subject.model.SubjectVO;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService{
@@ -43,6 +45,7 @@ public class ProfessorServiceImpl implements ProfessorService{
 		}
 		return cnt2;
 	}
+	
 	@Override
 	public int loginCheck(String officicalNo, String pwd) {
 
@@ -78,4 +81,13 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public ProfessorVO selectByProfNo(String profNo) {
 		return professorDao.selectByProfNo(profNo);
 	}
+
+	@Override
+	public List<SubjectVO> loadByProfNo(String profNo) {
+		return professorDao.loadByProfNo(profNo);
+	}
+	
+	
+	
+	
 }

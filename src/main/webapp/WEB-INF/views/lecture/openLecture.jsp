@@ -21,6 +21,11 @@
 	var time = '';
 
 $(function(){
+	$('#btLoad').click(function(){
+		location.href="<c:url value='/lecture/loadByProfNo?profNo=${sessionScope.officialNo}'/>";
+	});
+	
+	
 	var dialog, form,
 	subject = $( "#subject" ),
 	time = $( "#time" ),
@@ -46,7 +51,6 @@ $(function(){
 	    	 data:{
 	    		 "subject":"$('#subject').val()",
 	    		 "time":"$('#time').val()",
-	    		 "credit":"$('#credit').val()"
 	    	 },
 	    	 dataType:"json",
 	    	 success:function(res){
@@ -104,7 +108,7 @@ $(function(){
 <main role="main" class="flex-shrink-0">
 <div class="container">
 	<h2>강의시간 설정</h2>
-	<h4>${sessionScope.name} 교수님의 시간표 </h4>
+	<h4>${sessionScope.name} 교수님의 시간표 </h4><input type="button" id="btLoad" value="불러오기" style="float: right; margin-top: -50px; margin-right: 350px;"/>
 	<div class='tab'>
 	  <table border='0' cellpadding='0' cellspacing='0'>
 	    <tr class='days'>
@@ -189,14 +193,14 @@ $(function(){
     <fieldset>
       <label for="subject">과목명</label>
       <select id="subject">
-      		<c:forEach var="list" items="${list }">
-      			<option value="${list.subjCode }">${list.subjName }</option>
+      		<c:forEach var="vo" items="${list }">
+      			<option value="${vo.subjCode }">${vo.subjName }</option>
       		</c:forEach>
       </select>
-      <input type="hidden" name="typeCode" id="typeCode" value="${list.typeCode }">
+      <input type="hidden" name="typeCode" id="typeCode" value="${vo.typeCode }">
       <label for="time">시간</label>
       <input type="text" name="time" id="time" class="text ui-widget-content ui-corner-all">
-      <input type="hidden" name="credit" id="credit" value="${list.credit }">
+      <input type="hidden" name="credit" id="credit" value="${vo.credit }">
   
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
     </fieldset>
