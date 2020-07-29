@@ -23,4 +23,11 @@ public class EmployeeDAOMybatis implements EmployeeDAO{
 	public EmployeeVO selectByEmpNo(String empNo) {
 		return sqlSession.selectOne(namespace + "selectByEmpNo", empNo);
 	}
+
+	
+	@Override
+	public String selectSsn(String officialNo) {
+		return sqlSession.selectOne(namespace+"selectSsn", officialNo);
+	}
 }
+

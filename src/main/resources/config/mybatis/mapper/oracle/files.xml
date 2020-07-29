@@ -10,5 +10,9 @@
 		insert into files(NO,POST_NO,FILE_NAME,FILE_SIZE,ORIGINAL_FILE_NAME)
 		values(#{no},#{postNo},#{fileName},#{fileSize},#{originalFileName})
 	</insert>
+	<select id="selectCountByPostNo" parameterType="int" resultType="int">
+		select count(*) from files
+		where post_no = #{postNo}
+	</select>
 </mapper>
 

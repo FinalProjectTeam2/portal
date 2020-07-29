@@ -10,6 +10,10 @@
    	<select id="selectByEmpNo" parameterType="String" resultType="employeeVO">
    		select * from employee where emp_no=#{empNo}
    	</select>
+   	
+   	<select id="selectSsn" parameterType="string" resultType="string">
+   		select ssn from official_info where official_no=#{officicalNo}
+   	</select>
    
 </mapper>
 

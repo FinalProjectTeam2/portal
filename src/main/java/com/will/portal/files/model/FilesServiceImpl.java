@@ -13,5 +13,10 @@ public class FilesServiceImpl implements FilesService{
 	public int insertFiles(FilesVO vo) {
 		return filesDao.insertFiles(vo);
 	}
+
+	@Override
+	public int selectCountByPostNo(int postNo) {
+		return filesDao.selectCountByPostNo(postNo);
+	}
 	
 }

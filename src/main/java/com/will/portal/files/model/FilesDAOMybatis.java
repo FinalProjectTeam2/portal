@@ -16,4 +16,9 @@ public class FilesDAOMybatis implements FilesDAO{
 	public int insertFiles(FilesVO vo) {
 		return sqlSession.insert(namespace+"insertFiles", vo);
 	}
+
+	@Override
+	public int selectCountByPostNo(int postNo) {
+		return sqlSession.selectOne(namespace+"selectCountByPostNo", postNo);
+	}
 }

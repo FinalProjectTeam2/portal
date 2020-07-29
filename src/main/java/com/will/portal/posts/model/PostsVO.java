@@ -16,6 +16,7 @@ public class PostsVO {
 	private int step;
 
 	private int newImgTerm;
+	private int fileCount;
 
 	public int getPostNo() {
 		return postNo;
@@ -113,12 +114,20 @@ public class PostsVO {
 		this.newImgTerm = newImgTerm;
 	}
 
+	public int getFileCount() {
+		return fileCount;
+	}
+
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
+	}
+
 	@Override
 	public String toString() {
 		return "PostsVO [postNo=" + postNo + ", officialNo=" + officialNo + ", title=" + title + ", contents="
 				+ contents + ", regDate=" + regDate + ", readCount=" + readCount + ", delFlag=" + delFlag + ", bdCode="
 				+ bdCode + ", groupNo=" + groupNo + ", sortNo=" + sortNo + ", step=" + step + ", newImgTerm="
-				+ newImgTerm + "]";
+				+ newImgTerm + ", fileCount=" + fileCount + "]";
 	}
 
 }

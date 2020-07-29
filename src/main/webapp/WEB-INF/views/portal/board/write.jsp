@@ -115,7 +115,7 @@ button[name=delFile]:hover {
 		<form action="<c:url value='/portal/board/write'/>" class="writeFrm" id="boardFrm" method="post"
 			enctype="multipart/form-data">
 			<input type="text" value="${sessionScope.officialNo }" name="officialNo">
-			<input type="text" id="contents" name="contents">
+			<input type="hidden" id="contents" name="contents">
 			<div class="row1">
 				<div class="col-25">
 					<label for="l_title" class="formTitle">제목</label>
