@@ -50,6 +50,7 @@ public class AdminMemberController {
 	@Autowired AuthorityService authorityService;
 	@Autowired Emp_positionService empPositionService;
 	
+	//회원등록 화면 보여주기_GET
 	@RequestMapping(value = "/adminRegisterMember", method = RequestMethod.GET)
 	public String adminRegisterMember(Model model) {
 		logger.info("adminRegisterMember, GET");
@@ -74,17 +75,7 @@ public class AdminMemberController {
 		return "admin/member/adminRegisterMember";
 				
 	}
-	
-	@RequestMapping("/departmentList")
-	@ResponseBody
-	public List<DepartmentVO> departmentList(@RequestParam(defaultValue = "0") int facultyNo){
-		logger.info("ajax-departmentList, param: {}",facultyNo);
-		
-		List<DepartmentVO> departmentList= departmentService.selectDepartmentByFaculty(facultyNo);
-		
-		return departmentList;
-	}
-	
+
 	@RequestMapping(value = "/adminRegisterEmployee",method = RequestMethod.POST)
 	public String adminRegisterEmployee_post(@ModelAttribute EmployeeVO employeeVo, 
 			@ModelAttribute Official_infoVO officialVo,@RequestParam(required = false) String email3,

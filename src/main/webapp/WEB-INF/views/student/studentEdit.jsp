@@ -118,6 +118,4 @@ a:focus {
 			</form>
 			</fieldset>
 		</div>
-
-	
 <%@ include file="../inc/bottom.jsp"%>

@@ -122,7 +122,7 @@
 
 				$.ajax({
 					type:'get',
-					url: "<c:url value='/admin/member/departmentList'/>",
+					url: "<c:url value='/common/departmentList'/>",
 					data:"facultyNo="+$('#faculty').val(),
 					dataType:"json",
 					success:function(res){
