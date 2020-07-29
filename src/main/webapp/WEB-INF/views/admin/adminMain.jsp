@@ -6,9 +6,9 @@
 <link href="<c:url value='/resources/css/admin/adminMain.css' />"
 	rel="stylesheet">
 <main role="main" class="flex-shrink-0">
-	<a href="<c:url value='/admin/adminRegisterMember'/>"><button
+	<a href="<c:url value='/admin/member/adminRegisterMember'/>"><button
 			class="adminRegi btn btn-outline-success" id="btRegi">회원 등록</button></a>
-	<a href="<c:url value='/admin/adminManageMember'/>">
+	<a href="<c:url value='/admin/member/adminManageMember'/>">
 		<button class="adminRegi btn btn-outline-success" type="submit"
 			id="btManageMem">회원 관리</button>
 	</a>
