@@ -89,7 +89,7 @@ public class StudentServiceImpl implements StudentService {
 		if (password != null && !password.isEmpty()) {
 			// 최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
 			// 모든 패스워드 암호화할거기 때문에
-			if (loginPwd.equals(birthDay)) {
+			if (password.equals(birthDay)) {
 				if (loginPwd.equals(password)) {
 					result = true;
 				} 

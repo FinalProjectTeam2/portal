@@ -1,8 +1,18 @@
 package com.will.portal.student.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class StudentVO {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class StudentVO implements UserDetails{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String stuNo;
 	private String pwd;
 	private String name;
@@ -15,7 +25,14 @@ public class StudentVO {
 	private String identityState;
 	private int minor;
 	private String identifyCode;
+	private String type = "STUDENT";
 	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public String getStuNo() {
 		return stuNo;
 	}
@@ -97,7 +114,48 @@ public class StudentVO {
 	}
 	
 	
-	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
+		roles.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+		return roles;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return getPwd();
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return getStuNo();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 	
 	

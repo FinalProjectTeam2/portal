@@ -296,29 +296,36 @@
 			<artifactId>spring-websocket</artifactId>
 			<version>4.3.4.RELEASE</version>
 		</dependency>
-		
-		 <!-- Spring Security -->
 
-        <dependency>
+		<!-- Spring Security -->
 
-            <groupId>org.springframework.security</groupId>
+		<dependency>
 
-            <artifactId>spring-security-web</artifactId>
+			<groupId>org.springframework.security</groupId>
 
-            <version>3.2.3.RELEASE</version>
+			<artifactId>spring-security-web</artifactId>
 
-        </dependency>
+			<version>3.2.3.RELEASE</version>
 
-        <dependency>
+		</dependency>
 
-            <groupId>org.springframework.security</groupId>
+		<dependency>
 
-            <artifactId>spring-security-config</artifactId>
+			<groupId>org.springframework.security</groupId>
 
-            <version>3.2.3.RELEASE</version>
+			<artifactId>spring-security-config</artifactId>
 
-        </dependency>
-		
+			<version>3.2.3.RELEASE</version>
+
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>3.2.3.RELEASE</version>
+		</dependency>
+
+
 	</dependencies>
 	<repositories>
 		<!-- <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> <url>http://maven.jahia.org/maven2</url> 

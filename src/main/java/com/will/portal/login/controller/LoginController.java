@@ -54,13 +54,13 @@ public class LoginController {
 		logger.info("로그인 화면 보여주기");
 		if (error != null) {
 
-			model.addAttribute("error", "Invalid username and password!");
+			model.addAttribute("error", "error");
 
 		}
 
 		if (logout != null) {
 
-			model.addAttribute("msg", "You've been logged out successfully.");
+			model.addAttribute("msg", "로그아웃 되었습니다.");
 
 		}
 		return "login/login2";

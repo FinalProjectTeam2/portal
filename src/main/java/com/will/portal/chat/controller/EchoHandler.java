@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -30,9 +32,6 @@ public class EchoHandler extends TextWebSocketHandler{
 		Map<String, Object> map = session.getAttributes();
 		logger.info("아이디: {} 연결됨!", map.get("officialNo"));
 		logger.info("pricipal: {} 연결됨!", session.getPrincipal());
-		
-		
-		
 	}
 
 	@Override
