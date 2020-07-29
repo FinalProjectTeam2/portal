@@ -2,6 +2,12 @@
 body{
 	min-width: 1400px;
 }
+
+
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1465px;
+}
+
 header {
 	font-size: 1.2em;
 }
@@ -15,7 +21,7 @@ header {
 }
 
 main>.container {
-	padding: 60px 15px;
+	padding: 20px 10px;
 }
 
 .footer {
@@ -136,4 +142,7 @@ code {
 	font-size: 1.5em; 
 	font-weight: bold; 
 	border-bottom: 1px solid white;
+}
+header .navbar {
+    width: 99%;
 }

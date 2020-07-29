@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.employee">
+	<select id="selectPwd" parameterType="String" resultType="String">
+		select pwd from employee where emp_no=#{empNo}
+	</select>
+   
+   	<select id="selectByEmpNo" parameterType="String" resultType="employeeVO">
+   		select * from employee where emp_no=#{empNo}
+   	</select>
+   
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

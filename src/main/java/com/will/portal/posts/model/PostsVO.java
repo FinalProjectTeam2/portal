@@ -3,77 +3,93 @@ package com.will.portal.posts.model;
 import java.sql.Timestamp;
 
 public class PostsVO {
-	private String postCode;
-	private String postNo;
+	private int postNo;
+	private String officialNo;
 	private String title;
 	private String contents;
 	private Timestamp regDate;
 	private int readCount;
 	private String delFlag;
-	private int bdCode;
-	private String authCode;
-	public String getPostCode() {
-		return postCode;
-	}
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-	public String getPostNo() {
+	private String bdCode;
+	private int newImgTerm;
+
+	public int getPostNo() {
 		return postNo;
 	}
-	public void setPostNo(String postNo) {
+
+	public void setPostNo(int postNo) {
 		this.postNo = postNo;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getContents() {
 		return contents;
 	}
+
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
+
 	public Timestamp getRegDate() {
 		return regDate;
 	}
+
 	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
 	}
+
 	public int getReadCount() {
 		return readCount;
 	}
+
 	public void setReadCount(int readCount) {
 		this.readCount = readCount;
 	}
+
 	public String getDelFlag() {
 		return delFlag;
 	}
+
 	public void setDelFlag(String delFlag) {
 		this.delFlag = delFlag;
 	}
-	public int getBdCode() {
+
+	public String getBdCode() {
 		return bdCode;
 	}
-	public void setBdCode(int bdCode) {
+
+	public void setBdCode(String bdCode) {
 		this.bdCode = bdCode;
 	}
-	public String getAuthCode() {
-		return authCode;
+
+	public int getNewImgTerm() {
+		return newImgTerm;
 	}
-	public void setAuthCode(String authCode) {
-		this.authCode = authCode;
+
+	public void setNewImgTerm(int newImgTerm) {
+		this.newImgTerm = newImgTerm;
 	}
+
+	public String getOfficialNo() {
+		return officialNo;
+	}
+
+	public void setOfficialNo(String officialNo) {
+		this.officialNo = officialNo;
+	}
+
 	@Override
 	public String toString() {
-		return "PostsVO [postCode=" + postCode + ", postNo=" + postNo + ", title=" + title + ", contents=" + contents
-				+ ", regDate=" + regDate + ", readCount=" + readCount + ", delFlag=" + delFlag + ", bdCode=" + bdCode
-				+ ", authCode=" + authCode + "]";
+		return "PostsVO [postNo=" + postNo + ", officialNo=" + officialNo + ", title=" + title + ", contents="
+				+ contents + ", regDate=" + regDate + ", readCount=" + readCount + ", delFlag=" + delFlag + ", bdCode="
+				+ bdCode + ", newImgTerm=" + newImgTerm + "]";
 	}
-	
-	
-	
-	
+
 }

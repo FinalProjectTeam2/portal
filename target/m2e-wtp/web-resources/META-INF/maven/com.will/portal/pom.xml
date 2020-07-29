@@ -182,19 +182,40 @@
 
 
 		<!-- 화면에서 ajax처리시 Map처리 가능 -->
-		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-core-asl</artifactId>
-			<version>1.9.13</version> </dependency> <dependency> <groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId> <version>1.9.13</version> </dependency> -->
+		<!-- <dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 
-		<!-- Jackson -->
-		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-annotations</artifactId>
-			<version>2.7.5</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId> <version>2.7.5</version> </dependency>
-			<dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId>
-			<version>2.9.10.5</version> </dependency> -->
-
-
-
+	    <!-- Jackson -->
+	   <!-- <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-annotations</artifactId>
+	      <version>2.7.5</version>
+	    </dependency>
+	
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-core</artifactId>
+	      <version>2.7.5</version>
+	    </dependency>
+	-->
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-databind</artifactId>
+	      <version>2.9.10.5</version>
+	    </dependency> 
+	   
+	    
+	    
+    
 		<!-- Commons FileUpload for ckeditor -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>

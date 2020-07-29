@@ -4,11 +4,104 @@
 <%@ include file="../../inc/portalSidebar.jsp"%>
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/menu1.css'/>" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/resources/css/board/board.css'/>" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/resources/css/menu2.css'/>" />
+
 <!-- 공지사항 -->
+<script type="text/javascript">
+	$(function() {
+		$.send(1);
+
+		$("form[name=frmSearch]").submit(function() {
+			$.send(1);
+			return false;
+		});
+
+		$("#boardWrite").click(function() {
+			location.href = "<c:url value='/portal/board/write?bdCode=${boardVo.bdCode}'/>";
+		});
+	});
+
+	$.send = function(curPage) {
+		$("#currentPage").val(curPage);
+
+		$.ajax({
+			url : "<c:url value='/portal/board/ajax/list'/>",
+			data : $("form[name=frmSearch]").serializeArray(),
+			dataType : "json",
+			type : "post",
+			success : function(res) {
+				makeList(res);
+				pageMake(res); //페이징 처리 함수
+			}
+		});
+	}
+
+	function makeList(obj) {
+		
+		var str = "<tbody>";
+		
+		if(obj.pagingInfo.totalRecord == 0){
+			str += "<tr>"
+				+ '<td colspan="6">게시물이 없습니다.</td>'
+			+ "</tr>";
+		}else{
+			$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+" | 페이지 "+obj.pagingInfo.currentPage+"/"
+					+obj.pagingInfo.totalPage+ "</span>");
+		}
+		str += "</tbody>";
+		
+		$("#myTable").append(str);
+	}
+	
+	function pageMake(obj) {
+		var pagingInfo = obj.pagingInfo;
+
+		var str = "";
+
+		str += '<nav aria-label="Page navigation example">'
+				+ '<ul class="pagination">';
+		//이전블록
+		if (pagingInfo.firstPage > 1) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="$.send('
+					+ (pagingInfo.firstPage - 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
+		}
+
+		//페이지 처리
+		for (var i = pagingInfo.firstPage; i <= pagingInfo.lastPage; i++) {
+			if (i == pagingInfo.currentPage) {
+				str += '<li class="page-item"><a class="page-link" onclick="$.send('
+						+ i
+						+ ')"'
+						+ 'style="background: skyblue;" href="#">'
+						+ i + '</a></li>';
+			} else {
+				str += '<li class="page-item"><a class="page-link" onclick="$.send('
+						+ i + ')"' + ' href="#">' + i + '</a></li>';
+			}
+		}
+
+		//다음 블록
+		if (pagingInfo.lastPage < pagingInfo.totalPage) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="$.send(' + (pagingInfo.lastPage + 1)
+					+ ')">' + '<span aria-hidden="true">&laquo;</span>'
+					+ '</a></li>';
+		}
+
+		str += '</ul></nav>';
+
+		$("#divPage").html(str);
+	}
+</script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div class="NoticeContents">
-			<h1>포털공지</h1>
+			<h1>${boardVo.bdName }</h1>
 			<!-- 타이틀만만 바뀜(포털공지/ 학사ㆍ국제공지/ 장학공지/ 행사ㆍ참여 게시판/ 학사ㆍ국제공지  -->
 			<br>
 			<p style="line-height: 28px; font-size: 14px;">
@@ -25,12 +118,87 @@
 		</div>
 
 		<hr>
-<!-- ------------------------------------------------->
+		<!-- ------------------------------------------------->
 
-<!-- 게시판 -->
-<%@ include file="listMain.jsp"%>
+		<!-- 게시판 -->
+		<div id="menu1" class="tabcontent">
+			<div class="listinfo1"></div>
+			<div class="listinfo2">
+				<span>정렬:</span> <a href="#">수정일</a> <a href="#">작성일</a>
+			</div>
 
-<!-- ------------------------------------------------->
-<!-- 건의 -->
-<%@ include file="search.jsp"%>
-<%@ include file="../../inc/bottom.jsp"%>
+			<!-- 게시판 -->
+			<table id="myTable">
+				<colgroup>
+					<col width="35%">
+					<col width="6%">
+					<col width="6%">
+					<col width="30%">
+					<col width="15%">
+					<col width="8%">
+				</colgroup>
+				<thead>
+					<tr class="maTable_tr1">
+						<th scope="col">제목</th>
+						<th scope="col">번호</th>
+						<th scope="col">분류</th>
+						<th scope="col">작성자</th>
+						<th scope="col">작성일</th>
+						<th scope="col">조회수</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="divbt">
+				<!-- 비회원은 버튼 안 보임! -->
+				<button class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
+			</div>
+		</div>
+		<br> <br>
+		<!-- 페이지번호 -->
+		<div class="divPage"></div>
+
+		<br> <br>
+		<!-- 검색 -->
+		<div class="divSearch">
+			<form name="frmSearch" method="post" action="">
+				<input type="hidden" name="currentPage" value="1" id="currentPage" />
+				<!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
+				<input type="hidden" name="countPerPage" value="5" id="countPerPage" />
+				<!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
+				<input type="hidden" name="bdCode" id="bdCode"
+					value="${boardVo.bdCode }" /> <select name="searchCondition">
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+					<option value="name">작성자</option>
+				</select> <input type="text" name="searchKeyword" title="검색"> <input
+					type="submit" value="검색"><br> <br> <strong>인기검색어
+					:</strong> 교직 , 토익 , 토익 , 단소리
+			</form>
+		</div>
+
+		<script>
+			function myFunction() {
+				var filter, table, tr, td, i, txtValue;
+				filter = input.value.toUpperCase();
+				table = document.getElementById("myTable");
+				tr = table.getElementsByTagName("tr");
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td")[0];
+					if (td) {
+						txtValue = td.textContent || td.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+						} else {
+							tr[i].style.display = "none";
+						}
+					}
+				}
+			}
+		</script>
+
+		<!-- ------------------------------------------------->
+		<!-- 건의 -->
+		<div id="search">
+			<%@ include file="search.jsp"%>
+		</div>
+		<%@ include file="../../inc/bottom.jsp"%>

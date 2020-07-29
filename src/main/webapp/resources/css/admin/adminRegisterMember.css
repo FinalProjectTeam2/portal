@@ -81,12 +81,21 @@
 	background-color: #b7d5fd;
 	border-color: #b7d5fd;
 }
+
 #btClassroom {
-    margin: 0 0 16px 0 !important;
-    font-size: 0.8em;
-    width: 115px;
-    height: 37px;
-    color: #fff;
-    background-color: #01539d;
-    border-color: #01539d;
+	margin: 0 0 16px 0 !important;
+	font-size: 0.8em;
+	width: 115px;
+	height: 37px;
+	color: #fff;
+	background-color: #01539d;
+	border-color: #01539d;
+}
+
+#selLine {
+	width: 100% !important;
+	margin: 20px 0 20px 0;
+}
+.hid {
+	display: none;
 }

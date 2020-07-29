@@ -23,6 +23,8 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- for websocket -->
+		 <async-supported>true</async-supported>
 	</servlet>
 	
 	<!-- ckeditor image upload -->
@@ -52,7 +54,7 @@
     </filter>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 	
 	

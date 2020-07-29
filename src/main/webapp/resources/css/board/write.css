@@ -9,7 +9,7 @@
 	width: 90%;
 }
 
-#boardFrm input[type=text], #boardFrm select, #boardFrm textarea {
+#boardFrm input[type=text], #boardFrm select, textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -18,11 +18,10 @@
 }
 
 #boardFrm label {
-  padding: 12px 12px 12px 0;
   display: inline-block;
 }
 
-#boardFrm input[type=button] {
+.bts input {
   background-color: skyblue;
   color: white;
   padding: 12px 20px;
@@ -32,23 +31,10 @@
   float: right;
 }
 
-#boardFrm input[type=button]:hover {
+.bts input:hover {
   background-color: blue;
 }
 
-#boardFrm input[type=submit] {
-  background-color: skyblue;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
-}
-
-#boardFrm input[type=submit]:hover {
-  background-color: blue;
-}
 
 main .container {
   border-radius: 5px;
@@ -58,19 +44,20 @@ main .container {
 
 #boardFrm .col-25 {
   float: left;
-  width: 25%;
+  width: 15%;
   margin-top: 6px;
 }
 
 #boardFrm .col-75 {
-  float: left;
-  width: 75%;
+  float: right;
+  width: 85%;
   margin-top: 6px;
 }
 
 /* Clear floats after the columns */
 #boardFrm .row1{
 	overflow: hidden;
+	margin: 10px 0;
 }
 #boardFrm .row1:after {
   content: "";
@@ -82,11 +69,18 @@ main .container {
 	padding: 0 5%;
 }
 
-#boardFrm .bts {
+.bts {
 	margin-bottom: 100px;
 	margin-top: 30px;
 }
 
-#boardFrm .bts input[type=button]{
+.bts input{
 	margin: 0 5px;
+}
+
+#boardFrm .formTitle{
+	padding: 4px 0 0 0;
+    font-weight: bold;
+    font-size: 1.2em;
+    float: left;
 }

@@ -28,6 +28,11 @@ public class TestController {
 		return "test/processFileUpload";
 	}
 	
+	@RequestMapping(value="/adminRegisterMember", method = RequestMethod.GET) 
+	public String adminRegisterMember() {
+		return "test/adminRegisterMember";
+	}
+	
 	
 
 }

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
-<link href="<c:url value='/resources/css/admin/adminRegisterMem.css' />"
+<link href="<c:url value='/resources/css/admin/adminRegisterMember.css' />"
 	rel="stylesheet">
 <main role="main" class="flex-shrink-0">
 	<div class="container">

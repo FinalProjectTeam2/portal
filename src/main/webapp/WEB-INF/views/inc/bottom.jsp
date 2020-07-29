@@ -37,8 +37,10 @@ a.bottom {
 
 			if (scrollTop + innerHeight >= scrollHeight-100) {
 				$(".bottom").fadeOut(300);
+				return false;
 			} else {
 				$(".bottom").fadeIn(300);
+				return false;
 			}
 		});
 

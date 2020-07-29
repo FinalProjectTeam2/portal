@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.posts">
+	<select id="selectPostsList" parameterType="boardSearchVo" resultType="postsVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		        select post_no, official_no, title, reg_date,
+			    read_count, contents, del_flag, bd_code,
+			    (sysdate-reg_date)*24 as newImgTerm 
+			    from posts where bd_code=#{bdCode}
+			    <if test="searchKeyword!=null and searchKeyword !=''">
+		        	where ${searchCondition} like '%' 
+		        			|| #{searchKeyword} || '%'
+		        </if>
+		        order by POST_NO desc
+		    )A    
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="selectPostsCount" parameterType="boardSearchVo" resultType="int">
+        select count(*)
+	    from posts where bd_code=#{bdCode}
+	    <if test="searchKeyword!=null and searchKeyword !=''">
+        	where ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>
+	</select>
+</mapper>
+

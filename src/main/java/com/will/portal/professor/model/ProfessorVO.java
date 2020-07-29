@@ -75,7 +75,4 @@ public class ProfessorVO {
 				+ ", positionNo=" + positionNo + ", startDate=" + startDate + ", resignationDate=" + resignationDate
 				+ ", identityState=" + identityState + ", identifyCode=" + identifyCode + "]";
 	}
-	
-	
-	
 }

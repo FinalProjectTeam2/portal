@@ -45,7 +45,7 @@
     <tr>
         <td colspan="6" class="header">강의계획 (syllabus)</td>
     </tr>
-    <tr class="column-header">
+     <tr class="column-header">
         <td>논리명</td>
         <td>물리명</td>
         <td>도메인</td>
@@ -65,7 +65,7 @@
         <td>강의계획서</td>
         <td>syllabus</td>
         <td>N/A</td>
-        <td>CLOB</td>
+        <td>VARCHAR2(100)</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -88,7 +88,7 @@
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="6" class="header">강의시간표 (subj_timetable)</td>
+        <td colspan="6" class="header">강의시간표 (subj_time)</td>
     </tr>
     <tr class="column-header">
         <td>논리명</td>
@@ -170,7 +170,7 @@
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="6" class="header">강의평가 (subj_evaluation)</td>
+        <td colspan="6" class="header">강의평가 (subj_eval)</td>
     </tr>
     <tr class="column-header">
         <td>논리명</td>
@@ -279,7 +279,7 @@
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="6" class="header">개설교과과정 (open_subject)</td>
+        <td colspan="6" class="header">개설교과과정 (open_subj)</td>
     </tr>
     <tr class="column-header">
         <td>논리명</td>
@@ -389,15 +389,15 @@
     </tr>
     <tr>
         <td>게시글코드(PK)</td>
-        <td>post_code</td>
+        <td>post_no</td>
         <td>N/A</td>
-        <td>VARCHAR2(20)</td>
+        <td>NUMBER</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
     <tr>
         <td>관계자번호</td>
-        <td>post_no</td>
+        <td>official_no</td>
         <td>N/A</td>
         <td>VARCHAR2(150)</td>
         <td>N</td>
@@ -431,7 +431,7 @@
         <td>조회수</td>
         <td>read_count</td>
         <td>N/A</td>
-        <td>DATE</td>
+        <td>NUMBER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -439,7 +439,7 @@
         <td>삭제여부</td>
         <td>del_flag</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -447,15 +447,7 @@
         <td>게시판코드(FK)</td>
         <td>bd_code</td>
         <td>N/A</td>
-        <td>NUMBER</td>
-        <td>N</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>관리코드(FK)</td>
-        <td>auth_code</td>
-        <td>N/A</td>
-        <td>VARCHAR2(50)</td>
+        <td>VARCHAR2(10)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -474,9 +466,9 @@
     </tr>
     <tr>
         <td>게시판코드(PK)</td>
-        <td>bd_no</td>
+        <td>bd_code</td>
         <td>N/A</td>
-        <td>NUMBER</td>
+        <td>VARCHAR2(10)</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -524,7 +516,7 @@
         <td>사용 여부</td>
         <td>usage</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -532,7 +524,7 @@
         <td>댓글여부</td>
         <td>is_reply</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -540,7 +532,7 @@
         <td>답글여부</td>
         <td>is_comment</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -548,7 +540,7 @@
         <td>비공개여부</td>
         <td>is_private</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -556,7 +548,7 @@
         <td>업로드 가능 여부</td>
         <td>is_upload</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -582,6 +574,14 @@
         <td>N/A</td>
         <td>VARCHAR2(10)</td>
         <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>권한코드(FK)</td>
+        <td>auth_code</td>
+        <td>N/A</td>
+        <td>VARCHAR2(50)</td>
+        <td>N</td>
         <td>&nbsp;</td>
     </tr>
 </table>
@@ -853,14 +853,6 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>인증코드</td>
-        <td>certi_code</td>
-        <td>N/A</td>
-        <td>VARCHAR2(30)</td>
-        <td>N</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
         <td>사진</td>
         <td>image_url</td>
         <td>N/A</td>
@@ -941,7 +933,15 @@
         <td>본인인증상태</td>
         <td>identity_state</td>
         <td>N/A</td>
-        <td>CHAR(4)</td>
+        <td>CHAR(1)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>본인인증코드</td>
+        <td>identity_code</td>
+        <td>N/A</td>
+        <td>VARCHAR2(20)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -988,7 +988,7 @@
         <td>설명</td>
     </tr>
     <tr>
-        <td>관리코드(PK)</td>
+        <td>권한코드(PK)</td>
         <td>auth_code</td>
         <td>N/A</td>
         <td>VARCHAR2(50)</td>
@@ -996,7 +996,7 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>관리명</td>
+        <td>권한명</td>
         <td>auth_name</td>
         <td>N/A</td>
         <td>VARCHAR2(30)</td>
@@ -1145,15 +1145,15 @@
         <td>삭제여부</td>
         <td>del_flag</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
     <tr>
         <td>게시글코드(FK)</td>
-        <td>post_code</td>
+        <td>post_no</td>
         <td>N/A</td>
-        <td>VARCHAR2(20)</td>
+        <td>NUMBER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1195,8 +1195,40 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>등록금액</td>
+        <td>입학금</td>
+        <td>admission_fee</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>수강료</td>
         <td>tuition</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>실습비</td>
+        <td>practice_cost</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>학생회비</td>
+        <td>student_fee</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>총등록금액</td>
+        <td>total_tuition</td>
         <td>N/A</td>
         <td>NUMBER</td>
         <td>N</td>
@@ -1206,7 +1238,7 @@
         <td>납부여부</td>
         <td>deposit_state</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1244,14 +1276,6 @@
         <td>dep_name</td>
         <td>N/A</td>
         <td>VARCHAR2(100)</td>
-        <td>Y</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>직책코드(FK)</td>
-        <td>position_code</td>
-        <td>N/A</td>
-        <td>VARCHAR2(50)</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -1413,7 +1437,7 @@
         <td>강의평가완료여부</td>
         <td>lecture_eval_flag</td>
         <td>N/A</td>
-        <td>CHAR(4)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1521,7 +1545,15 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>관리코드(FK)</td>
+        <td>직책코드(FK)</td>
+        <td>position_code</td>
+        <td>N/A</td>
+        <td>VARCHAR2(50)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>권한코드(FK)</td>
         <td>auth_code</td>
         <td>N/A</td>
         <td>VARCHAR2(50)</td>
@@ -1548,7 +1580,7 @@
         <td>본인인증상태</td>
         <td>Identity_state</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1765,7 +1797,7 @@
         <td>보관여부</td>
         <td>keep_flag</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1802,7 +1834,7 @@
         <td>사용여부</td>
         <td>usage</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1817,7 +1849,7 @@
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="6" class="header">파일 (file)</td>
+        <td colspan="6" class="header">파일 (files)</td>
     </tr>
     <tr class="column-header">
         <td>논리명</td>
@@ -1829,17 +1861,17 @@
     </tr>
     <tr>
         <td>고유번호(PK)</td>
-        <td>COL2</td>
+        <td>no</td>
         <td>N/A</td>
-        <td>N/A</td>
+        <td>NUMBER</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
     <tr>
         <td>게시글코드(FK)</td>
-        <td>post_code</td>
+        <td>post_no</td>
         <td>N/A</td>
-        <td>VARCHAR2(20)</td>
+        <td>NUMBER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -1877,9 +1909,9 @@
     </tr>
     <tr>
         <td>업로드 날짜</td>
-        <td>COL3</td>
+        <td>upfile_date</td>
         <td>N/A</td>
-        <td>N/A</td>
+        <td>DATE</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -2062,7 +2094,7 @@
         <td>본인인증상태</td>
         <td>identity_state</td>
         <td>N/A</td>
-        <td>CHAR(5)</td>
+        <td>CHAR(1)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -2071,6 +2103,14 @@
         <td>minor</td>
         <td>N/A</td>
         <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>본인인증코드</td>
+        <td>identity_code</td>
+        <td>N/A</td>
+        <td>VARCHAR2(20)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>

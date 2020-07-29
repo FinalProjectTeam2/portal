@@ -1,5 +1,7 @@
 package com.will.portal.faculty.model;
 
-public interface FacultyService {
+import java.util.List;
 
+public interface FacultyService {
+	public List<FacultyVO> selectFaculty();
 }
