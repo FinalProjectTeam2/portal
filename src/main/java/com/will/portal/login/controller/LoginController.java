@@ -105,7 +105,6 @@ public class LoginController {
 					msg="N";
 				}
 				
-				
 				if(saveNo != null ) {
 					Cookie cookie = new Cookie("ck_officialNo", officialNo);
 					cookie.setMaxAge(1000*24*24*60);

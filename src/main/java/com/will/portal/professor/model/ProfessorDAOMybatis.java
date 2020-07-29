@@ -25,5 +25,8 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	public ProfessorVO selectByProfNo(String profNo) {
 		return sqlsession.selectOne(namespace + "selectByProfNo", profNo);
 	}
-
+	
+	public String selectSsn(String officialNo) {
+		return sqlsession.selectOne(namespace+"selectSsn", officialNo);
+	}
 }

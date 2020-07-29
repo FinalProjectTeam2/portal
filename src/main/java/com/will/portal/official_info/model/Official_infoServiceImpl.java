@@ -51,5 +51,9 @@ public class Official_infoServiceImpl implements Official_infoService{
 		return infoDao.updateAnyPwd(vo);
 	}
 
+	@Override
+	public String selectSsn(String officialNo) {
+		return infoDao.selectSsn(officialNo);
+	}
 	
 }

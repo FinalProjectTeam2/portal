@@ -12,5 +12,5 @@ public interface Official_infoService {
 	int insertOfficial(Official_infoVO officialVo);
 	int findPwd(ForPwdVO vo);
 	int updateAnyPwd(ForPwdVO vo);
-	
+	String selectSsn(String officialNo);
 }

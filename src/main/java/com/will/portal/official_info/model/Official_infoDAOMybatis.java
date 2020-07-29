@@ -71,6 +71,10 @@ public class Official_infoDAOMybatis implements Official_infoDAO{
 		return sqlSession.update(namespace +"updateAnyPwd",vo);
 	}
 
+	@Override
+	public String selectSsn(String officialNo) {
+		return sqlSession.selectOne(namespace+"selectSsn", officialNo);
+	}
 	
 	
 	

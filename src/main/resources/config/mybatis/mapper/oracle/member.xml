@@ -96,7 +96,11 @@
 		</if> 
 		=#{officialNo}
 	</update>
-			   
+	
+   	<select id="selectSsn" parameterType="string" resultType="string">
+   		select ssn from official_info where official_no=#{officicalNo}
+   	</select>
+   	
 </mapper>
 
 

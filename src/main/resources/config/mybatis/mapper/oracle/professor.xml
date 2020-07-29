@@ -10,7 +10,9 @@
    	<select id="selectByProfNo" parameterType="String" resultType="professorVO">
    		select * from professor where prof_no=#{profNo}
    	</select>
-   
+   	<select id="selectSsn" parameterType="string" resultType="string">
+   		select ssn from official_info where official_no=#{officicalNo}
+   	</select>
 </mapper>
 
 
