@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
-<%@ include file="../inc/mainSidebar.jsp"%>
+<%@ include file="../../inc/top.jsp"%>
+<%@ include file="../../inc/mainSidebar.jsp"%>
 <script type="text/javascript">
 $(function() {
     $('#btRegi')
@@ -120,26 +120,26 @@ $(function() {
        var faculty = $(this).val();
        if (faculty != "") {
 
-          $.ajax({
-             type:'get',
-             url: "<c:url value='/admin/member/departmentList'/>",
-             data:"facultyNo="+$('#faculty').val(),
-             dataType:"json",
-             success:function(res){
-                $(res).each(function(i){
-                   $('#department').append("<option value=\""+
-                      res[i].depNo+"\">"+res[i].depName+"</option>");
-                });
-             },error:function(xhr){
-                console.log(xhr.responseTest);
-                alert("오류");
-                return;
-             }
-             
-          })
-       }
-    });
- });
+				$.ajax({
+					type:'get',
+					url: "<c:url value='/admin/member/departmentList'/>",
+					data:"facultyNo="+$('#faculty').val(),
+					dataType:"json",
+					success:function(res){
+						$(res).each(function(i){
+							$('#department').append("<option value=\""+
+								res[i].depNo+"\">"+res[i].depName+"</option>");
+						});
+					},error:function(xhr){
+						console.log(xhr.responseTest);
+						alert("오류");
+						return;
+					}
+					
+				})
+			}
+		});
+	});
 </script>
 <link
 	href="<c:url value='/resources/css/admin/adminRegisterMember.css' />"
@@ -270,6 +270,7 @@ $(function() {
 									<div>
 										<label for="depNo">학과</label> <select name="depNo"
 											id="department">
+											<option value="">선택</option>
 										</select>
 									</div>
 								</div>
@@ -295,4 +296,4 @@ $(function() {
 				</div>
 			</div>
 		</div>
-		<%@ include file="../inc/bottom.jsp"%>
+		<%@ include file="../../inc/bottom.jsp"%>
