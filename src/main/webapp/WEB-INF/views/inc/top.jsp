@@ -188,6 +188,7 @@
 						class="sr-only">(current)</span>
 					</li>
 				</ul>
+				<a href="<c:url value='/chat/chatting'/>">채팅방</a>
 				<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="btLogin">로그인</button>
 				<select class="custom-select"
 					style="margin: 0 0 0 15px; font-size: 0.7em; width: 100px;">

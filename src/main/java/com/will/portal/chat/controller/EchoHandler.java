@@ -2,6 +2,7 @@ package com.will.portal.chat.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,12 @@ public class EchoHandler extends TextWebSocketHandler{
 		// list를 쓸때 방법
 		sessionList.add(session);
 		logger.info("{} 연결됨!", session.getId());
+		
+		Map<String, Object> map = session.getAttributes();
+		logger.info("아이디: {} 연결됨!", map.get("officialNo"));
+		logger.info("pricipal: {} 연결됨!", session.getPrincipal());
+		
+		
 		
 	}
 
