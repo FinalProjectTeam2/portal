@@ -84,14 +84,7 @@ public class LoginController {
 				request.getSession().setAttribute("officialNo", officialNo);
 				request.getSession().setAttribute("name", empVo.getEmpName());
 				request.getSession().setAttribute("type", type);
-				Principal prin = new Principal() {
-					
-					@Override
-					public String getName() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-				};
+				
 				if(saveNo != null ) {
 					Cookie cookie = new Cookie("ck_officialNo", officialNo);
 					cookie.setMaxAge(1000*24*24*60);

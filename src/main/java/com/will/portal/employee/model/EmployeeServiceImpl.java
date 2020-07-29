@@ -59,6 +59,18 @@ public class EmployeeServiceImpl implements EmployService {
 		return result;
 
 	}
+	
+	public boolean loginCheckSec(String loginPwd, String password) {
+
+		boolean result = false;
+		
+		if (loginPwd.equals(password)) {
+			result = true;
+		}
+		
+		return result;
+
+	}
 
 	@Override
 	public EmployeeVO selectByEmpNo(String empNo) {
