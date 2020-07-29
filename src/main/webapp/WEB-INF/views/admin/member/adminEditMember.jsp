@@ -5,19 +5,7 @@
 <%@ include file="../../inc/mainSidebar.jsp"%>
     <link rel="stylesheet" href="<c:url value='/resources/css/studentEdit.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/materialize.min.css' />">
-    
-<style>
-select:focus {
-	background-color: #ffffff;
-}
 
-li:focus {
-	background-color: #ffffff00;
-}
-a:focus {
-	background-color: #ffffff00;
-}
-</style>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 
