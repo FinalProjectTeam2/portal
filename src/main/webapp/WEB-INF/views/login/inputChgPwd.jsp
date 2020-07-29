@@ -6,6 +6,32 @@
 <!-- sidebar -->
 <%@ include file="../inc/mainSidebar.jsp"%>
 
+<script>
+	$(function() {
+		
+		$('#pwdFrm').submit(function () {
+			$.ajax({
+				url:"<c:url value='/login/changePwd' />",
+				data : $(this).serialize(),
+				type: "post",
+				success:function(res){
+					if(res){
+						alert('비밀번호가 성공적으로 변경되었습니다');
+						location.href="<c:url value='/index' />";
+					}else{
+						alert('비밀번호가 일치하지 않습니다');
+					}				
+				},
+				error:function(xhr,status,error){
+					alert(status + ", " + error);
+				}
+			});
+			
+			return false;
+		});
+	});
+</script>
+
 <!-- main 시작 -->
 <main role="main" class="flex-shrink-0">
 	<div class="container">
@@ -21,7 +47,7 @@
 				<!-- 2 -->
 				<div class="row">
 					<div class="col" id="pwdDiv">
-						<form action="">
+						<form name="pwdFrm" id="pwdFrm">
 							<div class="form-group">
 								<label for="curPwd">현재 비밀번호</label>
 								<input type="password" name="curPwd" id="curPwd"  class="form-control">
@@ -34,7 +60,7 @@
 								<hr>
 								
 								<div id="bt">
-									<button type="button" class="btn btn-dark">비밀번호 변경</button>
+									<button type="submit" class="btn btn-dark" id="changeBt">비밀번호 변경</button>
 									<button type="button" class="btn btn-dark">다시입력</button>
 									<button type="button" class="btn btn-success" style="background-color: #01539d; border: none;">다음에 변경하기</button>
 								</div>

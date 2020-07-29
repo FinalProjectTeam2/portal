@@ -228,7 +228,6 @@ public class LoginController {
 		int cnt = offiService.findPwd(vo);
 		logger.info("vo ={}, cnt = {}" ,vo, cnt);
 		if(cnt>0) {
-			bool = true;
 			//이메일 발송처리
 			logger.info("메일발송 처리");
 			UUID any = UUID.randomUUID();
@@ -238,7 +237,8 @@ public class LoginController {
 			vo.setOfficialNo(offiNo);
 			offiService.updateAnyPwd(vo);
 			Official_infoVO infoVo = offiService.selectByNo(offiNo);
-		
+			bool = true;
+			
 			String subject = "회원님의 비밀번호입니다";
 			String content = "회원님의 비밀번호는"+permPwd+"입니다";
 			String receiever = infoVo.getEmail1() +"@" +infoVo.getEmail2();
@@ -256,4 +256,69 @@ public class LoginController {
 		return bool;
 		
 	}
+	
+	@RequestMapping("/changePwd")
+	@ResponseBody
+	public boolean changePwd(@RequestParam String curPwd,
+			@RequestParam String newPwd,
+			HttpServletRequest request) {
+		boolean bool = false;
+		
+		String officialNo = (String)request.getSession().getAttribute("officialNo");
+		String num = officialNo.substring(4,5);
+		logger.info("officialNo={}",officialNo);
+		logger.info("num={}",num);
+		logger.info("curPwd={}",curPwd);
+		
+		if("1".equals(num)) {//직원
+			//현재 패스워드 확인
+			int cnt = employeeService.loginCheck(officialNo, curPwd);
+			if(cnt==EmployService.LOGIN_OK) {
+				ForPwdVO vo = new ForPwdVO();
+				String hashPassword = BCrypt.hashpw(newPwd, BCrypt.gensalt());
+				vo.setType(Integer.parseInt(num));
+				vo.setPwd(hashPassword);
+				vo.setOfficialNo(officialNo);
+				int result = offiService.updateAnyPwd(vo);
+				if(result > 0) {
+					bool = true;
+				}
+			}
+
+		}else if("2".equals(num)) {//교수
+			int cnt = professorService.loginCheck(officialNo, curPwd);
+			logger.info("결과cnt={}" ,cnt);
+			if(cnt==ProfessorService.LOGIN_OK) {
+				ForPwdVO vo = new ForPwdVO();
+				String hashPassword = BCrypt.hashpw(newPwd, BCrypt.gensalt());
+				vo.setType(Integer.parseInt(num));
+				vo.setPwd(hashPassword);
+				vo.setOfficialNo(officialNo);
+				logger.info("vo={}",vo);
+				int result = offiService.updateAnyPwd(vo);
+				if(result > 0) {
+					bool = true;
+				}
+				logger.info("result = {}" ,result);
+				logger.info("vo={}",vo);
+			}
+			
+		}else if("3".equals(num)) {//학생
+			int cnt = studentService.loginCheck(officialNo, curPwd);
+			if(cnt==StudentService.LOGIN_OK) {
+				ForPwdVO vo = new ForPwdVO();
+				String hashPassword = BCrypt.hashpw(newPwd, BCrypt.gensalt());
+				vo.setType(Integer.parseInt(num));
+				vo.setPwd(hashPassword);
+				vo.setOfficialNo(officialNo);
+				int result = offiService.updateAnyPwd(vo);
+				if(result > 0) {
+					bool = true;
+				}
+			}			
+		}
+		logger.info("비번변경 결과 ={}",bool);
+		return bool;
+	}
+	
 }
