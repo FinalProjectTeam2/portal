@@ -42,7 +42,65 @@
 		set IDENTITY_STATE = 'Y'
 		where stu_no=#{stuNo}
 	</update>
-   
+
+	<select id="findPwd" parameterType="forPwdVo" resultType="int">
+		select count(*) 
+		from 
+		<if test="type ==1">
+			employee e
+		</if>
+		<if test="type ==2">
+			professor p
+		</if>
+		<if test="type ==3">
+			student s
+		</if>
+		join official_info o
+		on 
+		<if test="type ==1">
+			e.emp_no= o.OFFICIAL_NO
+			and emp_name=#{name} 
+		</if>
+		<if test="type ==2">
+			p.prof_no= o.OFFICIAL_NO
+			and prof_name=#{name}
+		</if>
+		<if test="type ==3">
+			s.stu_no= o.OFFICIAL_NO
+			and name=#{name}
+		</if>
+			and o.ssn=#{ssn}
+	</select>
+
+	<update id="updateAnyPwd" parameterType="forPwdVo">
+		update 
+		<if test="type ==1">
+			employee
+		</if>
+		<if test="type ==2">
+			professor
+		</if>
+		<if test="type ==3">
+			student 
+		</if>
+		set pwd = #{pwd}
+		where
+		<if test="type ==1">
+			emp_no
+		</if> 
+		<if test="type ==2">
+			prof_no
+		</if> 
+		<if test="type ==3">
+			stu_no
+		</if> 
+		=#{officialNo}
+	</update>
+	
+   	<select id="selectSsn" parameterType="string" resultType="string">
+   		select ssn from official_info where official_no=#{officicalNo}
+   	</select>
+   	
 </mapper>
 
 

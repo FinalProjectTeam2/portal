@@ -30,7 +30,7 @@ public class StudentServiceImpl implements StudentService{
 		String userNo = format1.format(time) + sort + String.format("%03d", studentVo.getMajor())
 				+ String.format("%04d", seq);
 		studentVo.setStuNo(userNo);
-		studentVo.setPwd("0000");
+		studentVo.setPwd(officialVo.getSsn().substring(0,6));
 
 		int cnt = studentDao.insertStudent(studentVo);
 

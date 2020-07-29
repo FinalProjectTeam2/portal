@@ -99,3 +99,6 @@
 .hid {
 	display: none;
 }
+input#email3 {
+    margin-left: 20px;
+}

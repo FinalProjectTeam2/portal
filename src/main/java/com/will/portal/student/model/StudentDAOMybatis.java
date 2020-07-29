@@ -30,5 +30,4 @@ public class StudentDAOMybatis implements StudentDAO{
 		return sqlSession.selectOne(namespace+"selectSsn", officialNo);
 	}
 	
-	
 }
