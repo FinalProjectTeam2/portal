@@ -35,7 +35,7 @@ CREATE TABLE subj_time (
 	lecture_time_code VARCHAR2(10) NOT NULL, /* 강의시간표코드 */
 	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
 	timetable_code VARCHAR2(10) NOT NULL, /* 시간기준코드 */
-	classroom_code VARCHAR2(10) /* 강의실코드 */
+	classroom_code VARCHAR2(20) /* 강의실코드 */
 );
 
 ALTER TABLE subj_time
@@ -47,7 +47,7 @@ ALTER TABLE subj_time
 
 /* 강의실 */
 CREATE TABLE classroom (
-	classroom_code VARCHAR2(10) NOT NULL, /* 강의실코드 */
+	classroom_code VARCHAR2(20) NOT NULL, /* 강의실코드 */
 	classroom_name VARCHAR2(30) NOT NULL, /* 강의실명 */
 	building_code VARCHAR2(30) NOT NULL /* 건물코드 */
 );

@@ -1,5 +1,7 @@
 package com.will.portal.student.model;
 
+import java.util.Map;
+
 import com.will.portal.official_info.model.Official_infoVO;
 
 public interface StudentService {
@@ -12,4 +14,5 @@ public interface StudentService {
 	public boolean loginCheck(String loginPwd, String password, String officicalNo );
 	public StudentVO selectByStuNo(String stuNo);
 	int insertStudent(StudentVO studentVo, Official_infoVO officialVo, int sort);
+	Map<String, Object> selectViewByStuNo(String stuNo);
 }

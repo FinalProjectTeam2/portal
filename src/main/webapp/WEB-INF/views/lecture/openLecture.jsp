@@ -21,6 +21,11 @@
 	var time = '';
 
 $(function(){
+	$('#btLoad').click(function(){
+		location.href="<c:url value='/lecture/loadByProfNo?profNo=${sessionScope.officialNo}'/>";
+	});
+	
+	
 	var dialog, form,
 	subject = $( "#subject" ),
 	time = $( "#time" ),
@@ -40,12 +45,28 @@ $(function(){
 	 
 	 
 	    function addSubject() {
-	     $.ajax({});
+	     $.ajax({
+	    	 url:"<c:url value='/lecture/addSubject'/>",
+	    	 type:"post",
+	    	 data:{
+	    		 "subject":"$('#subject').val()",
+	    		 "time":"$('#time').val()",
+	    	 },
+	    	 dataType:"json",
+	    	 success:function(res){
+	    		 
+	    	 },
+	    	 error:function(xhr, status, error){
+	    		 alert(error);
+	    	 }
+	    	 
+	    	 
+	     });
 	    }
 	 
 	    dialog = $( "#dialog-form" ).dialog({
 	      autoOpen: false,
-	      height: 400,
+	      height: 500,
 	      width: 350,
 	      modal: true,
 	      buttons: {
@@ -69,6 +90,7 @@ $(function(){
 	        dialog.dialog( "open" );
 	        time = $(this).attr("id");
 	        $("#time").val(time);
+	        $("#time").attr("readonly", true);
 	      });
 });
 </script>
@@ -86,7 +108,7 @@ $(function(){
 <main role="main" class="flex-shrink-0">
 <div class="container">
 	<h2>강의시간 설정</h2>
-	<h4>${sessionScope.name} 교수님의 시간표 </h4>
+	<h4>${sessionScope.name} 교수님의 시간표 </h4><input type="button" id="btLoad" value="불러오기" style="float: right; margin-top: -50px; margin-right: 350px;"/>
 	<div class='tab'>
 	  <table border='0' cellpadding='0' cellspacing='0'>
 	    <tr class='days'>
@@ -165,17 +187,21 @@ $(function(){
 	</div>
 
  
-<div id="dialog-form" title="Create new user">
+<div id="dialog-form" title="수업 등록">
   <form name="frmSubject" action="" method="post">
   <p class="validateTips">모든칸을 채워야 합니다.</p>
     <fieldset>
       <label for="subject">과목명</label>
-      <input type="text" name="subject" id="subject" class="text ui-widget-content ui-corner-all">
+      <select id="subject">
+      		<c:forEach var="vo" items="${list }">
+      			<option value="${vo.subjCode }">${vo.subjName }</option>
+      		</c:forEach>
+      </select>
+      <input type="hidden" name="typeCode" id="typeCode" value="${vo.typeCode }">
       <label for="time">시간</label>
       <input type="text" name="time" id="time" class="text ui-widget-content ui-corner-all">
-      <label for="credit">학점</label>
-      <input type="text" name="credit" id="credit" class="text ui-widget-content ui-corner-all">
- 
+      <input type="hidden" name="credit" id="credit" value="${vo.credit }">
+  
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
     </fieldset>
   </form>

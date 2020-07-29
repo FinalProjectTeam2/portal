@@ -17,4 +17,7 @@ public interface Official_infoDAO {
 	int findPwd(ForPwdVO vo);
 	int updateAnyPwd(ForPwdVO vo);
 	public String selectSsn(String officialNo);
+	int updateCodeP(ProfessorVO vo);
+	String selectCodeP(String profNo);
+	int updateIdentStateP(String profNo);
 }

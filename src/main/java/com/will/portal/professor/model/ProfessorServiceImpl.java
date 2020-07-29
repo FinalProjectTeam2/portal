@@ -2,6 +2,7 @@ package com.will.portal.professor.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.subject.model.SubjectVO;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
@@ -53,11 +55,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 		String birthDay = professorDao.selectSsn(officicalNo).substring(0, 6);
 		String dbPwd = professorDao.selectPwd(officicalNo);
 		int result = 0;
-		if (dbPwd != null && !dbPwd.isEmpty()) {
-			// 최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
-			// 모든 패스워드 암호화할거기 때문에
-			if (pwd.equals(birthDay)) {
-				if (pwd.equals(dbPwd)) {
+		if(dbPwd != null && !dbPwd.isEmpty() ) {
+			//최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
+			//모든 패스워드 암호화할거기 때문에
+			if(dbPwd.equals(birthDay)) {
+				if(pwd.equals(dbPwd)) {
 					result = LOGIN_OK;
 				} else {
 					result = PWD_DISAGREE;
@@ -104,4 +106,10 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 		return result;
 	}
+
+	public List<SubjectVO> loadByProfNo(String profNo) {
+		return professorDao.loadByProfNo(profNo);
+	}
+
+	
 }

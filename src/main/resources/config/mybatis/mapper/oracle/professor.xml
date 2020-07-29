@@ -13,6 +13,12 @@
    	<select id="selectSsn" parameterType="string" resultType="string">
    		select ssn from official_info where official_no=#{officicalNo}
    	</select>
+   	
+   	<select id="loadByProfNo" parameterType="string" resultType="subjectVo">
+   		select * from subject where prof_no=#{profNo}
+   	</select>
+   	
+   	
 </mapper>
 
 
