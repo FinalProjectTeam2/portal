@@ -20,6 +20,19 @@ public class ProfessorVO implements UserDetails {
 	private String identifyCode;
 
 	private String type = "PROFESSOR";
+	private String officialNo;
+	private String name;
+	
+	
+
+	public String getOfficialNo() {
+		return getProfNo();
+	}
+
+	public String getName() {
+		return getProfName();
+	}
+
 
 	public String getType() {
 		return type;
@@ -35,6 +48,7 @@ public class ProfessorVO implements UserDetails {
 
 	public void setProfNo(String profNo) {
 		this.profNo = profNo;
+		this.officialNo = profNo;
 	}
 
 	public String getPwd() {
@@ -51,6 +65,7 @@ public class ProfessorVO implements UserDetails {
 
 	public void setProfName(String profName) {
 		this.profName = profName;
+		this.name = profName;
 	}
 
 	public int getDepNo() {
@@ -101,12 +116,7 @@ public class ProfessorVO implements UserDetails {
 		this.identifyCode = identifyCode;
 	}
 
-	@Override
-	public String toString() {
-		return "ProfessorVO [profNo=" + profNo + ", pwd=" + pwd + ", profName=" + profName + ", depNo=" + depNo
-				+ ", positionNo=" + positionNo + ", startDate=" + startDate + ", resignationDate=" + resignationDate
-				+ ", identityState=" + identityState + ", identifyCode=" + identifyCode + "]";
-	}
+	
 
 	private static final long serialVersionUID = 1L;
 
@@ -153,5 +163,15 @@ public class ProfessorVO implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "ProfessorVO [profNo=" + profNo + ", pwd=" + pwd + ", profName=" + profName + ", depNo=" + depNo
+				+ ", positionNo=" + positionNo + ", startDate=" + startDate + ", resignationDate=" + resignationDate
+				+ ", identityState=" + identityState + ", identifyCode=" + identifyCode + ", type=" + type
+				+ ", officialNo=" + officialNo + ", name=" + name + "]";
+	}
+	
+	
 
 }

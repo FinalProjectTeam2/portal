@@ -20,14 +20,21 @@ public class EmployeeVO implements UserDetails {
 	private String positionCode;
 
 	private String type = "ADMIN";
+	private String officialNo;
+	private String name;
+
+	public String getOfficialNo() {
+		return officialNo;
+	}
+
+	public String getName() {
+		return getEmpName();
+	}
 
 	public String getType() {
 		return type;
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public EmployeeVO() {
 		super();
@@ -47,6 +54,7 @@ public class EmployeeVO implements UserDetails {
 
 	public void setEmpNo(String empNo) {
 		this.empNo = empNo;
+		this.officialNo = empNo;
 	}
 
 	public String getPwd() {
@@ -87,6 +95,7 @@ public class EmployeeVO implements UserDetails {
 
 	public void setEmpName(String empName) {
 		this.empName = empName;
+		this.name = empName;
 	}
 
 	public Timestamp getResignationDate() {
@@ -109,7 +118,8 @@ public class EmployeeVO implements UserDetails {
 	public String toString() {
 		return "EmployeeVO [empNo=" + empNo + ", pwd=" + pwd + ", startDate=" + startDate + ", depCode=" + depCode
 				+ ", authCode=" + authCode + ", empName=" + empName + ", resignationDate=" + resignationDate
-				+ ", identityState=" + identityState + ", positionCode=" + positionCode + "]";
+				+ ", identityState=" + identityState + ", positionCode=" + positionCode + ", type=" + type
+				+ ", officialNo=" + officialNo + ", name=" + name + "]";
 	}
 
 	/**

@@ -11,6 +11,25 @@
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/chat/bootstrap.js'/>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<style type="text/css">
+.well {
+    width: 45%;
+    border: 0;
+    background: none;
+    box-shadow: none;
+}
+.well.my {
+    float: right;
+    clear: both;
+}
+.well.other {
+    float: left;
+    clear: both;
+}
+div#chatData {
+    overflow: hidden;
+}
+</style>
 <script type="text/javascript">
 	var sock = new SockJS("<c:url value='/echo'/>")
 	
@@ -36,28 +55,31 @@
 		
 		var strArray = data.split("|");
 		
-		for (var i = 0; i < strArray.length; i++) {
-			console.log("str["+i+"]:"+strArray[i]);
-		}
-		
 		var currentUser_session = $("#sessionUser").val();
 		console.log("current session id : "+currentUser_session);
 		
-		sessionId = strArray[0];
-		message = strArray[1];
+		name = strArray[0];
+		sessionId = strArray[1];
+		message = strArray[2];
 		
 		if(sessionId == currentUser_session){
-			var printHtml = "<div class='well'>";
+			var printHtml = "<div class='well my'>";
+			printHtml += "<div>";
+			printHtml += name + "(" + sessionId + ")";
+			printHtml += "</div>";
 			printHtml += "<div class='alert alert-info'>";
-			printHtml += "<strong>["+sessionId+"] => " + message + "</strong>";
+			printHtml += "<strong>"+ message + "</strong>";
 			printHtml += "</div >";
 			printHtml += "</div >";
 			
 			$("#chatData").append(printHtml);
 		}else{
-			var printHtml = "<div class='well'>";
+			var printHtml = "<div class='well other'>";
+			printHtml += "<div>";
+			printHtml += name + "(" + sessionId + ")";
+			printHtml += "</div>";
 			printHtml += "<div class='alert alert-warning'>";
-			printHtml += "<strong>["+sessionId+"] => " + message + "</strong>";
+			printHtml += "<strong>"+ message + "</strong>";
 			printHtml += "</div >";
 			printHtml += "</div >";
 			
@@ -93,6 +115,7 @@
 					</div>
 					<div>
 						<input type="text" id="message">
+						<input type="text" id="sessionUser" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
 						<input id="sendBtn" type="button" value="전송">
 					</div>
 			</div>

@@ -1,6 +1,5 @@
 package com.will.portal.login.controller;
 
-import java.security.Principal;
 import java.util.UUID;
 
 import javax.mail.MessagingException;

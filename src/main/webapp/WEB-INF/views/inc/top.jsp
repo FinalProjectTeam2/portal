@@ -118,8 +118,7 @@
 <script type="text/javascript">
 //$\{sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.(vo에해당하는 멤버변수명)}
 if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'STUDENT'){
-	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.stuNo}');
-	consele.log('<sec:authentication property="principal.name" />');
+	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}');
 }
 </script>
 </sec:authorize>
@@ -235,8 +234,11 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 				style="max-width: 1400px;">
 
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active" style="color: white;">PORTAL <span
-						class="sr-only">(current)</span>
+					<li class="nav-item active" style="color: white;">PORTAL 
+					<sec:authorize access="isAuthenticated()">
+					<sec:authentication property="principal.name" />님
+					</sec:authorize>
+					<span class="sr-only">(current)</span>
 					</li>
 				</ul>
 				<span id="timer"

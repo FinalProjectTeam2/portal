@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class StudentVO implements UserDetails{
+public class StudentVO implements UserDetails {
 	/**
 	 * 
 	 */
@@ -26,98 +26,126 @@ public class StudentVO implements UserDetails{
 	private int minor;
 	private String identifyCode;
 	private String type = "STUDENT";
-	
+	private String officialNo;
+
+	public String getOfficialNo() {
+		return officialNo;
+	}
+
 	public String getType() {
 		return type;
 	}
-	public void setType(String type) {
-		this.type = type;
-	}
+
+
 	public String getStuNo() {
 		return stuNo;
 	}
+
 	public void setStuNo(String stuNo) {
 		this.stuNo = stuNo;
+		this.officialNo = stuNo;
 	}
+
 	public String getPwd() {
 		return pwd;
 	}
+
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public int getMajor() {
 		return major;
 	}
+
 	public void setMajor(int major) {
 		this.major = major;
 	}
+
 	public int getSemester() {
 		return semester;
 	}
+
 	public void setSemester(int semester) {
 		this.semester = semester;
 	}
+
 	public int getCredits() {
 		return credits;
 	}
+
 	public void setCredits(int credits) {
 		this.credits = credits;
 	}
+
 	public String getState() {
 		return state;
 	}
+
 	public void setState(String state) {
 		this.state = state;
 	}
+
 	public Timestamp getAdmissionDate() {
 		return admissionDate;
 	}
+
 	public void setAdmissionDate(Timestamp admissionDate) {
 		this.admissionDate = admissionDate;
 	}
+
 	public Timestamp getGraduationDate() {
 		return graduationDate;
 	}
+
 	public void setGraduationDate(Timestamp graduationDate) {
 		this.graduationDate = graduationDate;
 	}
+
 	public String getIdentityState() {
 		return identityState;
 	}
+
 	public void setIdentityState(String identityState) {
 		this.identityState = identityState;
 	}
+
 	public int getMinor() {
 		return minor;
 	}
+
 	public void setMinor(int minor) {
 		this.minor = minor;
 	}
+
 	public String getIdentifyCode() {
 		return identifyCode;
 	}
+
 	public void setIdentifyCode(String identifyCode) {
 		this.identifyCode = identifyCode;
 	}
+
 	@Override
 	public String toString() {
 		return "StudentVO [stuNo=" + stuNo + ", pwd=" + pwd + ", name=" + name + ", major=" + major + ", semester="
 				+ semester + ", credits=" + credits + ", state=" + state + ", admissionDate=" + admissionDate
 				+ ", graduationDate=" + graduationDate + ", identityState=" + identityState + ", minor=" + minor
-				+ ", identifyCode=" + identifyCode + "]";
+				+ ", identifyCode=" + identifyCode + ", type=" + type + ", officialNo=" + officialNo + "]";
 	}
-	
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
-		roles.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 		return roles;
 	}
 
@@ -156,7 +184,5 @@ public class StudentVO implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
-	
-	
+
 }

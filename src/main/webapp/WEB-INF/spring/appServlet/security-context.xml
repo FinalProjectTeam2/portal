@@ -21,30 +21,33 @@
 
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/index" access="permitAll" />
-		<intercept-url pattern="**/ajax/**" access="permitAll" />
+		<intercept-url pattern="/**/ajax/**" access="permitAll" />
 
 		<intercept-url pattern="/resources/**"
 			access="permitAll" />
 		<intercept-url pattern="/**"
 			access="hasRole('ROLE_USER')" />
 
-		<form-login login-page="/login"
-			default-target-url="/index" username-parameter="officialNo" 
-			password-parameter="pwdd" authentication-failure-url="/login?error" 
-			always-use-default-target='true' login-processing-url="/loginOk"/>
+		<form-login login-page="/login" default-target-url="/index"
+			username-parameter="officialNo" password-parameter="pwdd"
+			authentication-failure-url="/login?error"
+			always-use-default-target='true' login-processing-url="/loginOk" />
 
 		<logout invalidate-session="true" logout-url="/logout"
 			logout-success-url="/login?logout" />
 
 		<!-- enable csrf protection -->
 
-		<csrf />
+		<csrf request-matcher-ref="CsrfSecurityRequestMatcher" />
 	</http>
-
+	
+	<beans:bean id="CsrfSecurityRequestMatcher"
+		class="com.will.portal.common.CsrfSecurityRequestMatcher" />
+		
 	<authentication-manager>
 		<authentication-provider
 			user-service-ref="memberService" />
-		<authentication-provider 
+		<authentication-provider
 			ref="userAuthProvider" />
 	</authentication-manager>
 
