@@ -36,4 +36,8 @@
 		select * from category ORDER by category_name
 	</select>
 
+	<select id="selectBoardByCategoryInline" parameterType="String" resultType="boardVo">
+		select * from board
+		where category_code = (select category_code from board where bd_code='F')
+	</select>
 </mapper>

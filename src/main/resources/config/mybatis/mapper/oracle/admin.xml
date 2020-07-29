@@ -18,13 +18,13 @@
 	</select>
 	<insert id="insertOfficial" parameterType="official_infoVO">
 		insert into
-		OFFICIAL_INFO(official_no,hp1,hp2,hp3,ssn)
-		values(#{officialNo},#{hp1},#{hp2},#{hp3},#{ssn})
+		OFFICIAL_INFO(official_no,hp1,hp2,hp3,email1,email2,ssn)
+		values(#{officialNo},#{hp1},#{hp2},#{hp3},#{email1},#{email2},#{ssn})
 	</insert>
 	<insert id="insertEmployee" parameterType="employeeVO">
 		insert into
-		employee(emp_no,pwd,dep_code,emp_name,position_code)
-		values(#{empNo},#{pwd},#{depCode},#{empName},#{positionCode})
+		employee(emp_no,pwd,dep_code,AUTH_CODE,emp_name,position_code)
+		values(#{empNo},#{pwd},#{authCode},#{depCode},#{empName},#{positionCode})
 	</insert>
 	<insert id="insertProfessor" parameterType="professorVO">
 		insert into
@@ -35,4 +35,5 @@
 		insert into student(stu_no,pwd,name,major)
 		values(#{stuNo},#{pwd},#{name},#{major})
 	</insert>
+	
 </mapper>

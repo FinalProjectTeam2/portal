@@ -24,4 +24,11 @@ public class StudentDAOMybatis implements StudentDAO{
 	public StudentVO selectByStuNo(String stuNo) {
 		return sqlSession.selectOne(namespace + "selectByStuNo", stuNo);
 	}
+
+	@Override
+	public String selectSsn(String officialNo) {
+		return sqlSession.selectOne(namespace+"selectSsn", officialNo);
+	}
+	
+	
 }

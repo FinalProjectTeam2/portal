@@ -277,3 +277,4 @@ $RECYCLE.BIN/
 log4j.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,maven,react,node,git
+target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
