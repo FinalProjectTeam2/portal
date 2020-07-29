@@ -28,6 +28,10 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- date formating -->
+<script type="text/javascript"
+	 src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 <title>척척학사</title>
 
 <link href="<c:url value='/resources/css/offcanvas.css' />"

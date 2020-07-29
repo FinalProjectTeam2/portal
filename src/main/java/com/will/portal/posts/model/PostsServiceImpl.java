@@ -13,11 +13,6 @@ public class PostsServiceImpl implements PostsService{
 	private PostsDAO postsDao;
 
 	@Override
-	public PostsAllVO SelectByCode(String postCode) {
-		return postsDao.SelectByCode(postCode);
-	}
-
-	@Override
 	public List<PostsVO> selectPostsList(BoardSearchVO bdSearchVo) {
 		return postsDao.selectPostsList(bdSearchVo);
 	}
@@ -25,6 +20,26 @@ public class PostsServiceImpl implements PostsService{
 	@Override
 	public int selectPostsCount(BoardSearchVO bdSearchVo) {
 		return postsDao.selectPostsCount(bdSearchVo);
+	}
+
+	@Override
+	public int insertPosts(PostsVO vo) {
+		return postsDao.insertPosts(vo);
+	}
+
+	@Override
+	public PostsAllVO SelectByCodeE(int postNo) {
+		return postsDao.SelectByCodeE(postNo);
+	}
+
+	@Override
+	public PostsAllVO SelectByCodeS(int postNo) {
+		return postsDao.SelectByCodeS(postNo);
+	}
+
+	@Override
+	public PostsAllVO SelectByCodeP(int postNo) {
+		return postsDao.SelectByCodeP(postNo);
 	}
 	
 	

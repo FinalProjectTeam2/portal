@@ -63,7 +63,7 @@ button[name=delFile]:hover {
 				+ '<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>'
 				+'</div>'
 				+'<div class="custom-file">'
-				+ '<input type="file" class="custom-file-input" name="files" id="inputGroupFile0'+count+'" '
+				+ '<input type="file" class="custom-file-input" name="files'+count+'" id="inputGroupFile0'+count+'" '
 				+' aria-describedby="inputGroupFileAddon01"> <label '
 				+'class="custom-file-label" for="inputGroupFile0'+count+'">파일을 선택하세요</label>'
 				+'</div>'
@@ -115,7 +115,7 @@ button[name=delFile]:hover {
 		<form action="<c:url value='/portal/board/write'/>" class="writeFrm" id="boardFrm" method="post"
 			enctype="multipart/form-data">
 			<input type="text" value="${sessionScope.officialNo }" name="officialNo">
-			<input type="text" id="contents" name="contents">
+			<input type="hidden" id="contents" name="contents">
 			<div class="row1">
 				<div class="col-25">
 					<label for="l_title" class="formTitle">제목</label>
@@ -132,11 +132,13 @@ button[name=delFile]:hover {
 					<select id="bdCode" name="bdCode">
 						<option value="">선택하세요</option>
 						<c:forEach var="vo" items="${list }">
-							<option value="${vo.bdCode }" 
-							<c:if test="${param.bdCode == vo.bdCode }">
-								selected="selected"
+							<c:if test="${vo.usage == 'Y' }">
+								<option value="${vo.bdCode }" 
+								<c:if test="${param.bdCode == vo.bdCode }">
+									selected="selected"
+								</c:if>
+								>${vo.bdName }</option>
 							</c:if>
-							>${vo.bdName }</option>
 						</c:forEach>
 					</select>
 				</div>

@@ -31,7 +31,7 @@ public class ProfessorServiceImpl implements ProfessorService{
 		String userNo = format1.format(time) + sort + String.format("%03d", professorVo.getDepNo())
 				+ String.format("%04d", seq);
 		professorVo.setProfNo(userNo);
-		professorVo.setPwd("0000");
+		professorVo.setPwd(officialVo.getSsn().substring(0,6));
 
 		int cnt = professorDao.insertProfessor(professorVo);
 

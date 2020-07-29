@@ -4,6 +4,11 @@
 <!-- sidebar -->
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link rel="stylesheet" href="<c:url value='/resources/css/lecture/weekcalendar.css'/>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.css'/>">
+<link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.theme.css'/>">
 <style>
     label, input { display:block; }
     input.text { margin-bottom:12px; width:95%; padding: .4em; }
@@ -12,41 +17,60 @@
     .ui-dialog .ui-state-error { padding: .3em; }
     .validateTips { border: 1px solid transparent; padding: 0.3em; }
 </style>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script type="text/javascript">
-	
 	var time = '';
-	$(function(){
-		$('#dialog-form').hide();
-		$('.input').click(function() {
-			time = $(this).attr('id');
-			$("#dialog-form").dialog({
-				modal:true,
-				  // 다이얼로그 열기 콜백
-				  dialogClass: 'custom-dialog-style',
-	            open: function () {
-	                $(this).load();
-	            },
 
-	            // 닫기 콜백
-
-	            close: function (e) {
-	                $(this).empty();
-	                $(this).dialog('destroy');
-	            },
-	            height: 350,
-	            width: 400,
-	            title: '과목 입력'
-
-	        });
-
+$(function(){
+	var dialog, form,
+	subject = $( "#subject" ),
+	time = $( "#time" ),
+	credit = $( "#credit" ),
+	allFields = $( [] ).add( subject ).add( time ).add( credit ),
+	tips = $( ".validateTips" );
+	
+	function updateTips( t ) {
+	      tips
+	        .text( t )
+	        .addClass( "ui-state-highlight" );
+	      setTimeout(function() {
+	        tips.removeClass( "ui-state-highlight", 1500 );
+	      }, 500 );
+	    }
+	 
+	 
+	 
+	    function addSubject() {
+	     $.ajax({});
+	    }
+	 
+	    dialog = $( "#dialog-form" ).dialog({
+	      autoOpen: false,
+	      height: 400,
+	      width: 350,
+	      modal: true,
+	      buttons: {
+	        "등록하기": addSubject,
+	        Cancel: function() {
+	          dialog.dialog( "close" );
+	        }
+	      },
+	      close: function() {
+	        form[ 0 ].reset();
+	        allFields.removeClass( "ui-state-error" );
+	      }
 	    });
-
-
-
-	});
+	 
+	    form = dialog.find( "form" ).on( "submit", function( event ) {
+	      event.preventDefault();
+	      addSubjet();
+	    });
+	 
+	    $( ".input" ).on( "click", function() {
+	        dialog.dialog( "open" );
+	        time = $(this).attr("id");
+	        $("#time").val(time);
+	      });
+});
 </script>
 
 
@@ -153,7 +177,6 @@
       <input type="text" name="credit" id="credit" class="text ui-widget-content ui-corner-all">
  
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
-      <input type="submit" tabindex="-1" >
     </fieldset>
   </form>
 </div>

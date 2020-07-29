@@ -22,6 +22,7 @@ header {
 
 main>.container {
 	padding: 20px 10px;
+	width: 95%;
 }
 
 .footer {

@@ -49,21 +49,22 @@
 
 #boardDetail .col-25 {;
   float: left;
-  width: 25%;
+  width: 15%;
   margin-top: 6px;
 }
 
 #boardDetail .col-75 {
-  float: left;
-  width: 75%;
+  float: right;
+  width: 85%;
   margin-top: 6px;
   background-color: white;
-  padding: 2% 1%
+  padding: 2% 1%;
 }
 
 #boardDetail .col {
 	background-color: white;
-	padding: 2% 1%
+	padding: 2% 1%;
+	overflow: hidden;
 }
 
 /* Clear floats after the columns */
@@ -95,5 +96,5 @@
 }
 
 #boardDetail .content {
-	padding: 10px 20px;
+	padding: 35px;
 }
