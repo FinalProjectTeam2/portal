@@ -1,5 +1,6 @@
 package com.will.portal.login.controller;
 
+import java.security.Principal;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -11,6 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.portal.common.MemberDetails;
 import com.will.portal.email.EmailSender;
 import com.will.portal.employee.model.EmployService;
 import com.will.portal.employee.model.EmployeeVO;
@@ -280,11 +283,11 @@ public class LoginController {
 	@RequestMapping("/changePwd")
 	@ResponseBody
 	public boolean changePwd(@RequestParam String curPwd,
-			@RequestParam String newPwd,
-			HttpServletRequest request) {
+			@RequestParam String newPwd, Principal principal) {
 		boolean bool = false;
-
-		String officialNo = (String)request.getSession().getAttribute("officialNo");
+		
+		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
+		String officialNo = user.getOfficialNo();
 		String num = officialNo.substring(4,5);
 		logger.info("officialNo={}",officialNo);
 		logger.info("num={}",num);

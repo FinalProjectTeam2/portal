@@ -27,11 +27,22 @@
     clear: both;
 }
 div#chatData {
-    overflow: hidden;
+   overflow: auto;
+   height: 560px;
+}
+div#chatDataIn {
+    height: max-content;
+    overflow: auto;
+}
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    word-break: break-all;
 }
 </style>
 <script type="text/javascript">
-	var sock = new SockJS("<c:url value='/echo'/>")
+	var sock = new SockJS("<c:url value='/echo'/>");
 	
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
@@ -40,6 +51,9 @@ div#chatData {
 		$("#sendBtn").click(function() {
 			console.log("send message...");
 			sendMessage();
+		});
+		$("#reLoad").click(function() {
+			 sock = new SockJS("<c:url value='/echo'/>");
 		});
 	});
 	
@@ -72,7 +86,7 @@ div#chatData {
 			printHtml += "</div >";
 			printHtml += "</div >";
 			
-			$("#chatData").append(printHtml);
+			$("#chatDataIn").append(printHtml);
 		}else{
 			var printHtml = "<div class='well other'>";
 			printHtml += "<div>";
@@ -83,9 +97,17 @@ div#chatData {
 			printHtml += "</div >";
 			printHtml += "</div >";
 			
-			$("#chatData").append(printHtml);
+			$("#chatDataIn").append(printHtml);
 		}
-		
+		/* $("#chatData").animate({
+			scrollTop: $("#chatData").height()
+		},800); */
+		/* $("#chatData").scrollTop($("#chatData").height()); */
+		var scrollPosition = $("#chatDataIn").height();
+		console.log("hegiht : " + scrollPosition);
+		$("#chatData").animate({
+			scrollTop: scrollPosition
+		}, 800);
 		console.log("chatting data : " + data);
 	}
 	
@@ -109,7 +131,7 @@ div#chatData {
 							<div class="clearfix"></div>
 						</div>
 						<div id="chatData" class="panel-collapse collapse in">
-							
+							<div id="chatDataIn"></div>
 						</div>
 						<div id="data"></div>
 					</div>
@@ -117,6 +139,7 @@ div#chatData {
 						<input type="text" id="message">
 						<input type="text" id="sessionUser" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
 						<input id="sendBtn" type="button" value="전송">
+						<input id="reLoad" type="button" value="재접속">
 					</div>
 			</div>
 		</div>

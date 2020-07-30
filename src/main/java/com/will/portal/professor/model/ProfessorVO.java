@@ -6,9 +6,14 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-public class ProfessorVO implements UserDetails {
+import com.will.portal.common.MemberDetails;
+
+public class ProfessorVO extends MemberDetails {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String profNo;
 	private String pwd;
 	private String profName;
@@ -19,27 +24,9 @@ public class ProfessorVO implements UserDetails {
 	private String identityState;
 	private String identifyCode;
 
-	private String type = "PROFESSOR";
-	private String officialNo;
-	private String name;
-	
-	
-
-	public String getOfficialNo() {
-		return getProfNo();
-	}
-
-	public String getName() {
-		return getProfName();
-	}
-
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
+	public ProfessorVO() {
+		super();
+		type = "PROFESSOR";
 	}
 
 	public String getProfNo() {
@@ -48,7 +35,7 @@ public class ProfessorVO implements UserDetails {
 
 	public void setProfNo(String profNo) {
 		this.profNo = profNo;
-		this.officialNo = profNo;
+		officialNo = profNo;
 	}
 
 	public String getPwd() {
@@ -65,7 +52,7 @@ public class ProfessorVO implements UserDetails {
 
 	public void setProfName(String profName) {
 		this.profName = profName;
-		this.name = profName;
+		name = profName;
 	}
 
 	public int getDepNo() {
@@ -116,9 +103,10 @@ public class ProfessorVO implements UserDetails {
 		this.identifyCode = identifyCode;
 	}
 
-	
-
-	private static final long serialVersionUID = 1L;
+	@Override
+	public String getType() {
+		return "PROFESSOR";
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -130,48 +118,12 @@ public class ProfessorVO implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return getPwd();
+		return pwd;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return getProfNo();
+		return profNo;
 	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "ProfessorVO [profNo=" + profNo + ", pwd=" + pwd + ", profName=" + profName + ", depNo=" + depNo
-				+ ", positionNo=" + positionNo + ", startDate=" + startDate + ", resignationDate=" + resignationDate
-				+ ", identityState=" + identityState + ", identifyCode=" + identifyCode + ", type=" + type
-				+ ", officialNo=" + officialNo + ", name=" + name + "]";
-	}
-	
-	
 
 }

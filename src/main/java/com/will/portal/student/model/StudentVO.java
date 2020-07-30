@@ -6,13 +6,16 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-public class StudentVO implements UserDetails {
+import com.will.portal.common.MemberDetails;
+
+public class StudentVO extends MemberDetails {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private String stuNo;
 	private String pwd;
 	private String name;
@@ -25,17 +28,13 @@ public class StudentVO implements UserDetails {
 	private String identityState;
 	private int minor;
 	private String identifyCode;
-	private String type = "STUDENT";
-	private String officialNo;
-
-	public String getOfficialNo() {
-		return officialNo;
+	
+	
+	
+	public StudentVO() {
+		super();
+		type = "STUDENT";
 	}
-
-	public String getType() {
-		return type;
-	}
-
 
 	public String getStuNo() {
 		return stuNo;
@@ -43,7 +42,7 @@ public class StudentVO implements UserDetails {
 
 	public void setStuNo(String stuNo) {
 		this.stuNo = stuNo;
-		this.officialNo = stuNo;
+		setOfficialNo(stuNo);
 	}
 
 	public String getPwd() {
@@ -54,10 +53,12 @@ public class StudentVO implements UserDetails {
 		this.pwd = pwd;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
-
+	
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -133,56 +134,29 @@ public class StudentVO implements UserDetails {
 	public void setIdentifyCode(String identifyCode) {
 		this.identifyCode = identifyCode;
 	}
-
-	@Override
-	public String toString() {
-		return "StudentVO [stuNo=" + stuNo + ", pwd=" + pwd + ", name=" + name + ", major=" + major + ", semester="
-				+ semester + ", credits=" + credits + ", state=" + state + ", admissionDate=" + admissionDate
-				+ ", graduationDate=" + graduationDate + ", identityState=" + identityState + ", minor=" + minor
-				+ ", identifyCode=" + identifyCode + ", type=" + type + ", officialNo=" + officialNo + "]";
-	}
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
+
 		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 		return roles;
 	}
 
+
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return getPwd();
+		return pwd;
 	}
+
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return getStuNo();
+		return stuNo;
 	}
 
 	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+	public String getType() {
+		return "STUDENT";
 	}
 
 }

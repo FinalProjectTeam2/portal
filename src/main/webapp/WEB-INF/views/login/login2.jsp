@@ -634,9 +634,12 @@ button.ui-keyboard-button:hover {
 	<!-- bottom -->
 	<%@ include file="../inc/bottom.jsp"%>
 	<script type="text/javascript">
-		
-			if(${!empty error}){
-				alert('${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}');
-			}
+
+	if(${!empty error}){
+		alert('${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}');
+	}
+	if(${!empty logout}){
+		alert('${msg}');
+	}
 		
 	</script>

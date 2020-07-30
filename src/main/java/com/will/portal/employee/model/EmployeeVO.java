@@ -6,9 +6,12 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-public class EmployeeVO implements UserDetails {
+import com.will.portal.common.MemberDetails;
+
+public class EmployeeVO extends MemberDetails {
+
+	private static final long serialVersionUID = 1L;
 	private String empNo;
 	private String pwd;
 	private Timestamp startDate;
@@ -19,25 +22,9 @@ public class EmployeeVO implements UserDetails {
 	private String identityState;
 	private String positionCode;
 
-	private String type = "ADMIN";
-	private String officialNo;
-	private String name;
-
-	public String getOfficialNo() {
-		return officialNo;
-	}
-
-	public String getName() {
-		return getEmpName();
-	}
-
-	public String getType() {
-		return type;
-	}
-
-
 	public EmployeeVO() {
 		super();
+		type = "ADMIN";
 	}
 
 	public String getPositionCode() {
@@ -54,7 +41,7 @@ public class EmployeeVO implements UserDetails {
 
 	public void setEmpNo(String empNo) {
 		this.empNo = empNo;
-		this.officialNo = empNo;
+		officialNo = empNo;
 	}
 
 	public String getPwd() {
@@ -95,7 +82,7 @@ public class EmployeeVO implements UserDetails {
 
 	public void setEmpName(String empName) {
 		this.empName = empName;
-		this.name = empName;
+		name = empName;
 	}
 
 	public Timestamp getResignationDate() {
@@ -114,60 +101,28 @@ public class EmployeeVO implements UserDetails {
 		this.identityState = identityState;
 	}
 
-	@Override
-	public String toString() {
-		return "EmployeeVO [empNo=" + empNo + ", pwd=" + pwd + ", startDate=" + startDate + ", depCode=" + depCode
-				+ ", authCode=" + authCode + ", empName=" + empName + ", resignationDate=" + resignationDate
-				+ ", identityState=" + identityState + ", positionCode=" + positionCode + ", type=" + type
-				+ ", officialNo=" + officialNo + ", name=" + name + "]";
-	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
-		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+		roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		return roles;
 	}
 
 	@Override
+	public String getType() {
+		return "ADMIN";
+	}
+
+	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return getPwd();
+		return pwd;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return getEmpNo();
+		return empNo;
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
 }

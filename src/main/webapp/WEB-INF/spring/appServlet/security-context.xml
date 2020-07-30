@@ -26,11 +26,14 @@
 		<intercept-url pattern="/resources/**"
 			access="permitAll" />
 		<intercept-url pattern="/**"
-			access="hasRole('ROLE_USER')" />
+			access="hasAnyRole('ROLE_ADMIN, ROLE_USER')" />
+		<intercept-url pattern="/admin/**"
+			access="hasRole('ROLE_ADMIN')" />
 
-		<form-login login-page="/login" default-target-url="/index"
+		<form-login login-page="/login"
 			username-parameter="officialNo" password-parameter="pwdd"
 			authentication-failure-url="/login?error"
+			authentication-success-handler-ref="loginSuccessHandler"
 			always-use-default-target='true' login-processing-url="/loginOk" />
 
 		<logout invalidate-session="true" logout-url="/logout"
@@ -40,10 +43,11 @@
 
 		<csrf request-matcher-ref="CsrfSecurityRequestMatcher" />
 	</http>
-	
+	<beans:bean id="loginSuccessHandler"
+		class="com.will.portal.common.LoginSuccessHandler"></beans:bean>
 	<beans:bean id="CsrfSecurityRequestMatcher"
 		class="com.will.portal.common.CsrfSecurityRequestMatcher" />
-		
+
 	<authentication-manager>
 		<authentication-provider
 			user-service-ref="memberService" />
