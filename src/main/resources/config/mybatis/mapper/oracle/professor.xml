@@ -17,6 +17,36 @@
    	<select id="loadByProfNo" parameterType="string" resultType="subjectVo">
    		select * from subject where prof_no=#{profNo}
    	</select>
+	
+	<select id="codeByProfNo" parameterType="string" resultType="string">
+		select OPEN_SUB_CODE from open_subj where prof_no=#{profNo}
+	</select>
+	
+	
+	
+   	<select id="timeByCode" resultType="subj_timeVo" parameterType="list">
+   		select * from subj_time 
+   		<if test="list!=null">
+	   		where OPEN_SUB_CODE in
+	   		<foreach collection="list" item="item" index="index"
+	   			open="(" separator="," close=")">
+	   			#{item}
+	   		</foreach>
+   		</if>
+   	</select>
+   	
+   	<insert id="insertSubjTime" parameterType="subj_timeVo">
+   		<selectKey keyProperty="lectureTimeNo" order="BEFORE" resultType="int">
+   			select subj_time_seq.nextval from dual
+   		</selectKey>
+   		insert into subj_time(LECTURE_TIME_NO, OPEN_SUB_CODE, TIMETABLE_CODE, CLASSROOM_CODE)
+   		values(#{lectureTimeNo}, #{openSubCode}, #{timetableCode}, #{classroomCode})
+   	</insert>
+   	
+   	<select id="classroomByDepNo" parameterType="string" resultType="map">
+   		select * from class where dep_no=#{depNo}
+   	</select>
+   	
    	
    	
 </mapper>

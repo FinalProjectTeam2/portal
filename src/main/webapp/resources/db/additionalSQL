@@ -6,3 +6,52 @@ alter table classroom
 modify(classroom_code VARCHAR2(20));
 alter table subj_time
 modify(classroom_code VARCHAR2(20));
+
+--subj_time테이블 컬럼명 컬럼 데이터 타입 변경
+ALTER TABLE subj_time RENAME COLUMN lecture_time_code TO lecture_time_no;
+alter table subj_time modify (lecture_time_no NUMBER);
+
+--subj_time용 시퀀스
+create sequence subj_time_seq
+increment by 1
+start with 1
+nocache;
+
+
+--classroom 학과번호로 검색하는 view
+create or replace view class as
+select c.classroom_code, c.classroom_name, d.dep_no
+from classroom c join building b
+on c.building_code=b.building_code
+join department d
+on c.building_code=d.building_code;
+
+
+#교수 강의 일정 시간표 뿌릴때 쓰는 view
+create or replace view tablelist as
+select  o.open_sub_code, o.prof_no, o.subj_code, s.classroom_code, s.timetable_code
+from open_subj o join subj_time s
+on o.open_sub_code=s.open_sub_code;
+
+
+--교수 화면 일단 뜨게 하기
+insert into classroom(classroom_code, classroom_name, building_code)
+values('B004-111-00', '관합주실', 'B004');
+insert into classroom(classroom_code, classroom_name, building_code)
+values('B004-111-03', '관악전공 강의실2', 'B004');
+
+
+insert into official_info(official_no, hp1, hp2, hp3, ssn)
+values('202021111111', '010', '3822', '5882', '820725-1000000');
+
+insert into prof_position
+values(1, '정교수');
+
+insert into professor(prof_no, pwd, prof_name, dep_no, position_no)
+values('202021111111', '820725', '박철', '111', 1);
+
+insert into subject
+values('MRC-111-001','관악기를 위한 오케스트라 워크샵', '관악기를 위한 오케스트라 워크샵', 'MRC', 3, '202021111111');
+
+insert into subject
+values('MRC-111-002','관합주', '관합주', 'MRC', 3, '202021111111');

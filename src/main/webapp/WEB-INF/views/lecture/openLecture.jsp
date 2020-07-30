@@ -21,10 +21,7 @@
 	var time = '';
 
 $(function(){
-	$('#btLoad').click(function(){
-		location.href="<c:url value='/lecture/loadByProfNo?profNo=${sessionScope.officialNo}'/>";
-	});
-	
+	timeTable();
 	
 	var dialog, form,
 	subject = $( "#subject" ),
@@ -41,20 +38,25 @@ $(function(){
 	        tips.removeClass( "ui-state-highlight", 1500 );
 	      }, 500 );
 	    }
-	 
-	 
+	 	
+	 	
+		/* 	$.each(res, function(idx, item){
+			var id = item.컬럼명
+			$('#'+id).html('<p>'+item.name+'</p>');
+		})	 */
 	 
 	    function addSubject() {
 	     $.ajax({
 	    	 url:"<c:url value='/lecture/addSubject'/>",
 	    	 type:"post",
 	    	 data:{
-	    		 "subject":"$('#subject').val()",
-	    		 "time":"$('#time').val()",
-	    	 },
-	    	 dataType:"json",
+	    		 "subject":$('#subject option:selected').val(),
+	    		 "time":$('#time').val(),
+	    		 "classroom":$('#classroom option:selected').val()
+	    	 },	    	
 	    	 success:function(res){
-	    		 
+	    		 alert(res);
+	    		 dialog.dialog( "close" );
 	    	 },
 	    	 error:function(xhr, status, error){
 	    		 alert(error);
@@ -93,6 +95,28 @@ $(function(){
 	        $("#time").attr("readonly", true);
 	      });
 });
+
+function timeTable(){
+	$.ajax({
+		url:"<c:url value='/lecture/timeByProfNo'/>",
+		data:{
+			"profNo":"${principal.officialNo}"	
+		},
+		dataType:"json",
+		success:function(res){
+			$.each(res, function(idx, item){
+				var tdId=item.timetableCode;
+				tdId = '#'+tdId;
+				console.log(tdId);
+				$(tdId).html(item.classroomCode);
+				$(tdId).css('background','skyblue');
+			});
+		},
+		error:function(xhr, status, error){
+			alert(error);
+		}
+	});
+}
 </script>
 
 
@@ -108,7 +132,7 @@ $(function(){
 <main role="main" class="flex-shrink-0">
 <div class="container">
 	<h2>강의시간 설정</h2>
-	<h4>${sessionScope.name} 교수님의 시간표 </h4><input type="button" id="btLoad" value="불러오기" style="float: right; margin-top: -50px; margin-right: 350px;"/>
+	<h4>${principal.name} 교수님의 시간표 </h4>
 	<div class='tab'>
 	  <table border='0' cellpadding='0' cellspacing='0'>
 	    <tr class='days'>
@@ -121,67 +145,67 @@ $(function(){
 	    </tr>
 	    <tr>
 	      <td class='time'>1교시<br>09:00~09:50</td>
-	      <td class="input" id="mo1"></td>
-	      <td class="input" id="tu1"></td>
-	      <td class="input" id="we1"></td>
-	      <td class="input" id="th1"></td>
-	      <td class="input" id="fr1"></td>
+	      <td class="input" id="MO1"></td>
+	      <td class="input" id="TU1"></td>
+	      <td class="input" id="WE1"></td>
+	      <td class="input" id="TH1"></td>
+	      <td class="input" id="FR1"></td>
 	    </tr>
 	    <tr>
 	      <td class='time'>2교시<br>10:00~10:50</td>
-	      <td class="input" id="mo2"></td>
-	      <td class="input" id="tu2"></td>
-	      <td class="input" id="we2"></td>
-	      <td class="input" id="th2"></td>
-	      <td class="input" id="fr2"></td>
+	      <td class="input" id="MO2"></td>
+	      <td class="input" id="TU2"></td>
+	      <td class="input" id="WE2"></td>
+	      <td class="input" id="TH2"></td>
+	      <td class="input" id="FR2"></td>
 	    </tr>
 	    <tr>
 	      <td class='time'>3교시<br>11:00~12:00</td>
-	      <td class="input" id="mo3"></td>
-	      <td class="input" id="tu3"></td>
-	      <td class="input" id="we3"></td>
-	      <td class="input" id="th3"></td>
-	      <td class="input" id="fr3"></td>
+	      <td class="input" id="MO3"></td>
+	      <td class="input" id="TU3"></td>
+	      <td class="input" id="WE3"></td>
+	      <td class="input" id="TH3"></td>
+	      <td class="input" id="FR3"></td>
 	    </tr>
 	    <tr>
 	      <td class='time'>4교시<br>12:00~13:00</td>
-	      <td class="input" id="mo4"></td>
-	      <td class="input" id="tu4"></td>
-	      <td class="input" id="we4"></td>
-	      <td class="input" id="th4"></td>
-	      <td class="input" id="fr4"></td>
+	      <td class="input" id="MO4"></td>
+	      <td class="input" id="TU4"></td>
+	      <td class="input" id="WE4"></td>
+	      <td class="input" id="TH4"></td>
+	      <td class="input" id="FR4"></td>
 	    </tr>
 		  <tr>
 	      <td class='time'>5교시<br>14:00~15:00</td>
-	      <td class="input" id="mo5"></td>
-	      <td class="input" id="tu5"></td>
-	      <td class="input" id="we5"></td>
-	      <td class="input" id="th5"></td>
-	      <td class="input" id="fr5"></td>
+	      <td class="input" id="MO5"></td>
+	      <td class="input" id="TU5"></td>
+	      <td class="input" id="WE5"></td>
+	      <td class="input" id="TH5"></td>
+	      <td class="input" id="FR5"></td>
 	    </tr>
 	    <tr>
 	      <td class='time'>6교시<br>15:00~16:00</td>
-	      <td class="input" id="mo6"></td>
-	      <td class="input" id="tu6"></td>
-	      <td class="input" id="we6"></td>
-	      <td class="input" id="th6"></td>
-	      <td class="input" id="fr6"></td>
+	      <td class="input" id="MO6"></td>
+	      <td class="input" id="TU6"></td>
+	      <td class="input" id="WE6"></td>
+	      <td class="input" id="TH6"></td>
+	      <td class="input" id="FR6"></td>
 	    </tr>
 	    <tr>
 	      <td class='time'>7교시<br>16:00~17:00</td>
-	      <td class="input" id="mo7"></td>
-	      <td class="input" id="tu7"></td>
-	      <td class="input" id="we7"></td>
-	      <td class="input" id="th7"></td>
-	      <td class="input" id="fr7"></td>
+	      <td class="input" id="MO7"></td>
+	      <td class="input" id="TU7"></td>
+	      <td class="input" id="WE7"></td>
+	      <td class="input" id="TH7"></td>
+	      <td class="input" id="FR7"></td>
 	    </tr>
 	    <tr>
 	      <td class='time'>8교시<br>17:00~18:00</td>
-	      <td class="input" id="mo8"></td>
-	      <td class="input" id="tu8"></td>
-	      <td class="input" id="we8"></td>
-	      <td class="input" id="th8"></td>
-	      <td class="input" id="fr8"></td>
+	      <td class="input" id="MO8"></td>
+	      <td class="input" id="TU8"></td>
+	      <td class="input" id="WE8"></td>
+	      <td class="input" id="TH8"></td>
+	      <td class="input" id="FR8"></td>
 	    </tr>
 	  </table>
 	</div>
@@ -201,7 +225,12 @@ $(function(){
       <label for="time">시간</label>
       <input type="text" name="time" id="time" class="text ui-widget-content ui-corner-all">
       <input type="hidden" name="credit" id="credit" value="${vo.credit }">
-  
+      <label for="classroom">강의실</label>
+     	 <select id="classroom">
+      		<c:forEach var="map" items="${cList }">
+      			<option value="${map['CLASSROOM_CODE']}">${map['CLASSROOM_NAME'] }</option>
+      		</c:forEach>
+     	 </select>
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
     </fieldset>
   </form>

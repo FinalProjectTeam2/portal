@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-<sec:authentication var="principal" property="principal" /> 
+<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html class="h-100">
 <head>
@@ -156,34 +156,34 @@
 	function clock() {
 		var date = new Date();
 
-		// date Object를 받아오고 
+		// date Object를 받아오고
 		var month = date.getMonth();
 
-		// 달을 받아옵니다 
+		// 달을 받아옵니다
 		var clockDate = date.getDate();
 
-		// 몇일인지 받아옵니다 
+		// 몇일인지 받아옵니다
 		var day = date.getDay();
 
-		// 요일을 받아옵니다. 
+		// 요일을 받아옵니다.
 		var week = [ '일', '월', '화', '수', '목', '금', '토' ];
 
-		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다. 
+		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다.
 		var hours = date.getHours();
 
-		// 시간을 받아오고 
+		// 시간을 받아오고
 		var minutes = date.getMinutes();
 
 		// 분도 받아옵니다.
 		var seconds = date.getSeconds();
 
-		// 초까지 받아온후 
+		// 초까지 받아온후
 		var timer = (month + 1) + '월 ' + clockDate + '일 ' + week[day] + '요일 '
 				+ (hours < 10 ? '0' + hours : hours) + ':'
 				+ (minutes < 10 ? '0' + minutes : minutes) + ':'
 				+ (seconds < 10 ? '0' + seconds : seconds);
 
-		// 월은 0부터 1월이기때문에 +1일을 해주고 
+		// 월은 0부터 1월이기때문에 +1일을 해주고
 
 		// 시간 분 초는 한자리수이면 시계가 어색해보일까봐 10보다 작으면 앞에0을 붙혀주는 작업을 3항연산으로 했습니다.
 		$("#timer").html(timer)
@@ -276,18 +276,30 @@
 							<li><a
 								href="<c:url value='/board_calender/calendarDetail'/>">서비스</a></li>
 						</ul></li>
+					<sec:authorize access="isAuthenticated()">
+					<c:if test="${principal.type=='STUDENT' }">
 					<li><a class="nav-link" href="#"> 학사서비스 </a>
 						<ul>
 							<li><a href="#">학사정보</a></li>
 							<li><a href="#">수강신청</a></li>
 						</ul></li>
+					</c:if>
+					<c:if test="${principal.type=='PROFESSOR' }">
+					<li><a class="nav-link" href="#"> 강의 관리 </a>
+						<ul>
+							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
+							<li><a href="#">강의 개설 신청</a></li>
+						</ul></li>
+					</c:if>
+					</sec:authorize>
+
 					<li><a class="nav-link" href="#">웹메일</a></li>
 					<li><a class="nav-link" href="#"> 쪽지함 <span
 							class="badge badge-pill bg-light align-text-bottom">27</span>
 					</a></li>
 				</ul>
 				<span id="timer"
-					style="color: black; font-size: 0.8em; margin: 15px 25px; 
+					style="color: black; font-size: 0.8em; margin: 15px 25px;
 					width: 100%; text-align: right;"></span>
 			</nav>
 		</div>
