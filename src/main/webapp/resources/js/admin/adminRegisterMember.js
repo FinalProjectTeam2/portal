@@ -1,4 +1,3 @@
-
 $(function() {
 	$(function() {
 		// ajax 학과 검색

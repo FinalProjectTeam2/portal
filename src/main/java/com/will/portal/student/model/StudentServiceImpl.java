@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.will.portal.account_info.model.Account_InfoDAO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
@@ -22,6 +23,8 @@ public class StudentServiceImpl implements StudentService {
 	CommonDAO commonDao;
 	@Autowired
 	Official_infoDAO officialDao;
+	@Autowired private Account_InfoDAO accountInfoDao;
+
 
 	@Transactional
 	public int insertStudent(StudentVO studentVo, Official_infoVO officialVo, int sort) {
@@ -39,7 +42,8 @@ public class StudentServiceImpl implements StudentService {
 		int cnt = studentDao.insertStudent(studentVo);
 
 		int cnt2 = 0;
-		if (cnt > 0) {
+		int ac=accountInfoDao.insertAccount(userNo);
+		if (cnt > 0 && ac>0) {
 
 			officialVo.setOfficialNo(userNo);
 			cnt2 = officialDao.insertOfficial(officialVo);

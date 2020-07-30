@@ -20,3 +20,9 @@ main>.container {
 #btRegiMem {
 	margin: 0 15px 0 5%;
 }
+a:hover { text-decoration:none }
+
+.btn-outline-success{
+	color: #248dd2;
+    border-color: #248dd2;
+} 
