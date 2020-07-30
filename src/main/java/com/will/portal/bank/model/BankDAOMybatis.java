@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.portal.account_info.model.Account_infoVO;
+
 @Repository
 public class BankDAOMybatis implements BankDAO {
 	private String namespace = "config.mybatis.mapper.oracle.bank.";
@@ -16,8 +18,8 @@ public class BankDAOMybatis implements BankDAO {
 		return sqlSession.selectList(namespace + "selectAllBank");
 	}
 	@Override
-	public int updateAccount(BankVO bankVo) {
-		return sqlSession.update(namespace +"updateAccount",bankVo);
+	public int updateAccount(Account_infoVO accInfoVo)  {
+		return sqlSession.update(namespace +"updateAccount",accInfoVo);
 	}
 	
 	

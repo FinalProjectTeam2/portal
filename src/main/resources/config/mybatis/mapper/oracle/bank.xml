@@ -7,7 +7,7 @@
 		select * from bank
 	</select>
 	
-	<update id="updateAccount" parameterType="bankVo">
+	<update id="updateAccount" parameterType="account_infoVo">
 		update account_info
 		set bank_code=#{bankCode}, account_no=#{bankNo},account_name=#{accountName}
 		where official_no=#{officialNo}

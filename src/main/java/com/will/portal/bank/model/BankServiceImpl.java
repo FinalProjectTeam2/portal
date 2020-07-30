@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.will.portal.account_info.model.Account_infoVO;
+
 @Service
 public class BankServiceImpl implements BankService{
 	@Autowired
@@ -14,8 +16,9 @@ public class BankServiceImpl implements BankService{
 		return bankDao.selectAllBank();
 	}
 
+
 	@Override
-	public int updateAccount(BankVO bankVo) {
-		return bankDao.updateAccount(bankVo);
+	public int updateAccount(Account_infoVO accInfoV) {
+		return bankDao.updateAccount(accInfoV);
 	}
 }

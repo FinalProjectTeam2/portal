@@ -1,5 +1,6 @@
 package com.will.portal.student.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.will.portal.SearchController;
 import com.will.portal.bank.model.BankService;
 import com.will.portal.bank.model.BankVO;
+import com.will.portal.common.MemberDetails;
+import com.will.portal.official_info.model.Official_infoService;
 import com.will.portal.student.model.StudentService;
 @Controller
 @RequestMapping("/student")
@@ -24,12 +28,14 @@ public class StudentController {
 	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 	@Autowired private StudentService studentService;
 	@Autowired private BankService bankService;
+	@Autowired private Official_infoService offiService;
 	
 	
 	@RequestMapping(value = "/studentEdit" , method = RequestMethod.GET)
-	public String edit_get(HttpServletRequest request, Model model) {
+	public String edit_get(Principal principal, Model model) {
 		logger.info("학생 수정화면 페이지 보여주기");
-		String officialNo = (String)request.getSession().getAttribute("officialNo");
+		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
+		String officialNo = user.getOfficialNo();
 		
 		Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
 		List<BankVO> bankList = bankService.selectAllBank();
@@ -39,10 +45,12 @@ public class StudentController {
 		return "/student/studentEdit";
 	}
 	
-	@RequestMapping(value = "/studentEdit" , method = RequestMethod.POST)
-	public String edit_post(@ModelAttribute BankVO bankVo) {
-		bankService.updateAccount(bankVo);
-	}
+	/*
+	 * @RequestMapping(value = "/studentEdit" , method = RequestMethod.POST) public
+	 * String edit_post(Principal principal, Model model) {
+	 * 
+	 * }
+	 */
 	
 	
 	

@@ -20,5 +20,4 @@ public class BankVO {
 		return "BankVO [bankCode=" + bankCode + ", bankName=" + bankName + "]";
 	}
 	
-	
 }
