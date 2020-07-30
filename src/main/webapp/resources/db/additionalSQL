@@ -6,3 +6,42 @@ alter table classroom
 modify(classroom_code VARCHAR2(20));
 alter table subj_time
 modify(classroom_code VARCHAR2(20));
+
+#은행DB
+CREATE SEQUENCE bank_SEQ
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
+
+insert into bank
+values(bank_seq.nextval, 'KB국민');
+insert into bank
+values(bank_seq.nextval, 'KEB하나');
+insert into bank
+values(bank_seq.nextval, '신한은행');
+insert into bank
+values(bank_seq.nextval, '우리은행');
+insert into bank
+values(bank_seq.nextval, 'NH농협');
+insert into bank
+values(bank_seq.nextval, 'IBK기업');
+insert into bank
+values(bank_seq.nextval, 'KDB산업');
+insert into bank
+values(bank_seq.nextval, '한국씨티');
+insert into bank
+values(bank_seq.nextval, 'SC제일');
+insert into bank
+values(bank_seq.nextval, 'BNK부산');
+insert into bank
+values(bank_seq.nextval, 'DGB대구');
+insert into bank
+values(bank_seq.nextval, 'BNK경남');
+insert into bank
+values(bank_seq.nextval, 'Sh수협');
+insert into bank
+values(bank_seq.nextval, '광주은행');
+insert into bank
+values(bank_seq.nextval, '전북은행');
+insert into bank
+values(bank_seq.nextval, '제주은행');

@@ -6,6 +6,26 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/studentEdit.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/materialize.min.css' />">
     
+<script>
+	$(function () {
+		$('#editFrm').submit(function () {
+			$.ajax({
+				url : "<c:url value='/student/studentEdit' />",
+				type: "post",
+				data : $(this).serialize(),
+				success:function(res){
+					
+				},
+				error:function(xhr,status,error){
+					alert(status + ", " + error);
+				}
+			});
+		});	
+	});
+
+</script>   
+    
+    
 <style>
 select:focus {
 	background-color: #ffffff;
@@ -40,7 +60,8 @@ a:focus {
 			      	<table>
 			      		<tr>
 			      			<th>학번</th>
-			      			<td>${map['STU_NO'] } / 입학날짜 : ${map['ADMISSION_DATE'] }</td>
+			      			<td>${map['STU_NO'] } / 입학날짜 : <fmt:formatDate value='${map["ADMISSION_DATE"] }' pattern="yyyy-MM-dd" />
+			      			 </td>
 			      		</tr>
 			      		<tr>
 			      			<th>학생</th>
@@ -68,12 +89,14 @@ a:focus {
 			      <!-- 기본정보 -->
 			      <div class="cola s12" id="canEdit">
 			      <hr><!-- style="border: 0.5px solid #01539d -->
+				      	
 				      	<table>
+				      		
 				      		<tr>
 				      			<th>이름</th>
 				      			<td><input placeholder="이름" name="name" type="text" class="validate" readonly="readonly" value="${map['NAME'] }"></td>
 								<th>학번</th>
-								<td><input placeholder="학번" name="stuNo" type="text" class="validate" readonly="readonly" value="${map['STU_NO'] }"></td>
+								<td><input placeholder="학번" name="officialNo" type="text" class="validate" readonly="readonly" value="${map['STU_NO'] }"></td>
 				      			<th>주민번호</th>
 				      			<td><input placeholder="주민번호" name="jumin" type="text" class="validate" readonly="readonly" value="${map['SSN'] }"></td>
 				      		</tr>
@@ -81,9 +104,11 @@ a:focus {
 				      			<th>은행명</th>
 				      			<td>
 			      				    <select class="browser-default" name="bank">
-								      <option>우리은행</option>
-								      <option>신한은행</option>
-								      <option>하나은행</option>
+								      <c:if test="${!empty bankList }">
+								      	<c:forEach var="bankVo" items="${bankList }">
+								      		<option value="${bankVo.bankCode }">${bankVo.bankName }</option>
+								      	</c:forEach>
+								      </c:if>
 								    </select>
 				      			</td>
 				      			<th>계좌번호</th>
@@ -107,8 +132,9 @@ a:focus {
 								<td><input placeholder="핸두폰번호" name="hp" type="text" class="validate" value="${map['HP1'] }-${map['HP2'] }-${map['HP3'] }"></td>
 				      		</tr>
 				      	
-
+						
 				      	</table>
+				      
 				      	<div style="text-align: center; margin-top: 10px;">
 				      			<input type="submit" id="editBt" value="정보수정" style="color: white;">
 			    		</div>
