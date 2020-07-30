@@ -50,14 +50,5 @@ public class TuitionController {
 		logger.info("등록금 영수증 확인");
 		return "tuition/tuition4";
 	}
-	
-	@RequestMapping("/ajaxtuitionStu.do")
-	@ResponseBody
-	public List<TuitionAllVO> stu(TuitionAllVO AllVo){
-		logger.info("학생 정보 조회");
-		
-		List<TuitionAllVO> list= tuitionService.selectStu(AllVo);
-		
-		return list;
-	}
+
 }

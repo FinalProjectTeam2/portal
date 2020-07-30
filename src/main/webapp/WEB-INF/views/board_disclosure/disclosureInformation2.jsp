@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
-<%@ include file="../inc/portalSidebar.jsp"%>
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -214,6 +212,5 @@ hr {
     </div>
 </div>
 </div>
-<%@ include file="../inc/bottom.jsp"%>
 </body>
 </html>

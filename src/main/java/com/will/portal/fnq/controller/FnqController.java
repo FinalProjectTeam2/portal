@@ -10,10 +10,10 @@ public class FnqController {
 	private static final Logger logger 
 		= LoggerFactory.getLogger(FnqController.class);
 	
-	@RequestMapping("/fnq/fnq/")
+	@RequestMapping("/potal/service")
 	public String fnq() {
 		logger.info("F&Q화면 보여주기");
-		return "fnq/fnq";
+		return "/potal/service/fnq";
 	}
 	
 }

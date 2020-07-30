@@ -168,6 +168,10 @@ hr {
   }
 }
 
+img {
+	width: 160px;
+	background-color: gray;
+}
 </style>
 <script type="text/javascript">
 function openMenu(evt, cityName) {
@@ -201,7 +205,7 @@ function myFunction() {
 <div id="tuition1">
 <div class="infobox">
 	<div class="img-box">
-		<h3>로고자리</h3>
+		<img src="<c:url value='/resources/images/logo.png'/>">
 		
 	</div>
 	<div class="info">

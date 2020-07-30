@@ -91,7 +91,7 @@ a.bottom {
 			</div>
 			<div class="foot_address">
 				죽전캠퍼스 경기도 용인시 수지구 죽전로 152 (우)16890 / 천안캠퍼스 충남 천안시 동남구 단대로 119
-				(우)31116 / <a href="http://www.dankook.ac.kr/web/kor/privacy"
+				(우)31116 / <a href="<c:url value='/board_disclosure/privacy1'/>"
 					target="_blank">개인정보처리방침</a>
 			</div>
 			<div class="foot_copyright">Copyright(c) 2015 BY DANKOOK
