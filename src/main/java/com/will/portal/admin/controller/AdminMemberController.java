@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.will.portal.account_info.model.Account_InfoService;
 import com.will.portal.authority.model.AuthorityService;
 import com.will.portal.authority.model.AuthorityVO;
 import com.will.portal.common.PaginationInfo;
@@ -147,7 +146,7 @@ public class AdminMemberController {
 		return url;
 	}
 	@RequestMapping(value = "/adminManageMember",method = RequestMethod.GET)
-	public void adminManageMember(@RequestParam int sort, @ModelAttribute SearchVO searchVo,Model model) {
+	public void adminManageMember(@RequestParam(defaultValue = "1") int sort, @ModelAttribute SearchVO searchVo,Model model) {
 		logger.info("adminManageMember, Get");
 		logger.info("adminManageMember, param: sort={}",sort);
 		logger.info("adminManageMember, param: {}",searchVo);
