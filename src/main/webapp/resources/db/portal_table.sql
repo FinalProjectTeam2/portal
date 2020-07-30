@@ -35,7 +35,7 @@ CREATE TABLE subj_time (
 	lecture_time_code VARCHAR2(10) NOT NULL, /* 강의시간표코드 */
 	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
 	timetable_code VARCHAR2(10) NOT NULL, /* 시간기준코드 */
-	classroom_code VARCHAR2(10) /* 강의실코드 */
+	classroom_code VARCHAR2(20) /* 강의실코드 */
 );
 
 ALTER TABLE subj_time
@@ -47,7 +47,7 @@ ALTER TABLE subj_time
 
 /* 강의실 */
 CREATE TABLE classroom (
-	classroom_code VARCHAR2(10) NOT NULL, /* 강의실코드 */
+	classroom_code VARCHAR2(20) NOT NULL, /* 강의실코드 */
 	classroom_name VARCHAR2(30) NOT NULL, /* 강의실명 */
 	building_code VARCHAR2(30) NOT NULL /* 건물코드 */
 );
@@ -142,11 +142,11 @@ CREATE TABLE board (
 	reg_date DATE DEFAULT sysdate, /* 게시판 등록일 */
 	edit_date DATE, /* 게시판 수정일 */
 	bd_order NUMBER, /* 게시판 순서 */
-	usage CHAR(5) DEFAULT 'N', /* 사용 여부 */
-	is_reply CHAR(5) DEFAULT 'N', /* 댓글여부 */
-	is_comment CHAR(5) DEFAULT 'N', /* 답글여부 */
-	is_private CHAR(5) DEFAULT 'N', /* 비공개여부 */
-	is_upload CHAR(5) DEFAULT 'N', /* 업로드 가능 여부 */
+	usage CHAR(1) DEFAULT 'N', /* 사용 여부 */
+	is_reply CHAR(1) DEFAULT 'N', /* 댓글여부 */
+	is_comment CHAR(1) DEFAULT 'N', /* 답글여부 */
+	is_private CHAR(1) DEFAULT 'N', /* 비공개여부 */
+	is_upload CHAR(1) DEFAULT 'N', /* 업로드 가능 여부 */
 	max_upfile NUMBER DEFAULT 1, /* 업로드 가능 개수 */
 	max_filesize NUMBER DEFAULT 1024*1024, /* 업로드 가능 파일사이즈 */
 	category_code VARCHAR2(10) NOT NULL, /* 카테고리코드 */
@@ -946,7 +946,6 @@ INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
-/*reply*/
 CREATE SEQUENCE reply_seq
 INCREMENT BY 1
 START WITH 1
@@ -1000,6 +999,23 @@ INCREMENT BY 1
 START WITH 1
 NOCACHE;
 
+/*employee*/
+CREATE SEQUENCE employee_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
+
+/*professor*/
+CREATE SEQUENCE PROFESSOR_SEQ
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
+
+/*student*/
+CREATE SEQUENCE STUDENT_SEQ
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
 
 /*뷰 생성*/
 /*board_view*/

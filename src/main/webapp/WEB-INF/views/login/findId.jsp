@@ -6,21 +6,24 @@
 <%@ include file="../inc/mainSidebar.jsp"%>
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/login.css'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/findId.css'/>">
 
 
 <!-- main 시작 -->
-<main role="main" class="flex-shrink-0">
+<main role="main" class="flex-shrink-0" id="mainmain">
 <div class="container">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
 			<div class="card-header">
-				<p id="title">아이디 찾기</p>
+				<p id="title"><img  id="shoutImg" src="<c:url value='/resources/images/shout.png'/>">  알림</p>
 			</div>
 			<div class="card-body">
-				<div>
-					<p>본인인증을 통해 <span>아이디</span>를 찾아주세요</p>
+				<div id="text">
+					<p>직번이나 학번이 기억나지 않으신 분은
+				    HelpDesk(820-0067~8)로 문의하시기 바랍니다.
+				    평일(09:00~17:00)</p>
 				</div>
+
 			</div>
 
 		</div>

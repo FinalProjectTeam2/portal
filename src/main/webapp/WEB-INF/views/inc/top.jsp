@@ -3,9 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html class="h-100">
 <head>
+<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,13 +32,18 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- date formating -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 <title>척척학사</title>
 
 <link href="<c:url value='/resources/css/offcanvas.css' />"
 	rel="stylesheet">
 <link href="<c:url value='/resources/css/layout.css' />"
 	rel="stylesheet">
-<link rel="shortcut icon" href="<c:url value='/resources/images/logoIcon.ico' />">
+<link rel="shortcut icon"
+	href="<c:url value='/resources/images/logoIcon.ico' />">
 <!-- ckeditor 사용하기 위함 -->
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 
@@ -107,36 +116,82 @@
 	margin-right: 10px;
 }
 </style>
+<sec:authorize access="isAuthenticated()">
 <script type="text/javascript">
-	$.ajaxSetup({
-		error : function(jqXHR, exception) {
-			if (jqXHR.status === 0) {
-				alert('Not connect.\n Verify Network.');
-			} else if (jqXHR.status == 400) {
-				alert('Server understood the request, but request content was invalid. [400]');
-			} else if (jqXHR.status == 401) {
-				alert('Unauthorized access. [401]');
-			} else if (jqXHR.status == 403) {
-				alert('Forbidden resource can not be accessed. [403]');
-			} else if (jqXHR.status == 404) {
-				alert('Requested page not found. [404]');
-			} else if (jqXHR.status == 500) {
-				alert('Internal server error. [500]');
-			} else if (jqXHR.status == 503) {
-				alert('Service unavailable. [503]');
-			} else if (exception === 'parsererror') {
-				alert('Requested JSON parse failed. [Failed]');
-			} else if (exception === 'timeout') {
-				alert('Time out error. [Timeout]');
-			} else if (exception === 'abort') {
-				alert('Ajax request aborted. [Aborted]');
-			} else {
-				alert('Uncaught Error.n' + jqXHR.responseText);
-			}
-		}
-	});
+//$\{sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.(vo에해당하는 멤버변수명)}
+if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'STUDENT'){
+	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}');
+}
+</script>
+</sec:authorize>
+<script type="text/javascript">
 
+	$
+			.ajaxSetup({
+				error : function(jqXHR, exception) {
+					if (jqXHR.status === 0) {
+						alert('Not connect.\n Verify Network.');
+					} else if (jqXHR.status == 400) {
+						alert('Server understood the request, but request content was invalid. [400]');
+					} else if (jqXHR.status == 401) {
+						alert('Unauthorized access. [401]');
+					} else if (jqXHR.status == 403) {
+						alert('Forbidden resource can not be accessed. [403]');
+					} else if (jqXHR.status == 404) {
+						alert('Requested page not found. [404]');
+					} else if (jqXHR.status == 500) {
+						alert('Internal server error. [500]');
+					} else if (jqXHR.status == 503) {
+						alert('Service unavailable. [503]');
+					} else if (exception === 'parsererror') {
+						alert('Requested JSON parse failed. [Failed]');
+					} else if (exception === 'timeout') {
+						alert('Time out error. [Timeout]');
+					} else if (exception === 'abort') {
+						alert('Ajax request aborted. [Aborted]');
+					} else {
+						alert('Uncaught Error.n' + jqXHR.responseText);
+					}
+				}
+			});
+	function clock() {
+		var date = new Date();
+
+		// date Object를 받아오고 
+		var month = date.getMonth();
+
+		// 달을 받아옵니다 
+		var clockDate = date.getDate();
+
+		// 몇일인지 받아옵니다 
+		var day = date.getDay();
+
+		// 요일을 받아옵니다. 
+		var week = [ '일', '월', '화', '수', '목', '금', '토' ];
+
+		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다. 
+		var hours = date.getHours();
+
+		// 시간을 받아오고 
+		var minutes = date.getMinutes();
+
+		// 분도 받아옵니다.
+		var seconds = date.getSeconds();
+
+		// 초까지 받아온후 
+		var timer = (month + 1) + '월 ' + clockDate + '일 ' + week[day] + '요일 '
+				+ (hours < 10 ? '0' + hours : hours) + ':'
+				+ (minutes < 10 ? '0' + minutes : minutes) + ':'
+				+ (seconds < 10 ? '0' + seconds : seconds);
+
+		// 월은 0부터 1월이기때문에 +1일을 해주고 
+
+		// 시간 분 초는 한자리수이면 시계가 어색해보일까봐 10보다 작으면 앞에0을 붙혀주는 작업을 3항연산으로 했습니다.
+		$("#timer").html(timer)
+	}
 	$(function() {
+		clock();
+		setInterval(clock, 1000);
 
 		$('.zeta-menu li ul').hide();
 
@@ -160,7 +215,7 @@
 			}
 			$(".zeta-menu li ul").slideUp();
 		});
-		
+
 		$("#btLogin").click(function() {
 			location.href = "<c:url value='/login/login' />";
 		});
@@ -172,19 +227,37 @@
 	<!-- top 시작 -->
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand" href="<c:url value='/index.do'/>"
-				style="border-right: 1px solid white; padding: 0 20px 0 0;">
-				<img class="logo" alt="로고" src="<c:url value='/resources/images/logo.png' />" >
+			<a class="navbar-brand" href="<c:url value='/index'/>"
+				style="border-right: 1px solid white; padding: 0 20px 0 0;"> <img
+				class="logo" alt="로고"
+				src="<c:url value='/resources/images/logo.png' />">
 			</a>
 			<div class="collapse navbar-collapse" id="navbarCollapse"
 				style="max-width: 1400px;">
 
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active" style="color: white;">PORTAL <span
-						class="sr-only">(current)</span>
+					<li class="nav-item active" style="color: white;">PORTAL 
+					<sec:authorize access="isAuthenticated()">
+					<sec:authentication property="principal.name" />님
+					</sec:authorize>
+					<span class="sr-only">(current)</span>
 					</li>
 				</ul>
-				<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="btLogin">로그인</button>
+				<span id="timer"
+					style="color: white; font-size: 0.8em; margin: 0 5px;"></span> <a
+					href="<c:url value='/chat/chatting'/>">채팅방</a>
+				<sec:authorize access="isAnonymous()">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="button"
+						id="btLogin">로그인</button>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<form action="<c:url value='/logout'/>"
+						method="POST">
+						<input id="logoutBtn" type="submit" value="로그아웃" /> <input
+							type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}">
+					</form>
+				</sec:authorize>
 				<select class="custom-select"
 					style="margin: 0 0 0 15px; font-size: 0.7em; width: 100px;">
 					<option>한국어</option>

@@ -1,5 +1,7 @@
 package com.will.portal.student.model;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,4 +26,15 @@ public class StudentDAOMybatis implements StudentDAO{
 	public StudentVO selectByStuNo(String stuNo) {
 		return sqlSession.selectOne(namespace + "selectByStuNo", stuNo);
 	}
+
+	@Override
+	public String selectSsn(String officialNo) {
+		return sqlSession.selectOne(namespace+"selectSsn", officialNo);
+	}
+
+	@Override
+	public Map<String, Object> selectViewByStuNo(String stuNo) {
+		return sqlSession.selectOne(namespace +"selectViewByStuNo", stuNo);
+	}
+	
 }

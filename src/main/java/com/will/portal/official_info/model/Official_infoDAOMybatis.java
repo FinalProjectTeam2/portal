@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.student.model.StudentVO;
+import com.will.portal.test.model.ForPwdVO;
 
 @Repository
 public class Official_infoDAOMybatis implements Official_infoDAO{
@@ -13,6 +14,7 @@ public class Official_infoDAOMybatis implements Official_infoDAO{
 	private SqlSessionTemplate sqlSession;
 	private String namespace="config.mybatis.mapper.oracle.member.";
 	private String namespaceAdmin="config.mybatis.mapper.oracle.admin.";
+	
 	
 	@Override
 	public Official_infoVO selectByNo(String officialNo) {
@@ -58,6 +60,39 @@ public class Official_infoDAOMybatis implements Official_infoDAO{
 	public int updateIdentState(String stuNo) {
 		return sqlSession.update(namespace+"updateIdentState", stuNo);
 	}
+
+	@Override
+	public int findPwd(ForPwdVO vo) {
+		return sqlSession.selectOne(namespace + "findPwd",vo);
+	}
+
+	@Override
+	public int updateAnyPwd(ForPwdVO vo) {
+		return sqlSession.update(namespace +"updateAnyPwd",vo);
+	}
+
+	@Override
+	public String selectSsn(String officialNo) {
+		return sqlSession.selectOne(namespace+"selectSsn", officialNo);
+	}
+
+	@Override
+	public int updateCodeP(ProfessorVO vo) {
+		return sqlSession.update(namespace + "updateCodeP", vo);
+	}
+
+	@Override
+	public String selectCodeP(String profNo) {
+		return sqlSession.selectOne(namespace + "selectCodeP", profNo);
+	}
+
+	@Override
+	public int updateIdentStateP(String profNo) {
+		return sqlSession.update(namespace+"updateIdentStateP", profNo);
+	}
+	
+	
+	
 	
 	
 	

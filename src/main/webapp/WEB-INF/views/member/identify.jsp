@@ -81,7 +81,7 @@ h1{
 					if(res.identSsn=='N'){
 						alert(res.message);
 					}else if(res.identSsn=='Y'){
-						$('#offNo').val(res.officialNo)
+						$('#offNo').val(res.officialNo);
 						ident();
 					}
 					
@@ -98,7 +98,7 @@ h1{
 		$('#btSubmit').click(function(){
 			if(!validate){
 				alert('인증번호 유효기간이 지났습니다. 다시 시도하세요.');
-				$(location).attr("href", "<c:url value='/member/identify?officialNo=${param.officialNo}'/>")
+				$(location).attr("href", "<c:url value='/member/identify?officialNo=${sessionScope.officialNo}'/>")
 			}else{
 				//$('form[name=frmGetCode]').submit();
 				$.ajax({
@@ -113,6 +113,7 @@ h1{
 					success:function(res){
 						alert(res.message);
 						if(res.identState=='Y'){
+							opener.location.href="<c:url value='/login/inputChgPwd'/>"
 							self.close();
 						}else{
 							alert(res.message)
@@ -171,7 +172,7 @@ function ident(){
 		<div id="countdown" style="display: hide">
 			<input type="text" id="code" name="inputCode" /> 
 			<input type="button" id="btSubmit" value="확인" /> 
-			<input type="hidden" id ="offNo" name="officialNo" value="${param.officialNo }" />
+			<input type="hidden" id ="offNo" name="officialNo" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}" />
 			<input type="hidden" name="checkCode" value="N" />
 			<input type="hidden" name="identSsn" id="identSsn" value="N" />
 			

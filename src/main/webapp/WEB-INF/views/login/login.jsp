@@ -466,10 +466,14 @@ button.ui-keyboard-button:hover {
 					data : $(this).serialize(),
 					type:"post",
 					success:function(res){
-						$('#msg').html(res);
-						if(res=='student' || res=='professor'||res=='admin'){
-							$('#msg').hide();
+						if(res=='student' || res=='professor'){
 							location.href="<c:url value='/index' />";
+						}else if(res == 'admin'){
+							location.href="<c:url value='/admin/adminMain' />";
+						}else if(res=='N'){
+							location.href="<c:url value='/member/changePwd'/>";
+						}else{	
+							$('#msg').html(res);
 						}
 					},
 					error:function(xhr,status,error){
@@ -547,8 +551,7 @@ button.ui-keyboard-button:hover {
 											조정하여 아이디를 입력 바랍니다.</em></li>
 									<li>&nbsp;&nbsp;&nbsp;- 서울 : 31 + 학번 / 천안 : 51 + 학번 / 대학원
 										: 71 + 학번</li>
-									<li>* <em>최초 비밀번호는 생년월일(예, 19961010) 또는 주민등록번호
-											뒤7자리(2015년 이전 구성원)입니다.</em></li>
+									<li>* <em>최초 비밀번호는 생년월일(예, 961010)입니다.</em></li>
 									<li>* <em>최초 비밀번호는 로그인 후 반드시 변경하시기 바랍니다.</em></li>
 									<li>* <em>안전한 비밀번호 만들기는 선택이 아닌 필수입니다.(관련근거:사용자보안 지침
 											제19조)</em></li>
@@ -588,8 +591,6 @@ $.isWindow = function(w) {
 </script>
 <script src="https://mottie.github.io/Keyboard/docs/js/jquery-ui-custom.min.js"></script>
 			</div>
-<div id="forAdmin" style="text-align: right;">
-	<a href="<c:url value='/login/adminLogin/' />">관리자 페이지로 이동</a>
-</div>
+
 <!-- bottom -->		
 <%@ include file="../inc/bottom.jsp"%>

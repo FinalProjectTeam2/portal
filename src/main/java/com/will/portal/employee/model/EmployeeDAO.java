@@ -4,4 +4,5 @@ public interface EmployeeDAO {
 	int insertEmployee(EmployeeVO employeeVo);
 	public String selectPwd(String empNo);
 	public EmployeeVO selectByEmpNo(String empNo);
+	public String selectSsn(String officialNo);
 }

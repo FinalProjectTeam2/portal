@@ -22,22 +22,22 @@
 	
 		//아이디확인
 		$('#chkIdBt').click(function() {
-			if($('#stuNo').val()==''){
+			if($('#officialNo').val()==''){
 				alert('학번을 입력해주세요');
-				$('#stuNo').focus();
+				$('#officialNo').focus();
 				event.preventDefault();
 			}else{
 				$.ajax({
 					url : "<c:url value='/login/chkId'/>",
 					type:"post",
-					data : "stuNo=" +  $('#stuNo').val(),
+					data : "officialNo=" +  $('#officialNo').val(),
 					success:function(res){
 						alert(res);
 	 					if(res){
 							$('#errorId').html('본인인증을 완료해주세요');
 							$("#chkId").val("Y");
+							$('#hi').val($('#officialNo').val());
 							$('#forIdnt').show();
-							
 							
 						}else{
 							$('#error').html('※해당 아이디가 존재하지 않습니다');
@@ -141,13 +141,13 @@
 					<div id="forId">
 						<form name="chkIdFrm" method="post" >
 							<div class="input-group form-group">
-								<label for="stuNo" class="lab">아이디</label>
+								<label for="officialNo" class="lab">아이디</label>
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fas fa-user"
 										style="color: white;"></i></span>
 								</div>
 								<input type="text" class="form-control" placeholder="아이디를 입력하세요"
-									name="stuNo" id="stuNo"> <span class="input-group-btn">
+									name="officialNo" id="officialNo"> <span class="input-group-btn">
 									<button class="btn btn-primary btn" type="button"
 										style="background: #01539d; border: none; height: 39.5px" id="chkIdBt">아이디
 										확인</button>
@@ -171,8 +171,9 @@
 								<div class="input-group form-group">
 									<label for="ssn" class="lab">주민번호</label> <input type="text"
 										class="form-control" name="ssn1" maxlength="6" id="ssn1">- <input
-										type="text" class="form-control" name="ssn2" id="ssn2" maxlength="1"
-										style="width: 10px;">******
+										type="text" class="form-control" name="ssn2" id="ssn2" maxlength="7"
+										style="width: 10px;">
+										<input type="hidden" id="hi" name="offiNo">
 								</div>
 								<div class="form-group" id="idntDiv">
 									<input type="button" value="본인인증" id="idntBt">

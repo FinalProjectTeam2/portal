@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import com.will.portal.common.MessageVO;
 import com.will.portal.message.SendMmsMessage;
 import com.will.portal.official_info.model.Official_infoService;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.student.model.StudentVO;
 
 @Controller
@@ -25,11 +28,16 @@ public class IdentifyController {
 	private static final Logger logger = LoggerFactory.getLogger(IdentifyController.class);
 	@Autowired
 	private Official_infoService infoService;
-	
+	/**
+	 * 최초 비밀번호 변경
+	 * @param officialNo
+	 * @param identState
+	 */
 	@RequestMapping("/member/changePwd")
-	public void changePwd(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
+	public void changePwd(HttpSession session) {
 		//추후 세션으로 대체예정 지금은 파라미터로 시험중
 		logger.info("최초 비밀번호 변경 화면으로 이동");
+		
 	}
 	
 	@RequestMapping(value = "/member/identify", method = RequestMethod.GET)
@@ -39,8 +47,7 @@ public class IdentifyController {
 	
 	@RequestMapping(value = "/member/sendCode", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String sendSms(@RequestParam String officialNo, @RequestParam String ssn1,
-				@RequestParam String ssn2, @RequestParam(defaultValue = "N") String identState) {
+	public String sendSms(@RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState) {
 		String userid = "fe5882";           // [필수] 뿌리오 아이디
 		String callback = "01038225882";    // [필수] 발신번호 - 숫자만
 		
@@ -79,11 +86,18 @@ public class IdentifyController {
 			String str = response_str.substring(0, 6);
 			if(str.equals("ok|sms")) {
 				result = "인증번호를 발송했습니다.";
-				StudentVO sVo = new StudentVO();
-				sVo.setStuNo(officialNo);
-				sVo.setIdentifyCode(code);
-				int cnt = infoService.updateCode(sVo);
-				logger.info("인증번호 업데이트 매개변수 code={}", sVo.getIdentifyCode());
+				if(officialNo.substring(4, 5).equals("3")) {
+					StudentVO sVo = new StudentVO();
+					sVo.setStuNo(officialNo);
+					sVo.setIdentifyCode(code);
+					int cnt = infoService.updateCode(sVo);
+					logger.info("인증번호 업데이트 매개변수 학생code={}", sVo.getIdentifyCode());
+				}else if(officialNo.substring(4, 5).equals("2")){
+					ProfessorVO pVo = new ProfessorVO();
+					pVo.setProfNo(officialNo);
+					pVo.setIdentifyCode(code);
+					int cnt = infoService.updateCodeP(pVo);
+				}
 			}else {
 				result = "인증번호 발송 실패";
 			}
@@ -125,24 +139,34 @@ public class IdentifyController {
 	
 	@RequestMapping(value = "/member/identify", method = RequestMethod.POST)
 	@ResponseBody
-	public MessageVO identify_post(@RequestParam String inputCode, @RequestParam String officialNo, @RequestParam(defaultValue = "N") String identState, Model model) {
-		logger.info("인증번호 확인 페이지 파라미터 code={}, 학번={}", inputCode, officialNo);
-		StudentVO vo = new StudentVO();
-		String dbCode = infoService.selectCode(officialNo);
-		String message="인증 실패 인증번호를 확인하세요";
-		logger.info("파라미터 인증번호={}, db인증번호={}", inputCode, dbCode);
+	public MessageVO identify_post(@RequestParam String inputCode, @RequestParam String officialNo, 
+			@RequestParam(defaultValue = "N") String identState, Model model) {
+		String dbCode ="";
+		String message="";
+		if(officialNo.substring(4, 5).equals("3")) {
+			logger.info("인증번호 확인 페이지 파라미터 code={}, 학번={}", inputCode, officialNo);
+			dbCode = infoService.selectCode(officialNo);
+			message="인증 실패 인증번호를 확인하세요";
+			logger.info("파라미터 인증번호={}, db인증번호={}", inputCode, dbCode);
+		}else if(officialNo.substring(4, 5).equals("2")) {
+			logger.info("인증번호 확인 페이지 파라미터 code={}, 교수번호={}", inputCode, officialNo);
+			dbCode = infoService.selectCodeP(officialNo);
+			message="인증 실패 인증번호를 확인하세요";
+		}
+		
 		if(inputCode.equals(dbCode)) {
-			message="인증 성공";
+			message="인증 성공 비밀번호 변경 페이지로 이동합니다.";
 			identState="Y";
-			infoService.updateIdentState(officialNo);
+			if(officialNo.substring(4, 5).equals("3")) {
+				infoService.updateIdentState(officialNo);
+			}else if(officialNo.substring(4, 5).equals("2")) {
+				infoService.updateIdentStateP(officialNo);
+			}
 		}
 		
 		MessageVO mVo = new MessageVO();
 		mVo.setIdentState(identState);
 		mVo.setMessage(message);
-		
-		
-
 		
 		
 		return mVo;
