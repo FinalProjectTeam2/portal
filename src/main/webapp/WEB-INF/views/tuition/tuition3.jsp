@@ -48,8 +48,7 @@
 	display: table-row-group; 
 }
 
-<!-- 테이블 -->
-		
+<!-- 테이블 -->	
 .box {
 	width: 1000px;
 	margin:10px 0;
@@ -65,22 +64,23 @@
 }
 </style>
 
+
 <h1>등록금 납부 상세 내역</h1>
 <div id="tuition1">
 <form name="frmWrite" method="post" action="<c:url value=''/>" >
 	<div class="divTable" > 
 		<div class="divTableBody"> 
 			<div class="divTableRow"> 
-				<div class="cellColor">대학</div> 
-				<div class="divTableCell">문과대학</div> 			
+				<div class="cellColor">학부</div> 
+				<div class="divTableCell">${faculty_name}</div> 			
 				<div class="cellColor">학과</div>
-				<div class="divTableCell">국어국문과</div> 
+				<div class="divTableCell">${dep_name} </div> 
 			</div> 
 		<div class="divTableRow"> 
 			<div class="cellColor">학번</div> 
-			<div class="divTableCell">20202020</div> 						
+			<div class="divTableCell">{stu_no}</div> 						
 			<div class="cellColor">이름</div>
-			<div class="divTableCell">홍길동</div> 
+			<div class="divTableCell">${name }</div> 
 		</div> 
 		<div class="divTableRow"> 
 			<div class="cellColor">학기</div> 
@@ -98,7 +98,7 @@
 			<div class="divTableCell">&nbsp;</div> 
 	</div>
 	</div>
-</div>
+</div>	
 </form>		
 		
 <br><br><br>

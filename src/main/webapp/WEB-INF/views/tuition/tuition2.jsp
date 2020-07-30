@@ -2,9 +2,6 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
 <main role="main" class="flex-shrink-0">
-<div class="container">
-
-
 
 <style type="text/css">
 body {
@@ -69,26 +66,40 @@ body {
 	padding: 4px;
 	
 }
-
-
 </style>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
+<script type="text/javascript">
+$(function() {
+	$.ajax({
+		url:"<c:url value='/ajaxtuitionStu.do/>",
+		type:"get",
+		dataType:"json",
+		success:function(res){
+			$("#list").append(res);
+		},
+		error:function(xhr, status, error){
+			alert(error);
+		}
+	});
+});
+</script>
 
 <div id="tuition1">
-<h1>대학 등록금 납부 내역 조회 </h1>
+<h1>등록금 납부 내역 조회 </h1>
 <form name="frmWrite" method="post" action="<c:url value=''/>" >
 	<div class="divTable" > 
 		<div class="divTableBody"> 
 			<div class="divTableRow"> 
-				<div class="cellColor">대학</div> 
-				<div class="divTableCell">문과대학</div> 			
+				<div class="cellColor">학부</div> 
+				<div class="divTableCell">${faculty_name}</div> 			
 				<div class="cellColor">학과</div>
-				<div class="divTableCell">국어국문과</div> 
+				<div class="divTableCell">${dep_name} </div> 
 			</div> 
 		<div class="divTableRow"> 
 			<div class="cellColor">학번</div> 
-			<div class="divTableCell">20202020</div> 						
+			<div class="divTableCell">{stu_no}</div> 						
 			<div class="cellColor">이름</div>
-			<div class="divTableCell">홍길동</div> 
+			<div class="divTableCell">${name }</div> 
 		</div> 
 		<div class="divTableRow"> 
 			<div class="cellColor">학기</div> 
@@ -109,7 +120,7 @@ body {
 </div>
 		
 <br><br><br>
-
+<div class="container">
 <div class="divTable">
 	<table class="box">
 		<colgroup>
