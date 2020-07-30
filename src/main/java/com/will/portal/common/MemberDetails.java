@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public abstract class MemberDetails implements UserDetails {
+public abstract class MemberDetails extends SearchVO implements UserDetails {
 	/**
 	 * 
 	 */
