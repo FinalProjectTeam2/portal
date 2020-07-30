@@ -100,9 +100,9 @@
     </tr>
     <tr>
         <td>강의시간표코드(PK)</td>
-        <td>lecture_time_code</td>
+        <td>lecture_time_no</td>
         <td>N/A</td>
-        <td>VARCHAR2(10)</td>
+        <td>NUMBER</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -388,7 +388,7 @@
         <td>설명</td>
     </tr>
     <tr>
-        <td>게시글코드(PK)</td>
+        <td>게시글번호(PK)</td>
         <td>post_no</td>
         <td>N/A</td>
         <td>NUMBER</td>
@@ -440,6 +440,30 @@
         <td>del_flag</td>
         <td>N/A</td>
         <td>CHAR(1)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>원본글번호</td>
+        <td>group_no</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>정렬번호</td>
+        <td>sort_no</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>차수</td>
+        <td>step</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -945,6 +969,14 @@
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
+    <tr>
+        <td>비밀번호변경일</td>
+        <td>change_date</td>
+        <td>N/A</td>
+        <td>DATE</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
@@ -1150,7 +1182,7 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>게시글코드(FK)</td>
+        <td>게시글번호(FK)</td>
         <td>post_no</td>
         <td>N/A</td>
         <td>NUMBER</td>
@@ -1868,7 +1900,7 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>게시글코드(FK)</td>
+        <td>게시글번호(FK)</td>
         <td>post_no</td>
         <td>N/A</td>
         <td>NUMBER</td>
@@ -2111,6 +2143,14 @@
         <td>identity_code</td>
         <td>N/A</td>
         <td>VARCHAR2(20)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>비밀번호변경일</td>
+        <td>change_date</td>
+        <td>N/A</td>
+        <td>DATE</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>

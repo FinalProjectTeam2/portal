@@ -35,6 +35,4 @@ public class Account_infoVO {
 				+ ", accountName=" + accountName + "]";
 	}
 	
-	
-	
 }

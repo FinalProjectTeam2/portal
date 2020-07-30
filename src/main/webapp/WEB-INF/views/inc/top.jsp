@@ -156,34 +156,34 @@
 	function clock() {
 		var date = new Date();
 
-		// date Object를 받아오고 
+		// date Object를 받아오고
 		var month = date.getMonth();
 
-		// 달을 받아옵니다 
+		// 달을 받아옵니다
 		var clockDate = date.getDate();
 
-		// 몇일인지 받아옵니다 
+		// 몇일인지 받아옵니다
 		var day = date.getDay();
 
-		// 요일을 받아옵니다. 
+		// 요일을 받아옵니다.
 		var week = [ '일', '월', '화', '수', '목', '금', '토' ];
 
-		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다. 
+		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다.
 		var hours = date.getHours();
 
-		// 시간을 받아오고 
+		// 시간을 받아오고
 		var minutes = date.getMinutes();
 
 		// 분도 받아옵니다.
 		var seconds = date.getSeconds();
 
-		// 초까지 받아온후 
+		// 초까지 받아온후
 		var timer = (month + 1) + '월 ' + clockDate + '일 ' + week[day] + '요일 '
 				+ (hours < 10 ? '0' + hours : hours) + ':'
 				+ (minutes < 10 ? '0' + minutes : minutes) + ':'
 				+ (seconds < 10 ? '0' + seconds : seconds);
 
-		// 월은 0부터 1월이기때문에 +1일을 해주고 
+		// 월은 0부터 1월이기때문에 +1일을 해주고
 
 		// 시간 분 초는 한자리수이면 시계가 어색해보일까봐 10보다 작으면 앞에0을 붙혀주는 작업을 3항연산으로 했습니다.
 		$("#timer").html(timer)
@@ -292,14 +292,14 @@
 						</ul></li>
 					</c:if>
 					</sec:authorize>
-					
+
 					<li><a class="nav-link" href="#">웹메일</a></li>
 					<li><a class="nav-link" href="#"> 쪽지함 <span
 							class="badge badge-pill bg-light align-text-bottom">27</span>
 					</a></li>
 				</ul>
 				<span id="timer"
-					style="color: black; font-size: 0.8em; margin: 15px 25px; 
+					style="color: black; font-size: 0.8em; margin: 15px 25px;
 					width: 100%; text-align: right;"></span>
 			</nav>
 		</div>
