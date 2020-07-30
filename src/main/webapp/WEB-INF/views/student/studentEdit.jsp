@@ -14,8 +14,8 @@
 				type: "post",
 				data : {
 					bankCode:$('#bankCode').val(),
-					bankName:$('#bankName').val(),
-					bankNo:$('#bankNo').val(),
+					accountNo:$('#accountNo').val(),
+					accountName:$('#accountName').val(),
 					
 					hp:$('#hp').val(), 
 					email:$('#email').val(), 

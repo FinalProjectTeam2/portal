@@ -123,7 +123,7 @@
    	<update id="updateOfficialInfo" parameterType="Official_infoVo">
    		update official_info
 		set hp1 = #{hp1}, hp2 = #{hp2}, hp3 = #{hp3}, email1 =#{email1}, email2 =#{email2}, zipcode =#{zipcode}, 
-		address=#{address}, addr_detail=#{addressDetail},image_url=#{imageUrl}
+		address=#{address}, addr_detail=#{addressDetail}
 		where official_no=#{officialNo}
    	</update>
 </mapper>
