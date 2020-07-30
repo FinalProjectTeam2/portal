@@ -12,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.portal.professor.model.ProfessorService;
+import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectVO;
 
 @Controller
@@ -33,12 +35,28 @@ public class LectureController {
 		
 	}
 	
-	@RequestMapping(value = "/lecture/addSubject", method = RequestMethod.POST)
-	public void addSubject(@RequestParam String subject, @RequestParam String time, 
+	@RequestMapping(value = "/lecture/addSubject", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String addSubject(@RequestParam String subject, @RequestParam String time, 
 			@RequestParam(defaultValue = "0") int credit, HttpSession session, Model model) {
-		logger.info("입력한 과목 처리 페이지");
+		logger.info("입력한 과목 처리 페이지 파라미터 subject={}, time={}", subject, time);
+		//교수번호 session에서 확인
+		String profNo = (String)session.getAttribute("officialNo");
+		String openSubCode = subject.substring(4);
+		String classroom = "B004-111-01";
 		
+		Subj_timeVO vo = new Subj_timeVO();
+		vo.setOpenSubCode(openSubCode);
+		vo.setClassroomCode(classroom);
+		vo.setTimetableCode(time);
+		
+		int cnt = profService.insertSubjTime(vo);
+		String message="";
+		if(cnt>0)	message="해당 시간에 입력되었습니다.";
+		logger.info("입력 확인 cnt={}", cnt);
+		return message;
 	}
+	
 	
 	@RequestMapping("/lecture/loadByProfNo")
 	public String loadByProfNo(@RequestParam String profNo, Model model) {
@@ -49,8 +67,17 @@ public class LectureController {
 		model.addAttribute("list", list);
 		
 		return "lecture/openLecture";
+	}
+	
+	@RequestMapping("/lecture/timeByProfNo")
+	@ResponseBody
+	public List<Subj_timeVO> timeByProfNo(@RequestParam String profNo){
+		logger.info("교수 시간표 읽은 후  리턴 페이지 파라미터 profNo={}", profNo);
 		
+		List<Subj_timeVO> timeList = profService.timeByProfNo(profNo); 
+		logger.info("시간표 읽어옴 list.size={}", timeList.size());
 		
+		return timeList;
 	}
 	
 }

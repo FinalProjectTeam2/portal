@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectVO;
 
 @Service
@@ -86,6 +87,22 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<SubjectVO> loadByProfNo(String profNo) {
 		return professorDao.loadByProfNo(profNo);
 	}
+
+	@Override
+	public List<Subj_timeVO> timeByProfNo(String profNo) {
+		List<String> list = professorDao.codeByProfNo(profNo);
+		return professorDao.timeByCode(list);
+	}
+
+	@Override
+	public int insertSubjTime(Subj_timeVO vo) {
+		return professorDao.insertSubjTime(vo);
+	}
+
+	
+	
+	
+	
 	
 	
 	

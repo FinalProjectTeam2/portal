@@ -6,3 +6,22 @@ alter table classroom
 modify(classroom_code VARCHAR2(20));
 alter table subj_time
 modify(classroom_code VARCHAR2(20));
+
+--subj_time테이블 컬럼명 컬럼 데이터 타입 변경
+ALTER TABLE subj_time RENAME COLUMN lecture_time_code TO lecture_time_no;
+alter table subj_time modify (lecture_time_no NUMBER);
+
+--subj_time용 시퀀스
+create sequence subj_time_seq
+increment by 1
+start with 1
+nocache;
+
+
+--classroom 학과번호로 검색하는 view
+create or replace view class as
+select c.classroom_code, c.classroom_name, d.dep_no
+from classroom c join building b
+on c.building_code=b.building_code
+join department d
+on c.building_code=d.building_code;

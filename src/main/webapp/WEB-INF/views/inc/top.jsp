@@ -206,11 +206,22 @@
 							<li><a href="#">자료실</a></li>
 							<li><a href="#">서비스</a></li>
 						</ul></li>
+					<c:if test="${sessionScope.type=='student' }">
 					<li><a class="nav-link" href="#"> 학사서비스 </a>
 						<ul>
 							<li><a href="#">학사정보</a></li>
 							<li><a href="#">수강신청</a></li>
 						</ul></li>
+					</c:if>
+					<c:if test="${sessionScope.type=='professor' }">
+					<li><a class="nav-link" href="#"> 강의 관리 </a>
+						<ul>
+							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
+							<li><a href="#">강의 개설 신청</a></li>
+						</ul></li>
+					</c:if>
+					
+					
 					<li><a class="nav-link" href="#">웹메일</a></li>
 					<li><a class="nav-link" href="#"> 쪽지함 <span
 							class="badge badge-pill bg-light align-text-bottom">27</span>
