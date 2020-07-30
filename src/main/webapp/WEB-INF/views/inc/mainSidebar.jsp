@@ -15,21 +15,7 @@
 	style="padding: 0;">
 	<div class="sidebar-sticky pt-3"
 		style="background: #626d80; height: 100%;">
-		<div class="category">LOGIN</div>
-		<div id="login">
-			<form action="">
-				<input type="hidden" name="url"
-					value="${requestScope['javax.servlet.forward.servlet_path']}">
-				<input class="form-control" type="text" id="userid" name="userid"
-					placeholder="아이디"> <input class="form-control"
-					type="password" id="pwd" name="pwd" placeholder="비밀번호">
-				<button type="submit" class="btn btn-outline-success">로그인</button>
-			</form>
-			<div id="findUser" style="color: #7a8394;">
-				<span><a href="<c:url value='/login/findId'/>">아이디 찾기</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-				<span><a href="<c:url value='/login/findPwd'/>">비밀번호 찾기</a></span>
-			</div>
-		</div>
+		
 		<div class="category">즐겨찾기</div>
 		<ul class="nav flex-column">
 			<li class="nav-item"><a class="nav-link" href="#"> <span
