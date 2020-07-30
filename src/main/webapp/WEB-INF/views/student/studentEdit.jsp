@@ -90,8 +90,8 @@ a:focus {
 			      		</tr>
 			      		<tr>
 			      			<th>기타</th>
-			      			<td>${map['HP1'] }-${map['HP2'] }-${map['HP1'] } / ${map['EMAIL1'] }@${map['EMAIL2'] } 
-			      			/ ${map['ZIPCODE'] } ${map['ADDRESS'] } ${map['ADDRESSDETAIL'] } / 우리은행 1002-000-0000(예금주명)</td>
+			      			<td>${map['HP1'] }-${map['HP2'] }-${map['HP3'] } / ${map['EMAIL1'] }@${map['EMAIL2'] } 
+			      			/ ${map['ZIPCODE'] } ${map['ADDRESS'] } ${map['ADDR_DETAIL'] } / ${map['BANK_NAME'] } ${map['ACCOUNT_NO'] }(${map['ACCOUNT_NAME'] })</td>
 			      		</tr>
 			      	</table>
 			      </div>
@@ -137,7 +137,7 @@ a:focus {
 				      			<th>주소</th>
 				      			<td><input placeholder="주소" name="address" id="address" type="text" class="validate" value="${map['ADDRESS'] }"></td>
 				      			<th>상세주소</th>
-				      			<td><input placeholder="상세주소" name="addrDetail" id="addrDetail" type="text" class="validate" value="${map['ADDRESSDETAIL'] }"></td>
+				      			<td><input placeholder="상세주소" name="addrDetail" id="addrDetail" type="text" class="validate" value="${map['ADDR_DETAIL'] }"></td>
 				      		</tr>
 				      		<tr>
 				      			<th>이메일</th>

@@ -9,7 +9,7 @@
 	
 	<update id="updateAccount" parameterType="account_infoVo">
 		update account_info
-		set bank_code=#{bankCode}, account_no=#{bankNo},account_name=#{accountName}
+		set bank_code=#{bankCode}, account_no=#{accountNo},account_name=#{accountName}
 		where official_no=#{officialNo}
 	</update>
    
