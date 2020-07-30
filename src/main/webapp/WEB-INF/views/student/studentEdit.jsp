@@ -40,23 +40,24 @@ a:focus {
 			      	<table>
 			      		<tr>
 			      			<th>학번</th>
-			      			<td>2014110498 / 입학날짜 : 2014-03-01</td>
+			      			<td>${map['STU_NO'] } / 입학날짜 : ${map['ADMISSION_DATE'] }</td>
 			      		</tr>
 			      		<tr>
 			      			<th>학생</th>
-			      			<td>홍길동 / 1995-03-28 / 여 / 대한민국</td>
+			      			<td>${map['NAME'] } / ${map['SSN'] }/ 대한민국</td>
 			      		</tr>
 			      		<tr>
 			      			<th>소속</th>
-			      			<td>사회과학대학/ 제1전공 : 경영학과</td>
+			      			<td>${map['FACULTY_NAME'] }/ 제1전공 : ${map['DEP_NAME'] }</td>
 			      		</tr>
 			      		<tr>
 			      			<th>과정</th>
-			      			<td>학사: 정규학생/ 9학기 / 재학</td>
+			      			<td>학사: ${map['STATE'] }/ ${map['SEMESTER'] }학기 </td>
 			      		</tr>
 			      		<tr>
 			      			<th>기타</th>
-			      			<td>010-1234-1234/ shn6314@gmail.com / 서울시 영등포구 / 우리은행 1002-000-0000(예금주명)</td>
+			      			<td>${map['HP1'] }-${map['HP2'] }-${map['HP1'] } / ${map['EMAIL1'] }@${map['EMAIL2'] } 
+			      			/ ${map['ZIPCODE'] } ${map['ADDRESS'] } ${map['ADDRESSDETAIL'] } / 우리은행 1002-000-0000(예금주명)</td>
 			      		</tr>
 			      	</table>
 			      </div>
@@ -67,16 +68,14 @@ a:focus {
 			      <!-- 기본정보 -->
 			      <div class="cola s12" id="canEdit">
 			      <hr><!-- style="border: 0.5px solid #01539d -->
-
 				      	<table>
-										      	
 				      		<tr>
 				      			<th>이름</th>
-				      			<td><input placeholder="이름" name="name" type="text" class="validate" readonly="readonly" value="홍길동"></td>
+				      			<td><input placeholder="이름" name="name" type="text" class="validate" readonly="readonly" value="${map['NAME'] }"></td>
 								<th>학번</th>
-								<td><input placeholder="학번" name="stuNo" type="text" class="validate" readonly="readonly" value="2014110498"></td>
+								<td><input placeholder="학번" name="stuNo" type="text" class="validate" readonly="readonly" value="${map['STU_NO'] }"></td>
 				      			<th>주민번호</th>
-				      			<td><input placeholder="주민번호" name="jumin" type="text" class="validate" readonly="readonly" value="950328*******"></td>
+				      			<td><input placeholder="주민번호" name="jumin" type="text" class="validate" readonly="readonly" value="${map['SSN'] }"></td>
 				      		</tr>
 				      		<tr>
 				      			<th>은행명</th>
@@ -94,18 +93,18 @@ a:focus {
 				      		</tr>
 				      		<tr>
 				      			<th>우편번호</th>
-				      			<td><input placeholder="우편번호" name="zipcode" type="text" class="validate" value="12345">
+				      			<td><input placeholder="우편번호" name="zipcode" type="text" class="validate" value="${map['ZIPCODE'] }">
 				      			  <button  id="findZipBt" type="button">우편번호 찾기</button></td>
 				      			<th>주소</th>
-				      			<td><input placeholder="주소" name="addr" type="text" class="validate" value="서울시영등포구"></td>
+				      			<td><input placeholder="주소" name="addr" type="text" class="validate" value="${map['ADDRESS'] }"></td>
 				      			<th>상세주소</th>
-				      			<td><input placeholder="상세주소" name="addrDetail" type="text" class="validate" value="땡떙아파트"></td>
+				      			<td><input placeholder="상세주소" name="addrDetail" type="text" class="validate" value="${map['ADDRESSDETAIL'] }"></td>
 				      		</tr>
 				      		<tr>
 				      			<th>이메일</th>
-								<td><input placeholder="이메일" name="email" type="text" class="validate" value="shn6314@gmail.com"></td>
+								<td><input placeholder="이메일" name="email" type="text" class="validate" value="${map['EMAIL1'] }@${map['EMAIL2'] }"></td>
 								<th>전화번호</th>
-								<td><input placeholder="핸두폰번호" name="hp" type="text" class="validate" value="010-1234-1234"></td>
+								<td><input placeholder="핸두폰번호" name="hp" type="text" class="validate" value="${map['HP1'] }-${map['HP2'] }-${map['HP3'] }"></td>
 				      		</tr>
 				      	
 
@@ -118,6 +117,4 @@ a:focus {
 			</form>
 			</fieldset>
 		</div>
-
-	
 <%@ include file="../inc/bottom.jsp"%>

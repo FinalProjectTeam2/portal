@@ -2,6 +2,7 @@ package com.will.portal.student.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class StudentServiceImpl implements StudentService{
 		if(dbPwd != null && !dbPwd.isEmpty() ) {
 			//최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
 			//모든 패스워드 암호화할거기 때문에
-			if(pwd.equals(birthDay)) {
+			if(dbPwd.equals(birthDay)) {
 				if(pwd.equals(dbPwd)) {
 					result = LOGIN_OK;
 				}else {
@@ -76,6 +77,11 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public StudentVO selectByStuNo(String stuNo) {
 		return studentDao.selectByStuNo(stuNo);
+	}
+
+	@Override
+	public Map<String, Object> selectViewByStuNo(String stuNo) {
+		return studentDao.selectViewByStuNo(stuNo);
 	}
 
 }
