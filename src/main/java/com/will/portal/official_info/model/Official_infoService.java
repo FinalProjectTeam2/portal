@@ -17,4 +17,5 @@ public interface Official_infoService {
 	int updateCodeP(ProfessorVO vo);
 	String selectCodeP(String profNo);
 	int updateIdentStateP(String profNo);
+	int updateOfficialInfo(Official_infoVO offiVo);
 }

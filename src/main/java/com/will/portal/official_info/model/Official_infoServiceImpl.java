@@ -71,6 +71,11 @@ public class Official_infoServiceImpl implements Official_infoService{
 	public int updateIdentStateP(String profNo) {
 		return infoDao.updateIdentStateP(profNo);
 	}
+
+	@Override
+	public int updateOfficialInfo(Official_infoVO offiVo) {
+		return infoDao.updateOfficialInfo(offiVo);
+	}
 	
 	
 	

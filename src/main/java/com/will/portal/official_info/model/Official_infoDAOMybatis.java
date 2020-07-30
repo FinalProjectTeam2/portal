@@ -91,7 +91,9 @@ public class Official_infoDAOMybatis implements Official_infoDAO{
 		return sqlSession.update(namespace+"updateIdentStateP", profNo);
 	}
 	
-	
+	public int updateOfficialInfo(Official_infoVO offiVo) {
+		return sqlSession.update(namespace +"updateOfficialInfo", offiVo);
+	}
 	
 	
 	
