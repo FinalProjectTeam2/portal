@@ -36,5 +36,8 @@
 		insert into student(stu_no,pwd,name,major)
 		values(#{stuNo},#{pwd},#{name},#{major})
 	</insert>
-	
+	<insert id="insertAccount" parameterType="string">
+		insert into account_info(official_no)
+		values(#{officialNo})
+	</insert>
 </mapper>

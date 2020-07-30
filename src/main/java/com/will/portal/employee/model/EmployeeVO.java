@@ -10,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import com.will.portal.common.MemberDetails;
 
 public class EmployeeVO extends MemberDetails {
-
 	private static final long serialVersionUID = 1L;
 	private String empNo;
 	private String pwd;

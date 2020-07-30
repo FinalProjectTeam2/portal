@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.will.portal.account_info.model.Account_InfoService;
 import com.will.portal.authority.model.AuthorityService;
 import com.will.portal.authority.model.AuthorityVO;
+import com.will.portal.common.PaginationInfo;
+import com.will.portal.common.SearchVO;
 import com.will.portal.department.model.DepartmentService;
 import com.will.portal.department.model.DepartmentVO;
 import com.will.portal.emp_depart.model.Emp_departService;
@@ -87,7 +90,6 @@ public class AdminMemberController {
 			officialVo.setEmail2(email3);
 		}
 		int cnt=employeeService.insertEmployee(employeeVo, officialVo, sort);
-		
 		String url="";
 		if(cnt>0) {
 			url="admin/adminMain";
@@ -145,15 +147,28 @@ public class AdminMemberController {
 		return url;
 	}
 	@RequestMapping(value = "/adminManageMember",method = RequestMethod.GET)
-	public void adminManageMember(Model model) {
+	public void adminManageMember(@RequestParam int sort, @ModelAttribute SearchVO searchVo,Model model) {
 		logger.info("adminManageMember, Get");
+		logger.info("adminManageMember, param: sort={}",sort);
+		logger.info("adminManageMember, param: {}",searchVo);
 		
+		//for select 생성
 		List<FacultyVO> facultyList= facultyService.selectFaculty();
 		List<DepartmentVO> departmentList=departmentService.selectDepartment();
 		List<Prof_positionVO> profPositionList=profPositionService.selectProfPosition();
 		List<Emp_departVO> empDepartList=empDepartService.selectEmpDepart();
 		List<AuthorityVO> authorityList=authorityService.selectAuthority();
 		List<Emp_positionVO> empPositionList=empPositionService.selectEmpPosition();
+		
+		
+		//paging 처리 관련
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(10);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(10);
+		
+		searchVo.setRecordCountPerPage(10);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);

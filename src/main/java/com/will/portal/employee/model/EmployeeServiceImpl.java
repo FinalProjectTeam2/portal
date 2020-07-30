@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.will.portal.account_info.model.Account_InfoDAO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
@@ -17,6 +18,7 @@ public class EmployeeServiceImpl implements EmployService {
 	@Autowired private EmployeeDAO employeeDao;
 	@Autowired private Official_infoDAO officialDao;
 	@Autowired private CommonDAO commonDao;
+	@Autowired private Account_InfoDAO accountInfoDao;
 
 	@Transactional
 	public int insertEmployee(EmployeeVO employeeVo, Official_infoVO officialVo, int sort) {
@@ -33,8 +35,9 @@ public class EmployeeServiceImpl implements EmployService {
 
 		int cnt = employeeDao.insertEmployee(employeeVo);
 
+		int ac=accountInfoDao.insertAccount(userNo);
 		int cnt2 = 0;
-		if (cnt > 0) {
+		if (cnt > 0 && ac>0) {
 
 			officialVo.setOfficialNo(userNo);
 			cnt2 = officialDao.insertOfficial(officialVo);

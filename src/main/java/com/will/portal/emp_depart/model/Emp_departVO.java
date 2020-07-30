@@ -1,6 +1,8 @@
 package com.will.portal.emp_depart.model;
 
-public class Emp_departVO {
+import com.will.portal.common.SearchVO;
+
+public class Emp_departVO extends SearchVO {
 	private String depCode;
 	private String depName;
 	
