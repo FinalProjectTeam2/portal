@@ -1,11 +1,13 @@
 package com.will.portal.professor.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectVO;
 
 @Repository
@@ -38,6 +40,30 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	public List<SubjectVO> loadByProfNo(String profNo) {
 		return sqlsession.selectList(namespace+"loadByProfNo", profNo);
 	}
+
+	
+	@Override
+	public List<Subj_timeVO> timeByCode(List<String> codeList) {
+		return sqlsession.selectList(namespace+"timeByCode", codeList);
+	}
+
+	@Override
+	public List<String> codeByProfNo(String profNo) {
+		return sqlsession.selectList(namespace+"codeByProfNo", profNo);
+	}
+
+	@Override
+	public int insertSubjTime(Subj_timeVO vo) {
+		return sqlsession.insert(namespace+"insertSubjTime", vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> classroomByDepNo(String depNo) {
+		return sqlsession.selectList(namespace+"classroomByDepNo", depNo);
+	}
+
+
+	
 	
 	
 	
