@@ -22,10 +22,6 @@
 
 $(function(){
 	timeTable();
-	$('#btLoad').click(function(){
-		location.href="<c:url value='/lecture/loadByProfNo?profNo=${sessionScope.officialNo}'/>";
-	});
-	
 	
 	var dialog, form,
 	subject = $( "#subject" ),
@@ -42,8 +38,12 @@ $(function(){
 	        tips.removeClass( "ui-state-highlight", 1500 );
 	      }, 500 );
 	    }
-	 
-	 
+	 	
+	 	
+		/* 	$.each(res, function(idx, item){
+			var id = item.컬럼명
+			$('#'+id).html('<p>'+item.name+'</p>');
+		})	 */
 	 
 	    function addSubject() {
 	     $.ajax({
@@ -51,7 +51,8 @@ $(function(){
 	    	 type:"post",
 	    	 data:{
 	    		 "subject":$('#subject option:selected').val(),
-	    		 "time":$('#time').val()
+	    		 "time":$('#time').val(),
+	    		 "classroom":$('#classroom option:selected').val()
 	    	 },	    	
 	    	 success:function(res){
 	    		 alert(res);
@@ -99,11 +100,17 @@ function timeTable(){
 	$.ajax({
 		url:"<c:url value='/lecture/timeByProfNo'/>",
 		data:{
-			"profNo":"${sessionScope.officialNo}"	
+			"profNo":"${principal.officialNo}"	
 		},
 		dataType:"json",
 		success:function(res){
-			alert(res);
+			$.each(res, function(idx, item){
+				var tdId=item.timetableCode;
+				tdId = '#'+tdId;
+				console.log(tdId);
+				$(tdId).html(item.classroomCode);
+				$(tdId).css('background','skyblue');
+			});
 		},
 		error:function(xhr, status, error){
 			alert(error);
@@ -125,7 +132,7 @@ function timeTable(){
 <main role="main" class="flex-shrink-0">
 <div class="container">
 	<h2>강의시간 설정</h2>
-	<h4>${sessionScope.name} 교수님의 시간표 </h4><input type="button" id="btLoad" value="불러오기" style="float: right; margin-top: -50px; margin-right: 350px;"/>
+	<h4>${principal.name} 교수님의 시간표 </h4>
 	<div class='tab'>
 	  <table border='0' cellpadding='0' cellspacing='0'>
 	    <tr class='days'>
@@ -218,10 +225,10 @@ function timeTable(){
       <label for="time">시간</label>
       <input type="text" name="time" id="time" class="text ui-widget-content ui-corner-all">
       <input type="hidden" name="credit" id="credit" value="${vo.credit }">
-      <label for="classroom">과목명</label>
+      <label for="classroom">강의실</label>
      	 <select id="classroom">
-      		<c:forEach var="vo" items="${list }">
-      			<option value="${vo.subjCode }">${vo.subjName }</option>
+      		<c:forEach var="map" items="${cList }">
+      			<option value="${map['CLASSROOM_CODE']}">${map['CLASSROOM_NAME'] }</option>
       		</c:forEach>
      	 </select>
       <!-- Allow form submission with keyboard without duplicating the dialog button -->

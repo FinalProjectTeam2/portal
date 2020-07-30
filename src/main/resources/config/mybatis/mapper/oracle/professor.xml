@@ -36,12 +36,18 @@
    	</select>
    	
    	<insert id="insertSubjTime" parameterType="subj_timeVo">
-   		<selectKey keyColumn="no" keyProperty="int" order="BEFORE">
+   		<selectKey keyProperty="lectureTimeNo" order="BEFORE" resultType="int">
    			select subj_time_seq.nextval from dual
    		</selectKey>
    		insert into subj_time(LECTURE_TIME_NO, OPEN_SUB_CODE, TIMETABLE_CODE, CLASSROOM_CODE)
-   		values(#{no}, #{openSubCode}, #{timetableCode}, #{classroomCode})
+   		values(#{lectureTimeNo}, #{openSubCode}, #{timetableCode}, #{classroomCode})
    	</insert>
+   	
+   	<select id="classroomByDepNo" parameterType="string" resultType="map">
+   		select * from class where dep_no=#{depNo}
+   	</select>
+   	
+   	
    	
 </mapper>
 

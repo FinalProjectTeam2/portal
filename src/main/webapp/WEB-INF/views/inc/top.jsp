@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html class="h-100">
 <head>
@@ -275,21 +276,22 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 							<li><a href="#">자료실</a></li>
 							<li><a href="#">서비스</a></li>
 						</ul></li>
-					<c:if test="${sessionScope.type=='student' }">
+					<sec:authorize access="isAuthenticated()">
+					<c:if test="${principal.type=='STUDENT' }">
 					<li><a class="nav-link" href="#"> 학사서비스 </a>
 						<ul>
 							<li><a href="#">학사정보</a></li>
 							<li><a href="#">수강신청</a></li>
 						</ul></li>
 					</c:if>
-					<c:if test="${sessionScope.type=='professor' }">
+					<c:if test="${principal.type=='PROFESSOR' }">
 					<li><a class="nav-link" href="#"> 강의 관리 </a>
 						<ul>
 							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
 							<li><a href="#">강의 개설 신청</a></li>
 						</ul></li>
 					</c:if>
-					
+					</sec:authorize>
 					
 					<li><a class="nav-link" href="#">웹메일</a></li>
 					<li><a class="nav-link" href="#"> 쪽지함 <span

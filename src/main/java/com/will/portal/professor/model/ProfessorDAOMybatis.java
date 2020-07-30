@@ -1,6 +1,7 @@
 package com.will.portal.professor.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,12 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	public int insertSubjTime(Subj_timeVO vo) {
 		return sqlsession.insert(namespace+"insertSubjTime", vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> classroomByDepNo(String depNo) {
+		return sqlsession.selectList(namespace+"classroomByDepNo", depNo);
+	}
+
 
 	
 	

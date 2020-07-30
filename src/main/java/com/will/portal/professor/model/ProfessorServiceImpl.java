@@ -3,6 +3,7 @@ package com.will.portal.professor.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +123,12 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public int insertSubjTime(Subj_timeVO vo) {
 		return professorDao.insertSubjTime(vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> classroomByDepNo(String depNo) {
+		return professorDao.classroomByDepNo(depNo);
+	}
+
 
 	
 	
