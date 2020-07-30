@@ -7,17 +7,23 @@
 	rel="stylesheet">
 <main role="main" class="flex-shrink-0">
 	<a href="<c:url value='/admin/member/adminRegisterMember'/>"><button
-			class="adminRegi btn btn-outline-success" id="btRegi">회원 등록</button></a>
+			class="adminRegi btn btn-outline-success" id="btRegiMem">회원 등록</button></a>
 	<a href="<c:url value='/admin/member/adminManageMember'/>">
-		<button class="adminRegi btn btn-outline-success" type="submit"
+		<button class="adminRegi btn btn-outline-success" id="btMangMem"
 			id="btManageMem">회원 관리</button>
 	</a>
-	<button class="adminRegi btn btn-outline-success" type="submit"
-		id="btManageCol">강의 등록</button>
-	<button class="adminRegi btn btn-outline-success" type="submit"
-		id="btManageCol">강의 관리</button>
-	<button class="adminRegi btn btn-outline-success" type="submit"
-		id="btManageCol">학부 관리</button>
+	<a href="#">
+		<button class="adminRegi btn btn-outline-success" id="btRegiLec"
+			id="btManageMem">강의 등록</button>
+	</a>
+	<a href="<c:url value='/admin/lecture/adminManageLecture'/>">
+		<button class="adminRegi btn btn-outline-success" id="btRegiLec"
+			id="btManageMem">강의 관리</button>
+	</a>
+	<a href="<c:url value='/admin/member/adminManageMember'/>">
+		<button class="adminRegi btn btn-outline-success" id="btRegiLec"
+			id="btManageMem">학부 관리</button>
+	</a>
 	<div class="container">
 		<div style="overflow: hidden;">
 			<div class="indexDOM_large">

@@ -73,9 +73,33 @@ public class EmployeeServiceImpl implements EmployService {
 		return result;
 
 	}
+	
+	public boolean loginCheckSec(String loginPwd, String password, String officialNo) {
+
+		boolean result = false;
+		
+		String birthDay = employeeDao.selectSsn(officialNo).substring(0, 6) ;
+		if(password != null && !password.isEmpty() ) {
+			//최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
+			//모든 패스워드 암호화할거기 때문에
+			if(password.equals(birthDay)) {
+				if(loginPwd.equals(password)) {
+					result = true;
+				}
+			}else {
+				//비번 변경 후에는 암호화된 dbPwd와 비교해서 로그인 처리 한다.
+				if(BCrypt.checkpw(loginPwd, password)){
+					result = true;
+				}
+			}
+		}
+
+		return result;
+	}
 
 	@Override
 	public EmployeeVO selectByEmpNo(String empNo) {
 		return employeeDao.selectByEmpNo(empNo);
 	}
+
 }
