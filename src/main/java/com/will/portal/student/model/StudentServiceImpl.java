@@ -14,11 +14,14 @@ import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
 
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 
-	@Autowired StudentDAO studentDao;
-	@Autowired CommonDAO commonDao;
-	@Autowired Official_infoDAO officialDao;
+	@Autowired
+	StudentDAO studentDao;
+	@Autowired
+	CommonDAO commonDao;
+	@Autowired
+	Official_infoDAO officialDao;
 
 	@Transactional
 	public int insertStudent(StudentVO studentVo, Official_infoVO officialVo, int sort) {
@@ -31,7 +34,7 @@ public class StudentServiceImpl implements StudentService{
 		String userNo = format1.format(time) + sort + String.format("%03d", studentVo.getMajor())
 				+ String.format("%04d", seq);
 		studentVo.setStuNo(userNo);
-		studentVo.setPwd(officialVo.getSsn().substring(0,6));
+		studentVo.setPwd(officialVo.getSsn().substring(0, 6));
 
 		int cnt = studentDao.insertStudent(studentVo);
 
@@ -46,8 +49,8 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public int loginCheck(String officialNo, String pwd) {
-		//최초 로그인시 비밀번호가 생년월일과 같기때문에 생년월일부터 받아온다
-		String birthDay = studentDao.selectSsn(officialNo).substring(0, 6) ;
+		// 최초 로그인시 비밀번호가 생년월일과 같기때문에 생년월일부터 받아온다
+		String birthDay = studentDao.selectSsn(officialNo).substring(0, 6);
 		String dbPwd = studentDao.selectPwd(officialNo);
 		int result = 0;
 		if(dbPwd != null && !dbPwd.isEmpty() ) {
@@ -56,21 +59,21 @@ public class StudentServiceImpl implements StudentService{
 			if(dbPwd.equals(birthDay)) {
 				if(pwd.equals(dbPwd)) {
 					result = LOGIN_OK;
-				}else {
+				} else {
 					result = PWD_DISAGREE;
 				}
-			}else {
-				//비번 변경 후에는 암호화된 dbPwd와 비교해서 로그인 처리 한다.
-				if(BCrypt.checkpw(pwd, dbPwd)){
+			} else {
+				// 비번 변경 후에는 암호화된 dbPwd와 비교해서 로그인 처리 한다.
+				if (BCrypt.checkpw(pwd, dbPwd)) {
 					result = LOGIN_OK;
-				}else if(!BCrypt.checkpw(pwd, dbPwd)){
-					result = PWD_DISAGREE;	
+				} else if (!BCrypt.checkpw(pwd, dbPwd)) {
+					result = PWD_DISAGREE;
 				}
 			}
-		}else {
+		} else {
 			result = ID_NONE;
 		}
-		
+
 		return result;
 	}
 
@@ -83,5 +86,27 @@ public class StudentServiceImpl implements StudentService{
 	public Map<String, Object> selectViewByStuNo(String stuNo) {
 		return studentDao.selectViewByStuNo(stuNo);
 	}
+	
+	public boolean loginCheck(String loginPwd, String password, String officialNo) {
+		// 최초 로그인시 비밀번호가 생년월일과 같기때문에 생년월일부터 받아온다
+		String birthDay = studentDao.selectSsn(officialNo).substring(0, 6);
+		boolean result = false;
+		if (password != null && !password.isEmpty()) {
+			// 최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
+			// 모든 패스워드 암호화할거기 때문에
+			if (password.equals(birthDay)) {
+				if (loginPwd.equals(password)) {
+					result = true;
+				}
+			} else {
+				// 비번 변경 후에는 암호화된 dbPwd와 비교해서 로그인 처리 한다.
+				if (BCrypt.checkpw(loginPwd, password)) {
+					result = true;
+				}
+			}
+		}
 
+		return result;
+
+	}
 }

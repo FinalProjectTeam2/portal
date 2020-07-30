@@ -11,6 +11,7 @@ public interface StudentService {
 	int ID_NONE=3;
 
 	public int loginCheck(String officicalNo, String pwd );
+	public boolean loginCheck(String loginPwd, String password, String officicalNo );
 	public StudentVO selectByStuNo(String stuNo);
 	int insertStudent(StudentVO studentVo, Official_infoVO officialVo, int sort);
 	Map<String, Object> selectViewByStuNo(String stuNo);

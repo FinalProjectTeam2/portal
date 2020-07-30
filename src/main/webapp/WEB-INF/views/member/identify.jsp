@@ -172,7 +172,7 @@ function ident(){
 		<div id="countdown" style="display: hide">
 			<input type="text" id="code" name="inputCode" /> 
 			<input type="button" id="btSubmit" value="확인" /> 
-			<input type="hidden" id ="offNo" name="officialNo" value="${sessionScope.officialNo}" />
+			<input type="hidden" id ="offNo" name="officialNo" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}" />
 			<input type="hidden" name="checkCode" value="N" />
 			<input type="hidden" name="identSsn" id="identSsn" value="N" />
 			
