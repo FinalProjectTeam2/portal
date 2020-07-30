@@ -5,11 +5,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<sec:authentication var="principal" property="principal" /> 
 <!DOCTYPE html>
 <html class="h-100">
 <head>
 <meta id="_csrf" name="_csrf" content="${_csrf.token}" />
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}" />
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,7 +37,6 @@
 <!-- date formating -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
 <title>척척학사</title>
 
 <link href="<c:url value='/resources/css/offcanvas.css' />"
@@ -46,7 +47,6 @@
 	href="<c:url value='/resources/images/logoIcon.ico' />">
 <!-- ckeditor 사용하기 위함 -->
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
-
 
 <style type="text/css">
 .logo {
@@ -117,15 +117,14 @@
 }
 </style>
 <sec:authorize access="isAuthenticated()">
-<script type="text/javascript">
-//$\{sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.(vo에해당하는 멤버변수명)}
-if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'STUDENT'){
-	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}');
-}
-</script>
+	<script type="text/javascript">
+		//$\{sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.(vo에해당하는 멤버변수명)}
+		/* if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'STUDENT'){
+		 console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}');
+		 } */
+	</script>
 </sec:authorize>
 <script type="text/javascript">
-
 	$
 			.ajaxSetup({
 				error : function(jqXHR, exception) {
@@ -236,26 +235,24 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 				style="max-width: 1400px;">
 
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active" style="color: white;">PORTAL 
-					<sec:authorize access="isAuthenticated()">
-					<sec:authentication property="principal.name" />님
-					</sec:authorize>
-					<span class="sr-only">(current)</span>
+					<li class="nav-item active" style="color: white;">PORTAL  <span class="sr-only">(current)</span>
 					</li>
 				</ul>
-				<span id="timer"
-					style="color: white; font-size: 0.8em; margin: 0 5px;"></span> <a
-					href="<c:url value='/chat/chatting'/>">채팅방</a>
+				<sec:authorize access="isAuthenticated()">
+					<span style="color: white; margin-right: 10px;">
+						<sec:authentication property="principal.name" />님
+					</span>
+				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<button class="btn btn-outline-success my-2 my-sm-0" type="button"
 						id="btLogin">로그인</button>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
-					<form action="<c:url value='/logout'/>"
-						method="POST">
-						<input id="logoutBtn" type="submit" value="로그아웃" /> <input
-							type="hidden" name="${_csrf.parameterName}"
+					<form action="<c:url value='/logout'/>" method="POST">
+						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+							id="logoutBtn">로그아웃</button>
 					</form>
 				</sec:authorize>
 				<select class="custom-select"
@@ -270,10 +267,14 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 				<ul class="zeta-menu">
 					<li><a class="nav-link" href="#">포털</a>
 						<ul>
-							<li><a href="<c:url value='/portal/board/main'/>">게시판</a></li>
-							<li><a href="#">공지</a></li>
-							<li><a href="#">자료실</a></li>
-							<li><a href="#">서비스</a></li>
+							<li><a
+								href="<c:url value='/portal/board/main?categoryCode=B'/>">게시판</a></li>
+							<li><a
+								href="<c:url value='/portal/board/main?categoryCode=N'/>">공지</a></li>
+							<li><a
+								href="<c:url value='/portal/board/main?categoryCode=P'/>">자료실</a></li>
+							<li><a
+								href="<c:url value='/board_calender/calendarDetail'/>">서비스</a></li>
 						</ul></li>
 					<li><a class="nav-link" href="#"> 학사서비스 </a>
 						<ul>
@@ -285,6 +286,9 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 							class="badge badge-pill bg-light align-text-bottom">27</span>
 					</a></li>
 				</ul>
+				<span id="timer"
+					style="color: black; font-size: 0.8em; margin: 15px 25px; 
+					width: 100%; text-align: right;"></span>
 			</nav>
 		</div>
 	</header>

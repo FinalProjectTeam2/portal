@@ -26,6 +26,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		String saveNo = request.getParameter("saveNo");
 		logger.info("로그인 성공!, 파라미터 saveNo={}",saveNo);
 		
+		request.getSession().setMaxInactiveInterval(60*60);
+		
 		if(saveNo != null ) {
 			Cookie cookie = new Cookie("ck_officialNo", user.getOfficialNo());
 			cookie.setMaxAge(1000*24*24*60);
@@ -39,7 +41,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 			response.addCookie(cookie2);
 			logger.info("쿠키삭제 완료");
 		}
-		// /member/changePwd
+		
+		
 		if (user.getType().equals("ADMIN")) {
 			
 			response.sendRedirect(request.getContextPath() + "/admin/adminMain");

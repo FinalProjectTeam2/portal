@@ -2,22 +2,17 @@ package com.will.portal.chat.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.will.portal.employee.model.EmployeeVO;
-import com.will.portal.professor.model.ProfessorVO;
-import com.will.portal.student.model.StudentVO;
+import com.will.portal.common.MemberDetails;
 
 @Component
 public class EchoHandler extends TextWebSocketHandler{
@@ -33,36 +28,25 @@ public class EchoHandler extends TextWebSocketHandler{
 		// list를 쓸때 방법
 		sessionList.add(session);
 		logger.info("{} 연결됨!", session.getId());
-		String officialNo = session.getPrincipal().getName();
 		
-		UserDetails user = (UserDetails) ((Authentication)session.getPrincipal()).getPrincipal();
-		logger.info("아이디: {} 연결됨!", user.getUsername());
+		MemberDetails user = (MemberDetails) ((Authentication)session.getPrincipal()).getPrincipal();
+		logger.info("아이디: {} 연결됨!", user.getOfficialNo());
 		
-		logger.info("pricipal: {} 연결됨!", user);
+		for (WebSocketSession sess : sessionList) {
+			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getOfficialNo() +"|" + "in"));
+		}
 		
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		logger.info("{}로 부터 {} 를 받음",session.getId(),message.getPayload());
-		String name = "";
-		UserDetails user = (UserDetails) ((Authentication)session.getPrincipal()).getPrincipal();
-		String num = user.getUsername().substring(4, 5);
-		switch (num) {
-		case "1":
-			name = ((EmployeeVO)user).getName();
-			break;
-		case "2":
-			name = ((ProfessorVO)user).getName();
-			break;
-
-		default:
-			name = ((StudentVO)user).getName();
-			break;
-		}
+		
+		MemberDetails user = (MemberDetails) ((Authentication)session.getPrincipal()).getPrincipal();
+		
 		//연결된 클라이언트에게 모두 전송 : 리스트 방법
 		for (WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(name + "|" + user.getUsername() +"|" + message.getPayload()));
+			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getOfficialNo() +"|" + message.getPayload()));
 		}
 		
 	}
@@ -72,6 +56,12 @@ public class EchoHandler extends TextWebSocketHandler{
 		sessionList.remove(session);
 		
 		logger.info("{} 연결 끊김",session.getId());
+		MemberDetails user = (MemberDetails) ((Authentication)session.getPrincipal()).getPrincipal();
+		logger.info("아이디: {} 연결 종료!", user.getOfficialNo());
+		
+		for (WebSocketSession sess : sessionList) {
+			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getOfficialNo() +"|" + "out"));
+		}
 	}
 	
 	
