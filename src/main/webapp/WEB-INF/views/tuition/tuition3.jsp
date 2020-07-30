@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
+<sec:authentication var="principal" property="principal" />
 <main role="main" class="flex-shrink-0">
 <div class="container">
 
@@ -63,8 +64,22 @@
 	
 }
 </style>
-
-
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
+<script type="text/javascript">
+$(function() {
+	$.ajax({
+		url:"<c:url value='/>",
+		type:"get",
+		dataType:"json",
+		success:function(res){
+			$("").append(res);
+		},
+		error:function(xhr, status, error){
+			alert(error);
+		}
+	});
+});
+</script>
 <h1>등록금 납부 상세 내역</h1>
 <div id="tuition1">
 <form name="frmWrite" method="post" action="<c:url value=''/>" >
@@ -161,33 +176,24 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:if test="${empty list}">
-				<tr>
-					<td colspan="5" class="align_center">
-					조회 내용이 없습니다.
-					</td>
-				</tr>
-			</c:if>	
-			<c:if test="${!empty list}">
-			</c:if>	
 			<tr>
 				<td>입학금</td>
-				<td>0원</td>
+				<td>${admissionfee }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>수업료</td>
-				<td>1,000,000원</td>
+				<td>${tuition }</td>
 				<td>수강신청학점:15학점</td>
 			</tr>
 			<tr>
 				<td>실습비</td>
-				<td>0원</td>
+				<td>${practicecost }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>학생회비</td>
-				<td>0원</td>
+				<td>${studentfee }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
@@ -217,7 +223,7 @@
 			</tr>
 			<tr>
 				<td>납부현황</td>
-				<td>납부</td>
+				<td>${deposit_state }</td>
 				<td>&nbsp;</td>
 			</tr>
 		</tbody>

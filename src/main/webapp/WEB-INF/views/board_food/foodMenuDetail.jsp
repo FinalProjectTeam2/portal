@@ -82,6 +82,7 @@
 		<div class="food_tit"> 
 		
 			<div class="date"> 2020.07.20 ~ 2020.07.25 
+				
 				<a href="#none" onclick="_Food_WAR_foodportlet_MovWeek(2020, 29)" class="btn_prev">
 					<span>이전주로 이동</span>
 				</a>
