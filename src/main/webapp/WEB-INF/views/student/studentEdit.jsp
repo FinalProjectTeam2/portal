@@ -25,12 +25,14 @@
 					imageUrl:$('#upfile').val()
 				},
 				success:function(res){
-					
+					alert(res);
+					alert("회원정보 수정이 완료되었습니다");
 				},
 				error:function(xhr,status,error){
 					alert(status + ", " + error);
 				}
 			});
+			return false;
 		});	
 	});
 

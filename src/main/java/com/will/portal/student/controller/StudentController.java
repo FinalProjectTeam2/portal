@@ -61,20 +61,32 @@ public class StudentController {
 	
 	 @RequestMapping(value = "/studentEdit" , method = RequestMethod.POST)
 	 @ResponseBody
-	 public String edit_post(Principal principal, Model model, 
+	 public boolean edit_post(Principal principal, Model model, 
 			 @ModelAttribute Account_infoVO accInfoVo,
 			 @ModelAttribute Official_infoVO offiVo,
 			 @RequestParam String hp,
 			 @RequestParam String email) {
+		boolean bool = false;
 		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
 		String officialNo = user.getOfficialNo();
 		accInfoVo.setOfficialNo(officialNo);
-		bankService.updateAccount(accInfoVo);
 		offiVo.setOfficialNo(officialNo);
+		String[] emailarr = email.split("@");
+		String email1 =emailarr[0], email2=emailarr[1];
+		String[] hparr = hp.split("-");
+		String hp1 = hparr[0] ,hp2=hparr[1] , hp3=hparr[2] ;
+		offiVo.setEmail1(email1);
+		offiVo.setEmail2(email2);
+		offiVo.setHp1(hp1);
+		offiVo.setHp2(hp2);
+		offiVo.setHp3(hp3);
 		
-		offiService.updateOfficialInfo(offiVo);
-		
-		return null;
+		int cnt1 = bankService.updateAccount(accInfoVo);
+		int cnt2 = offiService.updateOfficialInfo(offiVo);
+		if(cnt1 > 0 && cnt2 >0) {
+			bool = true;
+		}
+		return bool;
 	 }
 	 
 
