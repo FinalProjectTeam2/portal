@@ -5,11 +5,10 @@ $(function() {
 				$('#department').find('option').each(function() {
 					$(this).remove();
 				});
-				$('#department').append("<option value=''>선택</option>");
 
 				var faculty = $(this).val();
 				if (faculty != "") {
-
+					$('#department').append("<option value=''>선택</option>");
 					$.ajax({
 						type : 'get',
 						url : "/portal/common/departmentList",
@@ -32,23 +31,25 @@ $(function() {
 						}
 
 					})
+				}else{
+					$('#department').append("<option value=''>학부를 선택하세요</option>");
 				}
 			});
 
 	// 등록 구분 시 입력창
 	$('select[name=sort]').change(function() {
 		if ($('select[name=sort]').val() == 1) {
-			$('.emp').css('visibility', 'visible');
+			$('.emp').css('display', 'block');
 			$('.emp select').val("");
-			$('.stud').css('visibility', 'hidden');
+			$('.stud').css('display', 'none');
 		} else {
-			$('.emp').css('visibility', 'hidden');
-			$('.stud').css('visibility', 'visible');
-			$('.stud').val("");
+			$('.emp').css('display', 'none');
+			$('.stud').css('display', 'block');
+			$('.stud select').val("");
 		}
 		if ($('select[name=sort]').val() == 2) {
-			$('.prof').css('display', 'block');
-			$('.prof select').val("");
+			$('.prof').css('display', 'inline-block');
+			$('.prof').val("");
 		} else {
 			$('.prof').css('display', 'none');
 		}

@@ -32,22 +32,47 @@
 						</select>
 					</div>
 					<div class="stud">
-					<label for="faculty"><span>학부</span></label> <select
-						name="facultyNo" id="faculty">
-						<option value="">선택</option>
-						<c:forEach var="facVo" items="${facultyList }">
-							<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
-						</c:forEach>
-					</select> <label for="depNo"><span>학과</span></label> <select
-						name="depNo" id="department">
-						<option value="">선택</option>
-					</select> <label for="positionNo"><span class="prof">교수직급</span></label> <select name="positionNo" class="prof">
-						<option value="">선택</option>
-						<c:forEach var="positionVo" items="${profPositionList }">
-							<option value="${positionVo.positionNo }">${positionVo.positionName }</option>
-						</c:forEach>
+						<label for="faculty"><span>학부</span></label> <select
+							name="facultyNo" id="faculty">
+							<option value="">선택</option>
+							<c:forEach var="facVo" items="${facultyList }">
+								<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
+							</c:forEach>
+						</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
+							id="department">
+							<option value="">학부를 선택하세요</option>
+						</select> <label for="positionNo"><span class="prof">교수직급</span></label> <select
+							name="positionNo" class="prof" id="profPosition">
+							<option value="">선택</option>
+							<c:forEach var="positionVo" items="${profPositionList }">
+								<option value="${positionVo.positionNo }">${positionVo.positionName }</option>
+							</c:forEach>
+						</select>
 					</div>
-					</select> 이름 <input type="text" size="8" name="searchKeyword">
+				
+					<div class="emp">
+						<label for="depCode">부서</label> <select name="depCode"
+							id="depCode">
+							<option value="">선택</option>
+							<c:forEach var="vo" items="${empDepartList }">
+								<option value="${vo.depCode }">${vo.depName }</option>
+							</c:forEach>
+						</select> <label for="authCode">권한</label> <select name="authCode"
+							id="authCode">
+							<option value="">선택</option>
+							<c:forEach var="vo" items="${authorityList }">
+								<option value="${vo.authCode }">${vo.authName }</option>
+							</c:forEach>
+						</select>
+							<label for="positionCode">직책</label> <select name="positionCode"
+								id="positionCode">
+								<option value="">선택</option>
+								<c:forEach var="vo" items="${empPositionList }">
+									<option value="${vo.positionCode }">${vo.positionName}</option>
+								</c:forEach>
+							</select>
+					</div>
+					이름 <input type="text" size="8" name="searchKeyword">
 					<button class="btCustom btn btn-primary btn-lg login-button"
 						id="btSearch">검색</button>
 					<div class="divList">

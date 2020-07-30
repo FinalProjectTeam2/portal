@@ -1,4 +1,3 @@
-
 $(function() {
 	$(function() {
 		// ajax 학과 검색
@@ -45,17 +44,17 @@ $(function() {
 							check();
 							$('#form')
 									.prop("action",
-											"<c:url value='/admin/member/adminRegisterEmployee' />");
+											"/portal/admin/member/adminRegisterEmployee");
 						} else if (sort == 2) {
 							check();
 							$('#form')
 									.prop("action",
-											"<c:url value='/admin/member/adminRegisterProfessor' />");
+											"/portal/admin/member/adminRegisterProfessor");
 						} else if (sort == 3) {
 							check();
 							$('#form')
 									.prop("action",
-											"<c:url value='/admin/member/adminRegisterStudent' />");
+											"/portal/admin/member/adminRegisterStudent");
 						} else if (sort == null) {
 							alert('회원구분을 선택해주세요');
 							$('#sort').focus();

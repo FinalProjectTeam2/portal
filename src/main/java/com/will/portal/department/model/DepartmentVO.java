@@ -1,6 +1,8 @@
 package com.will.portal.department.model;
 
-public class DepartmentVO {
+import com.will.portal.common.SearchVO;
+
+public class DepartmentVO extends SearchVO {
 	private int depNo;
 	private String depName;
 	private String tel;

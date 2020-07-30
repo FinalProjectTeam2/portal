@@ -2,7 +2,9 @@ package com.will.portal.authority.model;
 
 import java.sql.Timestamp;
 
-public class AuthorityVO {
+import com.will.portal.common.SearchVO;
+
+public class AuthorityVO extends SearchVO{
 	private String authCode;
 	private String authName;
 	private String authDesc;

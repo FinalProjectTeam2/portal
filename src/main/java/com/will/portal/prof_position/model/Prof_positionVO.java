@@ -1,6 +1,8 @@
 package com.will.portal.prof_position.model;
 
-public class Prof_positionVO {
+import com.will.portal.common.SearchVO;
+
+public class Prof_positionVO extends SearchVO {
 	private int positionNo;
 	private String positionName;
 	

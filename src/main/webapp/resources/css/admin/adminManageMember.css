@@ -95,3 +95,19 @@ main>.container {
 .stud select{
 	width:180px;
 }
+.emp, .prof{
+	display: none;
+}
+.emp select {
+	width:110px;
+	text-align: right;
+}
+#profPosition{
+	width: 100px;
+}
+.stud{
+	margin-bottom: 15px;
+}
+.emp{
+	margin-bottom: 15px;
+}

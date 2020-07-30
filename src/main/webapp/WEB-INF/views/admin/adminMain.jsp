@@ -20,7 +20,7 @@
 		<button class="adminRegi btn btn-outline-success" id="btRegiLec"
 			id="btManageMem">강의 관리</button>
 	</a>
-	<a href="<c:url value='/admin/member/adminManageMember'/>">
+	<a href="#">
 		<button class="adminRegi btn btn-outline-success" id="btRegiLec"
 			id="btManageMem">학부 관리</button>
 	</a>
