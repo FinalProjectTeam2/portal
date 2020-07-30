@@ -33,7 +33,7 @@
 					
 				str += '<div class="category" style="cursor: default;">서비스</div>'
 					+ '<ul class="nav flex-column">'
-					+'<li class="nav-item"><a class="nav-link" href="#"><span'
+					+'<li class="nav-item"><a class="nav-link" href="<c:url value='/board_calender/calendarDetail' />"><span'
 					+'class="bullets"></span>학사일정 </a></li>'
 					+'<li class="nav-item"><a class="nav-link" href="#"> <span'
 					+'class="bullets"></span>질문/답변'

@@ -4,7 +4,7 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.tuition">
 	<select id="selectStu" parameterType="string" resultType="tuitionAllVo">
-		select * from tuition_view
+		select * from student_view2
 	</select>
    
    	<select id="tuition" parameterType="string" resultType="tuitionAllVo">
@@ -12,7 +12,7 @@
 	</select>
    
    	<select id="tuitionD" parameterType="string" resultType="tuitionAllVo">
-		select * from tuition_view
+		select * from tuitionD_view
 	</select>
 </mapper>
 
