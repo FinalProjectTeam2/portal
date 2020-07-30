@@ -89,3 +89,13 @@
     border-radius: 7px;
 	padding: 9px;
 }
+select:focus {
+	background-color: #ffffff;
+}
+
+li:focus {
+	background-color: #ffffff00;
+}
+a:focus {
+	background-color: #ffffff00;
+}

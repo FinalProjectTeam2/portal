@@ -94,7 +94,6 @@ public class LoginController {
 			result= professorService.loginCheck(officialNo,pwdd);
 			
 			if(result == ProfessorService.LOGIN_OK) {
-				msg ="professor";
 				ProfessorVO profVO = professorService.selectByProfNo(officialNo);
 				request.getSession().setAttribute("officialNo", officialNo);
 				request.getSession().setAttribute("name", profVO.getProfName());
@@ -103,6 +102,8 @@ public class LoginController {
 				
 				if(profVO.getIdentityState().equals("N")) {
 					msg="N";
+				}else {
+					msg ="professor";
 				}
 				
 				if(saveNo != null ) {

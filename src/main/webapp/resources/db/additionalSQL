@@ -1,0 +1,8 @@
+#추가로 필요한 SQL문들 주석달아서 올려놓을께요 필요하신분들 긁어다가 추가해서 바로 쓰시면 될듯합니다.
+
+
+#강의실과 수업시간 테이블 에 해당 컬럼 칸이 모잘라서 늘려놓음.
+alter table classroom
+modify(classroom_code VARCHAR2(20));
+alter table subj_time
+modify(classroom_code VARCHAR2(20));
