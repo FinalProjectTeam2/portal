@@ -111,3 +111,6 @@ main>.container {
 .emp{
 	margin-bottom: 15px;
 }
+#head1{
+	display: inline-block;
+}

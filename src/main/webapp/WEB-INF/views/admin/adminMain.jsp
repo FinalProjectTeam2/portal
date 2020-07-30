@@ -8,7 +8,7 @@
 <main role="main" class="flex-shrink-0">
 	<a href="<c:url value='/admin/member/adminRegisterMember'/>"><button
 			class="adminRegi btn btn-outline-success" id="btRegiMem">회원 등록</button></a>
-	<a href="<c:url value='/admin/member/adminManageMember'/>">
+	<a href="<c:url value='/admin/member/adminManageStudent'/>">
 		<button class="adminRegi btn btn-outline-success" id="btMangMem"
 			id="btManageMem">회원 관리</button>
 	</a>
