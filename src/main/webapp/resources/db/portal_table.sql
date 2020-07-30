@@ -21,7 +21,6 @@ grant connect,resource to portal;
 
 --뷰 생성 권한 부여하기
 grant create view to portal;
-
 /* 강의계획 */
 CREATE TABLE syllabus (
 	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
@@ -32,22 +31,22 @@ CREATE TABLE syllabus (
 
 /* 강의시간표 */
 CREATE TABLE subj_time (
-	lecture_time_code VARCHAR2(10) NOT NULL, /* 강의시간표코드 */
+	lecture_time_no NUMBER NOT NULL, /* 강의시간표코드 */
 	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
 	timetable_code VARCHAR2(10) NOT NULL, /* 시간기준코드 */
-	classroom_code VARCHAR2(20) /* 강의실코드 */
+	classroom_code VARCHAR2(10) /* 강의실코드 */
 );
 
 ALTER TABLE subj_time
 	ADD
 		CONSTRAINT PK_subj_time
 		PRIMARY KEY (
-			lecture_time_code
+			lecture_time_no
 		);
 
 /* 강의실 */
 CREATE TABLE classroom (
-	classroom_code VARCHAR2(20) NOT NULL, /* 강의실코드 */
+	classroom_code VARCHAR2(10) NOT NULL, /* 강의실코드 */
 	classroom_name VARCHAR2(30) NOT NULL, /* 강의실명 */
 	building_code VARCHAR2(30) NOT NULL /* 건물코드 */
 );
@@ -117,13 +116,16 @@ ALTER TABLE building
 
 /* 게시글 */
 CREATE TABLE posts (
-	post_no NUMBER NOT NULL, /* 게시글코드 */
+	post_no NUMBER NOT NULL, /* 게시글번호 */
 	official_no VARCHAR2(150), /* 관계자번호 */
 	title VARCHAR2(150), /* 제목 */
 	contents CLOB, /* 내용 */
 	reg_date DATE DEFAULT sysdate, /* 등록일 */
 	read_count NUMBER DEFAULT 0, /* 조회수 */
-	del_flag CHAR(5) DEFAULT 'N', /* 삭제여부 */
+	del_flag CHAR(1) DEFAULT 'N', /* 삭제여부 */
+	group_no NUMBER, /* 원본글번호 */
+	sort_no NUMBER, /* 정렬번호 */
+	step NUMBER, /* 차수 */
 	bd_code VARCHAR2(10) /* 게시판코드 */
 );
 
@@ -142,7 +144,7 @@ CREATE TABLE board (
 	reg_date DATE DEFAULT sysdate, /* 게시판 등록일 */
 	edit_date DATE, /* 게시판 수정일 */
 	bd_order NUMBER, /* 게시판 순서 */
-	usage CHAR(1) DEFAULT 'N', /* 사용 여부 */
+	usage CHAR(1) DEFAULT 'Y', /* 사용 여부 */
 	is_reply CHAR(1) DEFAULT 'N', /* 댓글여부 */
 	is_comment CHAR(1) DEFAULT 'N', /* 답글여부 */
 	is_private CHAR(1) DEFAULT 'N', /* 비공개여부 */
@@ -236,8 +238,9 @@ CREATE TABLE professor (
 	position_no NUMBER NOT NULL, /* 직책번호 */
 	start_date DATE DEFAULT sysdate, /* 임용일 */
 	resignation_date DATE, /* 퇴직일 */
-	identity_state CHAR(4) DEFAULT 'N', /* 본인인증상태 */
-	identity_code VARCHAR2(20) /* 본인인증코드 */
+	identity_state CHAR(1) DEFAULT 'N', /* 본인인증상태 */
+	identity_code VARCHAR2(20), /* 본인인증코드 */
+	change_date DATE /* 비밀번호변경일 */
 );
 
 ALTER TABLE professor
@@ -300,8 +303,8 @@ CREATE TABLE reply (
 	group_no NUMBER, /* 원본글번호 */
 	sort_no NUMBER, /* 정렬번호 */
 	step NUMBER, /* 차수 */
-	del_flag CHAR(5) DEFAULT 'N', /* 삭제여부 */
-	post_no NUMBER /* 게시글코드 */
+	del_flag CHAR(1) DEFAULT 'N', /* 삭제여부 */
+	post_no NUMBER /* 게시글번호 */
 );
 
 ALTER TABLE reply
@@ -321,7 +324,7 @@ CREATE TABLE tuition (
 	practice_cost NUMBER, /* 실습비 */
 	student_fee NUMBER, /* 학생회비 */
 	total_tuition NUMBER, /* 총등록금액 */
-	deposit_state CHAR(5) DEFAULT 'N', /* 납부여부 */
+	deposit_state CHAR(1) DEFAULT 'N', /* 납부여부 */
 	deposit_date DATE /* 납부일 */
 );
 
@@ -376,7 +379,7 @@ CREATE TABLE registration (
 	classification VARCHAR2(30) NOT NULL, /* 수강구분 */
 	reg_date DATE DEFAULT sysdate, /* 수강신청일자 */
 	score NUMBER, /* 성적 */
-	lecture_eval_flag CHAR(4) DEFAULT 'N' /* 강의평가완료여부 */
+	lecture_eval_flag CHAR(1) DEFAULT 'N' /* 강의평가완료여부 */
 );
 
 ALTER TABLE registration
@@ -424,7 +427,7 @@ CREATE TABLE employee (
 	auth_code VARCHAR2(50), /* 권한코드 */
 	emp_name VARCHAR2(50) NOT NULL, /* 임직원명 */
 	resignation_date DATE, /* 퇴사일 */
-	Identity_state CHAR(5) DEFAULT 'N' /* 본인인증상태 */
+	Identity_state CHAR(1) DEFAULT 'N' /* 본인인증상태 */
 );
 
 ALTER TABLE employee
@@ -498,7 +501,7 @@ CREATE TABLE inbox (
 	msg_no NUMBER NOT NULL, /* 족지번호 */
 	addressee VARCHAR2(100) NOT NULL, /* 수신인번호 */
 	read_date DATE, /* 읽은날짜 */
-	keep_flag CHAR(5) DEFAULT 'N' /* 보관여부 */
+	keep_flag CHAR(1) DEFAULT 'N' /* 보관여부 */
 );
 
 ALTER TABLE inbox
@@ -512,7 +515,7 @@ ALTER TABLE inbox
 CREATE TABLE category (
 	category_code VARCHAR2(10) NOT NULL, /* 카테고리코드 */
 	category_name VARCHAR2(100) NOT NULL, /* 카테고리명 */
-	usage CHAR(5) DEFAULT 'N', /* 사용여부 */
+	usage CHAR(1) DEFAULT 'N', /* 사용여부 */
 	reg_date DATE DEFAULT sysdate /* 등록일 */
 );
 
@@ -526,12 +529,12 @@ ALTER TABLE category
 /* 파일 */
 CREATE TABLE files (
 	no NUMBER NOT NULL, /* 고유번호 */
-	post_no NUMBER, /* 게시글코드 */
+	post_no NUMBER, /* 게시글번호 */
 	file_name VARCHAR2(100), /* 파일명 */
 	file_size NUMBER, /* 파일크기 */
 	original_file_name VARCHAR2(100), /* 원본파일명 */
 	down_count NUMBER DEFAULT 0, /* 다운로드수 */
-	upfile_date DATE /* 업로드 날짜 */
+	upfile_date DATE DEFAULT sysdate /* 업로드 날짜 */
 );
 
 ALTER TABLE files
@@ -582,9 +585,10 @@ CREATE TABLE student (
 	state VARCHAR2(100) DEFAULT '신입생', /* 학적상태 */
 	admission_date DATE DEFAULT sysdate, /* 입학일 */
 	graduation_date DATE, /* 졸업일 */
-	identity_state CHAR(5) DEFAULT 'N', /* 본인인증상태 */
+	identity_state CHAR(1) DEFAULT 'N', /* 본인인증상태 */
 	minor NUMBER, /* 부전공 */
-	identity_code VARCHAR2(20) /* 본인인증코드 */
+	identity_code VARCHAR2(20), /* 본인인증코드 */
+	change_date DATE /* 비밀번호변경일 */
 );
 
 ALTER TABLE student
