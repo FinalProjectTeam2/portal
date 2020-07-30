@@ -8,6 +8,7 @@
     
 <script>
 	$(function () {
+		$.select();
 		$('#editFrm').submit(function () {
 			$.ajax({
 				url : "<c:url value='/student/studentEdit' />",
@@ -22,11 +23,15 @@
 					zipcode:$('#zipcode').val(),
 					address:$('#address').val(), 
 					addrDetail:$('#addrDetail').val(),
-					imageUrl:$('#upfile').val()
+					
 				},
 				success:function(res){
-					alert(res);
 					alert("회원정보 수정이 완료되었습니다");
+					if(!res){
+						alert("수정실패");
+						return;
+					}
+					$.select();
 				},
 				error:function(xhr,status,error){
 					alert(status + ", " + error);
@@ -35,7 +40,55 @@
 			return false;
 		});	
 	});
-
+	$.select = function () {
+		$.ajax({
+			url : "<c:url value='/student/selectInfo' />",
+			type: "get",
+			dataType: "json",
+			success:function(res){
+							
+				$('#bankCode').val(res.BANK_CODE);
+				$('#accountNo').val(res.ACCOUNT_NO);
+				$('#accountName').val(res.ACCOUNT_NAME);
+				
+				$('#hp').val(res.HP1 +"-"+res.HP2+ "-"+ res.HP3); 
+				$('#email').val(res.EMAIL1 + "@" + res.EMAIL2); 
+				$('#zipcode').val(res.ZIPCODE);
+				$('#address').val(res.ADDRESS); 
+				$('#addrDetail').val(res.ADDR_DETAIL);
+				var inHtml = '<tr>'
+	      			+ '<th>학번</th>'
+	      			+ '<td>'+res.STU_NO+' / 입학날짜 : '+moment(res.ADMISSION_DATE).format('YYYY-MM-DD')
+	      			+ '</td>'
+		      		+ '</tr>'
+		      		+ '<tr>'
+	      			+ '<th>학생</th>'
+	      			+ '<td>'+res.NAME+' / '+res.SSN+'/ 대한민국</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>소속</th>'
+	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME+'</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>과정</th>'
+	      			+ '<td>학사: '+res.STATE+'/ '+res.SEMESTER+'학기 </td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>기타</th>'
+	      			+ '<td>'+res.HP1+'-'+res.HP2+'-'+res.HP3+' / '+res.EMAIL1+'@'+res.EMAIL2
+	      			+ '/ '+res.ZIPCODE+' '+res.ADDRESS+' '+res.ADDR_DETAIL+' / '+res.BANK_NAME+' '+res.ACCOUNT_NO +'('+res.ACCOUNT_NAME+')</td>'
+	      			+ '</tr>';
+	      			
+	      		$('#studentTable').html(inHtml);
+	      		$('#ssn').val(res.SSN);
+	      		$('#name').val(res.NAME);
+	      		
+			},
+			error:function(xhr,status,error){
+				alert(status + ", " + error);
+			}
+		});
+	}
 </script>   
     
     
@@ -70,7 +123,7 @@ a:focus {
 						</div>			      	
 			      </div>
 			      <div class="cola s9" id="info">
-			      	<table>
+			      	<table id="studentTable">
 			      		<tr>
 			      			<th>학번</th>
 			      			<td>${map['STU_NO'] } / 입학날짜 : <fmt:formatDate value='${map["ADMISSION_DATE"] }' pattern="yyyy-MM-dd" />
@@ -103,15 +156,14 @@ a:focus {
 			      <div class="cola s12" id="canEdit">
 			      <hr><!-- style="border: 0.5px solid #01539d -->
 				      	
-				      	<table>
-				      		
+				      	<table id="editInfo">
 				      		<tr>
 				      			<th>이름</th>
-				      			<td><input placeholder="이름" name="name" type="text" class="validate" readonly="readonly" value="${map['NAME'] }"></td>
+				      			<td><input placeholder="이름" name="name" id="name" type="text" class="validate" readonly="readonly"></td>
 								<th>학번</th>
-								<td><input placeholder="학번" name="officialNo" type="text" class="validate" readonly="readonly" value="${map['STU_NO'] }"></td>
+								<td><input placeholder="학번" name="officialNo" type="text" class="validate" readonly="readonly" value="${principal.officialNo }"></td>
 				      			<th>주민번호</th>
-				      			<td><input placeholder="주민번호" name="jumin" type="text" class="validate" readonly="readonly" value="${map['SSN'] }"></td>
+				      			<td><input placeholder="주민번호" name="jumin" id="ssn" type="text" class="validate" readonly="readonly"></td>
 				      		</tr>
 				      		<tr>
 				      			<th>은행명</th>
@@ -125,9 +177,9 @@ a:focus {
 								    </select>
 				      			</td>
 				      			<th>계좌번호</th>
-				      			<td><input placeholder="계좌번호" name="accountNo" id="accountNo" type="text" class="validate" value="1002-0000-00000"></td>
+				      			<td><input placeholder="계좌번호" name="accountNo" id="accountNo" type="text" class="validate"></td>
 				      			<th>예금주</th>
-				      			<td><input placeholder="예금주명" name="accountName" id="accountName" type="text" class="validate" value="신희나"></td>
+				      			<td><input placeholder="예금주명" name="accountName" id="accountName" type="text" class="validate"></td>
 				      			
 				      		</tr>
 				      		<tr>

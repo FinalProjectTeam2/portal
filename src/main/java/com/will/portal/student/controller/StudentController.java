@@ -49,10 +49,7 @@ public class StudentController {
 		logger.info("학생 수정화면 페이지 보여주기");
 		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
 		String officialNo = user.getOfficialNo();
-		
-		Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
 		List<BankVO> bankList = bankService.selectAllBank();
-		model.addAttribute("map", map);
 		model.addAttribute("bankList", bankList);
 		
 		return "/student/studentEdit";
@@ -86,10 +83,20 @@ public class StudentController {
 		if(cnt1 > 0 && cnt2 >0) {
 			bool = true;
 		}
+		
 		return bool;
 	 }
 	 
-
+	 @RequestMapping("/selectInfo")
+	 @ResponseBody
+	 public Map<String, Object> body(Principal principal) {
+		 MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
+		 String officialNo = user.getOfficialNo();
+		 Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
+		
+		 return map;
+			
+	 }
 	
 	
 	
