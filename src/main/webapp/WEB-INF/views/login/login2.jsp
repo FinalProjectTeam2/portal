@@ -628,9 +628,6 @@ button.ui-keyboard-button:hover {
 		<script
 			src="https://mottie.github.io/Keyboard/docs/js/jquery-ui-custom.min.js"></script>
 	</div>
-	<div id="forAdmin" style="text-align: right;">
-		<a href="<c:url value='/login/adminLogin/' />">관리자 페이지로 이동</a>
-	</div>
 	<!-- bottom -->
 	<%@ include file="../inc/bottom.jsp"%>
 	<script type="text/javascript">
