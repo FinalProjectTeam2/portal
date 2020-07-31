@@ -20,12 +20,12 @@
 
 #adminMngMem .divRight {
 	text-align: right;
-	width: 1400px;
+	width: 1450px;
 	margin: auto;
 }
 
 #adminMngMem table {
-	width: 1400px;
+	width: 1450px;
 	text-align: center;
 	margin-top: 20px;
 }
@@ -36,6 +36,7 @@
 	border-bottom: solid;
 	border-width: 1px;
 	border-color: #e5e5e5;
+	vertical-align: middle;
 }
 
 #adminMngMem th {
@@ -125,9 +126,10 @@ main>.container {
 }
 
 .divTop {
-	width: 1400px;
+	width: 1450px;
 	margin: auto;
 }
-.rightEnd{
+
+.rightEnd {
 	margin-right: 0 !important;
 }

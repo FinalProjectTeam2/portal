@@ -14,14 +14,17 @@
 			<div class="divTop">
 				<h2>학생 관리</h2>
 				<input type="button" class="btTop btCustom btn btn-primary" id="bt1"
-					value="학생 관리" onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input type="button"
-					class="btTop btCustom btn btn-primary" id="bt2" onclick="location.href='<c:url value="/admin/member/adminManageProfessor"/>'" value="교수 관리">
-				<input type="button" class="btTop btCustom btn btn-primary" id="bt3"
-					value="직원 관리" onclick="location.href='<c:url value="/admin/member/adminManageEmployee"/>'">
+					value="학생 관리"
+					onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input
+					type="button" class="btTop btCustom btn btn-primary" id="bt2"
+					onclick="location.href='<c:url value="/admin/member/adminManageProfessor"/>'"
+					value="교수 관리"> <input type="button"
+					class="btTop btCustom btn btn-primary" id="bt3" value="직원 관리"
+					onclick="location.href='<c:url value="/admin/member/adminManageEmployee"/>'">
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post"
 					action="<c:url value='/admin/member/adminManageStudent'/>">
-					<input type="hidden" name="sort" value="${param.sort }"> <input
+					<input type="hidden" name="sort" value=""> <input
 						type="hidden" name="currentPage">
 				</form>
 			</div>
@@ -31,35 +34,43 @@
 				action="<c:url value='/admin/member/adminManageStudent'/>">
 				<div class="divRight">
 					<div class="divTop">
-					<div class="stud">
-						<label for="faculty"><span>학부</span></label> <select
-							name="facultyNo" id="faculty">
-							<option value="">선택</option>
-							<c:forEach var="facVo" items="${facultyList }">
-								<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
-							</c:forEach>
-						</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
-							class="rightEnd" id="department">
-							<option value="">학부를 선택하세요</option>
-						</select>
-					</div>
+						<div class="stud">
+							<label for="faculty"><span>학부</span></label> 
+							<select	name="facultyNo" id="faculty">
+								<option value="0">선택</option>
+								<c:forEach var="facVo" items="${facultyList }">
+									<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
+								</c:forEach>
+							</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
+								class="rightEnd" id="department">
+								<option value="">학부를 선택하세요</option>
+							</select>
+						</div>
 
-
-					이름 <input type="text" size="8" name="searchKeyword">
-					<button class="btCustom btn btn-primary btn-lg login-button"
-						id="btSearch">검색</button>
-					<p style="float: left">조회결과 : {}건</p>
+						학번<input type="text" name="stuNo">
+						이름 <input type="text" size="8" name="name">
+						<button class="btCustom btn btn-primary btn-lg login-button"
+							id="btSearch">검색</button>
+						<p style="float: left">조회결과 : {}건</p>
 					</div>
 					<div class="divList">
 						<table class="box2" summary="학생 목록">
 							<caption>학생 목록</caption>
 							<colgroup>
 								<col style="width: 5%" />
+								<!-- 체크박스 -->
 								<col style="width: 10%" />
+								<!-- 번호 -->
 								<col style="width: 15%" />
+								<!-- 이름 -->
+								<col style="width: 10%" />
+								<!-- 학부 -->
 								<col style="width: 20%" />
-								<col style="width: 20%" />
+								<!-- 학과 -->
+								<col style="width: 10%" />
+								<!-- 학기 -->
 								<col style="width: 14%" />
+								<!-- 학적 -->
 								<col style="width: 8%" />
 								<col style="width: 8%" />
 							</colgroup>
@@ -70,49 +81,28 @@
 									<th scope="col">이름</th>
 									<th scope="col">학부</th>
 									<th scope="col">학과</th>
+									<th scope="col">학기</th>
 									<th scope="col">학적 상태</th>
 									<th scope="col">수정</th>
 									<th scope="col">삭제</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><input type="checkbox" name="pdItems[].productNo"
-										value=""> <input type="hidden"
-										name="pdItems[].imageURL" value=""></td>
-									<td>202031230001</td>
-									<td>학생킹</td>
-									<td>학부</td>
-									<td>학과</td>
-									<td>신입생</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="pdItems[].productNo"
-										value=""> <input type="hidden"
-										name="pdItems[].imageURL" value=""></td>
-									<td>202031230001</td>
-									<td>학생킹</td>
-									<td>학부</td>
-									<td>학과</td>
-									<td>신입생</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="pdItems[].productNo"
-										value=""> <input type="hidden"
-										name="pdItems[].imageURL" value=""></td>
-									<td>202031230001</td>
-									<td>학생킹</td>
-									<td>학부</td>
-									<td>학과</td>
-									<td>신입생</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
-								</tr>
-
+								<c:forEach var="map" items="${list }">
+									<tr>
+										<td><input type="checkbox" name="pdItems[].productNo"
+											value=""> <input type="hidden"
+											name="pdItems[].imageURL" value=""></td>
+										<td>${map['STU_NO']}</td>
+										<td>${map['NAME']}</td>
+										<td>${map['FACULTY_NAME']}</td>
+										<td>${map['DEP_NAME']}</td>
+										<td>${map['SEMESTER']}</td>
+										<td>${map['STATE']}</td>
+										<td><a href="#">수정</a></td>
+										<td><a href="#">삭제</a></td>
+									</tr>
+								</c:forEach>
 								<%-- 	<c:if test="${empty list }">
 									<tr>
 										<td colspan="8">결과가 없습니다.</td>
@@ -182,7 +172,8 @@
 
 					<div class="btdiv">
 						<input type="button"
-							class="btCustom btn btn-primary btn-lg login-button" onclick="location.href='<c:url value="/admin/member/adminRegisterMember"/>'"
+							class="btCustom btn btn-primary btn-lg login-button"
+							onclick="location.href='<c:url value="/admin/member/adminRegisterMember"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
 					<div class="btdiv">
