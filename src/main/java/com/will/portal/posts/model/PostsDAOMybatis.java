@@ -43,4 +43,9 @@ public class PostsDAOMybatis implements PostsDAO {
 	public PostsAllVO SelectByCodeP(int postNo) {
 		return sqlSession.selectOne(namespace+"SelectByCodeP", postNo);
 	}
+
+	@Override
+	public int upReadCount(int postNo) {
+		return sqlSession.update(namespace+"upReadCount", postNo);
+	}
 }

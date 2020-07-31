@@ -11,4 +11,5 @@ public interface PostsService {
 	PostsAllVO SelectByCodeE(int postNo);
 	PostsAllVO SelectByCodeS(int postNo);
 	PostsAllVO SelectByCodeP(int postNo);
+	int upReadCount(int postNo);
 }

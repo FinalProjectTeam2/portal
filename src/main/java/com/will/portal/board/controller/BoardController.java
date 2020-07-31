@@ -1,5 +1,7 @@
 package com.will.portal.board.controller;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.will.portal.board.model.BoardSearchVO;
 import com.will.portal.board.model.BoardService;
@@ -43,7 +46,7 @@ public class BoardController {
 
 	@Autowired
 	private FileUploadUtil fileUploadUtil;
-	
+
 	@Autowired
 	private FilesService filesSercive;
 
@@ -109,23 +112,22 @@ public class BoardController {
 		vo.setTitle(title);
 		vo.setOfficialNo(officialNo);
 		logger.info("게시글 작성 처리, 파라미터 vo={}", vo);
-		
+
 		int cnt = postsService.insertPosts(vo);
 		logger.info("게시글 작성 처리 결과, cnt={}, vo={}", cnt, vo);
-		
-		//파일 업로드 처리
-		List<Map<String, Object>> fileList
-		=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
-		
+
+		// 파일 업로드 처리
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
+
 		String msg = "게시글 작성 실패!", url = "/portal/board/write?bdCode=" + vo.getBdCode();
-		if(cnt >0) {
-			for(Map<String, Object> map : fileList) {
+		if (cnt > 0) {
+			for (Map<String, Object> map : fileList) {
 				FilesVO fileVo = new FilesVO();
 				fileVo.setFileName((String) map.get("fileName"));
 				fileVo.setFileSize((Long) map.get("fileSize"));
 				fileVo.setOriginalFileName((String) map.get("originalFName"));
 				fileVo.setPostNo(vo.getPostNo());
-				
+
 				cnt = filesSercive.insertFiles(fileVo);
 				logger.info("파일 insert 처리 결과 cnt={}", cnt);
 			}
@@ -145,27 +147,57 @@ public class BoardController {
 	}
 
 	@RequestMapping("/detail")
+	public String detailCount(@RequestParam(defaultValue = "0") int postNo, Model model) {
+		
+		int count = postsService.upReadCount(postNo);
+		logger.info("조회수 증가 결과 count={}", count);
+
+		return "forward:/portal/board/detailView";
+	}
+	
+	@RequestMapping("/detailView")
 	public String detail(@RequestParam(defaultValue = "0") int postNo, Model model) {
 		logger.info("게시판 상세보기 페이지");
-		if(postNo == 0) {
-			model.addAttribute("msg", "잘못된 경로입니다.");
-			model.addAttribute("url","/portal/board/list");
-			return "common/message";
-		}
 		
+
 		PostsAllVO vo = postsService.SelectByCodeE(postNo);
-		if(vo == null) {
+		if (vo == null) {
 			vo = postsService.SelectByCodeS(postNo);
-			if(vo == null) {
+			if (vo == null) {
 				vo = postsService.SelectByCodeP(postNo);
 			}
 		}
-		
-		logger.info("게시판 상세보기 조회 결과 vo={}",vo);
-		
+
+		logger.info("게시판 상세보기 조회 결과 vo={}", vo);
+
 		model.addAttribute("vo", vo);
-		
+
 		return "/portal/board/detail";
+	}
+	
+	@RequestMapping("/download")
+	public ModelAndView download(@RequestParam(defaultValue = "0") int no, @RequestParam String fileName
+			, HttpServletRequest request, Model model) {
+		//1.
+		logger.info("다운로드 파라미터 no={}, fileName={}", no, fileName);
+		//2.
+		int cnt = filesSercive.upDownCount(no);
+		logger.info("다운로드수 증가 cnt={}",cnt);
+		
+		//다운로드 처리를 위한 페이지로 넘겨준다
+		String upPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDS);
+		File file = new File(upPath, fileName);
+		
+		//3.
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("file", file);
+		
+		
+		//4.
+		//model에 map 넣기
+		ModelAndView mav = new ModelAndView("reBoardDownloadView", map);
+		return mav;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -231,4 +263,5 @@ public class BoardController {
 		logger.info("ajax categoryList");
 		return boardService.selectCategoryList();
 	}
+
 }

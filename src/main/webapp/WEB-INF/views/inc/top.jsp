@@ -216,7 +216,7 @@
 		});
 
 		$("#btLogin").click(function() {
-			location.href = "<c:url value='/login/login' />";
+			location.href = "<c:url value='/login' />";
 		});
 	});
 </script>
