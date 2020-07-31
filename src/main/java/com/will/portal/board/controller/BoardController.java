@@ -260,6 +260,7 @@ public class BoardController {
 	@RequestMapping("/ajax/cateList")
 	@ResponseBody
 	public List<CategoryListVO> cateList() {
+		logger.info("ajax categoryList");
 		return boardService.selectCategoryList();
 	}
 
