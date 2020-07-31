@@ -39,13 +39,13 @@ public class CommonController {
 
 	@Autowired
 	DepartmentService departmentService;
-	
+
 	@Autowired
 	EmployService employService;
 
 	@Autowired
 	StudentService studentService;
-	
+
 	@Autowired
 	ProfessorService professorService;
 
@@ -65,9 +65,9 @@ public class CommonController {
 	public MemberDetails memberByno(@RequestParam String officialNo) {
 		String num = officialNo.substring(4, 5);
 		logger.info("ajax - member 호출, 파라미터 officialNo={}",officialNo);
-		
+
 		MemberDetails user = null;
-		
+
 		switch (Integer.parseInt(num)) {
 		case 1:
 			user = employService.selectByEmpNo(officialNo);
@@ -79,18 +79,18 @@ public class CommonController {
 			user = studentService.selectByStuNo(officialNo);
 			break;
 		}
-		
+
 		return user;
 	}
 
 	   @RequestMapping("/image")
-	   public ResponseEntity<byte[]> displayImage(@RequestParam String img, 
+	   public ResponseEntity<byte[]> displayImage(@RequestParam String img,
 	         HttpSession session) {
 	      InputStream is = null;
 	      ResponseEntity<byte[]> entity = null;
 	      logger.info("FILE NAME : " + img);
 	      String uploadPath =session.getServletContext().getRealPath("pd_images");
-	      
+
 	      try {
 	         String formatName = img.substring(img.lastIndexOf(".") + 1);
 	         MediaType mType = getMediaType(formatName);
@@ -99,13 +99,13 @@ public class CommonController {
 	         if(!file.exists()) {
 	            entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 	         }
-	         
+
 	         is = new FileInputStream(file);
-	         
+
 	         headers.setContentType(mType);
-	         
+
 	         entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), headers, HttpStatus.CREATED);
-	            
+
 	      } catch (FileNotFoundException e) {
 	         e.printStackTrace();
 	         entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
@@ -120,7 +120,7 @@ public class CommonController {
 	               e.printStackTrace();
 	            }
 	      }
-	      
+
 	      return entity;
 	   }
 
@@ -134,6 +134,6 @@ public class CommonController {
 
 	      return mediaMap.get(type);
 
-	
+
 	   }
 }
