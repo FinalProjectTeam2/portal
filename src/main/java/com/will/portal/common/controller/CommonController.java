@@ -49,6 +49,7 @@ public class CommonController {
 	@Autowired
 	ProfessorService professorService;
 
+
 	//
 	@RequestMapping("/departmentList")
 	@ResponseBody
