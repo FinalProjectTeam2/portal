@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.will.portal.official_info.model.Official_infoVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
+import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.subject.model.SubjectVO;
 
 public interface ProfessorService {
@@ -17,7 +18,7 @@ public interface ProfessorService {
 	public boolean loginCheckSec(String loginPwd, String password, String officicalNo);
 	public ProfessorVO selectByProfNo(String profNo);
 	int insertProfessor(ProfessorVO profVo, Official_infoVO officialVo, int sort);
-	List<SubjectVO> loadByProfNo(String profNo);
+	List<SubjectAllVO> loadByProfNo(String profNo);
 	List<Subj_timeVO> timeByProfNo(String profNo);
 	int insertSubjTime(Subj_timeVO vo);
 	List<Map<String, Object>> classroomByDepNo(String depNo);

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.subj_time.model.Subj_timeVO;
+import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.subject.model.SubjectVO;
 
 @Controller
@@ -35,14 +36,14 @@ public class LectureController {
 	
 	@RequestMapping("/lecture/openLecture")
 	public String openLecture(Principal principal, Model model) {
-		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
 		String profNo = user.getOfficialNo();
 		logger.info("교수 과목 등록 페이지 파라미터 profNo={}", profNo);
 		
 		String depNo = profNo.substring(5, 8);
 		logger.info("교수 과목 확인 처리 페이지 profNo={}, depNo={}", profNo, depNo);
 		
-		List<SubjectVO> list = profService.loadByProfNo(profNo);
+		List<SubjectAllVO> list = profService.loadByProfNo(profNo);
 		
 		
 		List<Map<String, Object>> classList = profService.classroomByDepNo(depNo);
@@ -98,5 +99,12 @@ public class LectureController {
 		
 		return timeList;
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 }
