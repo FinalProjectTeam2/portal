@@ -82,12 +82,17 @@
 		from posts p join professor s on p.official_no=s.prof_no
 		where POST_NO = #{postNo}
 	</select>
-	
+
 	<select id="SelectByCodeS" resultMap="selectByCodeEResultMap" parameterType="int">
 		select p.*, s.name user_name
 		from posts p join student s on p.official_no=s.stu_no
 		where POST_NO = #{postNo}
 	</select>
 	
+	<update id="upReadCount" parameterType="int">
+		update posts
+		set read_count = read_count+1
+		where post_no = #{postNo}
+	</update>
 </mapper>
 
