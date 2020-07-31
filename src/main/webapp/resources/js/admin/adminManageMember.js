@@ -36,24 +36,7 @@ $(function() {
 				}
 			});
 
-	// 등록 구분 시 입력창
-	$('select[name=sort]').change(function() {
-		if ($('select[name=sort]').val() == 1) {
-			$('.emp').css('display', 'block');
-			$('.emp select').val("");
-			$('.stud').css('display', 'none');
-		} else {
-			$('.emp').css('display', 'none');
-			$('.stud').css('display', 'block');
-			$('.stud select').val("");
-		}
-		if ($('select[name=sort]').val() == 2) {
-			$('.prof').css('display', 'inline-block');
-			$('.prof').val("");
-		} else {
-			$('.prof').css('display', 'none');
-		}
-	});
+
 	$('#btMultiDel').click(
 			function() {
 				var len = $('tbody input[type=checkbox]:checked').length;

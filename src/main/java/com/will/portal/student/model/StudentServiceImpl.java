@@ -2,6 +2,7 @@ package com.will.portal.student.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.will.portal.account_info.model.Account_InfoDAO;
+import com.will.portal.common.StudentSearchVO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
@@ -25,6 +27,17 @@ public class StudentServiceImpl implements StudentService {
 	Official_infoDAO officialDao;
 	@Autowired private Account_InfoDAO accountInfoDao;
 
+
+	
+	@Override
+	public List<Map<String, Object>> selectStudentView(StudentSearchVO studentSearchVo) {
+		return studentDao.selectStudentView(studentSearchVo);
+	}
+
+	@Override
+	public List<StudentVO> selectStudent() {
+		return studentDao.selectStudent();
+	}
 
 	@Transactional
 	public int insertStudent(StudentVO studentVo, Official_infoVO officialVo, int sort) {
@@ -111,6 +124,11 @@ public class StudentServiceImpl implements StudentService {
 		}
 
 		return result;
-
 	}
+
+	@Override
+	public int getTotalRecord(StudentSearchVO studentSearchVo) {
+		return studentDao.getTotalRecord(studentSearchVo);
+	}
+	
 }
