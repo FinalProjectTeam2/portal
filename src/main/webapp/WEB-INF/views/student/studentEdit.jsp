@@ -6,13 +6,6 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/studentEdit.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/materialize.min.css' />">
 
-<input type="text" id="sample4_postcode" placeholder="우편번호">
-<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
-<span id="guide" style="color:#999;display:none"></span>
-<input type="text" id="sample4_detailAddress" placeholder="상세주소">
-<input type="text" id="sample4_extraAddress" placeholder="참고항목">
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -36,43 +29,44 @@
                 if(data.buildingName !== '' && data.apartment === 'Y'){
                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                 }
-                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-		
+
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample4_postcode').value = data.zonecode;
-                document.getElementById("sample4_roadAddress").value = roadAddr;
-                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-                
-                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-                if(roadAddr !== ''){
-                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                } else {
-                    document.getElementById("sample4_extraAddress").value = '';
-                }
+                document.getElementById('zipcode').value = data.zonecode;
+                document.getElementById("address").value = roadAddr;
 
-                var guideTextBox = document.getElementById("guide");
-                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                if(data.autoRoadAddress) {
-                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                    guideTextBox.style.display = 'block';
-
-                } else if(data.autoJibunAddress) {
-                    var expJibunAddr = data.autoJibunAddress;
-                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                    guideTextBox.style.display = 'block';
-                } else {
-                    guideTextBox.innerHTML = '';
-                    guideTextBox.style.display = 'none';
-                }
             }
         }).open();
     }
 </script>
 <script>
+//핸드폰 번호에 자동으로 "-"입력
+function inputPhoneNumber(obj) {
+    var number = obj.value.replace(/[^0-9]/g, "");
+    var phone = "";
+
+    if(number.length < 4) {
+        return number;
+    } else if(number.length < 7) {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3);
+    } else if(number.length < 11) {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3, 3);
+        phone += "-";
+        phone += number.substr(6);
+    } else {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3, 4);
+        phone += "-";
+        phone += number.substr(7);
+    }
+    obj.value = phone;
+}
+
+
 	$(function () {
 		$.select();
 		$('#editFrm').submit(function () {
@@ -190,28 +184,6 @@ a:focus {
 			      </div>
 			      <div class="cola s9" id="info">
 			      	<table id="studentTable">
-			      		<tr>
-			      			<th>학번</th>
-			      			<td>${map['STU_NO'] } / 입학날짜 : <fmt:formatDate value='${map["ADMISSION_DATE"] }' pattern="yyyy-MM-dd" />
-			      			 </td>
-			      		</tr>
-			      		<tr>
-			      			<th>학생</th>
-			      			<td>${map['NAME'] } / ${map['SSN'] }/ 대한민국</td>
-			      		</tr>
-			      		<tr>
-			      			<th>소속</th>
-			      			<td>${map['FACULTY_NAME'] }/ 제1전공 : ${map['DEP_NAME'] }</td>
-			      		</tr>
-			      		<tr>
-			      			<th>과정</th>
-			      			<td>학사: ${map['STATE'] }/ ${map['SEMESTER'] }학기 </td>
-			      		</tr>
-			      		<tr>
-			      			<th>기타</th>
-			      			<td>${map['HP1'] }-${map['HP2'] }-${map['HP3'] } / ${map['EMAIL1'] }@${map['EMAIL2'] } 
-			      			/ ${map['ZIPCODE'] } ${map['ADDRESS'] } ${map['ADDR_DETAIL'] } / ${map['BANK_NAME'] } ${map['ACCOUNT_NO'] }(${map['ACCOUNT_NAME'] })</td>
-			      		</tr>
 			      	</table>
 			      </div>
 			      <!--  -->
@@ -251,9 +223,11 @@ a:focus {
 				      		<tr>
 				      			<th>우편번호</th>
 				      			<td><input placeholder="우편번호" name="zipcode" id="zipcode" type="text" class="validate" value="${map['ZIPCODE'] }">
-				      			  <button  id="findZipBt" type="button">우편번호 찾기</button></td>
+				      			  <button  id="findZipBt" type="button" onclick="sample4_execDaumPostcode()">우편번호 찾기</button></td>
 				      			<th>주소</th>
-				      			<td><input placeholder="주소" name="address" id="address" type="text" class="validate" value="${map['ADDRESS'] }"></td>
+				      			<td><input placeholder="주소" name="address" id="address" type="text" class="validate" value="${map['ADDRESS'] }">
+				      				<span id="dong"></span>
+				      			</td>
 				      			<th>상세주소</th>
 				      			<td><input placeholder="상세주소" name="addrDetail" id="addrDetail" type="text" class="validate" value="${map['ADDR_DETAIL'] }"></td>
 				      		</tr>
@@ -261,7 +235,7 @@ a:focus {
 				      			<th>이메일</th>
 								<td><input placeholder="이메일" name="email" id="email" type="text" class="validate" value="${map['EMAIL1'] }@${map['EMAIL2'] }"></td>
 								<th>전화번호</th>
-								<td><input placeholder="핸드폰번호" name="hp" id="hp" type="text" class="validate" value="${map['HP1'] }-${map['HP2'] }-${map['HP3'] }"></td>
+								<td><input placeholder="핸드폰번호" onKeyup="inputPhoneNumber(this);" name="hp" id="hp" type="text" class="validate" value="${map['HP1'] }-${map['HP2'] }-${map['HP3'] }"></td>
 				      		</tr>
 				      	
 						
