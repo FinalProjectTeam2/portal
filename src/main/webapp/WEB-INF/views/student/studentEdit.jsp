@@ -66,25 +66,28 @@ function inputPhoneNumber(obj) {
     obj.value = phone;
 }
 
-
 	$(function () {
 		$.select();
 		$('#editFrm').submit(function () {
+			var formData = new FormData(); 
+			formData.append("bankCode", $("#bankCode").val()); 
+			formData.append("accountNo", $("#accountNo").val()); 
+			formData.append("accountName", $("#accountName").val()); 
+			
+			formData.append("hp", $("#hp").val()); 
+			formData.append("email", $("#email").val()); 
+			formData.append("zipcode", $("#zipcode").val()); 
+			formData.append("address", $("#address").val()); 
+			formData.append("addrDetail", $("#addrDetail").val());
+			
+			formData.append("upfile", $("#upfile")[0].files[0]);
+
 			$.ajax({
 				url : "<c:url value='/student/studentEdit' />",
 				type: "post",
-				data : {
-					bankCode:$('#bankCode').val(),
-					accountNo:$('#accountNo').val(),
-					accountName:$('#accountName').val(),
-					
-					hp:$('#hp').val(), 
-					email:$('#email').val(), 
-					zipcode:$('#zipcode').val(),
-					address:$('#address').val(), 
-					addrDetail:$('#addrDetail').val(),
-					
-				},
+				processData : false,
+	            contentType : false,
+				data :formData,
 				success:function(res){
 					alert("회원정보 수정이 완료되었습니다");
 					if(!res){
@@ -116,6 +119,15 @@ function inputPhoneNumber(obj) {
 				$('#zipcode').val(res.ZIPCODE);
 				$('#address').val(res.ADDRESS); 
 				$('#addrDetail').val(res.ADDR_DETAIL);
+				
+				var imgDiv = "<img id='studentImg' alt='사진' src='${ pageContext.request.contextPath }/common/image?img=" +res.IMAGE_URL+ "'/>"
+						+'<div class="rowa" style=" margin-top: 20px;"> <label for="upfile">사진수정</label>'
+						+'<input type="file" name="upfile" id="upfile" ></div>	';	
+				
+				var defaultDiv = "<img id='studentImg' alt='사진' src='${ pageContext.request.contextPath }/resources/images/student.png'/>"
+						+'<div class="rowa" style=" margin-top: 20px;"> <label for="upfile">사진수정</label>'
+						+'<input type="file" name="upfile" id="upfile" ></div>	';	
+				
 				var inHtml = '<tr>'
 	      			+ '<th>학번</th>'
 	      			+ '<td>'+res.STU_NO+' / 입학날짜 : '+moment(res.ADMISSION_DATE).format('YYYY-MM-DD')
@@ -138,7 +150,13 @@ function inputPhoneNumber(obj) {
 	      			+ '<td>'+res.HP1+'-'+res.HP2+'-'+res.HP3+' / '+res.EMAIL1+'@'+res.EMAIL2
 	      			+ '/ '+res.ZIPCODE+' '+res.ADDRESS+' '+res.ADDR_DETAIL+' / '+res.BANK_NAME+' '+res.ACCOUNT_NO +'('+res.ACCOUNT_NAME+')</td>'
 	      			+ '</tr>';
-	      			
+	      		
+				if(res.IMAGE_URL != 'default.jsp'){
+					$('#imgDiv').html(imgDiv);
+				}else{
+					$('#imgDiv').html(defaultDiv);
+				}
+				
 	      		$('#studentTable').html(inHtml);
 	      		$('#ssn').val(res.SSN);
 	      		$('#name').val(res.NAME);
@@ -166,8 +184,7 @@ a:focus {
 </style>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-
-
+		
 		<div id="editStu">
 		<fieldset>
 		<legend>정보조회 및 개인정보 변경</legend>
@@ -176,11 +193,13 @@ a:focus {
 			   <div class="rowa">
 			      <!-- 기존정보 -->
 			      <div class="cola s3" id="imgDiv">
-			      	<img id="studentImg" alt="" src="<c:url value='/resources/images/student.png'/>">
+< 			      	<img id="studentImg" alt="디폴트" src="<c:url value='/resources/images/student.png'/>">
 					   <div class="rowa" style=" margin-top: 20px;">
 					   		<label for="upfile">사진수정</label>
 					      	<input type="file" name="upfile" id="upfile" >
 						</div>			      	
+					</div>
+					<div>
 			      </div>
 			      <div class="cola s9" id="info">
 			      	<table id="studentTable">
@@ -197,6 +216,7 @@ a:focus {
 				      	<table id="editInfo">
 				      		<tr>
 				      			<th>이름</th>
+				      			
 				      			<td><input placeholder="이름" name="name" id="name" type="text" class="validate" readonly="readonly"></td>
 								<th>학번</th>
 								<td><input placeholder="학번" name="officialNo" type="text" class="validate" readonly="readonly" value="${principal.officialNo }"></td>
