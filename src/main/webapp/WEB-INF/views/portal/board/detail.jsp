@@ -68,7 +68,7 @@
 
 			<div class="bts">
 				<input type="button" value="목록" id="list">
-				<c:if test="${vo.postsVo.officialNo == principal.officialNo }">
+				<c:if test="${vo.postsVo.officialNo == principal.officialNo or principal.type == 'ADMIN'}">
 					<input type="button" id="edit" value="수정"> <input type="button" id="delete"
 						value="삭제"> 
 				</c:if>
