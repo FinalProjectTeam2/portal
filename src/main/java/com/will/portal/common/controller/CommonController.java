@@ -42,14 +42,12 @@ public class CommonController {
 	
 	@Autowired
 	EmployService employService;
-	
 
 	@Autowired
 	StudentService studentService;
 	
 	@Autowired
 	ProfessorService professorService;
-
 
 	//
 	@RequestMapping("/departmentList")
