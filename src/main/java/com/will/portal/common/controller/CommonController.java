@@ -35,7 +35,6 @@ public class CommonController {
 	= LoggerFactory.getLogger(CommonController.class);
 	
 	@Autowired DepartmentService departmentService;
-	
 	//
 	@RequestMapping("/departmentList")
 	@ResponseBody
@@ -46,7 +45,6 @@ public class CommonController {
 		
 		return departmentList;
 	}
-	
 
 	   @RequestMapping("/image")
 	   public ResponseEntity<byte[]> displayImage(@RequestParam String img, 
