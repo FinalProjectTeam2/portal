@@ -114,3 +114,7 @@ main>.container {
 #head1{
 	display: inline-block;
 }
+.btTop{
+	width: 100px;
+	margin: 10px 10px 10px 0;
+}
