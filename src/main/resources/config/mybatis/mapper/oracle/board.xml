@@ -25,7 +25,7 @@
 			<result column="category_Name" jdbcType="VARCHAR"
 				property="categoryName" />
 			<result column="usage" jdbcType="VARCHAR" property="usage" />
-			<result column="regDate" jdbcType="TIMESTAMP"
+			<result column="reg_Date" jdbcType="TIMESTAMP"
 				property="regDate" />
 		</association>
 		<collection property="boardList" column="category_Code"
@@ -38,6 +38,6 @@
 
 	<select id="selectBoardByCategoryInline" parameterType="String" resultType="boardVo">
 		select * from board
-		where category_code = (select category_code from board where bd_code='F')
+		where category_code = (select category_code from board where bd_code=#{bdCode})
 	</select>
 </mapper>

@@ -14,5 +14,10 @@
 		select count(*) from files
 		where post_no = #{postNo}
 	</select>
+	<update id="upDownCount" parameterType="int">
+		update files
+		set down_count = down_count+1
+		where no = #{no}
+	</update>
 </mapper>
 

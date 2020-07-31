@@ -19,7 +19,7 @@
 
 	<http auto-config='true' use-expressions="true">
 
-		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/login/**" access="permitAll" />
 		<intercept-url pattern="/index" access="permitAll" />
 		<intercept-url pattern="/**/ajax/**" access="permitAll" />
 
