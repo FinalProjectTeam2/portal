@@ -15,6 +15,7 @@ import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
+import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.subject.model.SubjectVO;
 
 @Service
@@ -113,7 +114,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return result;
 	}
 
-	public List<SubjectVO> loadByProfNo(String profNo) {
+	public List<SubjectAllVO> loadByProfNo(String profNo) {
 		return professorDao.loadByProfNo(profNo);
 	}
 

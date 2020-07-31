@@ -16,6 +16,22 @@
     h1 { font-size: 1.2em; margin: .6em 0; }
     .ui-dialog .ui-state-error { padding: .3em; }
     .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    
+    .tab{
+    	float: left;
+    }
+    
+    #timetableDiv{
+    	clear:none;
+    	width: 380px;
+    	float: left;
+    	margin-left: 50px;
+    	
+    }
+    #timetableDiv table{
+    	all:unset;
+    	font-size: 0.8em;
+    }
 </style>
 <script type="text/javascript">
 	var time = '';
@@ -57,6 +73,7 @@ $(function(){
 	    	 success:function(res){
 	    		 alert(res);
 	    		 dialog.dialog( "close" );
+	    		 timeTable();
 	    	 },
 	    	 error:function(xhr, status, error){
 	    		 alert(error);
@@ -73,7 +90,7 @@ $(function(){
 	      modal: true,
 	      buttons: {
 	        "등록하기": addSubject,
-	        Cancel: function() {
+	        "취소": function() {
 	          dialog.dialog( "close" );
 	        }
 	      },
@@ -131,7 +148,7 @@ function timeTable(){
 
 <main role="main" class="flex-shrink-0">
 <div class="container">
-	<h2>강의시간 설정</h2>
+	<h2>강의시간 설정</h2><label style="float: right; margin-right: 500px;">강의 계획서 업로드<a href="#"><img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
 	<h4>${principal.name} 교수님의 시간표 </h4>
 	<div class='tab'>
 	  <table border='0' cellpadding='0' cellspacing='0'>
@@ -209,8 +226,25 @@ function timeTable(){
 	    </tr>
 	  </table>
 	</div>
-
- 
+	<c:if test="${!empty list}">
+		<div id="timetableDiv">
+			<p>${principal.name} 교수님의 전체 강의 계획</p>
+			<table border="1">
+				<tr>
+					<th>과목명</th>
+					<th>학점</th>
+					<th>입력 학점</th>
+				</tr>
+				<c:forEach var="vo" items="${list }">
+	      			<tr>
+						<td>${vo.subjName }</td>      				
+						<td>${vo.credit }</td>
+						<td>${vo.count }</td> 				
+	      			</tr>
+	      		</c:forEach>	
+			</table>
+		</div>
+ 	</c:if>
 <div id="dialog-form" title="수업 등록">
   <form name="frmSubject" action="" method="post">
   <p class="validateTips">모든칸을 채워야 합니다.</p>

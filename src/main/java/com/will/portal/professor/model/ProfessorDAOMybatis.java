@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.will.portal.subj_time.model.Subj_timeVO;
+import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.subject.model.SubjectVO;
 
 @Repository
@@ -37,7 +38,7 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	}
 
 	@Override
-	public List<SubjectVO> loadByProfNo(String profNo) {
+	public List<SubjectAllVO> loadByProfNo(String profNo) {
 		return sqlsession.selectList(namespace+"loadByProfNo", profNo);
 	}
 
