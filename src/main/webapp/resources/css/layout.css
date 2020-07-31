@@ -1,6 +1,7 @@
 @charset "UTF-8";
 body{
 	min-width: 1400px;
+	overflow: initial;
 }
 
 
@@ -81,6 +82,7 @@ code {
     margin: 0 auto;
     width: 80%;
     padding: 20px 0;
+    min-height: 74vh;
 }
 
 .nav-scroller {
@@ -145,5 +147,5 @@ code {
 	border-bottom: 1px solid white;
 }
 header .navbar {
-    width: 99%;
+    width: 100%;
 }
