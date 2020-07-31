@@ -30,7 +30,7 @@ public class FileUploadUtil {
 	Properties fileUploadProps;
 	
 	public static final int PATH_PDS=1; //자료실 사용
-	public static final int PATH_PD_IMAGE=2; //상품 업로드시 사용
+	public static final int PATH_IMAGE=2; //프로필 사진 업로드 사용
 	
 	public List<Map<String, Object>> fileUpload(HttpServletRequest request, int pathGb) {
 		//파일 업로드 처리 메서드
@@ -96,7 +96,7 @@ public class FileUploadUtil {
 		if(type.equals("test")) { //테스트시
 	         if(pathGb==PATH_PDS) {
 	            key="file.upload.path.test";
-	         }else if(pathGb==PATH_PD_IMAGE) {
+	         }else if(pathGb==PATH_IMAGE) {
 	            key="imageFile.upload.path.test";
 	         }
 	         
@@ -104,7 +104,7 @@ public class FileUploadUtil {
 	      }else { //deploy-배포시
 	         if(pathGb==PATH_PDS) {
 	            key="file.upload.path";
-	         }else if(pathGb==PATH_PD_IMAGE) {
+	         }else if(pathGb==PATH_IMAGE) {
 	            key="imageFile.upload.path";
 	         }
 
@@ -113,6 +113,8 @@ public class FileUploadUtil {
 	         HttpSession session=request.getSession();
 	         uploadPath
 	            =session.getServletContext().getRealPath(uploadPath);
+	         //uploadPath.replace("\\", "\\\\");
+	         //uploadPath.replace("\\\\\\", "\\\\");
 	      }
 
 		logger.info("type={}, uploadpath={}", type, uploadPath);

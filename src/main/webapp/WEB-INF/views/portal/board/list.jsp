@@ -18,6 +18,7 @@ ul.pagination {
 </style>
 <!-- 공지사항 -->
 <script type="text/javascript">
+	var name = "";
 	$(function() {
 		$.send(1);
 
@@ -74,10 +75,22 @@ ul.pagination {
 				+ '<td colspan="5">게시물이 없습니다.</td>'
 			+ "</tr>";
 		}else{
-			$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+" | 페이지 "+obj.pagingInfo.currentPage+"/"
+			$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+"건&ensp;&ensp;|&ensp;&ensp;페이지 "+obj.pagingInfo.currentPage+"/"
 					+obj.pagingInfo.totalPage+ "</span>");
 			
 			$.each(obj.list, function(idx, item) {
+				
+				$.ajax({
+					url : "<c:url value='/common/ajax/member'/>",
+					data : {officialNo: item.officialNo},
+					dataType: "json",
+					type : "get",
+					success : function(res) {
+						name = res.name;
+						offi = "."+item.officialNo;
+						$(offi).html(name+"("+item.officialNo+")");
+					}
+				});
 				str += "<tr>";
 				str += "<td>"+ item.postNo +"</td>";
 				str += "<td class='title'><a href=\"<c:url value='/portal/board/detail'/>?postNo="
@@ -96,7 +109,7 @@ ul.pagination {
 					str += "<img alt=\"newPost\" src=\"<c:url value='/resources/images/new.gif'/>\">";
 				}
 				str += "</a></td>";
-				str += "<td>"+ item.officialNo +"</td>";
+				str += "<td class='"+item.officialNo+"'></td>";
 				str += "<td>"+  moment(item.regDate).format('YYYY-MM-DD') +"</td>";
 				str += "<td>"+ item.readCount +"</td>";
 				str += "</tr>";

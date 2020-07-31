@@ -18,5 +18,10 @@ public class FilesServiceImpl implements FilesService{
 	public int selectCountByPostNo(int postNo) {
 		return filesDao.selectCountByPostNo(postNo);
 	}
+
+	@Override
+	public int upDownCount(int no) {
+		return filesDao.upDownCount(no);
+	}
 	
 }

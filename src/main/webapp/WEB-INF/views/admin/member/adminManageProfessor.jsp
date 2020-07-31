@@ -11,41 +11,54 @@
 
 
 		<div id="adminMngMem">
-				<h2>학생 관리</h2>
+			<div class="divTop">
+				<h2>교수 관리</h2>
 				<input type="button" class="btTop btCustom btn btn-primary" id="bt1"
-					value="학생 관리"><input type="button"
-					class="btTop btCustom btn btn-primary" id="bt2" value="교수 관리">
-				<input type="button" class="btTop btCustom btn btn-primary" id="bt3"
-					value="직원 관리">
-			<!-- 페이징 처리를 위한 form 시작-->
-			<form name="frmPage" method="post"
-				action="<c:url value='/admin/member/adminManageStudent'/>">
-				<input type="hidden" name="sort" value="${param.sort }"> <input
-					type="hidden" name="currentPage">
-			</form>
+					value="학생 관리"
+					onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input
+					type="button" class="btTop btCustom btn btn-primary" id="bt2"
+					onclick="location.href='<c:url value="/admin/member/adminManageProfessor"/>'"
+					value="교수 관리"> <input type="button"
+					class="btTop btCustom btn btn-primary" id="bt3" value="직원 관리"
+					onclick="location.href='<c:url value="/admin/member/adminManageEmployee"/>'">
+				<!-- 페이징 처리를 위한 form 시작-->
+				<form name="frmPage" method="post"
+					action="<c:url value='/admin/member/adminManageStudent'/>">
+					<input type="hidden" name="sort" value="${param.sort }"> <input
+						type="hidden" name="currentPage">
+				</form>
+			</div>
 			<!-- 페이징 처리 form 끝 -->
 
 			<form name="frmList" method="post"
 				action="<c:url value='/admin/member/adminManageStudent'/>">
 				<div class="divRight">
-					<div class="stud">
-						<label for="faculty"><span>학부</span></label> <select
-							name="facultyNo" id="faculty">
-							<option value="">선택</option>
-							<c:forEach var="facVo" items="${facultyList }">
-								<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
-							</c:forEach>
-						</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
-							id="department">
-							<option value="">학부를 선택하세요</option>
-						</select>
+					<div class="divTop">
+						<div class="stud">
+							<label for="faculty"><span>학부</span></label> <select
+								name="facultyNo" id="faculty">
+								<option value="">선택</option>
+								<c:forEach var="facVo" items="${facultyList }">
+									<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
+								</c:forEach>
+							</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
+								id="department">
+								<option value="">학부를 선택하세요</option>
+							</select> <label for="positionNo"><span class="prof">교수직급</span></label> <select
+								name="positionNo" class="rightEnd" id="profPosition">
+								<option value="">선택</option>
+								<c:forEach var="positionVo" items="${profPositionList }">
+									<option value="${positionVo.positionNo }">${positionVo.positionName }</option>
+								</c:forEach>
+							</select>
+						</div>
+
+
+						이름 <input type="text" size="8" name="searchKeyword">
+						<button class="btCustom btn btn-primary btn-lg login-button"
+							id="btSearch">검색</button>
+						<p style="float: left">조회결과 : {}건</p>
 					</div>
-
-
-					이름 <input type="text" size="8" name="searchKeyword">
-					<button class="btCustom btn btn-primary btn-lg login-button"
-						id="btSearch">검색</button>
-							<p style="float:left">조회결과 : {}건</p>
 					<div class="divList">
 						<table class="box2" summary="학생 목록">
 							<caption>학생 목록</caption>
@@ -186,6 +199,7 @@
 							class="btCustom btn btn-primary btn-lg login-button"
 							id="btMultiDel" value="선택한 학생 삭제"><br>
 					</div>
+				</div>
 			</form>
 		</div>
 		<%@ include file="../../inc/bottom.jsp"%>

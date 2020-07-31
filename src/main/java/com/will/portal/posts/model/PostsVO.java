@@ -17,6 +17,15 @@ public class PostsVO {
 
 	private int newImgTerm;
 	private int fileCount;
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public int getPostNo() {
 		return postNo;
@@ -127,7 +136,7 @@ public class PostsVO {
 		return "PostsVO [postNo=" + postNo + ", officialNo=" + officialNo + ", title=" + title + ", contents="
 				+ contents + ", regDate=" + regDate + ", readCount=" + readCount + ", delFlag=" + delFlag + ", bdCode="
 				+ bdCode + ", groupNo=" + groupNo + ", sortNo=" + sortNo + ", step=" + step + ", newImgTerm="
-				+ newImgTerm + ", fileCount=" + fileCount + "]";
+				+ newImgTerm + ", fileCount=" + fileCount + ", name=" + name + "]";
 	}
 
 }
