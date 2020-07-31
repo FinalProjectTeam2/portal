@@ -6,7 +6,7 @@
 }
 
 #adminMngMem .divList, .divRight, .divPage, .divList table {
-	width: 1000px;
+	width: 1400px;
 }
 
 #adminMngMem .divList {
@@ -20,11 +20,12 @@
 
 #adminMngMem .divRight {
 	text-align: right;
-	width: 1000px;
+	width: 1400px;
+	margin: auto;
 }
 
 #adminMngMem table {
-	width: 1000px;
+	width: 1400px;
 	text-align: center;
 	margin-top: 20px;
 }
@@ -44,8 +45,8 @@
 }
 
 main>.container {
-	padding: 60px 15px;
-	margin: 5% 10%;
+	padding: 6% 0%;
+	margin: auto;
 }
 
 #btSearch {
@@ -53,10 +54,8 @@ main>.container {
 	height: 31px;
 	font-size: 1em;
 	padding: 0;
-	margin: -6px 19px 0 18px;
+	margin: -6px 0 0 18px;
 }
-
-
 
 .divRight select {
 	margin: 0 20px 0 3px;
@@ -83,38 +82,52 @@ main>.container {
 	padding: 0;
 	margin: 0;
 }
-#adminMngMem input[type="checkbox"]{
-    width: 15px;
-    height: 15px;
-    vertical-align: unset;
+
+#adminMngMem input[type="checkbox"] {
+	width: 15px;
+	height: 15px;
+	vertical-align: unset;
 }
+
 #condition {
-    text-align: left;
-    margin-bottom: 16px;
+	text-align: left;
+	margin-bottom: 16px;
 }
-.stud select{
-	width:180px;
+
+.stud select {
+	width: 180px;
 }
-.emp, .prof{
-	display: none;
-}
+
 .emp select {
-	width:110px;
+	width: 110px;
 	text-align: right;
 }
-#profPosition{
+
+#profPosition {
 	width: 100px;
 }
-.stud{
+
+.stud {
 	margin-bottom: 15px;
 }
-.emp{
+
+.emp {
 	margin-bottom: 15px;
 }
-#head1{
+
+#head1 {
 	display: inline-block;
 }
-.btTop{
+
+.btTop {
 	width: 100px;
 	margin: 10px 10px 10px 0;
+}
+
+.divTop {
+	width: 1400px;
+	margin: auto;
+}
+.rightEnd{
+	margin-right: 0 !important;
 }

@@ -11,23 +11,26 @@
 
 
 		<div id="adminMngMem">
+			<div class="divTop">
 				<h2>학생 관리</h2>
 				<input type="button" class="btTop btCustom btn btn-primary" id="bt1"
-					value="학생 관리"><input type="button"
-					class="btTop btCustom btn btn-primary" id="bt2" value="교수 관리">
+					value="학생 관리" onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input type="button"
+					class="btTop btCustom btn btn-primary" id="bt2" onclick="location.href='<c:url value="/admin/member/adminManageProfessor"/>'" value="교수 관리">
 				<input type="button" class="btTop btCustom btn btn-primary" id="bt3"
-					value="직원 관리">
-			<!-- 페이징 처리를 위한 form 시작-->
-			<form name="frmPage" method="post"
-				action="<c:url value='/admin/member/adminManageStudent'/>">
-				<input type="hidden" name="sort" value="${param.sort }"> <input
-					type="hidden" name="currentPage">
-			</form>
+					value="직원 관리" onclick="location.href='<c:url value="/admin/member/adminManageEmployee"/>'">
+				<!-- 페이징 처리를 위한 form 시작-->
+				<form name="frmPage" method="post"
+					action="<c:url value='/admin/member/adminManageStudent'/>">
+					<input type="hidden" name="sort" value="${param.sort }"> <input
+						type="hidden" name="currentPage">
+				</form>
+			</div>
 			<!-- 페이징 처리 form 끝 -->
 
 			<form name="frmList" method="post"
 				action="<c:url value='/admin/member/adminManageStudent'/>">
 				<div class="divRight">
+					<div class="divTop">
 					<div class="stud">
 						<label for="faculty"><span>학부</span></label> <select
 							name="facultyNo" id="faculty">
@@ -36,7 +39,7 @@
 								<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
 							</c:forEach>
 						</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
-							id="department">
+							class="rightEnd" id="department">
 							<option value="">학부를 선택하세요</option>
 						</select>
 					</div>
@@ -45,7 +48,8 @@
 					이름 <input type="text" size="8" name="searchKeyword">
 					<button class="btCustom btn btn-primary btn-lg login-button"
 						id="btSearch">검색</button>
-							<p style="float:left">조회결과 : {}건</p>
+					<p style="float: left">조회결과 : {}건</p>
+					</div>
 					<div class="divList">
 						<table class="box2" summary="학생 목록">
 							<caption>학생 목록</caption>
@@ -178,7 +182,7 @@
 
 					<div class="btdiv">
 						<input type="button"
-							class="btCustom btn btn-primary btn-lg login-button"
+							class="btCustom btn btn-primary btn-lg login-button" onclick="location.href='<c:url value="/admin/member/adminRegisterMember"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
 					<div class="btdiv">
@@ -186,6 +190,7 @@
 							class="btCustom btn btn-primary btn-lg login-button"
 							id="btMultiDel" value="선택한 학생 삭제"><br>
 					</div>
+				</div>
 			</form>
 		</div>
 		<%@ include file="../../inc/bottom.jsp"%>

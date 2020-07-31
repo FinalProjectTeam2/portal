@@ -168,7 +168,7 @@ public class AdminMemberController {
 		
 	}
 	@RequestMapping("/adminManageProfessor")
-	public void adminManageProfessor(@ModelAttribute DepartmentVO searchVo,@RequestParam String position,Model model) {
+	public void adminManageProfessor(@ModelAttribute DepartmentVO searchVo,@RequestParam(required = false) String position,Model model) {
 		logger.info("adminManageProfessor, param: position={},  {}",position,searchVo);
 		
 		//for select 생성
@@ -194,8 +194,8 @@ public class AdminMemberController {
 		
 	}
 	@RequestMapping("/adminManageEmployee")
-	public void adminManageEmployee(@ModelAttribute Emp_departVO searchVo,@RequestParam String authority,
-			@RequestParam String empPosition,  Model model) {
+	public void adminManageEmployee(@ModelAttribute Emp_departVO searchVo,@RequestParam(required = false) String authority,
+			@RequestParam(required = false) String empPosition,  Model model) {
 		logger.info("adminManageEmployee, param: {}",searchVo);
 		logger.info("adminManageEmployee, param: authority={}, empPosition={}",authority,empPosition);
 		
