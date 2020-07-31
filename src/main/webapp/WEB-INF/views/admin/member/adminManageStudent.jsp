@@ -12,15 +12,11 @@
 
 		<div id="adminMngMem">
 				<h2>학생 관리</h2>
-				<input type="button" class="btCustom btn btn-primary" id="bt1"
+				<input type="button" class="btTop btCustom btn btn-primary" id="bt1"
 					value="학생 관리"><input type="button"
-					class="btCustom btn btn-primary" id="bt2" value="교수 관리">
-				<input type="button" class="btCustom btn btn-primary" id="bt3"
+					class="btTop btCustom btn btn-primary" id="bt2" value="교수 관리">
+				<input type="button" class="btTop btCustom btn btn-primary" id="bt3"
 					value="직원 관리">
-
-		
-
-
 			<!-- 페이징 처리를 위한 form 시작-->
 			<form name="frmPage" method="post"
 				action="<c:url value='/admin/member/adminManageStudent'/>">
@@ -84,7 +80,7 @@
 									<td>학생킹</td>
 									<td>학부</td>
 									<td>학과</td>
-									<td>신입</td>
+									<td>신입생</td>
 									<td><a href="#">수정</a></td>
 									<td><a href="#">삭제</a></td>
 								</tr>
@@ -96,7 +92,7 @@
 									<td>학생킹</td>
 									<td>학부</td>
 									<td>학과</td>
-									<td>신입</td>
+									<td>신입생</td>
 									<td><a href="#">수정</a></td>
 									<td><a href="#">삭제</a></td>
 								</tr>
@@ -108,7 +104,7 @@
 									<td>학생킹</td>
 									<td>학부</td>
 									<td>학과</td>
-									<td>신입</td>
+									<td>신입생</td>
 									<td><a href="#">수정</a></td>
 									<td><a href="#">삭제</a></td>
 								</tr>
