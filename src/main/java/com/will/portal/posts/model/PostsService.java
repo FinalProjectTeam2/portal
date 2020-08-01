@@ -12,4 +12,6 @@ public interface PostsService {
 	PostsAllVO SelectByCodeS(int postNo);
 	PostsAllVO SelectByCodeP(int postNo);
 	int upReadCount(int postNo);
+	String selectBdCodeByPostNo(int postNo);
+	int deletePostByPostNo(int postNo);
 }

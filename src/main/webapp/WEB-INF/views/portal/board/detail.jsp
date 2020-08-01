@@ -19,7 +19,9 @@
 			location.href = "<c:url value='/portal/board/edit?postNo=${vo.postsVo.postNo }'/>";
 		});
 		$("#delete").click(function() {
-			location.href = "<c:url value='/portal/board/delete?postNo=${vo.postsVo.postNo }'/>";
+			if(confirm('정말 삭제하시겠습니까?')){
+				location.href = "<c:url value='/portal/board/delete?postNo=${vo.postsVo.postNo }'/>";
+			}
 		});
 		$("#list").click(function() {
 			location.href = "<c:url value='/portal/board/list?bdCode=${vo.postsVo.bdCode }'/>";
