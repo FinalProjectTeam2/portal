@@ -7,6 +7,19 @@ modify(classroom_code VARCHAR2(20));
 alter table subj_time
 modify(classroom_code VARCHAR2(20));
 
+#class룸 확인하는 view
+create or replace view class as
+select d.dep_no, c.classroom_code, c.classroom_name
+from department d join classroom c
+on c.building_code=d.building_code;
+
+#추가 시퀀스
+create sequence subj_time_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
+
+
 #은행DB
 CREATE SEQUENCE bank_SEQ
 INCREMENT BY 1

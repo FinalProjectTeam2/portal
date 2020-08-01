@@ -148,7 +148,7 @@ function timeTable(){
 
 <main role="main" class="flex-shrink-0">
 <div class="container">
-	<h2>강의시간 설정</h2><label style="float: right; margin-right: 500px;">강의 계획서 업로드<a href="#"><img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
+	<h2>강의시간 설정</h2><label for="syllabus" style="float: right; margin-right: 500px;">강의 계획서 업로드<a id="syllabus" href="#"><img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
 	<h4>${principal.name} 교수님의 시간표 </h4>
 	<div class='tab'>
 	  <table border='0' cellpadding='0' cellspacing='0'>
