@@ -30,8 +30,10 @@
 	
 	
 	
-   	<select id="timeByCode" resultType="subj_timeVo" parameterType="list">
-   		select * from subj_time 
+   	<select id="timeByCode" resultType="subj_timetableVo" parameterType="list">
+   		select t.*, s.subj_name 
+   		from subj_time t join subject s 
+   		on t.open_sub_code = substr(s.subj_code, 5)
    		<if test="list!=null">
 	   		where OPEN_SUB_CODE in
 	   		<foreach collection="list" item="item" index="index"

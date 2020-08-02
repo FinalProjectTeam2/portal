@@ -38,13 +38,20 @@
 
 $(function(){
 	timeTable();
-	
+	updateTable();
 	var dialog, form,
 	subject = $( "#subject" ),
 	time = $( "#time" ),
 	credit = $( "#credit" ),
 	allFields = $( [] ).add( subject ).add( time ).add( credit ),
 	tips = $( ".validateTips" );
+	
+	//강의 계획서 업로드 
+	$('#syllabus').click(function(){
+		window.open("<c:url value='/syllabus/upload'/>", "syllabusUpload", "width:800, height:700")
+	});
+	
+	
 	
 	function updateTips( t ) {
 	      tips
@@ -74,6 +81,7 @@ $(function(){
 	    		 alert(res);
 	    		 dialog.dialog( "close" );
 	    		 timeTable();
+	    		 updateTable();
 	    	 },
 	    	 error:function(xhr, status, error){
 	    		 alert(error);
@@ -82,7 +90,7 @@ $(function(){
 	    	 
 	     });
 	    }
-	 
+			 
 	    dialog = $( "#dialog-form" ).dialog({
 	      autoOpen: false,
 	      height: 500,
@@ -113,6 +121,38 @@ $(function(){
 	      });
 });
 
+function updateTable(){
+	$.ajax({
+		url:"<c:url value='/lecture/updateTable'/>",
+		dataType:"json",
+		success:function(res){
+			var table="<p>${principal.name} 교수님의 전체 강의 계획</p>"+
+				"<table border='1'>"+
+					"<tr>"+
+						"<th>과목명</th>"+
+						"<th>학점</th>"+
+						"<th>입력 학점</th>"+
+					"</tr>";
+				$.each(res, function(item, index){
+					table+="<tr>";
+					table+="<td>"+item.subjName+"</td>";
+					table+="<td>"+item.credit+"</td>";
+					table+="<td>"+item.count+"</td>";
+					table+="</tr>";
+				});	
+				table+="</table>";
+				$('timetableDiv').html(table);
+		},
+		error:function(xhr, status, error){
+			alert(error);
+		}
+	});
+}
+
+
+
+
+
 function timeTable(){
 	$.ajax({
 		url:"<c:url value='/lecture/timeByProfNo'/>",
@@ -125,8 +165,12 @@ function timeTable(){
 				var tdId=item.timetableCode;
 				tdId = '#'+tdId;
 				console.log(tdId);
-				$(tdId).html(item.classroomCode);
-				$(tdId).css('background','skyblue');
+				var bColor = '#A'+ item.classroomCode.substring(5, 8);
+				var color = '#5'+ item.classroomCode.substring(5, 8);
+				console.log(bColor);
+				$(tdId).html(item.subjName);
+				$(tdId).css('background', bColor);
+				$(tdId).css('color', color);
 			});
 		},
 		error:function(xhr, status, error){
@@ -229,20 +273,20 @@ function timeTable(){
 	<c:if test="${!empty list}">
 		<div id="timetableDiv">
 			<p>${principal.name} 교수님의 전체 강의 계획</p>
-			<table border="1">
-				<tr>
-					<th>과목명</th>
-					<th>학점</th>
-					<th>입력 학점</th>
-				</tr>
-				<c:forEach var="vo" items="${list }">
-	      			<tr>
-						<td>${vo.subjName }</td>      				
-						<td>${vo.credit }</td>
-						<td>${vo.count }</td> 				
-	      			</tr>
-	      		</c:forEach>	
-			</table>
+			<table border='1'>
+						<tr>
+							<th>과목명</th>
+							<th>학점</th>
+							<th>입력 학점</th>
+						</tr>
+						<c:forEach var="vo" items="${list }">
+							<tr>
+								<td>${vo.subjName }</td>
+								<td>${vo.credit }</td>
+								<td>${vo.count }</td>
+							</tr>
+						</c:forEach>
+					</table>
 		</div>
  	</c:if>
 <div id="dialog-form" title="수업 등록">

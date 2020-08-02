@@ -101,7 +101,16 @@ public class LectureController {
 	}
 	
 	
-	
+	@RequestMapping("/lecture/updateTable")
+	@ResponseBody
+	public List<SubjectAllVO> updateTable(Principal principal){
+		logger.info("입력 후 테이블 업데이트");
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		List<SubjectAllVO> tList = profService.loadByProfNo(profNo);
+		return tList;
+		
+	}
 	
 	
 	
