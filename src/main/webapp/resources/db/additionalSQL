@@ -1,0 +1,70 @@
+#추가로 필요한 SQL문들 주석달아서 올려놓을께요 필요하신분들 긁어다가 추가해서 바로 쓰시면 될듯합니다.
+
+
+#강의실과 수업시간 테이블 에 해당 컬럼 칸이 모잘라서 늘려놓음.
+alter table classroom
+modify(classroom_code VARCHAR2(20));
+alter table subj_time
+modify(classroom_code VARCHAR2(20));
+
+#은행DB
+CREATE SEQUENCE bank_SEQ
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
+
+insert into bank
+values(bank_seq.nextval, 'KB국민');
+insert into bank
+values(bank_seq.nextval, 'KEB하나');
+insert into bank
+values(bank_seq.nextval, '신한은행');
+insert into bank
+values(bank_seq.nextval, '우리은행');
+insert into bank
+values(bank_seq.nextval, 'NH농협');
+insert into bank
+values(bank_seq.nextval, 'IBK기업');
+insert into bank
+values(bank_seq.nextval, 'KDB산업');
+insert into bank
+values(bank_seq.nextval, '한국씨티');
+insert into bank
+values(bank_seq.nextval, 'SC제일');
+insert into bank
+values(bank_seq.nextval, 'BNK부산');
+insert into bank
+values(bank_seq.nextval, 'DGB대구');
+insert into bank
+values(bank_seq.nextval, 'BNK경남');
+insert into bank
+values(bank_seq.nextval, 'Sh수협');
+insert into bank
+values(bank_seq.nextval, '광주은행');
+insert into bank
+values(bank_seq.nextval, '전북은행');
+insert into bank
+values(bank_seq.nextval, '제주은행');
+
+
+#학생 정보 VIEW 다시 만들었습니다
+CREATE OR REPLACE VIEW 
+STUDENT_VIEW
+AS
+(
+SELECT * FROM
+STUDENT S JOIN OFFICIAL_INFO O 
+ON S.STU_NO = O.OFFICIAL_NO
+JOIN 
+(
+SELECT D.*,F.FACULTY_NAME FROM 
+DEPARTMENT D JOIN FACULTY F
+ON F.FACULTY_NO = D.FACULTY_NO
+)A 
+ON S.MAJOR = A.DEP_NO
+JOIN
+(SELECT AI.OFFICIAL_NO AS "DUPSTUNO",AI.BANK_CODE,AI.ACCOUNT_NO,AI.ACCOUNT_NAME,B.BANK_NAME FROM ACCOUNT_INFO AI JOIN BANK B
+ON AI.BANK_CODE = B.BANK_CODE
+)BB
+ON O.OFFICIAL_NO = BB.DUPSTUNO
+);

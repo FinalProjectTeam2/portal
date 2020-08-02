@@ -1,30 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="config.mybatis.mapper.oracle.student">
-	<select id="selectPwd" parameterType="String" resultType="String">
+	<select id="selectPwd" parameterType="String"
+		resultType="String">
 		select pwd from student where stu_no=#{stuNo}
 	</select>
-   
-   	<select id="selectByStuNo" parameterType="String" resultType="studentVO">
-   		select * from student where stu_no=#{stuNo}
-   	</select>
-   	
-   	<select id="selectSsn" parameterType="string" resultType="string">
-   		select ssn from official_info where official_no=#{officicalNo}
-   	</select>
-   
-   
+
+	<select id="selectByStuNo" parameterType="String"
+		resultType="studentVO">
+		select * from student where stu_no=#{stuNo}
+	</select>
+
+	<select id="selectSsn" parameterType="string"
+		resultType="string">
+		select ssn from official_info where
+		official_no=#{officicalNo}
+	</select>
+
+	<select id="selectViewByStuNo" parameterType="String"
+		resultType="map">
+		select * from STUDENT_VIEW where stu_no=#{stuNo}
+	</select>
+	
+	<select id="selectStudent" resultType="studentVo">
+		select * from student
+	</select>
+
+	<select id="selectStudentView" parameterType="studentSearchVo"
+		resultType="map">
+		select *
+		from
+		(
+		select rownum as RNUM, A.*
+		from(
+		<if
+			test="(stuNo==null or stuNo =='') and (name==null or name =='') and 
+		(facultyNo==0 or facultyNo =='') and (major==0 or major =='')">
+			select * from STUDENT_VIEW
+		</if>
+		<if
+			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or 
+		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='')">
+			select * from STUDENT_VIEW
+			where stu_no is not null
+			<if test="stuNo!=null and stuNo !=''">
+				and stu_no=#{stuNo}
+			</if>
+			<if test="name!=null and name !=''">
+				and name like '%' || #{name} || '%'
+			</if>
+			<if test="facultyNo!=0 and facultyNo !=''">
+				and faculty_no=#{facultyNo}
+			</if>
+			<if test="major!=0 and major !=''">
+				and major=#{major}
+			</if>
+		</if>
+		order by stu_no
+		)A
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="getTotalRecord" parameterType="studentSearchVo"
+		resultType="int">
+		<if
+			test="(stuNo==null or stuNo =='') and (name==null or name =='') and 
+		(facultyNo==0 or facultyNo =='') and (major==0 or major =='')">
+			select count(*) from STUDENT_VIEW
+		</if>
+		<if
+			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or 
+		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='')">
+			select count(*) from STUDENT_VIEW
+			where stu_no is not null
+			<if test="stuNo!=null and stuNo !=''">
+				and stu_no=#{stuNo}
+			</if>
+			<if test="name!=null and name !=''">
+				and name=#{name}
+			</if>
+			<if test="facultyNo!=0 and facultyNo !=''">
+				and faculty_no=#{facultyNo}
+			</if>
+			<if test="major!=0 and major !=''">
+				and major=#{major}
+			</if>
+		</if>
+	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-

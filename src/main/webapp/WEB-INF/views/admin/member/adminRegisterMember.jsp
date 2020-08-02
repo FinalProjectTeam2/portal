@@ -65,6 +65,8 @@
 									</div>
 								</div>
 								<div class="form-group">
+
+
 									<label for="email1" class="cols-sm-2 control-label">이메일</label>
 									<div class="cols-sm-10">
 										<div class="input-group">

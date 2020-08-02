@@ -3,10 +3,12 @@ package com.will.portal.employee.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.will.portal.account_info.model.Account_InfoDAO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
@@ -16,6 +18,7 @@ public class EmployeeServiceImpl implements EmployService {
 	@Autowired private EmployeeDAO employeeDao;
 	@Autowired private Official_infoDAO officialDao;
 	@Autowired private CommonDAO commonDao;
+	@Autowired private Account_InfoDAO accountInfoDao;
 
 	@Transactional
 	public int insertEmployee(EmployeeVO employeeVo, Official_infoVO officialVo, int sort) {
@@ -32,8 +35,9 @@ public class EmployeeServiceImpl implements EmployService {
 
 		int cnt = employeeDao.insertEmployee(employeeVo);
 
+		int ac=accountInfoDao.insertAccount(userNo);
 		int cnt2 = 0;
-		if (cnt > 0) {
+		if (cnt > 0 && ac>0) {
 
 			officialVo.setOfficialNo(userNo);
 			cnt2 = officialDao.insertOfficial(officialVo);
@@ -44,24 +48,61 @@ public class EmployeeServiceImpl implements EmployService {
 	@Override
 	public int loginCheck(String officicalNo, String pwd) {
 
+		//최초 로그인시 비밀번호가 생년월일과 같기때문에 생년월일부터 받아온다
+		String birthDay = employeeDao.selectSsn(officicalNo).substring(0, 6) ;
 		String dbPwd = employeeDao.selectPwd(officicalNo);
 		int result = 0;
 		if(dbPwd != null && !dbPwd.isEmpty() ) {
-			if(pwd.equals(dbPwd)) {
-				result = LOGIN_OK;
+			//최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
+			//모든 패스워드 암호화할거기 때문에
+			if(dbPwd.equals(birthDay)) {
+				if(pwd.equals(dbPwd)) {
+					result = LOGIN_OK;
+				}else {
+					result = PWD_DISAGREE;
+				}
 			}else {
-				result = PWD_DISAGREE;
+				//비번 변경 후에는 암호화된 dbPwd와 비교해서 로그인 처리 한다.
+				if(BCrypt.checkpw(pwd, dbPwd)){
+					result = LOGIN_OK;
+				}else if(!BCrypt.checkpw(pwd, dbPwd)){
+					result = PWD_DISAGREE;	
+				}
 			}
 		}else {
 			result = ID_NONE;
 		}
-
+		
 		return result;
 
+	}
+	
+	public boolean loginCheckSec(String loginPwd, String password, String officialNo) {
+
+		boolean result = false;
+		
+		String birthDay = employeeDao.selectSsn(officialNo).substring(0, 6) ;
+		if(password != null && !password.isEmpty() ) {
+			//최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
+			//모든 패스워드 암호화할거기 때문에
+			if(password.equals(birthDay)) {
+				if(loginPwd.equals(password)) {
+					result = true;
+				}
+			}else {
+				//비번 변경 후에는 암호화된 dbPwd와 비교해서 로그인 처리 한다.
+				if(BCrypt.checkpw(loginPwd, password)){
+					result = true;
+				}
+			}
+		}
+
+		return result;
 	}
 
 	@Override
 	public EmployeeVO selectByEmpNo(String empNo) {
 		return employeeDao.selectByEmpNo(empNo);
 	}
+
 }
