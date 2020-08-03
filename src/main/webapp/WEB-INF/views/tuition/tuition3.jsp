@@ -68,7 +68,7 @@
 <script type="text/javascript">
 $(function() {
 	$.ajax({
-		url:"<c:url value='/>",
+		url:"<c:url value=''/>",
 		type:"get",
 		dataType:"json",
 		success:function(res){

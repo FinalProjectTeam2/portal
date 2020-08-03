@@ -72,7 +72,7 @@ body {
 <script type="text/javascript">
 $(function() {
 	$.ajax({
-		url:"<c:url value='/ajaxtuitionStu.do/>",
+		url:"<c:url value='/ajaxtuitionStu.do'/>",
 		type:"get",
 		dataType:"json",
 		success:function(res){

@@ -14,4 +14,16 @@ public class TuitionServiceImpl implements TuitionService {
 	public List<TuitionAllVO>  selectStu(TuitionAllVO AllVo) {
 		return tuitionDao.selectStu(AllVo);
 	}
+
+	@Override
+	public List<TuitionVO> tuition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TuitionVO> tuitionD() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
