@@ -39,51 +39,60 @@ import com.will.portal.student.model.StudentVO;
 @Controller
 @RequestMapping("/admin/member")
 public class AdminMemberController {
-	
-	private static final Logger logger
-	= LoggerFactory.getLogger(AdminMemberController.class);
 
-	@Autowired EmployService employeeService;
-	@Autowired ProfessorService professorService;
-	@Autowired DepartmentService departmentService;
-	@Autowired FacultyService facultyService;
-	@Autowired Prof_positionService profPositionService;
-	@Autowired StudentService studentService;
-	@Autowired Emp_departService empDepartService;
-	@Autowired AuthorityService authorityService;
-	@Autowired Emp_positionService empPositionService;
-	
+	private static final Logger logger = LoggerFactory.getLogger(AdminMemberController.class);
+
+	@Autowired
+	EmployService employeeService;
+	@Autowired
+	ProfessorService professorService;
+	@Autowired
+	DepartmentService departmentService;
+	@Autowired
+	FacultyService facultyService;
+	@Autowired
+	Prof_positionService profPositionService;
+	@Autowired
+	StudentService studentService;
+	@Autowired
+	Emp_departService empDepartService;
+	@Autowired
+	AuthorityService authorityService;
+	@Autowired
+	Emp_positionService empPositionService;
+
 	/**
 	 * 회원등록 - 뷰
+	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/adminRegisterMember", method = RequestMethod.GET)
 	public String adminRegisterMember(Model model) {
 		logger.info("adminRegisterMember, GET");
-		
-		List<FacultyVO> facultyList= facultyService.selectFaculty();
-		List<DepartmentVO> departmentList=departmentService.selectDepartment();
-		List<Prof_positionVO> profPositionList=profPositionService.selectProfPosition();
-		List<Emp_departVO> empDepartList=empDepartService.selectEmpDepart();
-		List<AuthorityVO> authorityList=authorityService.selectAuthority();
-		List<Emp_positionVO> empPositionList=empPositionService.selectEmpPosition();
-		
+
+		List<FacultyVO> facultyList = facultyService.selectFaculty();
+		List<DepartmentVO> departmentList = departmentService.selectDepartment();
+		List<Prof_positionVO> profPositionList = profPositionService.selectProfPosition();
+		List<Emp_departVO> empDepartList = empDepartService.selectEmpDepart();
+		List<AuthorityVO> authorityList = authorityService.selectAuthority();
+		List<Emp_positionVO> empPositionList = empPositionService.selectEmpPosition();
+
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
-		model.addAttribute("departmentList",departmentList);
-		model.addAttribute("profPositionList",profPositionList);
-		model.addAttribute("empDepartList",empDepartList);
-		model.addAttribute("authorityList",authorityList);
-		model.addAttribute("empPositionList",empPositionList);
-		
-		
+		model.addAttribute("departmentList", departmentList);
+		model.addAttribute("profPositionList", profPositionList);
+		model.addAttribute("empDepartList", empDepartList);
+		model.addAttribute("authorityList", authorityList);
+		model.addAttribute("empPositionList", empPositionList);
+
 		return "admin/member/adminRegisterMember";
-				
+
 	}
 
 	/**
 	 * 회원등록 - 직원
+	 * 
 	 * @param employeeVo
 	 * @param officialVo
 	 * @param email3
@@ -91,30 +100,31 @@ public class AdminMemberController {
 	 * @param sort
 	 * @return
 	 */
-	@RequestMapping(value = "/adminRegisterEmployee",method = RequestMethod.POST)
-	public String adminRegisterEmployee_post(@ModelAttribute EmployeeVO employeeVo, 
-			@ModelAttribute Official_infoVO officialVo,@RequestParam(required = false) String email3,
+	@RequestMapping(value = "/adminRegisterEmployee", method = RequestMethod.POST)
+	public String adminRegisterEmployee_post(@ModelAttribute EmployeeVO employeeVo,
+			@ModelAttribute Official_infoVO officialVo, @RequestParam(required = false) String email3,
 			@RequestParam String name, @RequestParam int sort) {
-		logger.info("adminRegisterEmployee_post, param: {}",employeeVo);
-		logger.info("adminRegisterEmployee_post, param: {}",officialVo);
-		logger.info("adminRegisterEmployee_post, param: sort={}",sort);
-		
+		logger.info("adminRegisterEmployee_post, param: {}", employeeVo);
+		logger.info("adminRegisterEmployee_post, param: {}", officialVo);
+		logger.info("adminRegisterEmployee_post, param: sort={}", sort);
+
 		employeeVo.setEmpName(name);
-		if(officialVo.getEmail2().equals("etc")) {
+		if (officialVo.getEmail2().equals("etc")) {
 			officialVo.setEmail2(email3);
 		}
-		int cnt=employeeService.insertEmployee(employeeVo, officialVo, sort);
-		String url="";
-		if(cnt>0) {
-			url="admin/adminMain";
+		int cnt = employeeService.insertEmployee(employeeVo, officialVo, sort);
+		String url = "";
+		if (cnt > 0) {
+			url = "admin/adminMain";
 			logger.info("adminRegisterEmployee SUCCESS!!");
 		}
-		
+
 		return url;
 	}
-	
+
 	/**
 	 * 회원등록 - 교수
+	 * 
 	 * @param professorVo
 	 * @param officialVo
 	 * @param email3
@@ -124,32 +134,33 @@ public class AdminMemberController {
 	 */
 	@RequestMapping(value = "/adminRegisterProfessor", method = RequestMethod.POST)
 	public String adminRegisterProfessor_post(@ModelAttribute ProfessorVO professorVo,
-			@ModelAttribute Official_infoVO officialVo,@RequestParam(required = false) String email3,
-			@RequestParam String name,@RequestParam int sort) {
-		logger.info("adminRegisterProfessor_post, param: {}",professorVo);
-		logger.info("adminRegisterProfessor_post, param: {}",officialVo);
-		logger.info("adminRegisterProfessor_post, param: name={}",name);
-		logger.info("adminRegisterProfessor_post, param: sort={}",sort);
-		
-		professorVo.setProfName(name);
-		logger.info("professorVo.setProfName(name), {}",professorVo);
+			@ModelAttribute Official_infoVO officialVo, @RequestParam(required = false) String email3,
+			@RequestParam String name, @RequestParam int sort) {
+		logger.info("adminRegisterProfessor_post, param: {}", professorVo);
+		logger.info("adminRegisterProfessor_post, param: {}", officialVo);
+		logger.info("adminRegisterProfessor_post, param: name={}", name);
+		logger.info("adminRegisterProfessor_post, param: sort={}", sort);
 
-		if(officialVo.getEmail2().equals("etc")) {
+		professorVo.setProfName(name);
+		logger.info("professorVo.setProfName(name), {}", professorVo);
+
+		if (officialVo.getEmail2().equals("etc")) {
 			officialVo.setEmail2(email3);
 		}
-		int cnt=professorService.insertProfessor(professorVo, officialVo, sort);
-		
-		String url="";
-		if(cnt>0) {
-			url="admin/adminMain";
+		int cnt = professorService.insertProfessor(professorVo, officialVo, sort);
+
+		String url = "";
+		if (cnt > 0) {
+			url = "admin/adminMain";
 			logger.info("adminRegisterProfessor SUCCESS!!");
 		}
-		
+
 		return url;
 	}
-	
+
 	/**
 	 * 회원등록 - 학생
+	 * 
 	 * @param studentVo
 	 * @param officialVo
 	 * @param depNo
@@ -159,146 +170,174 @@ public class AdminMemberController {
 	 */
 	@RequestMapping(value = "/adminRegisterStudent", method = RequestMethod.POST)
 	public String adminRegisterStudent_post(@ModelAttribute StudentVO studentVo,
-			@ModelAttribute Official_infoVO officialVo,@RequestParam int depNo,
-			@RequestParam int sort,@RequestParam(required = false) String email3) {
+			@ModelAttribute Official_infoVO officialVo, @RequestParam int depNo, @RequestParam int sort,
+			@RequestParam(required = false) String email3) {
 		studentVo.setMajor(depNo);
-		logger.info("adminRegisterStudent_post, param: {}",studentVo);
-		logger.info("adminRegisterStudent_post, param: {}",officialVo);
-		logger.info("adminRegisterStudent_post, param: sort={}",sort);
-		
-		if(officialVo.getEmail2().equals("etc")) {
+		logger.info("adminRegisterStudent_post, param: {}", studentVo);
+		logger.info("adminRegisterStudent_post, param: {}", officialVo);
+		logger.info("adminRegisterStudent_post, param: sort={}", sort);
+
+		if (officialVo.getEmail2().equals("etc")) {
 			officialVo.setEmail2(email3);
 		}
-		int cnt=studentService.insertStudent(studentVo, officialVo, sort);
-		
-		String url="";
-		if(cnt>0) {
-			url="admin/adminMain";
+		int cnt = studentService.insertStudent(studentVo, officialVo, sort);
+
+		String url = "";
+		if (cnt > 0) {
+			url = "admin/adminMain";
 			logger.info("adminRegisterStudent SUCCESS!!");
 		}
-		
+
 		return url;
 	}
-	
+
 	/**
 	 * 회원관리 - 학생
+	 * 
 	 * @param searchVo
 	 * @param state
 	 * @param model
 	 */
 	@RequestMapping("/adminManageStudent")
 	public void adminManageStudent(@ModelAttribute StudentSearchVO studentSearchVo,
-			Model model) {
-		logger.info("adminManageStudent, param: {}",studentSearchVo);
-	
-		//select 생성
-		List<FacultyVO> facultyList= facultyService.selectFaculty();
-		List<DepartmentVO> departmentList=departmentService.selectDepartment();
+			@RequestParam(required = false) String state, Model model) {
+		logger.info("adminManageStudent, param:state={}, {}", state, studentSearchVo);
+
+		// select 생성
+		List<FacultyVO> facultyList = facultyService.selectFaculty();
+		List<DepartmentVO> departmentList = departmentService.selectDepartment();
+		if (state != null) {
+			String[] slist = state.split(",");
+			setState(studentSearchVo, slist, slist.length);
+		}
 		
-		
-		//paging 처리 관련
+
+		// paging 처리 관련
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
 		pagingInfo.setCurrentPage(studentSearchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
-		
+
 		studentSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
 		studentSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		
+
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
-		model.addAttribute("departmentList",departmentList);
-		
-		//db
+		model.addAttribute("departmentList", departmentList);
+
+		// db
 		List<Map<String, Object>> list = studentService.selectStudentView(studentSearchVo);
 		logger.info("학생  조회 결과, list.size={}", list.size());
-		
-		int totalRecord=studentService.getTotalRecord(studentSearchVo);
+
+		int totalRecord = studentService.getTotalRecord(studentSearchVo);
 		logger.info("학생조회 레코드 개수 : {}", totalRecord);
-		
+
 		pagingInfo.setTotalRecord(totalRecord);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
+	}
+
+	/**
+	 * 체크박스 조건 설정
+	 * @param studentSearchVo
+	 * @param slist
+	 * @param idx
+	 */
+	private void setState(StudentSearchVO studentSearchVo, String[] slist, int idx) {
+		studentSearchVo.setState1(slist[0]);
+		idx--;
+		if(idx<1) return;
+		studentSearchVo.setState2(slist[1]);
+		idx--;
+		if(idx<1) return;
+		studentSearchVo.setState3(slist[2]);
+		idx--;
+		if(idx<1) return;
+		studentSearchVo.setState4(slist[3]);
+		idx--;
+		if(idx<1) return;
+		studentSearchVo.setState5(slist[4]);
+		idx--;
+		if(idx<1) return;
 	}
 	
 	/**
 	 * 회원관리 - 교수
+	 * 
 	 * @param searchVo
 	 * @param position
 	 * @param model
 	 */
 	@RequestMapping("/adminManageProfessor")
-	public void adminManageProfessor(@ModelAttribute DepartmentVO searchVo,@RequestParam(required = false) String position,Model model) {
-		logger.info("adminManageProfessor, param: position={},  {}",position,searchVo);
-		
-		//for select 생성
-		List<FacultyVO> facultyList= facultyService.selectFaculty();
-		List<DepartmentVO> departmentList=departmentService.selectDepartment();
-		List<Prof_positionVO> profPositionList=profPositionService.selectProfPosition();
-		
-		
-		//paging 처리 관련
+	public void adminManageProfessor(@ModelAttribute DepartmentVO searchVo,
+			@RequestParam(required = false) String position, Model model) {
+		logger.info("adminManageProfessor, param: position={},  {}", position, searchVo);
+
+		// for select 생성
+		List<FacultyVO> facultyList = facultyService.selectFaculty();
+		List<DepartmentVO> departmentList = departmentService.selectDepartment();
+		List<Prof_positionVO> profPositionList = profPositionService.selectProfPosition();
+
+		// paging 처리 관련
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(10);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(10);
-		
+
 		searchVo.setRecordCountPerPage(10);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		
+
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
-		model.addAttribute("departmentList",departmentList);
-		model.addAttribute("profPositionList",profPositionList);
-		
-		
+		model.addAttribute("departmentList", departmentList);
+		model.addAttribute("profPositionList", profPositionList);
+
 	}
-	
+
 	/**
 	 * 회원관리 - 직원
+	 * 
 	 * @param searchVo
 	 * @param authority
 	 * @param empPosition
 	 * @param model
 	 */
 	@RequestMapping("/adminManageEmployee")
-	public void adminManageEmployee(@ModelAttribute Emp_departVO searchVo,@RequestParam(required = false) String authority,
-			@RequestParam(required = false) String empPosition,  Model model) {
-		logger.info("adminManageEmployee, param: {}",searchVo);
-		logger.info("adminManageEmployee, param: authority={}, empPosition={}",authority,empPosition);
-		
-		
-		//for select 생성
-		List<Emp_departVO> empDepartList=empDepartService.selectEmpDepart();
-		List<AuthorityVO> authorityList=authorityService.selectAuthority();
-		List<Emp_positionVO> empPositionList=empPositionService.selectEmpPosition();
-		
-		
-		//paging 처리 관련
+	public void adminManageEmployee(@ModelAttribute Emp_departVO searchVo,
+			@RequestParam(required = false) String authority, @RequestParam(required = false) String empPosition,
+			Model model) {
+		logger.info("adminManageEmployee, param: {}", searchVo);
+		logger.info("adminManageEmployee, param: authority={}, empPosition={}", authority, empPosition);
+
+		// for select 생성
+		List<Emp_departVO> empDepartList = empDepartService.selectEmpDepart();
+		List<AuthorityVO> authorityList = authorityService.selectAuthority();
+		List<Emp_positionVO> empPositionList = empPositionService.selectEmpPosition();
+
+		// paging 처리 관련
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(10);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(10);
-		
+
 		searchVo.setRecordCountPerPage(10);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		
-		model.addAttribute("empDepartList",empDepartList);
-		model.addAttribute("authorityList",authorityList);
-		model.addAttribute("empPositionList",empPositionList);
-		
-		
+
+		model.addAttribute("empDepartList", empDepartList);
+		model.addAttribute("authorityList", authorityList);
+		model.addAttribute("empPositionList", empPositionList);
+
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
 	 */
-	@RequestMapping(value = "/adminEditMember",method = RequestMethod.GET)
+	@RequestMapping(value = "/adminEditMember", method = RequestMethod.GET)
 	public void adminEditMember(String userid) {
 		logger.info("adminEditMember, Get");
-		
+
 	}
-	
+
 }
