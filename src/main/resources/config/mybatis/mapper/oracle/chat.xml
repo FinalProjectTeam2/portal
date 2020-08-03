@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.chat">
+	<insert id="insertRoom" parameterType="chatRoom">
+		insert into
+		chatroom(ROOM_ID,NAME,OFFICIAL_NO)
+		values(#{roomId},#{name},#{officialNo})
+	</insert>
+	<select id="selectAllRoom" resultType="chatRoom">
+		select * from chatroom
+		order by reg_date desc
+	</select>
+	<select id="selectById" resultType="chatRoom"
+		parameterType="String">
+		select * from chatroom where room_id = #{roomId}
+	</select>
+	<select id="countById" resultType="int" parameterType="String">
+		select
+		count(*) from chatroom where room_id = #{roomId}
+	</select>
+	<insert id="insertChatMessage" parameterType="chatMessage">
+		INSERT INTO chatmessage
+		VALUES (chatmessage.nextval,#{},#{},#{},#{},#{})
+	</insert>
+</mapper>

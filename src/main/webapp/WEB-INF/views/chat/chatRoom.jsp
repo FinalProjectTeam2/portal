@@ -84,7 +84,7 @@ div#chatDataIn {
 		});
 		function disconnect() {
 			sock.send(JSON.stringify({
-				chatRoomId : roomId,
+				roomId : roomId,
 				type : 'LEAVE',
 			}));
 			sock.close();
@@ -92,7 +92,7 @@ div#chatDataIn {
 		function send() {
 			msg = document.getElementById("message").value;
 			sock.send(JSON.stringify({
-				chatRoomId : roomId,
+				roomId : roomId,
 				type : 'CHAT',
 				message : msg
 			}));
@@ -101,7 +101,7 @@ div#chatDataIn {
 		}
 		function onOpen() {
 			sock.send(JSON.stringify({
-				chatRoomId : roomId,
+				roomId : roomId,
 				type : 'ENTER'
 			}));
 		}

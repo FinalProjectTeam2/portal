@@ -13,11 +13,29 @@
 	padding-bottom: 0;
 	text-align: left;
 }
-
+#chatRooms td a{
+	width: 100%;
+    height: 33px;
+    padding: 3px 0 0 0;
+}
+#chatRooms table {
+	/* min-height: 300px; */
+}
 .table thead th {
 	padding: 0.55rem;
 	background: #626d80;
 	color: white;
+}
+.table thead th a{
+	float: right;
+	margin-right: 5px;
+}
+#chatRooms{
+	margin: 0;
+	padding: 0;
+}
+#chatRooms table tr{
+	height: 42px;
 }
 </style>
 </head>
@@ -31,7 +49,11 @@
 			</colgroup>
 			<thead>
 				<tr>
-					<th colspan="2">실시간 채팅방</th>
+					<th colspan="2">
+						<span style="float: left; padding: 5px 0 0 0; font-weight: bold;font-size: 1.2em;">실시간 채팅방</span>
+						<a class="btn btn-primary pull-right" href="#"
+							onclick="acyncMovePage('<c:url value="/chat/new"/>', 'get')">방 생성</a>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,8 +67,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<a class="btn btn-primary pull-right" href="#"
-			onclick="acyncMovePage('<c:url value="/chat/new"/>', 'get')">방 생성</a>
+		
 	</div>
 
 

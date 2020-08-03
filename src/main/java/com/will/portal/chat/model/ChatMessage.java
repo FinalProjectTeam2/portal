@@ -2,10 +2,12 @@ package com.will.portal.chat.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class ChatMessage {
-    private String chatRoomId;
+	private int no;
+    private String roomId;
     private String writerId;
     private String writerName;
     private String message;
