@@ -1,5 +1,8 @@
 package com.will.portal.chat.controller;
 
+import java.security.Principal;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.will.portal.chat.model.ChatRoom;
 import com.will.portal.chat.model.ChatRoomForm;
 import com.will.portal.chat.model.ChatRoomRepository;
+import com.will.portal.common.MemberDetails;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,9 +72,11 @@ public class ChatController {
 
     @PostMapping("/room/new")
     @ResponseBody
-    public String makeRoom(@ModelAttribute ChatRoomForm form){
+    public String makeRoom(@ModelAttribute ChatRoomForm form,
+    		Principal principal ){
+    	MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
     	log.info("채팅방 만들기 파라미터 form={}",form);
-        chatRoomRepository.createChatRoom(form.getName());
+        chatRoomRepository.createChatRoom(form.getName(),user.getOfficialNo());
         
         return "/chat/";
     }

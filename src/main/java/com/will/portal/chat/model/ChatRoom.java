@@ -19,12 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatRoom {
     private String roomId;
     private String name;
+    private String officialNo;
     private Set<WebSocketSession> sessions = new HashSet<>();
 
-    public static ChatRoom create(String name){
+    public static ChatRoom create(String name, String officialNo){
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.roomId = UUID.randomUUID().toString();
         chatRoom.name = name;
+        chatRoom.officialNo = officialNo;
         return chatRoom;
     }
 
