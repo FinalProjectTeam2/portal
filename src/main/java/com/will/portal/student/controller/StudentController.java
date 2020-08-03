@@ -1,5 +1,6 @@
 package com.will.portal.student.controller;
 
+import java.io.File;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -70,10 +71,9 @@ public class StudentController {
 			 @ModelAttribute Official_infoVO offiVo,
 			 @RequestParam String hp,
 			 @RequestParam String email,
-			 @RequestParam MultipartFile upfile,
+			 @RequestParam (required = false )String oldFileName,
 			HttpServletRequest request) {
 		boolean bool = false;
-		logger.info("upfile={}" , upfile);
 		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
 		String officialNo = user.getOfficialNo();
 		accInfoVo.setOfficialNo(officialNo);
@@ -91,17 +91,32 @@ public class StudentController {
 		//파일 업로드 처리
 		List<Map<String, Object>> fileList
 		=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_IMAGE);
-
-			for(Map<String, Object> map : fileList) {
-				offiVo.setImageUrl((String)map.get("fileName"));
+		
+		String NewfileName= "";
+		for(Map<String, Object> map : fileList) {
+			NewfileName =(String) map.get("fileName");
+			offiVo.setImageUrl(NewfileName);
+		}		
+		
+		if(offiVo.getImageUrl()!= null && !offiVo.getImageUrl().isEmpty()) {
+			if(oldFileName != null && !oldFileName.isEmpty()) {
+				File oldFile = new File(fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE),oldFileName);
+				logger.info("oldFile={}",oldFile.getName());
+				if(oldFile.exists()) {
+					boolean deletefile = oldFile.delete();
+					logger.info("파일삭제 여부 : {}" , deletefile);
+				}
 			}
-			
-			int cnt1 = bankService.updateAccount(accInfoVo);
-			int cnt2 = offiService.updateOfficialInfo(offiVo);
-			if(cnt1 > 0 && cnt2 >0) {
-				bool = true;
-			}
-			
+		}
+		
+		int cnt1 = bankService.updateAccount(accInfoVo);
+		int cnt2 = offiService.updateOfficialInfo(offiVo);
+		if(cnt1 > 0 && cnt2 >0) {
+			bool = true;
+		}
+		
+		logger.info("oldFileName = {}", oldFileName);
+		logger.info("bool = {}", bool);
 		return bool;
 	 }
 	 
@@ -111,9 +126,29 @@ public class StudentController {
 		 MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
 		 String officialNo = user.getOfficialNo();
 		 Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
+		
+		 if(map.get("ZIPCODE") == null) {
+			 map.put("ZIPCODE","");
+		 }
+		 if(map.get("ADDRESS") == null) {
+			 map.put("ADDRESS","");
+		 }
+		 if(map.get("ADDR_DETAIL") == null) {
+			 map.put("ADDR_DETAIL","");
+		 }
+		 if(map.get("ADDRESS") == null) {
+			 map.put("ADDRESS","");
+		 }
+		 if(map.get("ACCOUNT_NO") == null) {
+			 map.put("ACCOUNT_NO","");
+			 map.put("ACCOUNT_NAME","");
+		 }
+		 
 		 String uploadPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE);
 		 map.put("uploadPath",uploadPath + "\\" + map.get("IMAGE_URL"));
 		 logger.info("uploadPath={}",map.get("uploadPath"));
+		 logger.info("IMAGE_URL={}",map.get("IMAGE_URL"));
+		 
 		 return map;
 		 //C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images
 		//C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png

@@ -50,8 +50,8 @@ values(bank_seq.nextval, '제주은행');
 #학생 정보 VIEW 다시 만들었습니다
 CREATE OR REPLACE VIEW 
 STUDENT_VIEW
-AS
-(
+AS(
+
 SELECT * FROM
 STUDENT S JOIN OFFICIAL_INFO O 
 ON S.STU_NO = O.OFFICIAL_NO
@@ -67,4 +67,7 @@ JOIN
 ON AI.BANK_CODE = B.BANK_CODE
 )BB
 ON O.OFFICIAL_NO = BB.DUPSTUNO
+join 
+(select STATE as "DUPSTATE", STATE_NAME from student_state)ss
+on ss.DUPSTATE = S.STATE
 );
