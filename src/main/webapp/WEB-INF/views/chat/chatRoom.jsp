@@ -3,12 +3,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+<link rel="stylesheet" href="<c:url value='/resources/css/chat/custom.css'/>">
 <style type="text/css">
 .well {
     width: 45%;
@@ -43,7 +46,7 @@ div#chatDataIn {
 }
 </style>
 <sec:authorize access="isAuthenticated()">
-
+	
 	<script type="text/javascript">
 		if(sock != null){
 			disconnect();
@@ -51,9 +54,15 @@ div#chatDataIn {
 		var roomId = '${room.roomId}';
 		console.log(roomId);
 		var sock = null;
-		
+		console.log('officialNo는!!! ${principal.officialNo}');
 
 		$(function() {
+			var scrollPosition = $("#chatDataIn").height();
+			console.log("hegiht : " + scrollPosition);
+			$("#chatData").animate({
+				scrollTop : scrollPosition
+			}, 0);
+			console.log("chatting data : " + data);
 			
 			$(window).bind('beforeunload',function(){
 
@@ -84,7 +93,7 @@ div#chatDataIn {
 		});
 		function disconnect() {
 			sock.send(JSON.stringify({
-				chatRoomId : roomId,
+				roomId : roomId,
 				type : 'LEAVE',
 			}));
 			sock.close();
@@ -92,7 +101,7 @@ div#chatDataIn {
 		function send() {
 			msg = document.getElementById("message").value;
 			sock.send(JSON.stringify({
-				chatRoomId : roomId,
+				roomId : roomId,
 				type : 'CHAT',
 				message : msg
 			}));
@@ -101,7 +110,7 @@ div#chatDataIn {
 		}
 		function onOpen() {
 			sock.send(JSON.stringify({
-				chatRoomId : roomId,
+				roomId : roomId,
 				type : 'ENTER'
 			}));
 		}
@@ -204,7 +213,38 @@ div#chatDataIn {
 							<div class="clearfix"></div>
 						</div>
 						<div id="chatData" class="panel-collapse collapse in show">
-							<div id="chatDataIn"></div>
+							<div id="chatDataIn">
+							<c:forEach var="msg" items="${list }">
+								<c:if test="${msg.type == 'CHAT' }">
+									<c:if test="${msg.writerId == principal.officialNo }">
+										<div class='well my'>
+										<div class='userInfoDiv'>
+										${msg.writerName }(${msg.writerId })
+										</div>
+										<div class='alert alert-info'>
+										<strong>${msg.message }</strong>
+										</div >
+										</div >
+									</c:if>
+									<c:if test="${msg.writerId != principal.officialNo }">
+										<div class='well other'>
+										<div class='userInfoDiv'>
+										${msg.writerName }(${msg.writerId })
+										</div>
+										<div class='alert alert-warning'>
+										<strong>${msg.message }</strong>
+										</div >
+										</div >
+									</c:if>
+								</c:if>
+								<c:if test="${msg.type != 'CHAT' }">
+									<div class='notice'>
+									${msg.message }
+									</div >
+								</c:if>
+								
+							</c:forEach>
+							</div>
 							<div id="data"></div>
 						</div>
 
