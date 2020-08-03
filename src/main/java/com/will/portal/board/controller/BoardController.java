@@ -199,7 +199,30 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public void edit_get() {
+	public void edit_get(@RequestParam int postNo, Model model) {
+		logger.info("게시글 수정 페이지");
+		
+		PostsAllVO postVo = postsService.SelectByCodeE(postNo);
+		if (postVo == null) {
+			postVo = postsService.SelectByCodeS(postNo);
+			if (postVo == null) {
+				postVo = postsService.SelectByCodeP(postNo);
+			}
+		}
+
+		logger.info("게시판 수정 페이지 조회 결과 vo={}", postVo);
+
+		
+		BoardVO bdvo = boardService.selectBoardByBdCode(postVo.getPostsVo().getBdCode());
+		List<BoardVO> list = boardService.selectBoardByCategoryInline(postVo.getPostsVo().getBdCode());
+		logger.info("게시판 검색 결과 list.size={}, vo={}", list.size(), bdvo);
+
+		model.addAttribute("postVo", postVo);
+		model.addAttribute("vo", bdvo);
+		model.addAttribute("list", list);
+	}
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public void edit_post() {
 		logger.info("게시글 수정 페이지");
 	}
 	
