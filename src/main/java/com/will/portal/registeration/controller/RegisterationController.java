@@ -12,7 +12,7 @@ public class RegisterationController {
 	private static final Logger logger
 		= LoggerFactory.getLogger(RegisterationController.class);
 	
-	@RequestMapping("/regi_lec/")
+	@RequestMapping("/regi_lec")
 	public String register_lec() {
 		logger.info("수강신청 뷰페이지 보여주기");
 		return "registeration/regi_lec";

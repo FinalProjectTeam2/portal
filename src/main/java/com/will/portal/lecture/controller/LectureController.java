@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.portal.common.MemberDetails;
+import com.will.portal.evaluation.model.EvaluationAllVO;
+import com.will.portal.evaluation.model.EvaluationService;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
@@ -28,6 +30,8 @@ public class LectureController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureController.class);
 	@Autowired
 	private ProfessorService profService;
+	@Autowired
+	private EvaluationService evaluationServ;
 	
 	@RequestMapping("/lecture/openLecture_bak")
 	public void openLecture_bak() {
@@ -110,6 +114,40 @@ public class LectureController {
 		List<SubjectAllVO> tList = profService.loadByProfNo(profNo);
 		return tList;
 		
+	}
+	
+	@RequestMapping(value = "/lecture/professorView", method = RequestMethod.GET)
+	public String profView(Principal principal, @RequestParam(required = false) String subCode, Model model) {
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		//학생list
+		List<EvaluationAllVO> list = evaluationServ.selectAllListforEval(subCode);
+		//select option에 들어갈 list
+		List<Map<String, Object>> sList = evaluationServ.subjectByProfNo(profNo);
+		logger.info("학생평가 페이지 list.size()={}, selectList.size={}", list.size(), sList.size());
+		model.addAttribute("list", list);
+		model.addAttribute("sList", sList);
+		
+		
+		return "lecture/professorView";
+	}
+	
+	
+	@RequestMapping(value = "/lecture/evaluation", method = RequestMethod.POST)
+	@ResponseBody
+	public List<EvaluationAllVO> profView_post(Principal principal, @RequestParam(required = false) String subCode, Model model) {
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		//학생list
+		List<EvaluationAllVO> list = evaluationServ.selectAllListforEval(subCode);
+		//select option에 들어갈 list
+		List<Map<String, Object>> sList = evaluationServ.subjectByProfNo(profNo);
+		logger.info("학생평가 페이지 list.size()={}", list.size());
+		model.addAttribute("list", list);
+		model.addAttribute("sList", sList);
+		
+		
+		return list;
 	}
 	
 	
