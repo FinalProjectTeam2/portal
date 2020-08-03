@@ -39,10 +39,10 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	
 	<beans:bean class="org.codehaus.jackson.map.ObjectMapper"></beans:bean>
-	<beans:bean class="com.will.portal.chat.controller.WebSocketConfig"></beans:bean>
 	<!-- websocket -->
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
+		<websocket:mapping handler="webSocketHandler" path="/chat"/>
 		<websocket:sockjs/>
 	</websocket:handlers>
 	

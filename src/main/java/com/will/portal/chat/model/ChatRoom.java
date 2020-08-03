@@ -11,8 +11,11 @@ import org.springframework.web.socket.WebSocketSession;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-@Getter @Setter
+@Slf4j
+@Getter @Setter @ToString
 public class ChatRoom {
     private String roomId;
     private String name;
@@ -29,14 +32,17 @@ public class ChatRoom {
                               ObjectMapper objectMapper) throws IOException {
         if(chatMessage.getType() == MessageType.ENTER){
             sessions.add(session);
-            chatMessage.setMessage(chatMessage.getWriter() + "님이 입장하셨습니다.");
+            chatMessage.setMessage(chatMessage.getWriterName()+"("+chatMessage.getWriterId()+")" 
+            		+ "님이 입장하셨습니다.");
         }
         else if(chatMessage.getType() == MessageType.LEAVE){
             sessions.remove(session);
-            chatMessage.setMessage(chatMessage.getWriter() + "님임 퇴장하셨습니다.");
+            chatMessage.setMessage(chatMessage.getWriterName()+"("+chatMessage.getWriterId()+")" 
+            		+ "님이 퇴장하셨습니다.");
         }
         else{
-            chatMessage.setMessage(chatMessage.getWriter() + " : " + chatMessage.getMessage());
+            chatMessage.setMessage(chatMessage.getWriterName() + "|" + chatMessage.getWriterId()
+            		+ "|" + chatMessage.getMessage());
         }
         send(chatMessage,objectMapper);
     }
@@ -44,6 +50,7 @@ public class ChatRoom {
     private void send(ChatMessage chatMessage, ObjectMapper objectMapper) throws IOException {
         TextMessage textMessage = new TextMessage(objectMapper.
                                     writeValueAsString(chatMessage.getMessage()));
+        log.info("textMessage={}",textMessage);
         for(WebSocketSession sess : sessions){
             sess.sendMessage(textMessage);
         }
