@@ -21,7 +21,6 @@ import com.will.portal.common.MemberDetails;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
-import com.will.portal.subject.model.SubjectVO;
 
 @Controller
 public class LectureController {
@@ -101,7 +100,16 @@ public class LectureController {
 	}
 	
 	
-	
+	@RequestMapping("/lecture/updateTable")
+	@ResponseBody
+	public List<SubjectAllVO> updateTable(Principal principal){
+		logger.info("입력 후 테이블 업데이트");
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		List<SubjectAllVO> tList = profService.loadByProfNo(profNo);
+		return tList;
+		
+	}
 	
 	
 	

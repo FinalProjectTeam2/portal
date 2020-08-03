@@ -239,7 +239,7 @@ CREATE TABLE professor (
 	start_date DATE DEFAULT sysdate, /* 임용일 */
 	resignation_date DATE, /* 퇴직일 */
 	identity_state CHAR(1) DEFAULT 'N', /* 본인인증상태 */
-	identity_code VARCHAR2(20), /* 본인인증코드 */
+	identify_code VARCHAR2(20), /* 본인인증코드 */
 	change_date DATE /* 비밀번호변경일 */
 );
 
@@ -574,6 +574,24 @@ ALTER TABLE faculty
 			faculty_no
 		);
 
+/* 학적상태 */
+CREATE TABLE student_state (
+   state VARCHAR2(100) NOT NULL, /* 학적상태번호 */
+   state_name VARCHAR2(100) /* 학적상태이름 */
+);
+
+CREATE UNIQUE INDEX PK_student_state
+   ON student_state (
+      state ASC
+   );
+ALTER TABLE student_state
+   ADD
+      CONSTRAINT PK_student_state
+      PRIMARY KEY (
+         state
+      );
+
+
 /* 학부생 */
 CREATE TABLE student (
 	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
@@ -582,7 +600,7 @@ CREATE TABLE student (
 	major NUMBER, /* 전공 */
 	semester NUMBER DEFAULT 1, /* 학기 */
 	credits NUMBER DEFAULT 0, /* 이수학점 */
-	state VARCHAR2(100) DEFAULT '신입생', /* 학적상태 */
+	state VARCHAR2(100) DEFAULT '1', /* 학적상태 */
 	admission_date DATE DEFAULT sysdate, /* 입학일 */
 	graduation_date DATE, /* 졸업일 */
 	identity_state CHAR(1) DEFAULT 'N', /* 본인인증상태 */
@@ -929,6 +947,15 @@ ALTER TABLE student
 		REFERENCES department (
 			dep_no
 		);
+ALTER TABLE student
+   ADD
+      CONSTRAINT FK_student_state_TO_student
+      FOREIGN KEY (
+         state
+      )
+      REFERENCES student_state (
+         state
+      );
 
 /* 시퀀스 생성 */
 
@@ -1029,10 +1056,21 @@ from posts p join files f
 on p.post_code = f.post_code;
 
 /*student_view*/
-create or replace view student_view as
-select s.*, o.hp1, o.hp2, o.hp3, o.email1, o.email2, o.zipcode, o.address, o.addr_detail, o.ssn, o.gender, o.image_url
-from student s join official_info o
-on s.stu_no=o.official_no;
+CREATE OR REPLACE VIEW
+STUDENT_VIEW
+AS 
+(SELECT S.*,O.*,st.state_name FROM
+STUDENT S JOIN OFFICIAL_INFO O 
+ON S.STU_NO = O.OFFICIAL_NO
+JOIN 
+(
+SELECT D.*,F.FACULTY_NAME FROM 
+DEPARTMENT D JOIN FACULTY F
+ON F.FACULTY_NO = D.FACULTY_NO
+)A 
+ON S.MAJOR = A.DEP_NO
+join student_state st
+on s.state=st.state);
 
 /*professor_view*/
 create or replace view professor_view as

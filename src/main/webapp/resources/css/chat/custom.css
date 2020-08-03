@@ -230,6 +230,8 @@ height:40px;
     background-color: #d9edf7;
     border-color: #bce8f1;
     word-break: break-all;
+    padding: 5px 10px;
+    font-size: 0.9em;    
 }
 #chattingDiv .col-xs-12 {
     width: 100%;

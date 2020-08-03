@@ -291,7 +291,9 @@ public class BoardController {
 	@ResponseBody
 	public List<CategoryListVO> cateList() {
 		logger.info("ajax categoryList");
-		return boardService.selectCategoryList();
+		List<CategoryListVO> list = boardService.selectCategoryList();
+		logger.info("list.size={}",list.size());
+		return list;
 	}
 
 }

@@ -76,6 +76,11 @@ public class Official_infoServiceImpl implements Official_infoService{
 	public int updateOfficialInfo(Official_infoVO offiVo) {
 		return infoDao.updateOfficialInfo(offiVo);
 	}
+
+	@Override
+	public int updateChangeDate(String profNo) {
+		return infoDao.updateChangeDate(profNo);
+	}
 	
 	
 	

@@ -9,6 +9,7 @@
 			dataType:"json",
 			type:"get",
 			success: function(res) {
+				console.log(res);
 				var str = "";
 				str = '<div class="sidebar-sticky pt-3"'
 					+'style="background: #626d80; height: 100%;">'
@@ -50,7 +51,6 @@
 				str += '</div>';
 				
 				$("#sidebarMenu").append(str);
-				
 				
 			}
 		});

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
-import com.will.portal.subject.model.SubjectVO;
 
 public interface ProfessorDAO {
 	int insertProfessor(ProfessorVO profVo);
@@ -17,4 +16,5 @@ public interface ProfessorDAO {
 	List<String> codeByProfNo(String profNo);
 	int insertSubjTime(Subj_timeVO vo);
 	List<Map<String, Object>> classroomByDepNo(String depNo);
+	Map<String, Object>selectViewByProfNo(String profNo);
 }

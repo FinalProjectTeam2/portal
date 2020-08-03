@@ -67,6 +67,7 @@ public class test1 {
 			try {
 				
 				if(fos!=null) fos.close();
+				if(workbook!=null) workbook.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

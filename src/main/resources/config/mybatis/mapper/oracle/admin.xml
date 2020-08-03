@@ -25,7 +25,7 @@
 	<insert id="insertEmployee" parameterType="employeeVO">
 		insert into
 		employee(emp_no,pwd,dep_code,AUTH_CODE,emp_name,position_code)
-		values(#{empNo},#{pwd},#{authCode},#{depCode},#{empName},#{positionCode})
+		values(#{empNo},#{pwd},#{depCode},#{authCode},#{empName},#{positionCode})
 	</insert>
 	<insert id="insertProfessor" parameterType="professorVO">
 		insert into
