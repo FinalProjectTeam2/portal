@@ -158,12 +158,19 @@ main>.container {
 	height: 15px;
 }
 
-.stud input[type=checkbox] {
+.ckState input[type=checkbox] {
 	margin: 0 5px 1px 10px;
 	text-align: right;
 	vertical-align: middle !important;
 }
+.ckState{
+	margin-bottom: 11px;
+}
+
 
 .stud label {
 	user-select: none;
+}
+.date{
+	margin: 0 10px 0 10px !important;
 }

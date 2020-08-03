@@ -68,7 +68,7 @@ public class AdminMemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "/adminRegisterMember", method = RequestMethod.GET)
-	public String adminRegisterMember(Model model) {
+	public String adminRegisterMember(@RequestParam(defaultValue = "0") int sort,Model model) {
 		logger.info("adminRegisterMember, GET");
 
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
@@ -210,8 +210,6 @@ public class AdminMemberController {
 			String[] slist = state.split(",");
 			setState(studentSearchVo, slist, slist.length);
 		}
-		
-
 		// paging 처리 관련
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
@@ -240,6 +238,7 @@ public class AdminMemberController {
 
 	/**
 	 * 체크박스 조건 설정
+	 * 
 	 * @param studentSearchVo
 	 * @param slist
 	 * @param idx
@@ -247,21 +246,26 @@ public class AdminMemberController {
 	private void setState(StudentSearchVO studentSearchVo, String[] slist, int idx) {
 		studentSearchVo.setState1(slist[0]);
 		idx--;
-		if(idx<1) return;
+		if (idx < 1)
+			return;
 		studentSearchVo.setState2(slist[1]);
 		idx--;
-		if(idx<1) return;
+		if (idx < 1)
+			return;
 		studentSearchVo.setState3(slist[2]);
 		idx--;
-		if(idx<1) return;
+		if (idx < 1)
+			return;
 		studentSearchVo.setState4(slist[3]);
 		idx--;
-		if(idx<1) return;
+		if (idx < 1)
+			return;
 		studentSearchVo.setState5(slist[4]);
 		idx--;
-		if(idx<1) return;
+		if (idx < 1)
+			return;
 	}
-	
+
 	/**
 	 * 회원관리 - 교수
 	 * 

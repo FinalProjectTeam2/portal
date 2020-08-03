@@ -45,16 +45,28 @@
 							</select>
 						</div>
 						<div class="ckState stud">
-						<input type="checkbox" name="stateAll" value="0" id="selectAll"><label for="selectAll">전체</label>
-						<input type="checkbox" name="state" value="2" id="2"><label for="2">재학생</label>
-						<input type="checkbox" name="state" value="1" id="1"><label for="1">신입생</label>
-						<input type="checkbox" name="state" value="3" id="3"><label for="3">휴학생</label>
-						<input type="checkbox" name="state" value="5" id="5"><label for="5">졸업생</label>
-						<input type="checkbox" name="state" value="4" id="4"><label for="4">졸업가능</label>
+							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
+								for="selectAll">전체</label> <input type="checkbox" name="state"
+								value="2" id="2"><label for="2">재학생</label> <input
+								type="checkbox" name="state" value="1" id="1"><label
+								for="1">신입생</label> <input type="checkbox" name="state"
+								value="3" id="3"><label for="3">휴학생</label> <input
+								type="checkbox" name="state" value="5" id="5"><label
+								for="5">졸업생</label> <input type="checkbox" name="state"
+								value="4" id="4"><label for="4">졸업가능</label>
 						</div>
 
-						학번<input type="text" name="stuNo"> 이름 <input type="text"
-							size="8" name="name">
+						학번<select name="startNo" class="date">
+							<option value="">---</option>
+							<c:forEach var="i" begin="0" end="39">
+								<option value="${2020-i }">${2020-i }</option>
+							</c:forEach>
+						</select>~<select name="endNo" class="date">
+							<option value="">---</option>
+							<c:forEach var="j" begin="0" end="39">
+								<option value="${2020-j }">${2020-j }</option>
+							</c:forEach>
+						</select> 이름 <input type="text" name="name">
 						<button class="btCustom btn btn-primary btn-lg login-button"
 							id="btSearch">검색</button>
 						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
@@ -190,7 +202,7 @@
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
-							onclick="location.href='<c:url value="/admin/member/adminRegisterMember"/>'"
+							onclick="location.href='<c:url value="/admin/member/adminRegisterMember?sort=1"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
 					<div class="btdiv">
