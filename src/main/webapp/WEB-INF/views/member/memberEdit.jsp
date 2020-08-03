@@ -85,7 +85,7 @@ function inputPhoneNumber(obj) {
 			formData.append("upfile", $("#upfile")[0].files[0]);
 
 			$.ajax({
-				url : "<c:url value='/student/studentEdit' />",
+				url : "<c:url value='/member/memberEdit' />",
 				type: "post",
 				processData : false,
 	            contentType : false,
@@ -107,7 +107,7 @@ function inputPhoneNumber(obj) {
 	});
 	$.select = function () {
 		$.ajax({
-			url : "<c:url value='/student/selectInfo' />",
+			url : "<c:url value='/member/selectInfo' />",
 			type: "get",
 			dataType: "json",
 			success:function(res){
@@ -131,7 +131,8 @@ function inputPhoneNumber(obj) {
 						+'<div class="rowa" style=" margin-top: 20px;"> <label for="upfile">사진수정</label>'
 						+'<input type="file" name="upfile" id="upfile" ></div>	'	
 						+'<input type="hidden" name="oldFileName" id="oldFileName" value=' + res.IMAGE_URL+ '>';
-				var inHtml = '<tr>'
+				
+				var stuInfo = '<tr>'
 	      			+ '<th>학번</th>'
 	      			+ '<td>'+res.STU_NO+' / 입학날짜 : '+moment(res.ADMISSION_DATE).format('YYYY-MM-DD')
 	      			+ '</td>'
@@ -153,17 +154,71 @@ function inputPhoneNumber(obj) {
 	      			+ '<td>'+res.HP1+'-'+res.HP2+'-'+res.HP3+' / '+res.EMAIL1+'@'+res.EMAIL2
 	      			+ '/ '+res.ZIPCODE+' '+res.ADDRESS+' '+res.ADDR_DETAIL+' / '+res.BANK_NAME+' '+res.ACCOUNT_NO +'('+res.ACCOUNT_NAME+')</td>'
 	      			+ '</tr>';
+	      			
+				var profInfo = '<tr>'
+	      			+ '<th>학번</th>'
+	      			+ '<td>'+res.PROF_NO+' / 임용날짜 : '+moment(res.REGIGNATION_DATE).format('YYYY-MM-DD')
+	      			+ '</td>'
+		      		+ '</tr>'
+		      		+ '<tr>'
+	      			+ '<th>교수</th>'
+	      			+ '<td>'+res.PROF_NAME+' / '+res.SSN+'/ 대한민국</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>소속</th>'
+	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME+'</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>직급</th>'
+	      			+ '<td>'+res.POSITION_NAME+' </td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>기타</th>'
+	      			+ '<td>'+res.HP1+'-'+res.HP2+'-'+res.HP3+' / '+res.EMAIL1+'@'+res.EMAIL2
+	      			+ '/ '+res.ZIPCODE+' '+res.ADDRESS+' '+res.ADDR_DETAIL+' / '+res.BANK_NAME+' '+res.ACCOUNT_NO +'('+res.ACCOUNT_NAME+')</td>'
+	      			+ '</tr>';
+	      			
+				var adminInfo = '<tr>'
+	      			+ '<th>학번</th>'
+	      			+ '<td>'+res.EMP_NO+' / 임용날짜 : '+moment(res.START_DATE).format('YYYY-MM-DD')
+	      			+ '</td>'
+		      		+ '</tr>'
+		      		+ '<tr>'
+	      			+ '<th>직원</th>'
+	      			+ '<td>'+res.EMP_NAME+' / '+res.SSN+'/ 대한민국</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>소속</th>'
+	      			+ '<td>'+res.DEP_NAME+'</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>직급</th>'
+	      			+ '<td>'+res.POSITION_NAME+' </td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>기타</th>'
+	      			+ '<td>'+res.HP1+'-'+res.HP2+'-'+res.HP3+' / '+res.EMAIL1+'@'+res.EMAIL2
+	      			+ '/ '+res.ZIPCODE+' '+res.ADDRESS+' '+res.ADDR_DETAIL+' / '+res.BANK_NAME+' '+res.ACCOUNT_NO +'('+res.ACCOUNT_NAME+')</td>'
+	      			+ '</tr>';
 	      		
-				if(res.IMAGE_URL != 'default.jsp'){
+				if(res.IMAGE_URL != 'default.jpg'){
 					$('#imgDiv').html(imgDiv);
 				}else{
 					$('#imgDiv').html(defaultDiv);
 				}
 				
-	      		$('#studentTable').html(inHtml);
-	      		$('#ssn').val(res.SSN);
-	      		$('#name').val(res.NAME);
+				if(res.type == 'STUDENT'){
+	      			$('#infoTable').html(stuInfo);
+	      			$('#name').val(res.NAME);
+				}else if(res.type == 'PROFESSOR'){
+	      			$('#infoTable').html(profInfo);
+	      			$('#name').val(res.PROF_NAME);
+				}else if(res.type=='ADMIN'){
+	      			$('#infoTable').html(adminInfo);
+	      			$('#name').val(res.EMP_NAME);
+				}
 	      		
+	      		$('#ssn').val(res.SSN);
 			},
 			error:function(xhr,status,error){
 				alert(status + ", " + error);
@@ -206,7 +261,7 @@ a:focus {
 					<div>
 			      </div>
 			      <div class="cola s9" id="info">
-			      	<table id="studentTable">
+			      	<table id="infoTable">
 			      	</table>
 			      </div>
 			      <!--  -->
@@ -219,7 +274,6 @@ a:focus {
 				      	<table id="editInfo">
 				      		<tr>
 				      			<th>이름</th>
-				      			
 				      			<td><input placeholder="이름" name="name" id="name" type="text" class="validate" readonly="readonly"></td>
 								<th>학번</th>
 								<td><input placeholder="학번" name="officialNo" type="text" class="validate" readonly="readonly" value="${principal.officialNo }"></td>

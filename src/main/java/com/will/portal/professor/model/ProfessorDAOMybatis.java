@@ -63,9 +63,10 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 		return sqlsession.selectList(namespace+"classroomByDepNo", depNo);
 	}
 
-
-	
-	
+	@Override
+	public Map<String, Object> selectViewByProfNo(String profNo) {
+		return sqlsession.selectOne(namespace+"selectViewByProfNo",profNo);
+	}
 	
 	
 	

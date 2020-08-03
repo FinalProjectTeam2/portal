@@ -22,5 +22,6 @@ public interface ProfessorService {
 	List<Subj_timeVO> timeByProfNo(String profNo);
 	int insertSubjTime(Subj_timeVO vo);
 	List<Map<String, Object>> classroomByDepNo(String depNo);
+	public Map<String, Object> selectViewByProfNo(String profNo);
 	
 }

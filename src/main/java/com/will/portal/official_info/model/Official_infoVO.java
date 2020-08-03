@@ -15,8 +15,6 @@ public class Official_infoVO {
 	private String certiCode;
 	private String imageUrl;
 	
-	
-	
 	public Official_infoVO() {
 		super();
 	}

@@ -130,5 +130,6 @@ public class StudentServiceImpl implements StudentService {
 	public int getTotalRecord(StudentSearchVO studentSearchVo) {
 		return studentDao.getTotalRecord(studentSearchVo);
 	}
+
 	
 }

@@ -17,4 +17,5 @@ public interface ProfessorDAO {
 	List<String> codeByProfNo(String profNo);
 	int insertSubjTime(Subj_timeVO vo);
 	List<Map<String, Object>> classroomByDepNo(String depNo);
+	Map<String, Object>selectViewByProfNo(String profNo);
 }
