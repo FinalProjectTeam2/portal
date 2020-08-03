@@ -16,7 +16,6 @@ import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
-import com.will.portal.subject.model.SubjectVO;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {

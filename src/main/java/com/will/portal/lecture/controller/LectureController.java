@@ -21,7 +21,6 @@ import com.will.portal.common.MemberDetails;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
-import com.will.portal.subject.model.SubjectVO;
 
 @Controller
 public class LectureController {
