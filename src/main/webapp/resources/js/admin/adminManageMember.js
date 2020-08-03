@@ -53,6 +53,9 @@ $(function() {
 	$("input[name=chkAll]").click(function() {
 		$('tbody input[type=checkbox]').prop('checked', this.checked);
 	});
+	$("input[name=stateAll]").click(function() {
+		$('.ckState input[type=checkbox]').prop('checked', this.checked);
+	});
 
 
 });// document.ready

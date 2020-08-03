@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
-import com.will.portal.subject.model.SubjectVO;
 
 @Repository
 public class ProfessorDAOMybatis implements ProfessorDAO{

@@ -129,6 +129,15 @@
 		</if>
 		where official_no=#{officialNo}
    	</update>
+   	
+   	<update id="updateChangeDate" parameterType="string">
+   		update professor
+   		set change_date=sysdate
+   		where prof_no=#{profNo}
+   	</update>
+   	
+   	
+   	
 </mapper>
 
 

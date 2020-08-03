@@ -19,7 +19,9 @@
 			location.href = "<c:url value='/portal/board/edit?postNo=${vo.postsVo.postNo }'/>";
 		});
 		$("#delete").click(function() {
-			location.href = "<c:url value='/portal/board/delete?postNo=${vo.postsVo.postNo }'/>";
+			if(confirm('정말 삭제하시겠습니까?')){
+				location.href = "<c:url value='/portal/board/delete?postNo=${vo.postsVo.postNo }'/>";
+			}
 		});
 		$("#list").click(function() {
 			location.href = "<c:url value='/portal/board/list?bdCode=${vo.postsVo.bdCode }'/>";
@@ -68,7 +70,7 @@
 
 			<div class="bts">
 				<input type="button" value="목록" id="list">
-				<c:if test="${vo.postsVo.officialNo == principal.officialNo }">
+				<c:if test="${vo.postsVo.officialNo == principal.officialNo or principal.type == 'ADMIN'}">
 					<input type="button" id="edit" value="수정"> <input type="button" id="delete"
 						value="삭제"> 
 				</c:if>
