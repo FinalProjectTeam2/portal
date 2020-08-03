@@ -48,4 +48,14 @@ public class PostsDAOMybatis implements PostsDAO {
 	public int upReadCount(int postNo) {
 		return sqlSession.update(namespace+"upReadCount", postNo);
 	}
+
+	@Override
+	public String selectBdCodeByPostNo(int postNo) {
+		return sqlSession.selectOne(namespace+"selectBdCodeByPostNo", postNo);
+	}
+
+	@Override
+	public int deletePostByPostNo(int postNo) {
+		return sqlSession.delete(namespace+"deletePostByPostNo", postNo);
+	}
 }
