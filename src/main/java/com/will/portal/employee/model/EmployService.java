@@ -1,5 +1,7 @@
 package com.will.portal.employee.model;
 
+import java.util.Map;
+
 import com.will.portal.official_info.model.Official_infoVO;
 
 public interface EmployService {
@@ -12,4 +14,5 @@ public interface EmployService {
 	EmployeeVO selectByEmpNo(String empNo);
 	int insertEmployee(EmployeeVO employeeVo, Official_infoVO officialVo, int sort);
 	boolean loginCheckSec(String loginPwd, String password, String officialNo);
+	public Map<String, Object> selectViewByEmpNo(String empNo);
 }
