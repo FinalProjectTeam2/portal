@@ -4,10 +4,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class Account_InfoDAOMybatis implements Account_InfoDAO{
+import lombok.RequiredArgsConstructor;
 
-	@Autowired SqlSessionTemplate sqlSession;
+@Repository
+@RequiredArgsConstructor
+public class Account_InfoDAOMybatis implements Account_InfoDAO{
+	private final SqlSessionTemplate sqlSession;
 	private String namespceAdmin ="config.mybatis.mapper.oracle.admin.";
 	
 	@Override
@@ -15,6 +17,4 @@ public class Account_InfoDAOMybatis implements Account_InfoDAO{
 
 		return sqlSession.insert(namespceAdmin+"insertAccount",officialNo);
 	}
-	
-	
 }

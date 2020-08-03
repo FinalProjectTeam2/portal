@@ -234,7 +234,8 @@ select:focus {
 }
 
 li:focus {
-	background-color: #ffffff00;
+	background-color: #ffffff00;\
+	
 }
 a:focus {
 	background-color: #ffffff00;
