@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.will.portal.SearchController;
 import com.will.portal.account_info.model.Account_infoVO;
@@ -27,11 +26,9 @@ import com.will.portal.bank.model.BankVO;
 import com.will.portal.common.FileUploadUtil;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.files.model.FilesService;
-import com.will.portal.files.model.FilesVO;
 import com.will.portal.official_info.model.Official_infoService;
 import com.will.portal.official_info.model.Official_infoVO;
 import com.will.portal.student.model.StudentService;
-import com.will.portal.student.model.StudentVO;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
