@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.evaluation">
+	<select id="selectAllListforEval" resultType="evaluationAllVo" parameterType="string">
+		select e.*, s.name, su.subj_name
+		from evaluation e join student s
+		on e.stu_no = s.stu_no
+		join subject su
+		on e.sub_code=substr(su.subj_code, 5)
+		<if test="value!=null">
+			where e.sub_code=#{subCode}
+		</if> 
+	</select>
+	
+	<select id="subjectByProfNo" resultType="map" parameterType="string">
+		select o.subj_code, o.open_sub_code, s.subj_name 
+		from subject s join open_subj o
+		on s.subj_code=o.subj_code
+		where o.prof_no=#{profNo}
+	</select>
+	
+   
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

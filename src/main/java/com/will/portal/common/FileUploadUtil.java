@@ -31,6 +31,7 @@ public class FileUploadUtil {
 	
 	public static final int PATH_PDS=1; //자료실 사용
 	public static final int PATH_IMAGE=2; //프로필 사진 업로드 사용
+	public static final int PATH_PDF=3;	//교수 강의계획서 업로드 사용
 	
 	public List<Map<String, Object>> fileUpload(HttpServletRequest request, int pathGb) {
 		//파일 업로드 처리 메서드
@@ -106,6 +107,8 @@ public class FileUploadUtil {
 	            key="file.upload.path";
 	         }else if(pathGb==PATH_IMAGE) {
 	            key="imageFile.upload.path";
+	         }else if(pathGb==PATH_PDF) {
+	        	 key="pdfFile.upload.path";
 	         }
 
 	         uploadPath=fileUploadProps.getProperty(key);

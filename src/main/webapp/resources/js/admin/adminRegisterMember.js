@@ -1,5 +1,6 @@
 $(function() {
 	$(function() {
+		sortCheck();
 		// ajax 학과 검색
 		$('#faculty').change(
 				function() {
@@ -122,8 +123,11 @@ $(function() {
 		return pattern.test(number);
 	}
 
-	// 등록 구분 시 입력창
 	$('select[name=sort]').change(function() {
+		sortCheck();
+	});
+	// 등록 구분 시 입력창
+	function sortCheck(){
 		if ($('select[name=sort]').val() == 1) {
 			$('.emp').css('display', 'block');
 			$('.emp select').val("");
@@ -139,8 +143,5 @@ $(function() {
 		} else {
 			$('.prof').css('display', 'none');
 		}
-	});
-
-	
-	
+	}
 });
