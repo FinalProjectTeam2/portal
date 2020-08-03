@@ -2,6 +2,7 @@ package com.will.portal.employee.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,11 @@ public class EmployeeServiceImpl implements EmployService {
 	@Override
 	public EmployeeVO selectByEmpNo(String empNo) {
 		return employeeDao.selectByEmpNo(empNo);
+	}
+
+	@Override
+	public Map<String, Object> selectViewByEmpNo(String officialNo) {
+		return employeeDao.selectViewByEmpNo(officialNo);
 	}
 
 }

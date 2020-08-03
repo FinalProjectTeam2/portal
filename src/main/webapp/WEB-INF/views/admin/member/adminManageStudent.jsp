@@ -8,8 +8,6 @@
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-
-
 		<div id="adminMngMem">
 			<div class="divTop">
 				<h2>학생 관리</h2>
@@ -35,8 +33,8 @@
 				<div class="divRight">
 					<div class="divTop">
 						<div class="stud">
-							<label for="faculty"><span>학부</span></label> 
-							<select	name="facultyNo" id="faculty">
+							<label for="faculty"><span>학부</span></label> <select
+								name="facultyNo" id="faculty">
 								<option value="0">선택</option>
 								<c:forEach var="facVo" items="${facultyList }">
 									<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
@@ -46,12 +44,20 @@
 								<option value="">학부를 선택하세요</option>
 							</select>
 						</div>
+						<div class="ckState stud">
+						<input type="checkbox" name="stateAll" value="0" id="selectAll"><label for="selectAll">전체</label>
+						<input type="checkbox" name="state" value="2" id="2"><label for="2">재학생</label>
+						<input type="checkbox" name="state" value="1" id="1"><label for="1">신입생</label>
+						<input type="checkbox" name="state" value="3" id="3"><label for="3">휴학생</label>
+						<input type="checkbox" name="state" value="5" id="5"><label for="5">졸업생</label>
+						<input type="checkbox" name="state" value="4" id="4"><label for="4">졸업가능</label>
+						</div>
 
-						학번<input type="text" name="stuNo">
-						이름 <input type="text" size="8" name="name">
+						학번<input type="text" name="stuNo"> 이름 <input type="text"
+							size="8" name="name">
 						<button class="btCustom btn btn-primary btn-lg login-button"
 							id="btSearch">검색</button>
-						<p style="float: left">조회결과 : {}건</p>
+						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
 					</div>
 					<div class="divList">
 						<table class="box2" summary="학생 목록">
@@ -88,27 +94,29 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="map" items="${list }">
+								<c:if test="${empty list }">
 									<tr>
-										<td><input type="checkbox" name="pdItems[].productNo"
-											value=""> <input type="hidden"
-											name="pdItems[].imageURL" value=""></td>
-										<td>${map['STU_NO']}</td>
-										<td>${map['NAME']}</td>
-										<td>${map['FACULTY_NAME']}</td>
-										<td>${map['DEP_NAME']}</td>
-										<td>${map['SEMESTER']}</td>
-										<td>${map['STATE']}</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-								</c:forEach>
-								<%-- 	<c:if test="${empty list }">
-									<tr>
-										<td colspan="8">결과가 없습니다.</td>
+										<td colspan="9">결과가 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
+									<c:forEach var="map" items="${list }">
+										<tr>
+											<td><input type="checkbox" name="pdItems[].productNo"
+												value=""> <input type="hidden"
+												name="pdItems[].imageURL" value=""></td>
+											<td>${map['STU_NO']}</td>
+											<td>${map['NAME']}</td>
+											<td>${map['FACULTY_NAME']}</td>
+											<td>${map['DEP_NAME']}</td>
+											<td>${map['SEMESTER']}</td>
+											<td>${map['STATE_NAME']}</td>
+											<td><a href="#">수정</a></td>
+											<td><a href="#">삭제</a></td>
+										</tr>
+									</c:forEach>
+								</c:if>
+								<%--	<c:if test="${!empty list }">
 									<!-- 반복 시작 -->
 									<c:set var="idx" value="0" />
 									<c:forEach var="vo" items="${list }">
@@ -145,31 +153,40 @@
 					</div>
 					<div class="divPage">
 						<!-- 페이지 번호 추가 -->
-						<%-- 	<c:if test="${pagingInfo.firstPage>1 }">
-							<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"> <img
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"
+								class="imgNext"> <img
 								src='<c:url value="/resources/images/first.JPG" />' border="0">
 							</a>
-						</c:if> --%>
+							<a href="#" style="color: #3333339c" onclick="boardList(1)">
+								1 </a>
+							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
+						</c:if>
 
 						<!-- [1][2][3][4][5][6][7][8][9][10] -->
-						<%-- 	<c:forEach var="i" begin="${pagingInfo.firstPage }"
+						<c:forEach var="i" begin="${pagingInfo.firstPage }"
 							end="${pagingInfo.lastPage }">
 							<c:if test="${i==pagingInfo.currentPage }">
-								<span style="color: blue; font-weight: bold">${i }</span>
+								<span class="pageA">${i }</span>
 							</c:if>
 							<c:if test="${i!=pagingInfo.currentPage }">
-								<a href="#" onclick="boardList(${i})"> [${i }] </a>
+								<a href="#" style="color: #3333339c" onclick="boardList(${i})">
+									${i } </a>
 							</c:if>
 						</c:forEach>
 
 						<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-							<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"> <img
+							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
+							<a href="#" style="color: #3333339c"
+								onclick="boardList(${pagingInfo.totalPage})">
+								${pagingInfo.totalPage } </a>
+							<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"
+								class="imgNext"> <img
 								src="<c:url value="/resources/images/last.JPG" />" border="0">
 							</a>
-						</c:if> --%>
+						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
-
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"

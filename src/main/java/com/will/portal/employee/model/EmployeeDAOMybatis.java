@@ -1,5 +1,7 @@
 package com.will.portal.employee.model;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,6 +30,11 @@ public class EmployeeDAOMybatis implements EmployeeDAO{
 	@Override
 	public String selectSsn(String officialNo) {
 		return sqlSession.selectOne(namespace+"selectSsn", officialNo);
+	}
+
+	@Override
+	public Map<String, Object> selectViewByEmpNo(String officialNo) {
+		return sqlSession.selectOne(namespace + "selectViewByEmpNo",officialNo);
 	}
 }
 

@@ -55,7 +55,10 @@
    		select * from class where dep_no=#{depNo}
    	</select>
    	
-   	
+   	<select id="selectViewByProfNo" parameterType="String"
+		resultType="map">
+		select * from PROFESSOR_VIEW where prof_no=#{profNo}
+	</select>
    	
 </mapper>
 

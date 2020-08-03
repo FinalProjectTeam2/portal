@@ -15,6 +15,10 @@
    		select ssn from official_info where official_no=#{officicalNo}
    	</select>
    
+    <select id="selectViewByEmpNo" parameterType="String" resultType="map">
+		select * from EMPLOYEE_VIEW where official_no=#{officialNo}
+	</select>
+   
 </mapper>
 
 
