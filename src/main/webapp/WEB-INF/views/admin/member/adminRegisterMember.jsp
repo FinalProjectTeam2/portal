@@ -23,9 +23,18 @@
 								<div class="form-group">
 									<div>
 										<label for="sort">회원 구분</label> <select name="sort" id="sort">
-											<option value="3">학생</option>
-											<option value="2">교수</option>
-											<option value="1">임직원</option>
+											<option value="3"
+												<c:if test="${param.sort==3}">
+				selected="selected"
+			</c:if>>학생</option>
+											<option value="2"
+												<c:if test="${param.sort==2}">
+				selected="selected"
+			</c:if>>교수</option>
+											<option value="1"
+												<c:if test="${param.sort==1}">
+				selected="selected"
+			</c:if>>임직원</option>
 										</select>
 									</div>
 								</div>

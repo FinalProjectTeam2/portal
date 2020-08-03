@@ -22,7 +22,7 @@
 		resultType="map">
 		select * from STUDENT_VIEW where stu_no=#{stuNo}
 	</select>
-	
+
 	<select id="selectStudent" resultType="studentVo">
 		select * from student
 	</select>
@@ -36,12 +36,12 @@
 		from(
 		<if
 			test="(stuNo==null or stuNo =='') and (name==null or name =='') and 
-		(facultyNo==0 or facultyNo =='') and (major==0 or major =='')">
+		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')">
 			select * from STUDENT_VIEW
 		</if>
 		<if
 			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or 
-		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='')">
+		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1 !=null and state1 !='')">
 			select * from STUDENT_VIEW
 			where stu_no is not null
 			<if test="stuNo!=null and stuNo !=''">
@@ -56,6 +56,22 @@
 			<if test="major!=0 and major !=''">
 				and major=#{major}
 			</if>
+			<if test="state1!=null and state1 !=''">
+				and state in (#{state1}
+				<if test="state2!=null and state2!=''">
+					,#{state2}
+				</if>
+				<if test="state3!=null and state3!=''">
+					,#{state3}
+				</if>
+				<if test="state4!=null and state4!=''">
+					,#{state4}
+				</if>
+				<if test="state5!=null and state5!=''">
+					,#{state5}
+				</if>
+				)
+			</if>
 		</if>
 		order by stu_no
 		)A
@@ -68,12 +84,12 @@
 		resultType="int">
 		<if
 			test="(stuNo==null or stuNo =='') and (name==null or name =='') and 
-		(facultyNo==0 or facultyNo =='') and (major==0 or major =='')">
+		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')">
 			select count(*) from STUDENT_VIEW
 		</if>
 		<if
 			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or 
-		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='')">
+		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1!=null and state1 !='')">
 			select count(*) from STUDENT_VIEW
 			where stu_no is not null
 			<if test="stuNo!=null and stuNo !=''">
@@ -87,6 +103,22 @@
 			</if>
 			<if test="major!=0 and major !=''">
 				and major=#{major}
+			</if>
+			<if test="state1!=null and state1 !=''">
+				and state in (#{state1}
+				<if test="state2!=null and state2!=''">
+					,#{state2}
+				</if>
+				<if test="state3!=null and state3!=''">
+					,#{state3}
+				</if>
+				<if test="state4!=null and state4!=''">
+					,#{state4}
+				</if>
+				<if test="state5!=null and state5!=''">
+					,#{state5}
+				</if>
+				)
 			</if>
 		</if>
 	</select>

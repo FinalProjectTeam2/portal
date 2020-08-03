@@ -146,17 +146,17 @@ public class BoardController {
 		return boardService.selectBoardByBdCode(bdCode);
 	}
 
-	@RequestMapping("/detail")
+	@RequestMapping("/detailCount")
 	public String detailCount(@RequestParam(defaultValue = "0") int postNo, Model model) {
 		
 		int count = postsService.upReadCount(postNo);
 		logger.info("조회수 증가 결과 count={}", count);
 
-		return "forward:/portal/board/detailView";
+		return "redirect:/portal/board/detail?postNo="+postNo;
 	}
 	
-	@RequestMapping("/detailView")
-	public String detail(@RequestParam(defaultValue = "0") int postNo, Model model) {
+	@RequestMapping("/detail")
+	public void detail(@RequestParam(defaultValue = "0") int postNo, Model model) {
 		logger.info("게시판 상세보기 페이지");
 		
 
@@ -171,8 +171,6 @@ public class BoardController {
 		logger.info("게시판 상세보기 조회 결과 vo={}", vo);
 
 		model.addAttribute("vo", vo);
-
-		return "/portal/board/detail";
 	}
 	
 	@RequestMapping("/download")
@@ -204,10 +202,19 @@ public class BoardController {
 	public void edit_get() {
 		logger.info("게시글 수정 페이지");
 	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public void delete_get() {
-		logger.info("게시글 삭제 페이지");
+	
+	@RequestMapping(value = "/delete")
+	public String deleteOk(@RequestParam(defaultValue = "0") int postNo) {
+		logger.info("게시글 삭제 처리 파라미터 postNo={}",postNo);
+		
+		String bdCode = postsService.selectBdCodeByPostNo(postNo);
+		logger.info("bdCode={}",bdCode);
+		
+		int cnt = postsService.deletePostByPostNo(postNo);
+		logger.info("삭제 결과 cnt={}",cnt);
+		
+		
+		return "redirect:/portal/board/list?bdCode="+bdCode;
 	}
 
 	@RequestMapping(value = "/re", method = RequestMethod.GET)
@@ -260,6 +267,7 @@ public class BoardController {
 	@RequestMapping("/ajax/cateList")
 	@ResponseBody
 	public List<CategoryListVO> cateList() {
+		logger.info("ajax categoryList");
 		return boardService.selectCategoryList();
 	}
 

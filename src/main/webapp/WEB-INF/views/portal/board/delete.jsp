@@ -49,12 +49,19 @@ form[name=frmDelete]{
 	text-align: center;
 }
 </style>
-
+<script type="text/javascript">
+	$(function() {
+		$("form[name=frmDelete]").submit(function() {
+			
+		});
+	});
+</script>
 <main role="main" class="flex-shrink-0">
 <div class="container">
 
   <form action="" method="post" name="frmDelete">
     <label>게시물을 삭제하시겠습니까?<br> 비밀번호를 입력하세요.</label><br>
+    <input type="hidden" value="${param.postNo }">
     <input type="password" id="psw" name="pwd" required>
     <input type="submit" value="삭제">
   </form>
