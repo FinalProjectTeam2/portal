@@ -128,3 +128,27 @@ on ss.position_CODE = S.position_CODE
 JOIN EMP_DEPART D
 ON D.DEP_CODE = S.DEP_CODE
 );
+
+
+
+--수강신청 들어갈때 해당학생 기본정보 
+select s.name, s.stu_no, s.major, d.dep_name, f.faculty_no, f.faculty_name
+from department d  join student s
+on s.major=d.dep_no
+join faculty f
+on d.faculty_no=f.faculty_no;
+
+--검색했을때 나오는정보들
+select o.open_sub_code, s.subj_name, p.prof_name, s.credit, st.classroom_code, c.classroom_name, ty.type, sy.syllabus
+from open_subj o join subject s
+on o.subj_code=s.subj_code
+join professor p
+on o.prof_no=p.prof_no
+join subj_time st
+on o.open_sub_code=st.open_sub_code
+join classroom c
+on st.classroom_code=c.classroom_code
+join subj_type ty
+on s.type_code=ty.type_code
+join syllabus sy
+on o.open_sub_code=sy.open_sub_code;
