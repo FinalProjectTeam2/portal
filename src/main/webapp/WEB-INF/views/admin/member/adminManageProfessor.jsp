@@ -192,6 +192,7 @@
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
+							onclick="location.href='<c:url value="/admin/member/adminRegisterMember?sort=2"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
 					<div class="btdiv">
