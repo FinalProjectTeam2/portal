@@ -3,15 +3,19 @@ package com.will.portal.professor.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.will.portal.account_info.model.Account_InfoDAO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.subj_time.model.Subj_timeVO;
+import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.subject.model.SubjectVO;
 
 @Service
@@ -23,6 +27,8 @@ public class ProfessorServiceImpl implements ProfessorService {
 	private Official_infoDAO officialDao;
 	@Autowired
 	private CommonDAO commonDao;
+	@Autowired private Account_InfoDAO accountInfoDao;
+
 
 	@Transactional
 	public int insertProfessor(ProfessorVO professorVo, Official_infoVO officialVo, int sort) {
@@ -40,7 +46,8 @@ public class ProfessorServiceImpl implements ProfessorService {
 		int cnt = professorDao.insertProfessor(professorVo);
 
 		int cnt2 = 0;
-		if (cnt > 0) {
+		int ac=accountInfoDao.insertAccount(userNo);
+		if (cnt > 0 && ac>0) {
 
 			officialVo.setOfficialNo(userNo);
 			cnt2 = officialDao.insertOfficial(officialVo);
@@ -107,9 +114,33 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return result;
 	}
 
-	public List<SubjectVO> loadByProfNo(String profNo) {
+	public List<SubjectAllVO> loadByProfNo(String profNo) {
 		return professorDao.loadByProfNo(profNo);
 	}
 
+	@Override
+	public List<Subj_timeVO> timeByProfNo(String profNo) {
+		List<String> list = professorDao.codeByProfNo(profNo);
+		return professorDao.timeByCode(list);
+	}
+
+	@Override
+	public int insertSubjTime(Subj_timeVO vo) {
+		return professorDao.insertSubjTime(vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> classroomByDepNo(String depNo) {
+		return professorDao.classroomByDepNo(depNo);
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
 	
 }

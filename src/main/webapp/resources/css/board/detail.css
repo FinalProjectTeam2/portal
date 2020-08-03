@@ -23,29 +23,11 @@
   background-color: skyblue;
   color: white;
   padding: 12px 20px;
-  border: none;
   border-radius: 4px;
   cursor: pointer;
   float: right;
 }
 
-#boardDetail input[type=button]:hover {
-  background-color: blue;
-}
-
-#boardDetail input[type=submit] {
-  background-color: skyblue;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
-}
-
-#boardDetail input[type=submit]:hover {
-  background-color: blue;
-}
 
 #boardDetail .col-25 {;
   float: left;
@@ -93,8 +75,61 @@
 
 #boardDetail .bts input[type=button]{
 	margin: 0 5px;
+	border: 1px solid skyblue;
 }
 
 #boardDetail .content {
 	padding: 35px;
+}
+.info{
+	overflow: hidden;
+	padding: 0 1%;
+}
+#boardDetail {
+    width: 90%;
+    margin: 0 auto;
+}
+.content{
+	margin: 40px auto 20px auto;
+}
+
+.fileInfo{
+	margin: 10px 0;
+	overflow: hidden;
+}
+.fileInfo > div{
+	float: right;
+}
+.fileInfo > div > div{
+	font-size: 0.8em;
+	text-align: right;
+}
+.col h3{
+	word-break: break-word;
+	line-height: 1.5em;
+}
+.row1{
+	overflow: hidden;
+}
+#readCount{
+	float: right;
+	margin: 0 30px;
+}
+#boardDetail .bts input[type=button]:hover {
+	background: white;
+	color: skyblue;
+	
+}
+#boardDetail .bts input[type=button]:focus {
+	border-color: skyblue;
+	background-color: skyblue;
+	
+  	color: white;
+	
+}
+#boardDetail .bts input[type=button]:after {
+	background: white;
+	color: skyblue;
+	border-color: skyblue;
+	
 }

@@ -22,9 +22,9 @@ a.bottom {
 <script type="text/javascript">
 	$(function() {
 
-		$('.top').hide();
+		//$('.top').hide();
 
-		$("body").scroll(function() {
+		$("html").scroll(function() {
 			if ($(this).scrollTop() > 200) {
 				$('.top').fadeIn(300);
 			} else {

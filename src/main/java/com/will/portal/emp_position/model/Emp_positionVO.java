@@ -1,6 +1,8 @@
 package com.will.portal.emp_position.model;
 
-public class Emp_positionVO {
+import com.will.portal.common.SearchVO;
+
+public class Emp_positionVO extends SearchVO{
 	private String positionCode;
 	private String positionName;
 	public String getPositionCode() {

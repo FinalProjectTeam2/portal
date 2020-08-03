@@ -1,15 +1,18 @@
 package com.will.portal.subj_time.model;
 
 public class Subj_timeVO {
-	private String lectureTimeCode;
+	private int lectureTimeNo;
 	private String openSubCode;
 	private String timetableCode;
 	private String classroomCode;
-	public String getLectureTimeCode() {
-		return lectureTimeCode;
+	
+	
+	
+	public int getLectureTimeNo() {
+		return lectureTimeNo;
 	}
-	public void setLectureTimeCode(String lectureTimeCode) {
-		this.lectureTimeCode = lectureTimeCode;
+	public void setLectureTimeNo(int lectureTimeNo) {
+		this.lectureTimeNo = lectureTimeNo;
 	}
 	public String getOpenSubCode() {
 		return openSubCode;
@@ -31,7 +34,7 @@ public class Subj_timeVO {
 	}
 	@Override
 	public String toString() {
-		return "Subj_timeVO [lectureTimeCode=" + lectureTimeCode + ", openSubCode=" + openSubCode + ", timetableCode="
+		return "Subj_timeVO [lectureTimeNo=" + lectureTimeNo + ", openSubCode=" + openSubCode + ", timetableCode="
 				+ timetableCode + ", classroomCode=" + classroomCode + "]";
 	}
 	

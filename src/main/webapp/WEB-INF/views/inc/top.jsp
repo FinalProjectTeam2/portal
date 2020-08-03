@@ -5,11 +5,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html class="h-100">
 <head>
 <meta id="_csrf" name="_csrf" content="${_csrf.token}" />
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}" />
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,7 +37,6 @@
 <!-- date formating -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
 <title>척척학사</title>
 
 <link href="<c:url value='/resources/css/offcanvas.css' />"
@@ -46,7 +47,6 @@
 	href="<c:url value='/resources/images/logoIcon.ico' />">
 <!-- ckeditor 사용하기 위함 -->
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
-
 
 <style type="text/css">
 .logo {
@@ -117,15 +117,14 @@
 }
 </style>
 <sec:authorize access="isAuthenticated()">
-<script type="text/javascript">
-//$\{sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.(vo에해당하는 멤버변수명)}
-if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'STUDENT'){
-	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}');
-}
-</script>
+	<script type="text/javascript">
+		//$\{sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.(vo에해당하는 멤버변수명)}
+		/* if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'STUDENT'){
+		 console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}');
+		 } */
+	</script>
 </sec:authorize>
 <script type="text/javascript">
-
 	$
 			.ajaxSetup({
 				error : function(jqXHR, exception) {
@@ -157,34 +156,34 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 	function clock() {
 		var date = new Date();
 
-		// date Object를 받아오고 
+		// date Object를 받아오고
 		var month = date.getMonth();
 
-		// 달을 받아옵니다 
+		// 달을 받아옵니다
 		var clockDate = date.getDate();
 
-		// 몇일인지 받아옵니다 
+		// 몇일인지 받아옵니다
 		var day = date.getDay();
 
-		// 요일을 받아옵니다. 
+		// 요일을 받아옵니다.
 		var week = [ '일', '월', '화', '수', '목', '금', '토' ];
 
-		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다. 
+		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다.
 		var hours = date.getHours();
 
-		// 시간을 받아오고 
+		// 시간을 받아오고
 		var minutes = date.getMinutes();
 
 		// 분도 받아옵니다.
 		var seconds = date.getSeconds();
 
-		// 초까지 받아온후 
+		// 초까지 받아온후
 		var timer = (month + 1) + '월 ' + clockDate + '일 ' + week[day] + '요일 '
 				+ (hours < 10 ? '0' + hours : hours) + ':'
 				+ (minutes < 10 ? '0' + minutes : minutes) + ':'
 				+ (seconds < 10 ? '0' + seconds : seconds);
 
-		// 월은 0부터 1월이기때문에 +1일을 해주고 
+		// 월은 0부터 1월이기때문에 +1일을 해주고
 
 		// 시간 분 초는 한자리수이면 시계가 어색해보일까봐 10보다 작으면 앞에0을 붙혀주는 작업을 3항연산으로 했습니다.
 		$("#timer").html(timer)
@@ -217,7 +216,7 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 		});
 
 		$("#btLogin").click(function() {
-			location.href = "<c:url value='/login/login' />";
+			location.href = "<c:url value='/login' />";
 		});
 	});
 </script>
@@ -236,26 +235,24 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 				style="max-width: 1400px;">
 
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active" style="color: white;">PORTAL 
-					<sec:authorize access="isAuthenticated()">
-					<sec:authentication property="principal.name" />님
-					</sec:authorize>
-					<span class="sr-only">(current)</span>
+					<li class="nav-item active" style="color: white;">PORTAL  <span class="sr-only">(current)</span>
 					</li>
 				</ul>
-				<span id="timer"
-					style="color: white; font-size: 0.8em; margin: 0 5px;"></span> <a
-					href="<c:url value='/chat/chatting'/>">채팅방</a>
+				<sec:authorize access="isAuthenticated()">
+					<span style="color: white; margin-right: 10px;">
+						<sec:authentication property="principal.name" />님
+					</span>
+				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<button class="btn btn-outline-success my-2 my-sm-0" type="button"
 						id="btLogin">로그인</button>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
-					<form action="<c:url value='/logout'/>"
-						method="POST">
-						<input id="logoutBtn" type="submit" value="로그아웃" /> <input
-							type="hidden" name="${_csrf.parameterName}"
+					<form action="<c:url value='/logout'/>" method="POST">
+						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+							id="logoutBtn">로그아웃</button>
 					</form>
 				</sec:authorize>
 				<select class="custom-select"
@@ -270,21 +267,40 @@ if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'S
 				<ul class="zeta-menu">
 					<li><a class="nav-link" href="#">포털</a>
 						<ul>
-							<li><a href="<c:url value='/portal/board/main'/>">게시판</a></li>
-							<li><a href="#">공지</a></li>
-							<li><a href="#">자료실</a></li>
-							<li><a href="#">서비스</a></li>
+							<li><a
+								href="<c:url value='/portal/board/main?categoryCode=B'/>">게시판</a></li>
+							<li><a
+								href="<c:url value='/portal/board/main?categoryCode=N'/>">공지</a></li>
+							<li><a
+								href="<c:url value='/portal/board/main?categoryCode=P'/>">자료실</a></li>
+							<li><a
+								href="<c:url value='/board_calender/calendarDetail'/>">서비스</a></li>
 						</ul></li>
+					<sec:authorize access="isAuthenticated()">
+					<c:if test="${principal.type=='STUDENT' }">
 					<li><a class="nav-link" href="#"> 학사서비스 </a>
 						<ul>
 							<li><a href="#">학사정보</a></li>
 							<li><a href="#">수강신청</a></li>
 						</ul></li>
+					</c:if>
+					<c:if test="${principal.type=='PROFESSOR' }">
+					<li><a class="nav-link" href="#"> 강의 관리 </a>
+						<ul>
+							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
+							<li><a href="#">강의 개설 신청</a></li>
+						</ul></li>
+					</c:if>
+					</sec:authorize>
+
 					<li><a class="nav-link" href="#">웹메일</a></li>
 					<li><a class="nav-link" href="#"> 쪽지함 <span
 							class="badge badge-pill bg-light align-text-bottom">27</span>
 					</a></li>
 				</ul>
+				<span id="timer"
+					style="color: black; font-size: 0.8em; margin: 15px 25px;
+					width: 100%; text-align: right;"></span>
 			</nav>
 		</div>
 	</header>

@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>본인인증 창</title>
 <style type="text/css">
+
 body{
 	margin-top: 50px;
 	text-align: center;
@@ -26,6 +27,14 @@ h1{
 	margin-top: 50px;
 }
 </style>
+<!--Bootsrap 4 CDN-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   
+   <!--Fontawesome CDN-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link rel="stylesheet" href="<c:url value='/resources/css/reset.css'/>">
+<link rel="stylesheet" href="<c:url value='/resources/css/identify.css'/>">
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/member.js'/>"></script>
 <script type="text/javascript">
@@ -162,26 +171,42 @@ function ident(){
 </script>
 </head>
 <body>
-	<h1>휴대폰 본인인증</h1>
-	<form method="post" action="<c:url value='/member/identify'/>" name="frmGetCode">
-		<div id="showSsn">	
-			주민번호 입력 : 
-			<input type="text" name="ssn1" id="ssn1" size="6" maxlength="6" /><span>&nbsp;-&nbsp;</span>
-			<input type="text" name="ssn2" id="ssn2" size="1" maxlength="1" />****** <br>
+	<div class="container">
+		<div class="d-flex justify-content-center h-100">
+			<div class="card">
+				<div class="card-header">
+					<h2>휴대폰 본인인증</h2>
+				</div>
+		<div class="card-body">
+			<form method="post" action="<c:url value='/member/identify'/>" name="frmGetCode">
+				<br><br><br><br>
+				<div id="showSsn"class="input-group form-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="font-size: 0.7em;"><i class="fas fa-key">주민번호 입력 </i></span>
+					</div>
+						<input width="100px" type="text" class="form-control" name="ssn1" id="ssn1" size="6" maxlength="6" /><span>&nbsp;-&nbsp;</span>
+						<input type="text" name="ssn2" id="ssn2" size="1" maxlength="1" /><h3>&nbsp;&nbsp;******</h3> <br>
+				</div>
+				<div id="countdown" class="input-group form-group" style="display: hide">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="font-size: 0.7em;"><i class="fas fa-key">인증번호 입력</i></span>
+					</div>
+					<input width="100px" type="text" id="code" class="form-control" name="inputCode" size="20" maxlength="6" /> 
+					<input type="hidden" id ="offNo" name="officialNo" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}" />
+					<input type="hidden" name="checkCode" value="N" />
+					<input type="hidden" name="identSsn" id="identSsn" value="N" />
+					<lable class="input" style="color:red"></lable>
+					<br><br>			
+					<div class="form-group">
+						<input type="button" id="btSubmit" value="확인" style="margin-top: 30px;margin-right: 20px;" class="btn float-right login_btn"/>
+					</div>
+				</div>
+			</form>
+		<div id="getCode" class="form-group">
+			<input type="button" id="btcode" value="인증번호 받기" style="margin-top: 30px;margin-right: 20px;" class="btn float-right login_btn"/>
 		</div>
-		<div id="countdown" style="display: hide">
-			<input type="text" id="code" name="inputCode" /> 
-			<input type="button" id="btSubmit" value="확인" /> 
-			<input type="hidden" id ="offNo" name="officialNo" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}" />
-			<input type="hidden" name="checkCode" value="N" />
-			<input type="hidden" name="identSsn" id="identSsn" value="N" />
-			
-			<lable class="input" style="color:red"></lable>
 		</div>
-	</form>
-	<div id="getCode">
-		
-		<input type="button" id="btcode" value="인증번호 받기" style="margin-top: 20px;" />
+		</div>
 	</div>
 </body>
 </html>

@@ -21,4 +21,9 @@ public class FilesDAOMybatis implements FilesDAO{
 	public int selectCountByPostNo(int postNo) {
 		return sqlSession.selectOne(namespace+"selectCountByPostNo", postNo);
 	}
+
+	@Override
+	public int upDownCount(int no) {
+		return sqlSession.update(namespace+"upDownCount", no);
+	}
 }

@@ -41,6 +41,21 @@ public class PostsServiceImpl implements PostsService{
 	public PostsAllVO SelectByCodeP(int postNo) {
 		return postsDao.SelectByCodeP(postNo);
 	}
+
+	@Override
+	public int upReadCount(int postNo) {
+		return postsDao.upReadCount(postNo);
+	}
+
+	@Override
+	public String selectBdCodeByPostNo(int postNo) {
+		return postsDao.selectBdCodeByPostNo(postNo);
+	}
+
+	@Override
+	public int deletePostByPostNo(int postNo) {
+		return postsDao.deletePostByPostNo(postNo);
+	}
 	
 	
 }

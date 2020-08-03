@@ -1,46 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="<c:url value='/resources/css/chat/bootstrap.css'/>">
 <link rel="stylesheet" href="<c:url value='/resources/css/chat/custom.css'/>">
-<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/chat/bootstrap.js'/>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <style type="text/css">
-.well {
-    width: 45%;
-    border: 0;
-    background: none;
-    box-shadow: none;
-}
-.well.my {
-    float: right;
-    clear: both;
-}
-.well.other {
-    float: left;
-    clear: both;
-}
-div#chatData {
-   overflow: auto;
-   height: 560px;
-}
-div#chatDataIn {
-    height: max-content;
-    overflow: auto;
-}
-.alert-info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-    word-break: break-all;
-}
+
 </style>
+<sec:authorize access="isAuthenticated()">
+
 <script type="text/javascript">
 	var sock = new SockJS("<c:url value='/echo'/>");
 	
@@ -53,12 +23,13 @@ div#chatDataIn {
 			sendMessage();
 		});
 		$("#reLoad").click(function() {
-			 sock = new SockJS("<c:url value='/echo'/>");
+			 location.reload();
 		});
 	});
 	
 	function sendMessage() {
 		sock.send($("#message").val());
+		$("#message").val("");
 	}
 	
 	/* evt 는 websocket이 보내준 데이터 */
@@ -76,9 +47,25 @@ div#chatDataIn {
 		sessionId = strArray[1];
 		message = strArray[2];
 		
+		if(message == 'in'){
+			var printHtml = "<div class='notice'>";
+			printHtml += name + "님이 입장하셨습니다.";
+			printHtml += "</div >";
+			$("#chatDataIn").append(printHtml);
+			return;
+		}
+		
+		if(message == 'out'){
+			var printHtml = "<div class='notice' >";
+			printHtml += name + "님이 퇴장하셨습니다.";
+			printHtml += "</div >";
+			$("#chatDataIn").append(printHtml);
+			return;
+		}
+		
 		if(sessionId == currentUser_session){
 			var printHtml = "<div class='well my'>";
-			printHtml += "<div>";
+			printHtml += "<div class='userInfoDiv'>";
 			printHtml += name + "(" + sessionId + ")";
 			printHtml += "</div>";
 			printHtml += "<div class='alert alert-info'>";
@@ -89,7 +76,7 @@ div#chatDataIn {
 			$("#chatDataIn").append(printHtml);
 		}else{
 			var printHtml = "<div class='well other'>";
-			printHtml += "<div>";
+			printHtml += "<div class='userInfoDiv'>";
 			printHtml += name + "(" + sessionId + ")";
 			printHtml += "</div>";
 			printHtml += "<div class='alert alert-warning'>";
@@ -115,11 +102,19 @@ div#chatDataIn {
 		$("#data").append("연결끊김");
 	}
 </script>
-
-<title>WEB SOCKET 실시간 익명 채팅 사이트</title>
-</head>
-<body>
-	<div class="container">
+</sec:authorize>
+<sec:authorize access="isAnonymous()">
+<script type="text/javascript">
+$(function() {
+	$("#data").html("로그인 후 사용 가능한 서비스입니다.");
+	$("#sendBtn").attr('disabled', true);
+	$("#reLoad").attr('disabled', true);
+	$("#message").attr('disabled', true);
+});
+</script>
+</sec:authorize>
+	<div id="chattingDiv">
+	<div class="container1">
 		<div class="container bootstrap snippet">
 			<div class="row">
 				<div class="col-xs-12">
@@ -130,20 +125,20 @@ div#chatDataIn {
 							</div>
 							<div class="clearfix"></div>
 						</div>
-						<div id="chatData" class="panel-collapse collapse in">
+						<div id="chatData" class="panel-collapse collapse in show">
 							<div id="chatDataIn"></div>
+							<div id="data"></div>
 						</div>
-						<div id="data"></div>
+						
 					</div>
-					<div>
+					<div style="overflow: hidden;">
 						<input type="text" id="message">
-						<input type="text" id="sessionUser" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
-						<input id="sendBtn" type="button" value="전송">
+						<input type="hidden" id="sessionUser" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
 						<input id="reLoad" type="button" value="재접속">
+						<input id="sendBtn" type="button" value="전 송">
 					</div>
 			</div>
 		</div>
 	</div>
 	</div>
-</body>
-</html>
+	</div>

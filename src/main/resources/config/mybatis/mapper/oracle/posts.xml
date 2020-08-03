@@ -15,7 +15,7 @@
 			    (select count(*) from files f where f.post_no = p.post_no) file_count 
 			    from posts p where bd_code=#{bdCode}
 			    <if test="searchKeyword!=null and searchKeyword !=''">
-		        	where ${searchCondition} like '%' 
+		        	and ${searchCondition} like '%' 
 		        			|| #{searchKeyword} || '%'
 		        </if>
 		        order by POST_NO desc
@@ -82,12 +82,25 @@
 		from posts p join professor s on p.official_no=s.prof_no
 		where POST_NO = #{postNo}
 	</select>
-	
+
 	<select id="SelectByCodeS" resultMap="selectByCodeEResultMap" parameterType="int">
 		select p.*, s.name user_name
 		from posts p join student s on p.official_no=s.stu_no
 		where POST_NO = #{postNo}
 	</select>
 	
+	<update id="upReadCount" parameterType="int">
+		update posts
+		set read_count = read_count+1
+		where post_no = #{postNo}
+	</update>
+	
+	<select id="selectBdCodeByPostNo" parameterType="int" resultType="String">
+		select bd_code from posts where post_No = #{postNo}
+	</select>
+	
+	<delete id="deletePostByPostNo" parameterType="int">
+		UPDATE posts SET del_flag = 'Y' where post_no=#{postNo}
+	</delete>
 </mapper>
 

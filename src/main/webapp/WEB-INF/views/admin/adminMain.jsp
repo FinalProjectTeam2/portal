@@ -6,24 +6,16 @@
 <link href="<c:url value='/resources/css/admin/adminMain.css' />"
 	rel="stylesheet">
 <main role="main" class="flex-shrink-0">
-	<a href="<c:url value='/admin/member/adminRegisterMember'/>"><button
-			class="adminRegi btn btn-outline-success" id="btRegiMem">회원 등록</button></a>
-	<a href="<c:url value='/admin/member/adminManageMember'/>">
-		<button class="adminRegi btn btn-outline-success" id="btMangMem"
-			id="btManageMem">회원 관리</button>
-	</a>
-	<a href="#">
-		<button class="adminRegi btn btn-outline-success" id="btRegiLec"
-			id="btManageMem">강의 등록</button>
-	</a>
-	<a href="<c:url value='/admin/lecture/adminManageLecture'/>">
-		<button class="adminRegi btn btn-outline-success" id="btRegiLec"
-			id="btManageMem">강의 관리</button>
-	</a>
-	<a href="<c:url value='/admin/member/adminManageMember'/>">
-		<button class="adminRegi btn btn-outline-success" id="btRegiLec"
-			id="btManageMem">학부 관리</button>
-	</a>
+	<button class="adminRegi btn btn-outline-success" id="btRegiMem"
+			 onclick="location.href='<c:url value="/admin/member/adminRegisterMember"/>'">회원 등록</button>
+	<button class="adminRegi btn btn-outline-success"
+			 onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'">회원 관리</button>
+	<button class="adminRegi btn btn-outline-success"
+			 onclick="location.href='<c:url value="/admin/lecture/adminRegisterLecture"/>'">강의 등록</button>
+	<button class="adminRegi btn btn-outline-success"
+			 onclick="location.href='<c:url value="/admin/lecture/adminManageLecture"/>'">강의 관리</button>
+	<button class="adminRegi btn btn-outline-success" 
+			 onclick="location.href='<c:url value=""/>'">학부 관리</button>
 	<div class="container">
 		<div style="overflow: hidden;">
 			<div class="indexDOM_large">

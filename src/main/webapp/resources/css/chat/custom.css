@@ -3,196 +3,258 @@
 @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);                    
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);                    
 
-*{
+#chattingDiv *{
 	font-family: 'Nanum Gothic';
 }
-h5{
+#chattingDiv h5{
 	font-family: 'Noto Sans KR';
 	font-size: 15px;
 }
-h4{
+#chattingDiv h4{
 	font-family: 'Noto Sans KR';
 }
-h3{
+#chattingDiv h3{
 	font-family: 'Hanna';
 }
-h2{
+#chattingDiv h2{
 	font-family: 'Hanna';
 }
-h1{
+#chattingDiv h1{
 	font-family: 'Hanna';
 }
-
- .portlet {
+#chattingDiv input{
+	font-family: 'Hanna';
+}
+#chattingDiv .well > div{
+	font-family: 'Hanna';
+}
+#chattingDiv .portlet {
     margin-bottom: 15px;
 }
 
-.btn-white {
+#chattingDiv .btn-white {
     border-color: #cccccc;
     color: #333333;
     background-color: #ffffff;
 }
 
-.portlet {
+#chattingDiv .portlet {
     border: 1px solid;
 }
 
-.portlet .portlet-heading {
+#chattingDiv .portlet .portlet-heading {
     padding: 0 15px;
 }
 
-.portlet .portlet-heading h4 {
+#chattingDiv .portlet .portlet-heading h4 {
     padding: 1px 0;
     font-size: 16px;
 }
 
-.portlet .portlet-heading a {
+#chattingDiv .portlet .portlet-heading a {
     color: #fff;
 }
 
-.portlet .portlet-heading a:hover,
-.portlet .portlet-heading a:active,
-.portlet .portlet-heading a:focus {
+#chattingDiv .portlet .portlet-heading a:hover,
+#chattingDiv .portlet .portlet-heading a:active,
+#chattingDiv .portlet .portlet-heading a:focus {
     outline: none;
 }
 
-.portlet .portlet-widgets .dropdown-menu a {
+#chattingDiv .portlet .portlet-widgets .dropdown-menu a {
     color: #333;
 }
 
-.portlet .portlet-widgets ul.dropdown-menu {
+#chattingDiv .portlet .portlet-widgets ul.dropdown-menu {
     min-width: 0;
 }
 
-.portlet .portlet-heading .portlet-title {
+#chattingDiv .portlet .portlet-heading .portlet-title {
     float: left;
 }
 
-.portlet .portlet-heading .portlet-title h4 {
+#chattingDiv .portlet .portlet-heading .portlet-title h4 {
     margin: 10px 0;
 }
 
-.portlet .portlet-heading .portlet-widgets {
+#chattingDiv .portlet .portlet-heading .portlet-widgets {
     float: right;
     margin: 8px 0;
 }
 
-.portlet .portlet-heading .portlet-widgets .tabbed-portlets {
+#chattingDiv .portlet .portlet-heading .portlet-widgets .tabbed-portlets {
     display: inline;
 }
 
-.portlet .portlet-heading .portlet-widgets .divider {
+#chattingDiv .portlet .portlet-heading .portlet-widgets .divider {
     margin: 0 5px;
 }
 
-.portlet .portlet-body {
+#chattingDiv .portlet .portlet-body {
     padding: 15px;
     background: #fff;
 }
 
-.portlet .portlet-footer {
+#chattingDiv .portlet .portlet-footer {
     padding: 10px 15px;
     background: #e0e7e8;
 }
 
-.portlet .portlet-footer ul {
+#chattingDiv .portlet .portlet-footer ul {
     margin: 0;
 }
 
-.portlet-green,
-.portlet-green>.portlet-heading {
+#chattingDiv .portlet-green,
+#chattingDiv .portlet-green>.portlet-heading {
     border-color: #16a085;
 }
 
-.portlet-green>.portlet-heading {
+#chattingDiv .portlet-green>.portlet-heading {
     color: #fff;
     background-color: #16a085;
 }
 
-.portlet-orange,
-.portlet-orange>.portlet-heading {
+#chattingDiv .portlet-orange,
+#chattingDiv .portlet-orange>.portlet-heading {
     border-color: #f39c12;
 }
 
-.portlet-orange>.portlet-heading {
+#chattingDiv .portlet-orange>.portlet-heading {
     color: #fff;
     background-color: #f39c12;
 }
 
-.portlet-blue,
-.portlet-blue>.portlet-heading {
+#chattingDiv .portlet-blue,
+#chattingDiv .portlet-blue>.portlet-heading {
     border-color: #2980b9;
 }
 
-.portlet-blue>.portlet-heading {
+#chattingDiv .portlet-blue>.portlet-heading {
     color: #fff;
     background-color: #2980b9;
 }
 
-.portlet-red,
-.portlet-red>.portlet-heading {
+#chattingDiv .portlet-red,
+#chattingDiv .portlet-red>.portlet-heading {
     border-color: #e74c3c;
 }
 
-.portlet-red>.portlet-heading {
+#chattingDiv .portlet-red>.portlet-heading {
     color: #fff;
     background-color: #e74c3c;
 }
 
-.portlet-purple,
-.portlet-purple>.portlet-heading {
+#chattingDiv .portlet-purple,
+#chattingDiv .portlet-purple>.portlet-heading {
     border-color: #8e44ad;
 }
 
-.portlet-purple>.portlet-heading {
+#chattingDiv .portlet-purple>.portlet-heading {
     color: #fff;
     background-color: #8e44ad;
 }
 
-.portlet-default,
-.portlet-dark-blue,
-.portlet-default>.portlet-heading,
-.portlet-dark-blue>.portlet-heading {
+#chattingDiv .portlet-default,
+#chattingDiv .portlet-dark-blue,
+#chattingDiv .portlet-default>.portlet-heading,
+#chattingDiv .portlet-dark-blue>.portlet-heading {
     border-color: #34495e;
 }
 
-.portlet-default>.portlet-heading,
-.portlet-dark-blue>.portlet-heading {
+#chattingDiv .portlet-default>.portlet-heading,
+#chattingDiv .portlet-dark-blue>.portlet-heading {
     color: #fff;
     background-color: #34495e;
 }
 
-.portlet-basic,
-.portlet-basic>.portlet-heading {
+#chattingDiv .portlet-basic,
+#chattingDiv .portlet-basic>.portlet-heading {
     border-color: #333;
 }
 
-.portlet-basic>.portlet-heading {
+#chattingDiv .portlet-basic>.portlet-heading {
     border-bottom: 1px solid #333;
     color: #333;
     background-color: #fff;
 }
 
 @media(min-width:768px) {
-    .portlet {
-        margin-bottom: 30px;
+   #chattingDiv  .portlet {
+        margin-bottom: 15px;
     }
 }
 
-.img-chat{
+#chattingDiv .img-chat{
 width:40px;
 height:40px;
 }
 
-.text-green {
+#chattingDiv .text-green {
     color: #16a085;
 }
 
-.text-orange {
+#chattingDiv .text-orange {
     color: #f39c12;
 }
 
-.text-red {
+#chattingDiv .text-red {
     color: #e74c3c;
-}                
+}             
+
+#chattingDiv .well {
+    width: 45%;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    margin: 0 2.5%;
+}
+#chattingDiv .well.my {
+    float: right;
+    clear: both;
+}
+#chattingDiv .well.other {
+    float: left;
+    clear: both;
+}
+#chattingDiv div#chatData {
+   overflow: scroll;
+    height: 240px;
+    overflow-x: hidden;
+}
+#chattingDiv div#chatDataIn {
+    height: max-content;
+    overflow: auto;
+}
+#chattingDiv .alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    word-break: break-all;
+}
+#chattingDiv .col-xs-12 {
+    width: 100%;
+}
+input#message {
+    width: 70%;
+	float: left;
+}   
                                     
+input#sendBtn {
+    width: 13%;
+}
+#chattingDiv strong {
+    color: black;
+}
+#chattingDiv .userInfoDiv{
+	font-size: 0.8em;
+}
+#chattingDiv .notice{
+	margin: 5px 20px;
+	clear: both;
+}
+
+#chattingDiv input[type=button] {
+    font-family: 'Hanna';
+    float: right;
+    margin: 0 0 0 10px;
+}

@@ -10,14 +10,19 @@
 	href="<c:url value='/resources/css/menu2.css'/>" />
 <style type="text/css">
 ul.pagination {
-    display: inline-flex;
+	display: inline-flex;
 }
-.title img{
+
+.title img {
 	margin: 0 5px 0 0;
+}
+.delFlag{
+	color: gray;
 }
 </style>
 <!-- 공지사항 -->
 <script type="text/javascript">
+	var name = "";
 	$(function() {
 		$.send(1);
 
@@ -74,29 +79,46 @@ ul.pagination {
 				+ '<td colspan="5">게시물이 없습니다.</td>'
 			+ "</tr>";
 		}else{
-			$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+" | 페이지 "+obj.pagingInfo.currentPage+"/"
+			$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+"건&ensp;&ensp;|&ensp;&ensp;페이지 "+obj.pagingInfo.currentPage+"/"
 					+obj.pagingInfo.totalPage+ "</span>");
 			
 			$.each(obj.list, function(idx, item) {
+				
+				$.ajax({
+					url : "<c:url value='/common/ajax/member'/>",
+					data : {officialNo: item.officialNo},
+					dataType: "json",
+					type : "get",
+					success : function(res) {
+						name = res.name;
+						offi = "."+item.officialNo;
+						$(offi).html(name+"("+item.officialNo+")");
+					}
+				});
 				str += "<tr>";
 				str += "<td>"+ item.postNo +"</td>";
-				str += "<td class='title'><a href=\"<c:url value='/portal/board/detail'/>?postNo="
+				if(item.delFlag == 'N'){
+					str += "<td class='title'><a href=\"<c:url value='/portal/board/detailCount'/>?postNo="
 						+ item.postNo + "\" title=\""+item.title+"\">";
-				if(item.fileCount > 0){
-					str += "<img alt=\"file\" src=\"<c:url value='/resources/images/file.gif'/>\">";
-				}
-				str	+= '<span style="margin-right: 5px;">'
-				if(item.title.length >= 60){
-					str += item.title.substring(0,60) + "...";
+					if(item.fileCount > 0){
+						str += "<img alt=\"file\" src=\"<c:url value='/resources/images/file.gif'/>\">";
+					}
+					str	+= '<span style="margin-right: 5px;">'
+					if(item.title.length >= 60){
+						str += item.title.substring(0,60) + "...";
+					}else{
+						str += item.title
+					}
+					str += '</span>';
+					if(item.newImgTerm < 24){
+						str += "<img alt=\"newPost\" src=\"<c:url value='/resources/images/new.gif'/>\">";
+					}
+					str += "</a></td>";
 				}else{
-					str += item.title
+					str += '<td class="delFlag">삭제된 게시물입니다.</td>';
 				}
-				str += '</span>';
-				if(item.newImgTerm < 24){
-					str += "<img alt=\"newPost\" src=\"<c:url value='/resources/images/new.gif'/>\">";
-				}
-				str += "</a></td>";
-				str += "<td>"+ item.officialNo +"</td>";
+				
+				str += "<td class='"+item.officialNo+"'></td>";
 				str += "<td>"+  moment(item.regDate).format('YYYY-MM-DD') +"</td>";
 				str += "<td>"+ item.readCount +"</td>";
 				str += "</tr>";
@@ -180,7 +202,7 @@ ul.pagination {
 
 			<!-- 게시판 -->
 			<div id="tableList"></div>
-			
+
 			<div class="divbt">
 				<!-- 비회원은 버튼 안 보임! -->
 				<button class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
@@ -206,7 +228,7 @@ ul.pagination {
 					:</strong> 교직 , 토익 , 토익 , 단소리
 			</form>
 		</div>
-		
+
 		<script>
 			function myFunction() {
 				var filter, table, tr, td, i, txtValue;
