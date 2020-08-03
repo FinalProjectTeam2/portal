@@ -160,6 +160,7 @@ public class IdentifyController {
 			if(officialNo.substring(4, 5).equals("3")) {
 				infoService.updateIdentState(officialNo);
 			}else if(officialNo.substring(4, 5).equals("2")) {
+				infoService.updateChangeDate(officialNo);
 				infoService.updateIdentStateP(officialNo);
 			}
 		}
