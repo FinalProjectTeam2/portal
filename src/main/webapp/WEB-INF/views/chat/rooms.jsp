@@ -23,7 +23,7 @@
 }
 .table thead th {
 	padding: 0.55rem;
-	background: #626d80;
+	background: #344456;
 	color: white;
 }
 .table thead th a{

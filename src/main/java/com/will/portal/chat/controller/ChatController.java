@@ -1,7 +1,9 @@
 package com.will.portal.chat.controller;
 
 import java.security.Principal;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.portal.chat.model.ChatMessage;
 import com.will.portal.chat.model.ChatRoom;
 import com.will.portal.chat.model.ChatRoomForm;
 import com.will.portal.chat.model.ChatRoomRepository;
+import com.will.portal.chat.model.ChatService;
 import com.will.portal.common.MemberDetails;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +33,9 @@ public class ChatController {
 	
 	//private Logger logger = LoggerFactory.getLogger(ChatController.class);
 	private final ChatRoomRepository chatRoomRepository;
+	
+	@Autowired
+	private ChatService chatService;
 	
 	@RequestMapping("/chatMain")
 	public void chatMain() {
@@ -58,7 +65,11 @@ public class ChatController {
     public String room(@RequestParam String roomId, Model model){
         ChatRoom room = chatRoomRepository.findRoomById(roomId);
         log.info("채팅방 정보 room={}",room);
+        
+        List<ChatMessage> list = chatService.selectMessage(room.getRoomId());
+        
         model.addAttribute("room",room);
+        model.addAttribute("list",list);
         return "/chat/chatRoom";
     }
 

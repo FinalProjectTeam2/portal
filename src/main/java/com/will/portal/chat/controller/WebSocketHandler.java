@@ -1,7 +1,6 @@
 package com.will.portal.chat.controller;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
@@ -22,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class WebSocketHandler extends TextWebSocketHandler {
     private final ChatRoomRepository chatRoomRepository;
-    private final ChatService chatService;
     private final ObjectMapper objectMapper=  new ObjectMapper();
+    private final ChatService chatService;
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -36,7 +35,15 @@ public class WebSocketHandler extends TextWebSocketHandler {
         chatMessage.setWriterName(user.getName());
         log.info("chatMessage={}",chatMessage);
         
-        
+        if(chatMessage.getType().equals("ENTER")) {
+        	chatMessage.setMessage(chatMessage.getWriterName()+"("+chatMessage.getWriterId()+")" 
+        			+ "님이 입장하셨습니다.");
+        }else if(chatMessage.getType().equals("LEAVE")) {
+        	chatMessage.setMessage(chatMessage.getWriterName()+"("+chatMessage.getWriterId()+")" 
+        			+ "님이 퇴장하셨습니다.");
+        }
+        int cnt = chatService.insertMessage(chatMessage);
+        log.info("메세지 인설트 결과 cnt={}",cnt);
         
         ChatRoom chatRoom = chatRoomRepository.findRoomById(chatMessage.getRoomId());
         chatRoom.handleMessage(session,chatMessage,objectMapper);

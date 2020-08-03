@@ -20,8 +20,15 @@
 		select
 		count(*) from chatroom where room_id = #{roomId}
 	</select>
-	<insert id="insertChatMessage" parameterType="chatMessage">
-		INSERT INTO chatmessage
-		VALUES (chatmessage.nextval,#{},#{},#{},#{},#{})
+	<insert id="insertMessage" parameterType="chatMessage">
+		<selectKey order="BEFORE" resultType="int" keyProperty="no">
+			select CHATMESSAGE_SEQ.nextval from dual
+		</selectKey>
+		INSERT INTO CHATMESSAGE(NO,ROOM_ID,WRITER_ID,WRITER_NAME,MESSAGE,TYPE)
+		VALUES (#{no},#{roomId},#{writerId},#{writerName},#{message},#{type})
 	</insert>
+	
+	<select id="selectMessage" parameterType="String" resultType="chatMessage">
+		select * from chatmessage where ROOM_ID = #{roomId} order by reg_date
+	</select>
 </mapper>

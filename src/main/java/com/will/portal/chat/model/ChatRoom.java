@@ -32,12 +32,12 @@ public class ChatRoom {
 
     public void handleMessage(WebSocketSession session, ChatMessage chatMessage,
                               ObjectMapper objectMapper) throws IOException {
-        if(chatMessage.getType() == MessageType.ENTER){
+        if(chatMessage.getType().equals("ENTER")){
             sessions.add(session);
             chatMessage.setMessage(chatMessage.getWriterName()+"("+chatMessage.getWriterId()+")" 
             		+ "님이 입장하셨습니다.");
         }
-        else if(chatMessage.getType() == MessageType.LEAVE){
+        else if(chatMessage.getType().equals("LEAVE")){
             sessions.remove(session);
             chatMessage.setMessage(chatMessage.getWriterName()+"("+chatMessage.getWriterId()+")" 
             		+ "님이 퇴장하셨습니다.");
@@ -47,6 +47,7 @@ public class ChatRoom {
             		+ "|" + chatMessage.getMessage());
         }
         send(chatMessage,objectMapper);
+        
     }
 
     private void send(ChatMessage chatMessage, ObjectMapper objectMapper) throws IOException {

@@ -28,4 +28,14 @@ public class ChatServiceImpl implements ChatService{
 	public int countById(String roomId) {
 		return dao.countById(roomId);
 	}
+
+	@Override
+	public int insertMessage(ChatMessage message) {
+		return dao.insertMessage(message);
+	}
+
+	@Override
+	public List<ChatMessage> selectMessage(String roomId) {
+		return dao.selectMessage(roomId);
+	}
 }
