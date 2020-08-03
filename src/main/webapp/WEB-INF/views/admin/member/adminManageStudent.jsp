@@ -6,6 +6,22 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
+<script>
+	$(function() {
+		$('#btMultiUpdateState').click(function() {
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('학적상태를 변경하려는 학생부터 선택하세요');
+				return;
+			}
+			
+			$('form[name=frmList]')
+			.prop("action","<c:url value='/admin/member/multiUpdateState'/>");
+					$('form[name=frmList]').submit();
+		});
+	});
+
+</script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="adminMngMem">
@@ -102,8 +118,8 @@
 								<c:if test="${!empty list }">
 									<c:forEach var="map" items="${list }">
 										<tr>
-											<td><input type="checkbox" name="pdItems[].productNo"
-												value=""> <input type="hidden"
+											<td><input type="checkbox" name="stuNo"
+												value="${map['STU_NO']}"> <input type="hidden"
 												name="pdItems[].imageURL" value=""></td>
 											<td>${map['STU_NO']}</td>
 											<td>${map['NAME']}</td>
@@ -187,6 +203,18 @@
 						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
+					<div class="divRight">
+						<select name="states">
+							<option value=""></option>
+							<option value="1">신입생</option>
+							<option value="2">재학생</option>
+							<option value="3">휴학생</option>
+							<option value="4">졸업가능생</option>
+							<option value="5">졸업생</option>
+						</select>
+						<input type="button" id="btMultiUpdateState" value="변경" >
+					</div>
+					
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"

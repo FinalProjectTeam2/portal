@@ -122,4 +122,10 @@
 			</if>
 		</if>
 	</select>
+	
+	<update id="updateStudentState" parameterType="studentVO">
+		update student
+		set state=#{state}
+		where stu_no=#{stuNo}
+	</update>
 </mapper>

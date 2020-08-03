@@ -9,6 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.will.portal.account_info.model.Account_InfoDAO;
 import com.will.portal.common.StudentSearchVO;
@@ -129,6 +130,24 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public int getTotalRecord(StudentSearchVO studentSearchVo) {
 		return studentDao.getTotalRecord(studentSearchVo);
+	}
+	
+	@Override
+	public int multiUpdateStudentState(List<StudentVO> studentList, String state) {
+		int cnt = 0;
+		try {
+			for (StudentVO studentVO : studentList) {
+				if(studentVO.getStuNo() != null) {
+					studentVO.setState(state);
+					cnt = studentDao.updateStudentState(studentVO);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt = -1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return 0;
 	}
 
 	

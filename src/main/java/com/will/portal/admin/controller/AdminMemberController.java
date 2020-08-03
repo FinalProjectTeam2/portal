@@ -33,6 +33,7 @@ import com.will.portal.prof_position.model.Prof_positionService;
 import com.will.portal.prof_position.model.Prof_positionVO;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.professor.model.ProfessorVO;
+import com.will.portal.student.model.StudentListVO;
 import com.will.portal.student.model.StudentService;
 import com.will.portal.student.model.StudentVO;
 
@@ -339,5 +340,11 @@ public class AdminMemberController {
 		logger.info("adminEditMember, Get");
 
 	}
-
+	
+	@RequestMapping(value = "/multiUpdateState")
+	public void multiUpdateState(@RequestParam List<StudentListVO> studentCheckList, @RequestParam String states){
+		logger.info("studentCheck = {}", studentCheckList);
+		logger.info("studentCheck = {}", states);
+		
+	}
 }

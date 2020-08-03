@@ -15,4 +15,5 @@ public interface StudentDAO {
 	List<StudentVO> selectStudent();
 	List<Map<String, Object>> selectStudentView(StudentSearchVO studentSearchVo);
 	int getTotalRecord(StudentSearchVO studentSearchVo);
+	int updateStudentState(StudentVO studentVO);
 }
