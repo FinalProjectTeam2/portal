@@ -69,7 +69,7 @@ td, th, tr {
 }
 </style>
 
-<h1>납입금고지서&납입금영수증 </h1>
+<h1>납입금고지서&납입금영수증 </h1><br>
 <div id="tuition1">
 <!-- 인쇄버튼 -->
 <div class="divbtn">
@@ -283,8 +283,8 @@ td, th, tr {
 				</tr>
 		</tbody>
 </table>
-<br><br>
 </div>
+<br><br>
 <!-- 학생회비고지서_학생용 -->
 <div class="divForm4">
 	<table class="t4">

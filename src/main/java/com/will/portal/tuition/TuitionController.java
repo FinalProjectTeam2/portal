@@ -50,5 +50,7 @@ public class TuitionController {
 		logger.info("등록금 영수증 확인");
 		return "tuition/tuition4";
 	}
+	
+	
 
 }

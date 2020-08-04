@@ -70,24 +70,11 @@ body {
 </style>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript">
-$(function() {
-	$.ajax({
-		url:"<c:url value='/ajaxtuitionStu.do'/>",
-		type:"get",
-		dataType:"json",
-		success:function(res){
-			$("#list").append(res);
-		},
-		error:function(xhr, status, error){
-			alert(error);
-		}
-	});
-});
 </script>
 
 <div id="tuition1">
 <h1>등록금 납부 내역 조회 </h1>
-<form name="frmWrite" method="post" action="<c:url value=''/>" >
+<form name="frmWrite" method="post" action="<c:url value='tuition/tuition3'/>" >
 	<div class="divTable" > 
 		<div class="divTableBody"> 
 			<div class="divTableRow"> 

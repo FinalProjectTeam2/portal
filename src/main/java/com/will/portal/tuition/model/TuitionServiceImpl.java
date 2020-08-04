@@ -11,19 +11,14 @@ public class TuitionServiceImpl implements TuitionService {
 	@Autowired private TuitionDAO tuitionDao;
 
 	@Override
-	public List<TuitionAllVO>  selectStu(TuitionAllVO AllVo) {
-		return tuitionDao.selectStu(AllVo);
-	}
+	public List<TuitionStuVO> selectStu() {
 
-	@Override
-	public List<TuitionVO> tuition() {
-		// TODO Auto-generated method stub
-		return null;
+		return tuitionDao.selectStu();
 	}
 
 	@Override
 	public List<TuitionVO> tuitionD() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 }

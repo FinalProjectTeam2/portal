@@ -80,22 +80,8 @@
 		<input type="hidden" id="_Food_WAR_foodportlet_sYear" name="_Food_WAR_foodportlet_sYear" value="2020"> 
 		<input type="hidden" id="_Food_WAR_foodportlet_sWeekOfYear" name="_Food_WAR_foodportlet_sWeekOfYear" value="30"> 
 		<div class="food_tit"> 
-		
-			<div class="date"> 2020.07.20 ~ 2020.07.25 
-				
-				<a href="#none" onclick="_Food_WAR_foodportlet_MovWeek(2020, 29)" class="btn_prev">
-					<span>이전주로 이동</span>
-				</a>
- 				<a href="#none" onclick="_Food_WAR_foodportlet_MovWeek(2020, 31)" class="btn_next">
- 					<span>다음주로 이동</span>
- 				</a> 
-			</div>
-
-			<div class="btn_this_week"> 
-				<a href="http://www.dankook.ac.kr/web/kor/-555?p_p_id=Food_WAR_foodportlet&amp;p_p_lifecycle=0&amp;p_p_state=normal&amp;p_p_mode=view&amp;p_p_col_id=column-2&amp;p_p_col_pos=2&amp;p_p_col_count=3&amp;_Food_WAR_foodportlet_action=view">
-					<span>이번주</span>
-				</a> 
-			</div> 
+			<%@ include file="dateTerm.jsp"%>
+			<div class="date"> 2020.07.20 ~ 2020.07.25 <br><br> </div>
 		</div> 
 		
 		<div class="food_list"> 

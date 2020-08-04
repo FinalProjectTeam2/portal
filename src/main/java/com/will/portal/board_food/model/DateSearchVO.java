@@ -1,5 +1,7 @@
 package com.will.portal.board_food.model;
 
+import com.will.portal.common.SearchVO;
+
 public class DateSearchVO extends SearchVO{
 	private String startDay;  //시작일
 	private String endDay; //종료일

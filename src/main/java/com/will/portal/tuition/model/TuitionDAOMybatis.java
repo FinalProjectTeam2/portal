@@ -16,20 +16,16 @@ public class TuitionDAOMybatis implements TuitionDAO {
 	
 	private String namespace="config.mybatis.mapper.oracle.tuition.";
 
-	@Override
-	public List<TuitionAllVO> selectStu(TuitionAllVO AllVo) {
-		return sqlSession.selectOne(namespace+"selectStu", AllVo);
-	}
 
 	@Override
-	public List<TuitionVO> tuition() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TuitionStuVO> selectStu() {
+		
+		return sqlSession.selectList(namespace+"selectStu");
 	}
 
 	@Override
 	public List<TuitionVO> tuitionD() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
