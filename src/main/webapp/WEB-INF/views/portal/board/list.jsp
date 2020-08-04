@@ -34,6 +34,13 @@ ul.pagination {
 		$("#boardWrite").click(function() {
 			location.href = "<c:url value='/portal/board/write?bdCode=${boardVo.bdCode}'/>";
 		});
+		
+		$("#recordCountPerPage").change(function() {
+			$.send($("#currentPage").val())
+		});
+		$("#sort").change(function() {
+			$.send($("#currentPage").val())
+		});
 	});
 
 	$.send = function(curPage) {
@@ -48,6 +55,12 @@ ul.pagination {
 				makeList(res);
 				pageMake(res); //페이징 처리 함수
 				$('body').scrollTop(0);
+				$("#recordCountPerPage").val(res.pagingInfo.recordCountPerPage);
+				var sortName = res.bdSearchVo.sort;
+				if(sortName == null || sortName ==''){
+					sortName == 'write';
+				}
+				$("#sort").val(sortName);
 			}
 		});
 	}
@@ -169,6 +182,7 @@ ul.pagination {
 		str += '</ul></nav>';
 
 		$("#divPage").html(str);
+		$("#currentPage").val(pagingInfo.currentPage);
 	}
 </script>
 <main role="main" class="flex-shrink-0">
@@ -194,10 +208,20 @@ ul.pagination {
 		<!-- ------------------------------------------------->
 
 		<!-- 게시판 -->
+		<form name="frmSearch" method="post" action="">
 		<div id="menu1" class="tabcontent">
-			<div class="listinfo1"></div>
+			<div class="listinfo1">
+			</div>
 			<div class="listinfo2">
+				<select name="sort" id="sort">
+					<option value="write">작성일</option>
+					<option value="edit">수정일</option>
+				</select>
 				<span>정렬:</span> <a href="#">수정일</a> <a href="#">작성일</a>
+				<select name="recordCountPerPage" id="recordCountPerPage">
+					<option value="10">10개</option>
+					<option value="20">20개</option>
+				</select>
 			</div>
 
 			<!-- 게시판 -->
@@ -213,10 +237,11 @@ ul.pagination {
 
 		<!-- 검색 -->
 		<div class="divSearch">
-			<form name="frmSearch" method="post" action="">
+			
 				<input type="hidden" name="currentPage" value="1" id="currentPage" />
 				<!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
-				<input type="hidden" name="countPerPage" value="5" id="countPerPage" />
+				<input type="hidden"  />
+				
 				<!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
 				<input type="hidden" name="bdCode" id="bdCode"
 					value="${boardVo.bdCode }" /> <select name="searchCondition">
@@ -226,8 +251,8 @@ ul.pagination {
 				</select> <input type="text" name="searchKeyword" title="검색"> <input
 					type="submit" value="검색"><br> <br> <strong>인기검색어
 					:</strong> 교직 , 토익 , 토익 , 단소리
-			</form>
 		</div>
+		</form>
 
 		<script>
 			function myFunction() {

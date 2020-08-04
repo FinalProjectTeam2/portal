@@ -14,4 +14,5 @@ public interface PostsDAO {
 	int upReadCount(int postNo);
 	String selectBdCodeByPostNo(int postNo);
 	int deletePostByPostNo(int postNo);
+	int updatePost(PostsVO vo);
 }

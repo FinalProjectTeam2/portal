@@ -567,11 +567,11 @@ button.ui-keyboard-button:hover {
 						</div>
 						<div class="form-group">
 							<div class="row align-items-center remember" id="chk">
-								<input type="checkbox" name="saveNo"
+								<input type="checkbox" name="saveNo" id="saveNo"
 									<c:if test = "${!empty cookie.ck_officialNo.value }">
 												checked = "checked"
-											</c:if>>아이디
-								저장
+											</c:if>><label for="saveNo">아이디
+								저장</label>
 							</div>
 							<input type="submit" value="로그인"
 								class="btn float-right login_btn" id="loginBt">

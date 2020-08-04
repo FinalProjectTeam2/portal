@@ -26,4 +26,9 @@ public class FilesDAOMybatis implements FilesDAO{
 	public int upDownCount(int no) {
 		return sqlSession.update(namespace+"upDownCount", no);
 	}
+
+	@Override
+	public int deleteFile(int no) {
+		return sqlSession.delete(namespace+"deleteFile",no);
+	}
 }

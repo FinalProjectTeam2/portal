@@ -56,6 +56,11 @@ public class PostsServiceImpl implements PostsService{
 	public int deletePostByPostNo(int postNo) {
 		return postsDao.deletePostByPostNo(postNo);
 	}
+
+	@Override
+	public int updatePost(PostsVO vo) {
+		return postsDao.updatePost(vo);
+	}
 	
 	
 }

@@ -54,4 +54,17 @@ public class ChatRoomRepository {
         chatRoomMap.put(chatRoom.getRoomId(), chatRoom);
         return chatRoom;
     }
+    
+    public boolean deleteChatRoom(String id) {
+		boolean bool = false;
+		if(chatRoomMap.remove(id) != null) {
+			bool = true;
+			log.info("id(#{})방 제거 완료!",id);
+		}else {
+			log.info("id(#{})방 제거 실패!",id);
+			
+		}
+    	
+    	return bool;
+	}
 }
