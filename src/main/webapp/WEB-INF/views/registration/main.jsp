@@ -4,7 +4,11 @@
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/regi_lec.css'/>">
 <script type="text/javascript">
-	
+	$(function(){
+		$('.btn-search').click(function(){
+			
+		});
+	});
 </script>
 <main role="main" class="flex-shrink-0">
 <div class="container">
@@ -87,52 +91,25 @@
 						<th id="hide7">요일</th>
 						<td><select name="p_day" id="p_day" onchange="chgDayTime();"
 							style="width: 100%">
-								<option value="">- All -</option>
-								<option value="2">월요일</option>
-								<option value="3">화요일</option>
-								<option value="4">수요일</option>
-								<option value="5">목요일</option>
-								<option value="6">금요일</option>
-								<option value="7">토요일</option>
+								<option value="all">- All -</option>
+								<option value="MO">월요일</option>
+								<option value="TU">화요일</option>
+								<option value="WE">수요일</option>
+								<option value="TH">목요일</option>
+								<option value="FR">금요일</option>
 						</select></td>
 						<th id="hide8">수업시간</th>
 						<td><select name="p_time" id="p_time"
 							onchange="chgDayTime();" style="width: 100%">
-								<option value="">- All -</option>
-								<option value="0900">09:00</option>
-								<option value="0930">09:30</option>
-								<option value="1000">10:00</option>
-								<option value="1030">10:30</option>
-								<option value="1100">11:00</option>
-								<option value="1130">11:30</option>
-								<option value="1200">12:00</option>
-								<option value="1230">12:30</option>
-								<option value="1300">13:00</option>
-								<option value="1330">13:30</option>
-								<option value="1400">14:00</option>
-								<option value="1430">14:30</option>
-								<option value="1500">15:00</option>
-								<option value="1530">15:30</option>
-								<option value="1600">16:00</option>
-								<option value="1630">16:30</option>
-								<option value="1700">17:00</option>
-								<option value="1730">17:30</option>
-								<option value="1800">18:00</option>
-								<option value="1825">18:25</option>
-								<option value="1850">18:50</option>
-								<option value="1900">19:00</option>
-								<option value="1915">19:15</option>
-								<option value="1930">19:30</option>
-								<option value="1940">19:40</option>
-								<option value="2005">20:05</option>
-								<option value="2030">20:30</option>
-								<option value="2035">20:35</option>
-								<option value="2055">20:55</option>
-								<option value="2100">21:00</option>
-								<option value="2120">21:20</option>
-								<option value="2125">21:25</option>
-								<option value="2145">21:45</option>
-								<option value="2150">21:50</option>
+								<option value="all">- All -</option>
+								<option value="1">1교시</option>
+								<option value="2">2교시</option>
+								<option value="3">3교시</option>
+								<option value="4">4교시</option>
+								<option value="5">5교시</option>
+								<option value="6">6교시</option>
+								<option value="7">7교시</option>
+								<option value="8">8교시</option>
 						</select></td>
 						<th id="hide9">교수명</th>
 						<td><input type="text" name="p_teach" id="p_teach"

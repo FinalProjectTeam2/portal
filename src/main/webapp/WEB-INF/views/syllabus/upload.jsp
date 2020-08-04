@@ -59,12 +59,16 @@ form input{
   border:0;
 }
 
-
+#info{
+	position: absolute;
+	top: 26%;
+	left: 28%;
+	width: 500px;
+}
 
 	
 </style>
 
-<script type="text/javascript" src="<c:url value='/resources/js/jquery.form.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript"> </script>
 <script src="<c:url value='/resources/js/jquery.MultiFile.min.js'/>" type="text/javascript"> </script>
@@ -138,12 +142,12 @@ form input{
                 var fileNameArr = fileName.split("\.");
                 // 확장자
                 var ext = fileNameArr[fileNameArr.length - 1];
-                // 파일 사이즈(단위 :KB)
-                var fileSize = files[i].size/1024;
+                // 파일 사이즈(단위 :MB)
+                var fileSize = files[i].size/1024/1024;
                 
-                if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml']) >= 0){
+                if($.inArray(ext, ['pdf']) != 0){
                     // 확장자 체크
-                    alert("등록 불가 확장자");
+                    alert("pdf만 등록 가능합니다.");
                     break;
                 }else if(fileSize > uploadSize){
                     // 파일 사이즈 체크
@@ -176,7 +180,7 @@ form input{
         var html = "";
         html += "<tr id='fileTr_" + fIndex + "'>";
         html += "    <td class='left' >";
-        html +=         fileName + " / " + fileSize + "KB "  + "<a href='#' onclick='deleteFile(" + fIndex + "); return false;' class='btn small bg_02'>삭제</a>"
+        html +=         fileName + " / " + fileSize + "KB "  + "<a href='#' onclick='deleteFile(" + fIndex + "); return false;' class='btn small bg_02'><img style='width:17px; height:auto;' src='<c:url value='/resources/images/deleteIcon.png'/>'></a>"
         html += "    </td>"
         html += "</tr>"
  
@@ -224,6 +228,9 @@ form input{
             for(var i = 0; i < uploadFileList.length; i++){
                 formData.append('files', fileList[uploadFileList[i]]);
             }
+            formData.append('openSubCode', $('#openSubj').val());
+            formData.append('theoryTime', $('#theoryTime').val());
+            formData.append('trainingTime', $('#trainingTime').val());
             
             $.ajax({
                 url:"<c:url value='/syllabus/upload'/>",
@@ -232,16 +239,18 @@ form input{
                 enctype:'multipart/form-data',
                 processData:false,
                 contentType:false,
-                dataType:'json',
                 cache:false,
-                success:function(result){
-                    if(result.data.length > 0){
-                        alert("성공");
-                        location.reload();
-                    }else{
-                        alert("실패");
-                        location.reload();
+                success:function(res){
+                    if(res){
+                    	console.log(res);
+                        location.href="<c:url value='/syllabus/upload'/>";
+                        alert("등록 완료");
+                    }else if(!res){
+                        alert("등록 실패");
+                        location.href="<c:url value='/syllabus/upload'/>";
                     }
+                },error(xhr, status, error){
+                	alert(error);
                 }
             });
         }
@@ -254,6 +263,19 @@ form input{
 </head>
 <BODY>
 
+    	<div id="info">
+    		<label for="openSubj">과목명  : &nbsp;&nbsp;</label>
+	    	<select id="openSubj" class="selectpicker">
+	    		<c:if test="${!empty list }">
+	    			<c:forEach var="vo" items="${list}">
+	    				<option value="${vo.subjCode }">${vo.subjName }</option>
+	    			</c:forEach>
+	    		</c:if>
+	    	</select><br>
+	    	<label for="theoryTime"> 이론시간 : </label><input type="text" id="theoryTime"><br>
+	    	<label for="trainingTime"> 실습시간 : </label><input type="text" id="trainingTime">
+	    	
+    	</div>
     <form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">
     	<input type="file" id="dropZone" multiple="multiple" name="file">
   			<p>파일을 여기에 넣어주세요.</p>

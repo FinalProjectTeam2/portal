@@ -6,23 +6,7 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/board/write.css'/>" />
 <style type="text/css">
-.col-25 {
-	padding-left: 2%;
-}
-#addFile{
-	margin: 5px 0 0 5px;
-    font-size: 1em;
-    padding: 0px 4px;
-    float: left;
-}
-button[name=delFile] {
-    background-color: #ffffff00;
-    border: 0;
-    padding: 0 5px;
-}
-button[name=delFile]:hover {
-	color: red;
-}
+
 </style>
 <script type="text/javascript">
 	

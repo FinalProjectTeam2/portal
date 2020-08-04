@@ -38,7 +38,6 @@
 
 $(function(){
 	timeTable();
-	updateTable();
 	var dialog, form,
 	subject = $( "#subject" ),
 	time = $( "#time" ),
@@ -97,7 +96,7 @@ $(function(){
 	      width: 350,
 	      modal: true,
 	      buttons: {
-	        "등록하기": addSubject,
+	        "등록하기":addSubject,
 	        "취소": function() {
 	          dialog.dialog( "close" );
 	        }
@@ -133,15 +132,15 @@ function updateTable(){
 						"<th>학점</th>"+
 						"<th>입력 학점</th>"+
 					"</tr>";
-				$.each(res, function(item, index){
+				$.each(res, function(index, item){
 					table+="<tr>";
-					table+="<td>"+item.subjName+"</td>";
-					table+="<td>"+item.credit+"</td>";
-					table+="<td>"+item.count+"</td>";
+					table+="<td class='subName'>"+item.subjName+"</td>";
+					table+="<td class='cred'>"+item.credit+"</td>";
+					table+="<td class='cnt'>"+item.count+"</td>";
 					table+="</tr>";
 				});	
 				table+="</table>";
-				$('timetableDiv').html(table);
+				$('#timetableDiv').html(table);
 		},
 		error:function(xhr, status, error){
 			alert(error);
@@ -281,9 +280,9 @@ function timeTable(){
 						</tr>
 						<c:forEach var="vo" items="${list }">
 							<tr>
-								<td>${vo.subjName }</td>
-								<td>${vo.credit }</td>
-								<td>${vo.count }</td>
+								<td class="subName">${vo.subjName }</td>
+								<td class="cred">${vo.credit }</td>
+								<td class="cnt">${vo.count }</td>
 							</tr>
 						</c:forEach>
 					</table>
