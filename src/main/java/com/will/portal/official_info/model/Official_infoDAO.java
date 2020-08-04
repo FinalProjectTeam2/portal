@@ -21,4 +21,5 @@ public interface Official_infoDAO {
 	String selectCodeP(String profNo);
 	int updateIdentStateP(String profNo);
 	int updateOfficialInfo(Official_infoVO offiVo);
+	int updateChangeDate(String profNo);
 }

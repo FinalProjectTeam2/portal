@@ -239,7 +239,7 @@ CREATE TABLE professor (
 	start_date DATE DEFAULT sysdate, /* 임용일 */
 	resignation_date DATE, /* 퇴직일 */
 	identity_state CHAR(1) DEFAULT 'N', /* 본인인증상태 */
-	identity_code VARCHAR2(20), /* 본인인증코드 */
+	identify_code VARCHAR2(20), /* 본인인증코드 */
 	change_date DATE /* 비밀번호변경일 */
 );
 

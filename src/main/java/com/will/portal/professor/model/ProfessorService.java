@@ -6,7 +6,6 @@ import java.util.Map;
 import com.will.portal.official_info.model.Official_infoVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
-import com.will.portal.subject.model.SubjectVO;
 
 public interface ProfessorService {
 	//로그인 처리 관련 상수
@@ -22,5 +21,6 @@ public interface ProfessorService {
 	List<Subj_timeVO> timeByProfNo(String profNo);
 	int insertSubjTime(Subj_timeVO vo);
 	List<Map<String, Object>> classroomByDepNo(String depNo);
+	public Map<String, Object> selectViewByProfNo(String profNo);
 	
 }
