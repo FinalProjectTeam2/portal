@@ -64,7 +64,6 @@ public class CommonController {
 	@ResponseBody
 	public MemberDetails memberByno(@RequestParam String officialNo) {
 		String num = officialNo.substring(4, 5);
-		logger.info("ajax - member 호출, 파라미터 officialNo={}",officialNo);
 
 		MemberDetails user = null;
 
