@@ -6,6 +6,39 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
+<script>
+	$(function() {
+		$('#btMultiUpdateState').click(function() {
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('학적상태를 변경하려는 학생부터 선택하세요');
+				return;
+			}else if($('#states').val() == '0'){
+				alert('변경하려는 학적상태를 선택하세요');
+				return;
+			}
+			
+			$('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateState'/>");
+			$('form[name=frmList]').submit();
+		});
+	
+		$('#btMultiDel').click(function() {
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('학적상태를 변경하려는 학생부터 선택하세요');
+				return;
+		
+			}
+			
+			$('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDelete'/>");
+			$('form[name=frmList]').submit();
+		
+		});
+	
+	
+	});
+
+</script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="adminMngMem">
@@ -130,10 +163,12 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
+								<!-- 반복시작 -->
+									<c:set var="idx" value="0"/>
 									<c:forEach var="map" items="${list }">
 										<tr>
-											<td><input type="checkbox" name="pdItems[].productNo"
-												value=""> <input type="hidden"
+											<td><input type="checkbox" name="stuList[${idx }].stuNo"
+												value="${map['STU_NO']}"> <input type="hidden"
 												name="pdItems[].imageURL" value=""></td>
 											<td>${map['STU_NO']}</td>
 											<td>${map['NAME']}</td>
@@ -141,10 +176,12 @@
 											<td>${map['DEP_NAME']}</td>
 											<td>${map['SEMESTER']}</td>
 											<td>${map['STATE_NAME']}</td>
-											<td><a href="#">수정</a></td>
-											<td><a href="#">삭제</a></td>
+											<td><a href="<c:url value='/admin/member/memberEdit?officialNo=${map["STU_NO"] }'/>">수정</a></td>
+											<td><a href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
 										</tr>
+									<c:set var="idx" value="${idx+1 }"/>
 									</c:forEach>
+									<!-- 반복 끝 -->
 								</c:if>
 								<%--	<c:if test="${!empty list }">
 									<!-- 반복 시작 -->
@@ -217,6 +254,19 @@
 						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
+					<div class="divRight">
+						<select name="states" id="states">
+							<option value="0">학적상태 변경</option>
+							<option value="1">신입생</option>
+							<option value="2">재학생</option>
+							<option value="3">휴학생</option>
+							<option value="4">졸업가능생</option>
+							<option value="5">졸업생</option>
+							<option value="6">제적생</option>
+						</select>
+						<input type="button" id="btMultiUpdateState" value="변경" >
+					</div>
+					
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
