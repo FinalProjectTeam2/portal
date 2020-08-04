@@ -3,6 +3,7 @@ package com.will.portal.professor.model;
 import java.util.List;
 import java.util.Map;
 
+import com.will.portal.common.ProfSearchVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 
@@ -17,4 +18,6 @@ public interface ProfessorDAO {
 	int insertSubjTime(Subj_timeVO vo);
 	List<Map<String, Object>> classroomByDepNo(String depNo);
 	Map<String, Object>selectViewByProfNo(String profNo);
+	List<Map<String, Object>> selectProfessorView(ProfSearchVO profSearchVo);
+	int getTotalRecord(ProfSearchVO profSearchVo);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.will.portal.authority.model.AuthorityService;
 import com.will.portal.authority.model.AuthorityVO;
 import com.will.portal.common.PaginationInfo;
+import com.will.portal.common.ProfSearchVO;
 import com.will.portal.common.StudentSearchVO;
 import com.will.portal.common.Utility;
 import com.will.portal.department.model.DepartmentService;
@@ -287,29 +288,71 @@ public class AdminMemberController {
 	 * @param model
 	 */
 	@RequestMapping("/adminManageProfessor")
-	public void adminManageProfessor(@ModelAttribute DepartmentVO searchVo,
+	public void adminManageProfessor(@ModelAttribute ProfSearchVO profSearchVo,
 			@RequestParam(required = false) String position, Model model) {
-		logger.info("adminManageProfessor, param: position={},  {}", position, searchVo);
+		logger.info("adminManageProfessor, param: position={},  {}", position,profSearchVo);
 
 		// for select 생성
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
 		List<DepartmentVO> departmentList = departmentService.selectDepartment();
+		if(position !=null && !position.isEmpty()) {
+			String[] slist = position.split(",");
+			setPosition(profSearchVo, slist);
+		}
 		List<Prof_positionVO> profPositionList = profPositionService.selectProfPosition();
 
 		// paging 처리 관련
 		PaginationInfo pagingInfo = new PaginationInfo();
-		pagingInfo.setBlockSize(10);
-		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
-		pagingInfo.setRecordCountPerPage(10);
+		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
+		pagingInfo.setCurrentPage(profSearchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
 
-		searchVo.setRecordCountPerPage(10);
-		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		profSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
+		profSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList", departmentList);
 		model.addAttribute("profPositionList", profPositionList);
+		
+		//db
+		List<Map<String,Object>> list = professorService.selectProfessorView(profSearchVo);
+		logger.info("교수  조회 결과, list.size={}", list.size());
+		
+		int totalRecord = professorService.getTotalRecord(profSearchVo);
+		logger.info("교수조회 레코드 개수 : {}", totalRecord);
 
+		pagingInfo.setTotalRecord(totalRecord);
+
+		model.addAttribute("profSearchVo",profSearchVo);
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+	}
+	/**
+	 * 체크박스 조건 설정 - 교수 직책
+	 * 
+	 * @param studentSearchVo
+	 * @param slist
+	 * @param idx
+	 */
+	private void setPosition(ProfSearchVO profSearchVo, String[] slist) {
+		int idx=slist.length;
+		profSearchVo.setPositionNo1(slist[0]);
+		idx--;
+		if (idx < 1)
+			return;
+		profSearchVo.setPositionNo2(slist[1]);
+		idx--;
+		if (idx < 1)
+			return;
+		profSearchVo.setPositionNo3(slist[2]);
+		idx--;
+		if (idx < 1)
+			return;
+		profSearchVo.setPositionNo3(slist[3]);
+		idx--;
+		if (idx < 1)
+			return;
 	}
 
 	/**

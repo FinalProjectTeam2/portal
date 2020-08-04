@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.portal.common.ProfSearchVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 
@@ -66,6 +67,18 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	public Map<String, Object> selectViewByProfNo(String profNo) {
 		return sqlsession.selectOne(namespace+"selectViewByProfNo",profNo);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectProfessorView(ProfSearchVO profSearchVo) {
+		return sqlsession.selectList(namespace+"selectProfessorView",profSearchVo);
+	}
+
+	@Override
+	public int getTotalRecord(ProfSearchVO profSearchVo) {
+		return sqlsession.selectOne(namespace+"getTotalRecord",profSearchVo);
+	}
+	
+	
 	
 	
 	

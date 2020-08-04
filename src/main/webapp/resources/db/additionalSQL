@@ -152,3 +152,4 @@ join subj_type ty
 on s.type_code=ty.type_code
 join syllabus sy
 on o.open_sub_code=sy.open_sub_code;
+
