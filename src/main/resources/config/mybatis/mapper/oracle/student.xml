@@ -27,7 +27,7 @@
 		select * from student
 	</select>
 
-	<select id="selectStudentView" parameterType="studentSearchVo"
+	<select id="selectStudentView" parameterType="studentSearchVO"
 		resultType="map">
 		select *
 		from
@@ -36,14 +36,16 @@
 		from(
 		<if
 			test="(stuNo==null or stuNo =='') and (name==null or name =='') and 
-		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')">
+		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='') 
+		and (startNo==null or startNo=='') and (endNo==null or endNo=='')">
 			select * from STUDENT_VIEW
 		</if>
 		<if
 			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or 
-		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1 !=null and state1 !='')">
+		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1 !=null and state1 !='')
+		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select * from STUDENT_VIEW
-			where stu_no is not null
+			where substr(stu_no,1,4) between #{startNo} and #{endNo}
 			<if test="stuNo!=null and stuNo !=''">
 				and stu_no=#{stuNo}
 			</if>
@@ -83,18 +85,20 @@
 		where RNUM>#{firstRecordIndex}
 		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
-	<select id="getTotalRecord" parameterType="studentSearchVo"
+	<select id="getTotalRecord" parameterType="studentSearchVO"
 		resultType="int">
 		<if
 			test="(stuNo==null or stuNo =='') and (name==null or name =='') and 
-		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')">
+		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')
+		 and (startNo==null or startNo=='') and (endNo==null or endNo='')">
 			select count(*) from STUDENT_VIEW
 		</if>
 		<if
 			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or 
-		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1!=null and state1 !='')">
+		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1!=null and state1 !='')
+		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select count(*) from STUDENT_VIEW
-			where stu_no is not null
+			 where substr(stu_no,1,4) between #{startNo} and #{endNo}
 			<if test="stuNo!=null and stuNo !=''">
 				and stu_no=#{stuNo}
 			</if>

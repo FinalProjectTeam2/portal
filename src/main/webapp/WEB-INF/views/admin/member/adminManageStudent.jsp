@@ -33,7 +33,7 @@
 					<input type="hidden" name="state6" value="${studentSearchVo.state6}">
 					<input type="hidden" name="startNo" value="${studentSearchVo.startNo}">
 					<input type="hidden" name="endNo" value="${studentSearchVo.endNo}">
-					<input type="hidden"	name="currentPage">
+					<input type="hidden" name="currentPage">
 				</form>
 			</div>
 			<!-- 페이징 처리 form 끝 -->
@@ -71,12 +71,11 @@
 						<jsp:useBean id="now" class="java.util.Date" />
 						<fmt:formatDate value="${now }" var="year" pattern="yyyy" />
 						학번<select name="startNo" class="date">
-							<option value="">---</option>
-							<c:forEach var="i" begin="0" end="39">
-								<option value="${year-i }"
-									<c:if test="${year-i==param.startNo }">
+							<c:forEach var="i" begin="1990" end="${year }">
+								<option value="${i }"
+									<c:if test="${i==param.startNo }">
 									 selected="selected"
-									</c:if>>${year-i }</option>
+									</c:if>>${i }</option>
 							</c:forEach>
 						</select>~<select name="endNo" class="date">
 							<c:forEach var="j" begin="0" end="39">

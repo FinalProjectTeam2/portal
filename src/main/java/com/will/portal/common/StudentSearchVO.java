@@ -15,6 +15,8 @@ public class StudentSearchVO extends SearchVO {
 	private String startNo; // 범위 시작학번
 	private String endNo; // 범위 끝 학번
 
+	
+
 	public StudentSearchVO(String stuNo, String name, int facultyNo, int major, String state1, String state2,
 			String state3, String state4, String state5, String state6, String startNo, String endNo) {
 		super();

@@ -17,7 +17,6 @@ import com.will.portal.authority.model.AuthorityService;
 import com.will.portal.authority.model.AuthorityVO;
 import com.will.portal.common.PaginationInfo;
 import com.will.portal.common.StudentSearchVO;
-import com.will.portal.common.StudentSearchVO2;
 import com.will.portal.common.Utility;
 import com.will.portal.department.model.DepartmentService;
 import com.will.portal.department.model.DepartmentVO;
