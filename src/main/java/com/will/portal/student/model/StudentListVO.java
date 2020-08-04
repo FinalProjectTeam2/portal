@@ -6,9 +6,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
 public class StudentListVO {
-	private List<StudentVO> studentList;
+	private List<StudentVO> stuList;
+
+	public List<StudentVO> getStuList() {
+		return stuList;
+	}
+
+	public void setStuList(List<StudentVO> stuList) {
+		this.stuList = stuList;
+	}
+
+
+	
 }

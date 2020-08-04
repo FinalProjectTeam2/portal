@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,7 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	Official_infoDAO officialDao;
 	@Autowired private Account_InfoDAO accountInfoDao;
-
+	
 
 	
 	@Override
@@ -147,8 +148,34 @@ public class StudentServiceImpl implements StudentService {
 			e.printStackTrace();
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
-		return 0;
+		return cnt;
 	}
+
+	@Override
+	public int deleteMulti(List<StudentVO> studentList) {
+		int cnt = 0;
+		
+		try {
+			for (StudentVO studentVO : studentList) {
+				if(studentVO.getStuNo()!=null) {
+					cnt = studentDao.deleteStudent(studentVO.getStuNo());
+				}
+			}
+			
+		}catch(RuntimeException e) {
+			cnt = -1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int deleteStudent(String stuNo) {
+		return studentDao.deleteStudent(stuNo);
+	}
+
+
 
 	
 }

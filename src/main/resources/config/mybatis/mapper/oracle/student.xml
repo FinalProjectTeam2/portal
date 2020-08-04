@@ -128,4 +128,10 @@
 		set state=#{state}
 		where stu_no=#{stuNo}
 	</update>
+
+	<delete id="deleteStudent" parameterType="String">
+		delete from student
+		where stu_no=#{stuNo}
+	</delete>
+	
 </mapper>

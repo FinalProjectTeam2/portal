@@ -128,3 +128,52 @@ on ss.position_CODE = S.position_CODE
 JOIN EMP_DEPART D
 ON D.DEP_CODE = S.DEP_CODE
 );
+
+
+#학적상태 테이블 추가
+/* 학적상태 */
+CREATE TABLE student_state (
+   state VARCHAR2(100) NOT NULL, /* 학적상태번호 */
+   state_name VARCHAR2(100) /* 학적상태이름 */
+);
+
+ALTER TABLE student MODIFY (state DEFAULT '1');
+update student
+set state=1;
+
+insert into student_state
+values('1','신입생');
+insert into student_state
+values('2','재학생');
+insert into student_state
+values('3','휴학생');
+insert into student_state
+values('4','졸업가능');
+insert into student_state
+values('5','졸업생');
+insert into student_state
+values('6','제적생');
+
+commit;
+CREATE UNIQUE INDEX PK_student_state
+   ON student_state (
+      state ASC
+   );
+ALTER TABLE student_state
+   ADD
+      CONSTRAINT PK_student_state
+      PRIMARY KEY (
+         state
+      );
+
+ALTER TABLE student
+   ADD
+      CONSTRAINT FK_student_state_TO_student
+      FOREIGN KEY (
+         state
+      )
+      REFERENCES student_state (
+         state
+      );
+
+

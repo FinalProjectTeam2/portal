@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import lombok.RequiredArgsConstructor;
 
 @Repository
-@RequiredArgsConstructor
 public class Account_InfoDAOMybatis implements Account_InfoDAO{
-	private final SqlSessionTemplate sqlSession;
+	@Autowired
+	private SqlSessionTemplate sqlSession;
 	private String namespceAdmin ="config.mybatis.mapper.oracle.admin.";
 	
 	@Override
