@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
+
 @Setter
-@ToString
+@ToString @Getter
 public class Account_infoVO {
 	private String officialNo;
 	private String bankCode;
