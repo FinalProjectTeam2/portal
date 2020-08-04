@@ -70,6 +70,9 @@
 				<if test="state5!=null and state5!=''">
 					,#{state5}
 				</if>
+				<if test="state6!=null and state6!=''">
+					,#{state6}
+				</if>
 				)
 			</if>
 		</if>
@@ -96,7 +99,7 @@
 				and stu_no=#{stuNo}
 			</if>
 			<if test="name!=null and name !=''">
-				and name=#{name}
+				and name like '%' || #{name} || '%'
 			</if>
 			<if test="facultyNo!=0 and facultyNo !=''">
 				and faculty_no=#{facultyNo}
@@ -118,8 +121,14 @@
 				<if test="state5!=null and state5!=''">
 					,#{state5}
 				</if>
+				<if test="state6!=null and state6!=''">
+					,#{state6}
+				</if>
 				)
 			</if>
 		</if>
+	</select>
+	<select id="selectStudentState" resultType="student_stateVO">
+	select * from student_state
 	</select>
 </mapper>

@@ -57,6 +57,7 @@ public class CommonController {
 
 		List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(facultyNo);
 
+		logger.info("@@@{}",departmentList);
 		return departmentList;
 	}
 

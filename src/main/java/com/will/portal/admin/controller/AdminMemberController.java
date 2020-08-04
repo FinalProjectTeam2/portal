@@ -17,6 +17,7 @@ import com.will.portal.authority.model.AuthorityService;
 import com.will.portal.authority.model.AuthorityVO;
 import com.will.portal.common.PaginationInfo;
 import com.will.portal.common.StudentSearchVO;
+import com.will.portal.common.StudentSearchVO2;
 import com.will.portal.common.Utility;
 import com.will.portal.department.model.DepartmentService;
 import com.will.portal.department.model.DepartmentVO;
@@ -35,6 +36,8 @@ import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.student.model.StudentService;
 import com.will.portal.student.model.StudentVO;
+import com.will.portal.student_state.model.Student_stateService;
+import com.will.portal.student_state.model.Student_stateVO;
 
 @Controller
 @RequestMapping("/admin/member")
@@ -60,6 +63,8 @@ public class AdminMemberController {
 	AuthorityService authorityService;
 	@Autowired
 	Emp_positionService empPositionService;
+	@Autowired
+	Student_stateService studentStateService;
 
 	/**
 	 * 회원등록 - 뷰
@@ -208,8 +213,10 @@ public class AdminMemberController {
 		List<DepartmentVO> departmentList = departmentService.selectDepartment();
 		if (state != null) {
 			String[] slist = state.split(",");
-			setState(studentSearchVo, slist, slist.length);
+			setState(studentSearchVo, slist);
 		}
+		List<Student_stateVO> stateList = studentStateService.selectStudentState();
+		
 		// paging 처리 관련
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
@@ -222,6 +229,7 @@ public class AdminMemberController {
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList", departmentList);
+		model.addAttribute("stateList",stateList);
 
 		// db
 		List<Map<String, Object>> list = studentService.selectStudentView(studentSearchVo);
@@ -232,6 +240,7 @@ public class AdminMemberController {
 
 		pagingInfo.setTotalRecord(totalRecord);
 
+		model.addAttribute("studentSearchVo",studentSearchVo);
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
 	}
@@ -243,7 +252,8 @@ public class AdminMemberController {
 	 * @param slist
 	 * @param idx
 	 */
-	private void setState(StudentSearchVO studentSearchVo, String[] slist, int idx) {
+	private void setState(StudentSearchVO studentSearchVo, String[] slist) {
+		int idx=slist.length;
 		studentSearchVo.setState1(slist[0]);
 		idx--;
 		if (idx < 1)
@@ -261,6 +271,10 @@ public class AdminMemberController {
 		if (idx < 1)
 			return;
 		studentSearchVo.setState5(slist[4]);
+		idx--;
+		if (idx < 1)
+			return;
+		studentSearchVo.setState6(slist[5]);
 		idx--;
 		if (idx < 1)
 			return;

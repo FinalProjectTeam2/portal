@@ -22,8 +22,18 @@
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post"
 					action="<c:url value='/admin/member/adminManageStudent'/>">
-					<input type="hidden" name="sort" value=""> <input
-						type="hidden" name="currentPage">
+					<input type="hidden" name="name" value="${studentSearchVo.name}">
+					<input type="hidden" name="facultyNo" value="${studentSearchVo.facultyNo}">
+					<input type="hidden" name="major" value="${studentSearchVo.major}">
+					<input type="hidden" name="state1" value="${studentSearchVo.state1}">
+					<input type="hidden" name="state2" value="${studentSearchVo.state2}">
+					<input type="hidden" name="state3" value="${studentSearchVo.state3}">
+					<input type="hidden" name="state4" value="${studentSearchVo.state4}">
+					<input type="hidden" name="state5" value="${studentSearchVo.state5}">
+					<input type="hidden" name="state6" value="${studentSearchVo.state6}">
+					<input type="hidden" name="startNo" value="${studentSearchVo.startNo}">
+					<input type="hidden" name="endNo" value="${studentSearchVo.endNo}">
+					<input type="hidden"	name="currentPage">
 				</form>
 			</div>
 			<!-- 페이징 처리 form 끝 -->
@@ -37,34 +47,43 @@
 								name="facultyNo" id="faculty">
 								<option value="0">선택</option>
 								<c:forEach var="facVo" items="${facultyList }">
-									<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
+									<option value="${facVo.facultyNo }"
+										<c:if test="${facVo.facultyNo==param.facultyNo }">
+									 selected="selected"
+									</c:if>>${facVo.facultyName }</option>
 								</c:forEach>
-							</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
-								class="rightEnd" id="department">
-								<option value="">학부를 선택하세요</option>
+							</select> <label for="department"><span>학과</span></label> <select
+								name="major" class="rightEnd" id="department">
+								<option value="0">학부를 선택하세요</option>
 							</select>
 						</div>
 						<div class="ckState stud">
 							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
-								for="selectAll">전체</label> <input type="checkbox" name="state"
-								value="2" id="2"><label for="2">재학생</label> <input
-								type="checkbox" name="state" value="1" id="1"><label
-								for="1">신입생</label> <input type="checkbox" name="state"
-								value="3" id="3"><label for="3">휴학생</label> <input
-								type="checkbox" name="state" value="5" id="5"><label
-								for="5">졸업생</label> <input type="checkbox" name="state"
-								value="4" id="4"><label for="4">졸업가능</label>
+								for="selectAll">전체</label>
+								
+								
+								<c:forEach var="vo" items="${stateList}">
+								<input type="checkbox" name="state"
+								value="${vo.state }" id="${vo.state }"><label for="${vo.state }">
+								${vo.stateName }</label>
+								</c:forEach>
 						</div>
-
+						<jsp:useBean id="now" class="java.util.Date" />
+						<fmt:formatDate value="${now }" var="year" pattern="yyyy" />
 						학번<select name="startNo" class="date">
 							<option value="">---</option>
 							<c:forEach var="i" begin="0" end="39">
-								<option value="${2020-i }">${2020-i }</option>
+								<option value="${year-i }"
+									<c:if test="${year-i==param.startNo }">
+									 selected="selected"
+									</c:if>>${year-i }</option>
 							</c:forEach>
 						</select>~<select name="endNo" class="date">
-							<option value="">---</option>
 							<c:forEach var="j" begin="0" end="39">
-								<option value="${2020-j }">${2020-j }</option>
+								<option value="${year-j }"
+									<c:if test="${year-j==param.endNo }">
+									 selected="selected"
+									</c:if>>${year-j }</option>
 							</c:forEach>
 						</select> 이름 <input type="text" name="name">
 						<button class="btCustom btn btn-primary btn-lg login-button"
