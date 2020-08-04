@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.registration">
+	<select id="selectFaculty" resultType="facultyVo">
+		select * from faculty order by faculty_name
+	</select>
+	
+	<select id="selectDepartment" resultType="departmentVo" parameterType="int">
+		select * from department 
+			<if test="value!=0">
+				where faculty_no=#{facultyNo}
+			</if>
+		order by dep_name
+	</select>
+	
+	<select id="openSubjList" resultType="openSubjListVo">
+		select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, tt.timetable_name, cr.classroom_name, st.type, sy.syllabus
+		from open_subj o join subject s
+		on o.subj_code=s.subj_code
+		join professor p
+		on s.prof_no=p.prof_no
+		join subj_time stime
+		on st.open_sub_code=o.open_sub_code
+		join timetable tt
+		on tt.timetable_code=stime.timetable_code
+		join classroom cr
+		on cr.classroom_code=stime.classroom_code
+		join subj_type st
+		on st.type_code=s.type_code
+		join syllabus sy
+		on sy.open_sub_code=o.open_sub_code;
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

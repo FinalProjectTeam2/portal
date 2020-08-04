@@ -119,10 +119,10 @@ public class LectureController {
 	public String profView(Principal principal, @RequestParam(required = false) String subCode, Model model) {
 		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
 		String profNo = user.getOfficialNo();
-		//학생list
-		List<EvaluationAllVO> list = evaluationServ.selectAllListforEval(subCode);
 		//select option에 들어갈 list
 		List<Map<String, Object>> sList = evaluationServ.subjectByProfNo(profNo);
+		//학생list
+		List<EvaluationAllVO> list = evaluationServ.selectAllListforEval(subCode);
 		logger.info("학생평가 페이지 list.size()={}, selectList.size={}", list.size(), sList.size());
 		model.addAttribute("list", list);
 		model.addAttribute("sList", sList);
@@ -138,12 +138,11 @@ public class LectureController {
 		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
 		String profNo = user.getOfficialNo();
 		//학생list
+		
 		List<EvaluationAllVO> list = evaluationServ.selectAllListforEval(subCode);
-		//select option에 들어갈 list
-		List<Map<String, Object>> sList = evaluationServ.subjectByProfNo(profNo);
-		logger.info("학생평가 페이지 list.size()={}", list.size());
-		model.addAttribute("list", list);
-		model.addAttribute("sList", sList);
+		
+		logger.info("학생평가 페이지 list.size()={}, 매개변수 subCode={}", list.size(), subCode);
+		
 		
 		
 		return list;

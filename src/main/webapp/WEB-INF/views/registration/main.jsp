@@ -5,10 +5,116 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/regi_lec.css'/>">
 <script type="text/javascript">
 	$(function(){
+		getDate();
+		subjList();
+		//학부 선택시 해당되는 학과만 나오도록 함
+		$('#p_daehak').change(function(){
+			var facultyNo=$('#p_daehak option:selected').val();
+			$.ajax({
+				url:"<c:url value='/registration/main'/>",
+				type:"post",
+				data:{"facultyNo":facultyNo},
+				success(res){
+					var str="<select name='p_major' id='p_major' style='width: 100%'>";
+					str+="<option value='All'>---All---</option>";
+					
+					$.each(res, function(index, item){
+						str+="<option value='"+item.depNo+"'>"+item.depName+"</option>";
+					});
+						str+="</select>";
+						$('#major').html(str);
+				},
+				error(xhr, status, error){
+					alert(error);
+				}
+			});
+		});
+		
+		
+		//검색 버튼 눌렀을때 
 		$('.btn-search').click(function(){
 			
 		});
 	});
+	
+	function subjList(){
+		var faculty=$('p_daehak').val();
+		var department=$('p_major').val();
+		var subjName=$('p_subjt').val();
+		var time1=$('p_day').val();
+		var time2=$('p_time').val();
+		var profName=$('p_teach').val();
+		var openSubCode=$('p_code').val();
+		
+		$.ajax({
+			url:"<c:url value='/registration/openSubjList'/>",
+			data:{
+				"faculty":faculty,
+				"department":department,
+				"subjName":subjName,
+				"time1":time1,
+				"time2":time2,
+				"profName":profName,
+				"openSubCode":openSubCode
+			},
+			dataType:"json",
+			type:"post",
+			success:function(res){
+				var str = "";
+				$.each(res, function(idx, item){
+					if(res==''){
+						
+					}else{
+						
+							str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
+							str+="<td role='gridcell' style='height: 0px; width: 7%;'><button class='applyBt'>신청</button></td>";
+							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 18%; text-align: center'>"+item.subjName+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+item.personnel+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.profName+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 5%;'>"+item.credit+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.timetableName+"/"+item.classroomName+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 6%;'>"+item.type+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 9%;'>한국어</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.syllabus+"</td>";
+							str+="</tr>";
+					}
+				
+				});
+				$('#gridLecture tbody').html(str);
+				$('#meta_1').find('em').text(res.count);
+			},
+			error:function(xhr, status, error){
+				alert(error);
+			}
+		});
+	}
+	
+	
+	
+	
+	
+	function getDate(){
+		//년도 띄우기
+		var today = new Date();
+		var year = today.getFullYear();
+		$('#p_year option').val(year+3).prop("selected", true);
+		//임의로 분기별로 수강신청 해당학기 정함
+		var month = today.getMonth()+1;
+		if(month >= 1 && month <=3){
+			$('#p_term option').val('25').prop("selected", true);
+			$('#p_term').prop("disable");
+		}else if(month >= 4 && month <=6){
+			$('#p_term option').val('10').prop("selected", true);
+			$('#p_term').prop("disable");
+		}else if(month >= 7 && month <=9){
+			$('#p_term option').val('15').prop("selected", true);
+			$('#p_term').prop("disable");
+		}else if(month >= 10 && month <=12){
+			$('#p_term option').val('20').prop("selected", true);
+			$('#p_term').prop(disable);
+		}
+	}
 </script>
 <main role="main" class="flex-shrink-0">
 <div class="container">
@@ -44,53 +150,56 @@
 
 				<tbody>
 					<tr>
-						<th id="hide1">년도</th>
-						<td><select name="p_year" id="p_year"
-							onchange="initDaehakCombo();initMajorCombo();this.blur();"
-							style="width: 100%">
+					<th id="hide1">년도</th>
+                 	 <td><select name="p_year" id="p_year" style="width: 100%">
 
-								<option value="2020" selected="">2020</option>
+                        <option value="2020">2020</option>
 
-								<option value="2019">2019</option>
+                        <option value="2019">2019</option>
 
-								<option value="2018">2018</option>
+                        <option value="2018">2018</option>
 
-								<option value="2017">2017</option>
+                        <option value="2017">2017</option>
 
-						</select></td>
+                  </select></td>
 						<th id="hide2">학기</th>
-						<td id="hide3"><select name="p_term" id="p_term"
-							onchange="initDaehakCombo();initMajorCombo();this.blur();"
-							style="width: 100%">
-								<option value="10" selected="">1학기</option>
-								<option value="20">2학기</option>
-								<option value="15">&gt;여름계절</option>
-								<option value="25">&gt;겨울계절</option>
-						</select></td>
-						<th id="hide4">대학</th>
-						<td><select name="p_daehak" id="p_daehak"
-							onchange="initMajorCombo();this.blur();" style="width: 100%"><option
-									value="A01008">문과대학</option>
-								<option value="A00400">법과대학</option>
-								<option value="A06895">아트퓨전디자인대학원</option></select></td>
+						<td id="hide3">
+							<select name="p_term" id="p_term" style="width: 100%">
+									<option value="10">1학기</option>
+									<option value="20">2학기</option>
+									<option value="15">&gt;여름계절</option>
+									<option value="25">&gt;겨울계절</option>
+							</select>
+						</td>
+						<th id="hide4">학부</th>
+						<td>
+							<select name="p_daehak" id="p_daehak" style="width: 100%">
+								<option value="0">---All---</option>
+									<c:if test="${!empty fList }">
+										<c:forEach var="fVo" items="${fList }">
+											<option value="${fVo.facultyNo }">${fVo.facultyName }</option>
+										</c:forEach>
+									</c:if>
+							</select>
+						</td>
 						<th id="hide5">학과</th>
-						<td><select name="p_major" id="p_major"
-							onchange="initSbjtTeach();this.blur();" style="width: 100%"><option
-									value="A01010">문과대학 국어국문학과 국어국문학</option>
-								<option value="A01012">문과대학 사학과 사학</option>
-								<option value="A01015">문과대학 철학과 철학</option>
-								<option value="A07302">문과대학 응용영어통번역학과 응용영어통번역학</option>
-								<option value="A07315">문과대학 영어영문학과 영어영문학</option></select></td>
+						<td id="major">
+							<select name="p_major" id="p_major" style="width: 100%">
+								<option value="All">---All---</option>
+									<c:if test="${!empty dList }">
+										<c:forEach var="dVo" items="${dList }">
+											<option value="${dVo.depNo }">${dVo.depName }</option>
+										</c:forEach>
+									</c:if>
+							</select>
+						</td>
 						<th id="hide6">강좌명</th>
 						<td><input type="text" name="p_subjt" id="p_subjt" size="15"
-							onfocus="chgSubjt();"
-							onkeydown="if(event.keyCode == 13) return false;"
 							placeholder="검색어 (Search Word)"></td>
 					</tr>
 					<tr>
 						<th id="hide7">요일</th>
-						<td><select name="p_day" id="p_day" onchange="chgDayTime();"
-							style="width: 100%">
+						<td><select name="p_day" id="p_day" style="width: 100%">
 								<option value="all">- All -</option>
 								<option value="MO">월요일</option>
 								<option value="TU">화요일</option>
@@ -99,8 +208,7 @@
 								<option value="FR">금요일</option>
 						</select></td>
 						<th id="hide8">수업시간</th>
-						<td><select name="p_time" id="p_time"
-							onchange="chgDayTime();" style="width: 100%">
+						<td><select name="p_time" id="p_time" style="width: 100%">
 								<option value="all">- All -</option>
 								<option value="1">1교시</option>
 								<option value="2">2교시</option>
@@ -112,10 +220,7 @@
 								<option value="8">8교시</option>
 						</select></td>
 						<th id="hide9">교수명</th>
-						<td><input type="text" name="p_teach" id="p_teach"
-							onfocus="chgTeach();" size="15"
-							onkeydown="if(event.keyCode == 13) return false;"
-							placeholder="검색어 (Search Word)"></td>
+						<td><input type="text" name="p_teach" id="p_teach" placeholder="검색어 (Search Word)"></td>
 						<th id="hide10">언어구분</th>
 						<td><select name="p_lang" id="p_lang" style="width: 100%">
 								<option value="">---- All ----</option>
@@ -125,10 +230,7 @@
 						</select></td>
 						<th id="hide11">학수번호<br>분반
 						</th>
-						<td><input type="text" name="p_code" id="p_code"
-							onfocus="chgCode();" size="15"
-							onkeydown="if(event.keyCode == 13) return false;"
-							placeholder="검색어 (Search Word)"></td>
+						<td><input type="text" name="p_code" id="p_code" placeholder="검색어 (Search Word)"></td>
 					</tr>
 
 				</tbody>
@@ -190,7 +292,7 @@
 											</div></th>
 										<th id="gridLecture_subjt_name" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 13%;"><span
+											style="width: 18%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 											<div id="jqgh_gridLecture_subjt_name"
@@ -204,19 +306,6 @@
 										<th id="gridLecture_lect_grade" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
 											style="width: 7%;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_lect_grade"
-												class="ui-jqgrid-sortable">
-												대상학년<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_asign_pcnt" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 5%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 										<div id="jqgh_gridLecture_asign_pcnt"
@@ -294,18 +383,7 @@
 											style="width: 9%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_bigo" class="ui-jqgrid-sortable">
-												특이사항<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_lectPlan" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 10%;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
+										
 										<div id="jqgh_gridLecture_lectPlan" class="ui-jqgrid-sortable">
 												강의계획서<span class="s-ico" style="display: none"><span
 													sort="asc"
@@ -325,20 +403,7 @@
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
-									<tr class="jqgfirstrow" role="row" id="subjects">
-										<td role="gridcell" style="height: 0px; width: 7%;"><button id="applyBt">신청</button></td>
-										<td role="gridcell" style="height: 0px; width: 9%;">dsad</td>
-										<td role="gridcell" style="height: 0px; width: 13%;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 7%;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 14%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 6%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 10%;">s</td>
-									</tr>
+									
 								</tbody>
 							</table>
 						</div>
@@ -388,7 +453,7 @@
 											</div></th>
 										<th id="gridLecture_subjt_name" role="columnheader"
 											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 13%;"><span
+											style="width: 18%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
 											<div id="jqgh_gridLecture_subjt_name"
@@ -404,19 +469,7 @@
 											style="width: 7%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_lect_grade"
-												class="ui-jqgrid-sortable">
-												대상학년<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_asign_pcnt" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 5%;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
+										
 										<div id="jqgh_gridLecture_asign_pcnt"
 												class="ui-jqgrid-sortable">
 												정원<span class="s-ico" style="display: none"><span
@@ -492,18 +545,7 @@
 											style="width: 9%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
-										<div id="jqgh_gridLecture_bigo" class="ui-jqgrid-sortable">
-												특이사항<span class="s-ico" style="display: none"><span
-													sort="asc"
-													class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span
-													sort="desc"
-													class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span>
-											</div></th>
-										<th id="gridLecture_lectPlan" role="columnheader"
-											class="ui-state-default ui-th-column ui-th-ltr"
-											style="width: 10%;"><span
-											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
-											style="cursor: col-resize;">&nbsp;</span>
+										
 										<div id="jqgh_gridLecture_lectPlan" class="ui-jqgrid-sortable">
 												강의계획서<span class="s-ico" style="display: none"><span
 													sort="asc"
@@ -526,16 +568,14 @@
 									<tr class="jqgfirstrow" role="row" id="applyContent">
 										<td role="gridcell" style="height: 0px; width: 7%;"><button id="cancelBt">삭제</button></td>
 										<td role="gridcell" style="height: 0px; width: 9%;">dsad</td>
-										<td role="gridcell" style="height: 0px; width: 13%;">sd</td>
+										<td role="gridcell" style="height: 0px; width: 18%; text-align: center">sd</td>
 										<td role="gridcell" style="height: 0px; width: 7%;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 14%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 6%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
 										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 10%;">s</td>
 									</tr>
 								</tbody>
 							</table>
