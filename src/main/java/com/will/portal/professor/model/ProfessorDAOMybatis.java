@@ -77,8 +77,16 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	public int getTotalRecord(ProfSearchVO profSearchVo) {
 		return sqlsession.selectOne(namespace+"getTotalRecord",profSearchVo);
 	}
-	
-	
+
+	@Override
+	public int updatePosition(ProfessorVO professorVo) {
+		return sqlsession.update(namespace +"updatePosition", professorVo);
+	}
+
+	@Override
+	public int deleteProfessor(String profNo) {
+		return sqlsession.delete(namespace + "deleteProfessor", profNo);
+	}
 	
 	
 	

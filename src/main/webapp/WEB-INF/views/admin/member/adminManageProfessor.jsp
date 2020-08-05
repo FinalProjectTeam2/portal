@@ -6,13 +6,49 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
+	
+<script>
+$(function() {
+    $('#btMultiUpdateposition').click(function() {
+       var len=$('tbody input[type=checkbox]:checked').length;
+       if(len==0){
+          alert('직급을 변경하려는 교수를 선택하세요');
+          return;
+       }else if($('#positionNo').val() == '0'){
+          alert('변경하려는 직급을 선택하세요');
+          return;
+       }
+       
+       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateposition'/>");
+       $('form[name=frmList]').submit();
+    });
+    
+    
+    $('#btMultiDel').click(function() {
+       var len=$('tbody input[type=checkbox]:checked').length;
+       if(len==0){
+          alert('학적상태를 변경하려는 학생부터 선택하세요');
+          return;
+    
+       }
+       
+       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDeleteProfessor'/>");
+       $('form[name=frmList]').submit();
+    
+    });
+    
+    
+});
+</script>
+	
+	
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="adminMngMem">
 			<div class="divTop">
 				<h2>교수 관리</h2>
 				<input type="button" class="btTop btCustom btn btn-primary" id="bt1"
-					value="교수 관리"
+					value="학생 관리"
 					onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input
 					type="button" class="btTop btCustom btn btn-primary" id="bt2"
 					onclick="location.href='<c:url value="/admin/member/adminManageProfessor"/>'"
@@ -22,17 +58,16 @@
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post"
 					action="<c:url value='/admin/member/adminManageProfessor'/>">
-					<input type="hidden" name="name" value="${profSearchVo.name}">
+					<input type="hidden" name="profName" value="${profSearchVo.profName}">
 					<input type="hidden" name="facultyNo" value="${profSearchVo.facultyNo}">
-					<input type="hidden" name="major" value="${profSearchVo.major}">
-					<input type="hidden" name="state1" value="${studentSearchVo.state1}">
-					<input type="hidden" name="state2" value="${studentSearchVo.state2}">
-					<input type="hidden" name="state3" value="${studentSearchVo.state3}">
-					<input type="hidden" name="state4" value="${studentSearchVo.state4}">
-					<input type="hidden" name="state5" value="${studentSearchVo.state5}">
-					<input type="hidden" name="state6" value="${studentSearchVo.state6}">
-					<input type="hidden" name="startNo" value="${studentSearchVo.startNo}">
-					<input type="hidden" name="endNo" value="${studentSearchVo.endNo}">
+					<input type="hidden" name="depNo" value="${profSearchVo.depNo}">
+					<input type="hidden" name="positionNo1" value="${profSearchVo.positionNo1}">
+					<input type="hidden" name="positionNo2" value="${profSearchVo.positionNo2}">
+					<input type="hidden" name="positionNo3" value="${profSearchVo.positionNo3}">
+					<input type="hidden" name="positionNo4" value="${profSearchVo.positionNo4}">
+					<input type="hidden" name="positionNo5" value="${profSearchVo.positionNo5}">
+					<input type="hidden" name="startNo" value="${profSearchVo.startNo}">
+					<input type="hidden" name="endNo" value="${profSearchVo.endNo}">
 					<input type="hidden" name="currentPage">
 				</form>
 			</div>
@@ -45,7 +80,7 @@
 						<div class="stud">
 							<label for="faculty"><span>학부</span></label> <select
 								name="facultyNo" id="faculty">
-								<option value="0">선택</option>
+								<option value="">선택</option>
 								<c:forEach var="facVo" items="${facultyList }">
 									<option value="${facVo.facultyNo }"
 										<c:if test="${facVo.facultyNo==param.facultyNo }">
@@ -54,7 +89,7 @@
 								</c:forEach>
 							</select> <label for="department"><span>학과</span></label> <select
 								name="depNo" class="rightEnd" id="department">
-								<option value="0">학부를 선택하세요</option>
+								<option value="">학부를 선택하세요</option>
 							</select>
 						</div>
 						<div class="ckState stud">
@@ -130,54 +165,24 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
+									<c:set var="idx" value="0" ></c:set>
 									<c:forEach var="map" items="${list }">
 										<tr>
-											<td><input type="checkbox" name="pdItems[].productNo"
-												value=""> <input type="hidden"
+											<td><input type="checkbox" name="profList[${idx }].profNo"
+												value="${map['PROF_NO']}"> <input type="hidden"
 												name="pdItems[].imageURL" value=""></td>
-											<td>${map['']}</td>
-											<td>${map['']}</td>
-											<td>${map['']}</td>
-											<td>${map['']}</td>
-											<td>${map['']}</td>
-											<td>${map['']}</td>
-											<td><a href="#">수정</a></td>
-											<td><a href="#">삭제</a></td>
+											<td>${map['PROF_NO']}</td>
+											<td>${map['PROF_NAME']}</td>
+											<td>${map['FACULTY_NAME']}</td>
+											<td>${map['DEP_NAME']}</td>
+											<td>${map['POSITION_NAME']}</td>
+											<td><fmt:formatDate value="${map['START_DATE']}" pattern="yyyy-MM-dd"/></td>
+											<td><a href="<c:url value='/admin/member/memberEdit?officialNo=${map["PROF_NO"] }'/>">수정</a></td>
+											<td><a href="<c:url value='/admin/member/deleteProfessor?profNo=${map["PROF_NO"] }'/>">삭제</a></td>
 										</tr>
+									<c:set var="idx" value="${idx+1 }" ></c:set>
 									</c:forEach>
 								</c:if>
-								<%--	<c:if test="${!empty list }">
-									<!-- 반복 시작 -->
-									<c:set var="idx" value="0" />
-									<c:forEach var="vo" items="${list }">
-										<c:if test="${!empty list }">
-											<!-- 반복 시작 -->
-											<c:set var="idx" value="0" />
-											<c:forEach var="vo" items="${list }">
-												<tr class="align_center">
-													<td><input type="checkbox"
-														name="pdItems[${idx }].productNo" value="${vo. }">
-														<input type="hidden" name="pdItems[${idx}].imageURL"
-														value="${vo.imageURL}"></td>
-													<td><a href=""> <img
-															src="<c:url value='/pd_images/${vo.imageURL}'/>"
-															alt="${vo.productName }" width="50"></a></td>
-													<td class="align_left">${vo.productName }</td>
-													<td class="align_right"><fmt:formatNumber
-															value="${vo.sellPrice }" pattern="#,###" />원</td>
-													<td><fmt:formatDate value="${vo.regDate }"
-															pattern="yyyy-MM-dd" /></td>
-													<td><a href="#">수정</a></td>
-													<td><a href="#">삭제</a></td>
-												</tr>
-												<c:set var="idx" value="${idx+1 }" />
-											</c:forEach>
-											<!-- 반복 끝 -->
-										</c:if>
-										<c:set var="idx" value="${idx+1 }" />
-									</c:forEach>
-									<!-- 반복 끝 -->
-								</c:if> --%>
 							</tbody>
 						</table>
 					</div>
@@ -217,6 +222,15 @@
 						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
+				<div class="divRight">
+                  <select name="positionNo" id="positionNo">
+                     <option value="0">학적상태 변경</option>
+                  	<c:forEach var="vo" items="${profPositionList}">
+                     <option value="${vo.positionNo }">${vo.positionName }</option>
+					</c:forEach>
+                  </select>
+                  <input type="button" id="btMultiUpdateposition" value="변경" >
+               </div>
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"

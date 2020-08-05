@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -41,6 +42,7 @@ import com.will.portal.official_info.model.Official_infoService;
 import com.will.portal.official_info.model.Official_infoVO;
 import com.will.portal.prof_position.model.Prof_positionService;
 import com.will.portal.prof_position.model.Prof_positionVO;
+import com.will.portal.professor.model.ProfessorListVO;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.student.model.StudentListVO;
@@ -354,6 +356,7 @@ public class AdminMemberController {
 	 */
 	private void setPosition(ProfSearchVO profSearchVo, String[] slist) {
 		int idx = slist.length;
+		
 		profSearchVo.setPositionNo1(slist[0]);
 		idx--;
 		if (idx < 1)
@@ -366,7 +369,11 @@ public class AdminMemberController {
 		idx--;
 		if (idx < 1)
 			return;
-		profSearchVo.setPositionNo3(slist[3]);
+		profSearchVo.setPositionNo4(slist[3]);
+		idx--;
+		if (idx < 1)
+			return;
+		profSearchVo.setPositionNo5(slist[4]);
 		idx--;
 		if (idx < 1)
 			return;
@@ -438,9 +445,29 @@ public class AdminMemberController {
 		model.addAttribute("url", url);
 		return "common/message";
 	}
+	
+	@RequestMapping("/multiUpdateposition")
+	public String multiUpdateposition(@RequestParam String positionNo,
+			@ModelAttribute ProfessorListVO profList, Model model) {
+		
+		logger.info("profList={}positionNo={}",profList,positionNo);
+		List<ProfessorVO> list = profList.getProfList();
+		int cnt = professorService.mutiUpdatePosition(list, Integer.parseInt(positionNo));
+		
+		logger.info("cnt = {}", cnt);
+		String msg = "학적상태 변경 실패", url = "/admin/member/adminManageProfessor";
+		if (cnt > 0) {
+			msg = "학적상태 변경 성공";
+		}
 
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "common/message";
+		
+	}
+	
 	@RequestMapping(value = "/multiDelete")
-	public String multiDelete(@ModelAttribute StudentListVO studentList, Model model) {
+	public String multiDeleteStudent(@ModelAttribute StudentListVO studentList, Model model) {
 		List<StudentVO> list = studentList.getStuList();
 		int cnt = studentService.deleteMulti(list);
 
@@ -453,7 +480,22 @@ public class AdminMemberController {
 		model.addAttribute("url", url);
 		return "common/message";
 	}
-
+	
+	@RequestMapping(value = "/multiDeleteProfessor")
+	public String multiDeleteProfessor(@ModelAttribute ProfessorListVO profList, Model model) {
+		List<ProfessorVO> list = profList.getProfList();
+		int cnt = professorService.multiDelete(list);
+		
+		String msg = "교수 삭제 실패", url = "/admin/member/adminManageProfessor";
+		if (cnt > 0) {
+			msg = "교수 삭제 성공";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "common/message";
+	}
+	
 	@RequestMapping("/deleteStudent")
 	public String deleteStudent(String stuNo, Model model) {
 		int cnt = studentService.deleteStudent(stuNo);
@@ -467,6 +509,21 @@ public class AdminMemberController {
 		model.addAttribute("url", url);
 		return "common/message";
 	}
+	@RequestMapping("/deleteProfessor")
+	public String deleteProfessor(String profNo, Model model) {
+		int cnt = professorService.deleteProfessor(profNo);
+		
+		String msg = "삭제 실패", url = "/admin/member/adminManageProfessor";
+		if (cnt > 0) {
+			msg = "삭제 성공";
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "common/message";
+		
+	}
+	
 
 	@RequestMapping(value = "/memberEdit", method = RequestMethod.POST)
 	@ResponseBody
