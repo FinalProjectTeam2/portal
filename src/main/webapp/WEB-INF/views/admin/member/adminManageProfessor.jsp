@@ -225,11 +225,9 @@ $(function() {
 				<div class="divRight">
                   <select name="positionNo" id="positionNo">
                      <option value="0">학적상태 변경</option>
-                     <option value="1">정교수</option>
-                     <option value="2">부교수</option>
-                     <option value="3">조교수</option>
-                     <option value="4">전임강사</option>
-                     <option value="5">퇴임</option>
+                  	<c:forEach var="vo" items="${profPositionList}">
+                     <option value="${vo.positionNo }">${vo.positionName }</option>
+					</c:forEach>
                   </select>
                   <input type="button" id="btMultiUpdateposition" value="변경" >
                </div>

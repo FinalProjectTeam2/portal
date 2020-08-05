@@ -6,69 +6,142 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
+	
+<script>
+$(function() {
+    $('#btMultiUpdateposition').click(function() {
+       var len=$('tbody input[type=checkbox]:checked').length;
+       if(len==0){
+          alert('직급을 변경하려는 교수를 선택하세요');
+          return;
+       }else if($('#positionNo').val() == '0'){
+          alert('변경하려는 직급을 선택하세요');
+          return;
+       }
+       
+       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateposition'/>");
+       $('form[name=frmList]').submit();
+    });
+    
+    
+    $('#btMultiDel').click(function() {
+       var len=$('tbody input[type=checkbox]:checked').length;
+       if(len==0){
+          alert('학적상태를 변경하려는 학생부터 선택하세요');
+          return;
+    
+       }
+       
+       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDeleteProfessor'/>");
+       $('form[name=frmList]').submit();
+    
+    });
+    
+    
+});
+</script>
+	
+	
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-
-
 		<div id="adminMngMem">
 			<div class="divTop">
-				<h2>직원 관리</h2>
+				<h2>교수 관리</h2>
 				<input type="button" class="btTop btCustom btn btn-primary" id="bt1"
-					value="학생 관리" onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input type="button"
-					class="btTop btCustom btn btn-primary" id="bt2" onclick="location.href='<c:url value="/admin/member/adminManageProfessor"/>'" value="교수 관리">
-				<input type="button" class="btTop btCustom btn btn-primary" id="bt3"
-					value="직원 관리" onclick="location.href='<c:url value="/admin/member/adminManageEmployee"/>'">
+					value="학생 관리"
+					onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input
+					type="button" class="btTop btCustom btn btn-primary" id="bt2"
+					onclick="location.href='<c:url value="/admin/member/adminManageProfessor"/>'"
+					value="교수 관리"> <input type="button"
+					class="btTop btCustom btn btn-primary" id="bt3" value="직원 관리"
+					onclick="location.href='<c:url value="/admin/member/adminManageEmployee"/>'">
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post"
-					action="<c:url value='/admin/member/adminManageStudent'/>">
-					<input type="hidden" name="sort" value="${param.sort }"> <input
-						type="hidden" name="currentPage">
+					action="<c:url value='/admin/member/adminManageProfessor'/>">
+					<input type="hidden" name="profName" value="${profSearchVo.profName}">
+					<input type="hidden" name="facultyNo" value="${profSearchVo.facultyNo}">
+					<input type="hidden" name="depNo" value="${profSearchVo.depNo}">
+					<input type="hidden" name="positionNo1" value="${profSearchVo.positionNo1}">
+					<input type="hidden" name="positionNo2" value="${profSearchVo.positionNo2}">
+					<input type="hidden" name="positionNo3" value="${profSearchVo.positionNo3}">
+					<input type="hidden" name="positionNo4" value="${profSearchVo.positionNo4}">
+					<input type="hidden" name="positionNo5" value="${profSearchVo.positionNo5}">
+					<input type="hidden" name="startNo" value="${profSearchVo.startNo}">
+					<input type="hidden" name="endNo" value="${profSearchVo.endNo}">
+					<input type="hidden" name="currentPage">
 				</form>
 			</div>
 			<!-- 페이징 처리 form 끝 -->
 
 			<form name="frmList" method="post"
-				action="<c:url value='/admin/member/adminManageStudent'/>">
+				action="<c:url value='/admin/member/adminManageProfessor'/>">
 				<div class="divRight">
 					<div class="divTop">
-					<div class="emp">
-							<label for="depCode">부서</label> <select name="depCode"
-							id="depCode">
-							<option value="">선택</option>
-							<c:forEach var="vo" items="${empDepartList }">
-								<option value="${vo.depCode }">${vo.depName }</option>
+						<div class="stud">
+							<label for="faculty"><span>학부</span></label> <select
+								name="facultyNo" id="faculty">
+								<option value="">선택</option>
+								<c:forEach var="facVo" items="${facultyList }">
+									<option value="${facVo.facultyNo }"
+										<c:if test="${facVo.facultyNo==param.facultyNo }">
+									 selected="selected"
+									</c:if>>${facVo.facultyName }</option>
+								</c:forEach>
+							</select> <label for="department"><span>학과</span></label> <select
+								name="depNo" class="rightEnd" id="department">
+								<option value="">학부를 선택하세요</option>
+							</select>
+						</div>
+						<div class="ckState stud">
+							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
+								for="selectAll">전체</label>
+								
+								
+								<c:forEach var="vo" items="${profPositionList}">
+								<input type="checkbox" name="position"
+								value="${vo.positionNo }" id="${vo.positionNo }"><label for="${vo.positionNo }">
+								${vo.positionName }</label>
+								</c:forEach>
+						</div>
+						<jsp:useBean id="now" class="java.util.Date" />
+						<fmt:formatDate value="${now }" var="year" pattern="yyyy" />
+						등록년도<select name="startNo" class="date">
+							<c:forEach var="i" begin="1990" end="${year }">
+								<option value="${i }"
+									<c:if test="${i==param.startNo }">
+									 selected="selected"
+									</c:if>>${i }</option>
 							</c:forEach>
-						</select> <label for="authCode">권한</label> <select name="authCode"
-							id="authCode">
-							<option value="">선택</option>
-							<c:forEach var="vo" items="${authorityList }">
-								<option value="${vo.authCode }">${vo.authName }</option>
+						</select>~<select name="endNo" class="date">
+							<c:forEach var="j" begin="0" end="39">
+								<option value="${year-j }"
+									<c:if test="${year-j==param.endNo }">
+									 selected="selected"
+									</c:if>>${year-j }</option>
 							</c:forEach>
-						</select> <label for="positionCode">직책</label> <select name="positionCode"
-							id="positionCode" class="rightEnd">
-							<option value="">선택</option>
-							<c:forEach var="vo" items="${empPositionList }">
-								<option value="${vo.positionCode }">${vo.positionName}</option>
-							</c:forEach>
-						</select>
-					</div>
-
-
-					이름 <input type="text" size="8" name="searchKeyword">
-					<button class="btCustom btn btn-primary btn-lg login-button"
-						id="btSearch">검색</button>
-					<p style="float: left">조회결과 : {}건</p>
+						</select> 이름 <input type="text" name="profName">
+						<button class="btCustom btn btn-primary btn-lg login-button"
+							id="btSearch">검색</button>
+						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
 					</div>
 					<div class="divList">
-						<table class="box2" summary="학생 목록">
-							<caption>학생 목록</caption>
+						<table class="box2" summary="교수 목록">
+							<caption>교수 목록</caption>
 							<colgroup>
 								<col style="width: 5%" />
+								<!-- 체크박스 -->
 								<col style="width: 10%" />
+								<!-- 번호 -->
 								<col style="width: 15%" />
+								<!-- 이름 -->
+								<col style="width: 10%" />
+								<!-- 학부 -->
 								<col style="width: 20%" />
-								<col style="width: 20%" />
+								<!-- 학과 -->
+								<col style="width: 10%" />
+								<!-- 학기 -->
 								<col style="width: 14%" />
+								<!-- 학적 -->
 								<col style="width: 8%" />
 								<col style="width: 8%" />
 							</colgroup>
@@ -79,125 +152,95 @@
 									<th scope="col">이름</th>
 									<th scope="col">학부</th>
 									<th scope="col">학과</th>
-									<th scope="col">학적 상태</th>
+									<th scope="col">교수직급</th>
+									<th scope="col">부임일</th>
 									<th scope="col">수정</th>
 									<th scope="col">삭제</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><input type="checkbox" name="pdItems[].productNo"
-										value=""> <input type="hidden"
-										name="pdItems[].imageURL" value=""></td>
-									<td>202031230001</td>
-									<td>학생킹</td>
-									<td>학부</td>
-									<td>학과</td>
-									<td>신입생</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="pdItems[].productNo"
-										value=""> <input type="hidden"
-										name="pdItems[].imageURL" value=""></td>
-									<td>202031230001</td>
-									<td>학생킹</td>
-									<td>학부</td>
-									<td>학과</td>
-									<td>신입생</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="pdItems[].productNo"
-										value=""> <input type="hidden"
-										name="pdItems[].imageURL" value=""></td>
-									<td>202031230001</td>
-									<td>학생킹</td>
-									<td>학부</td>
-									<td>학과</td>
-									<td>신입생</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
-								</tr>
-
-								<%-- 	<c:if test="${empty list }">
+								<c:if test="${empty list }">
 									<tr>
-										<td colspan="8">결과가 없습니다.</td>
+										<td colspan="9">결과가 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<!-- 반복 시작 -->
-									<c:set var="idx" value="0" />
-									<c:forEach var="vo" items="${list }">
-										<c:if test="${!empty list }">
-											<!-- 반복 시작 -->
-											<c:set var="idx" value="0" />
-											<c:forEach var="vo" items="${list }">
-												<tr class="align_center">
-													<td><input type="checkbox"
-														name="pdItems[${idx }].productNo" value="${vo. }">
-														<input type="hidden" name="pdItems[${idx}].imageURL"
-														value="${vo.imageURL}"></td>
-													<td><a href=""> <img
-															src="<c:url value='/pd_images/${vo.imageURL}'/>"
-															alt="${vo.productName }" width="50"></a></td>
-													<td class="align_left">${vo.productName }</td>
-													<td class="align_right"><fmt:formatNumber
-															value="${vo.sellPrice }" pattern="#,###" />원</td>
-													<td><fmt:formatDate value="${vo.regDate }"
-															pattern="yyyy-MM-dd" /></td>
-													<td><a href="#">수정</a></td>
-													<td><a href="#">삭제</a></td>
-												</tr>
-												<c:set var="idx" value="${idx+1 }" />
-											</c:forEach>
-											<!-- 반복 끝 -->
-										</c:if>
-										<c:set var="idx" value="${idx+1 }" />
+									<c:set var="idx" value="0" ></c:set>
+									<c:forEach var="map" items="${list }">
+										<tr>
+											<td><input type="checkbox" name="profList[${idx }].profNo"
+												value="${map['PROF_NO']}"> <input type="hidden"
+												name="pdItems[].imageURL" value=""></td>
+											<td>${map['PROF_NO']}</td>
+											<td>${map['PROF_NAME']}</td>
+											<td>${map['FACULTY_NAME']}</td>
+											<td>${map['DEP_NAME']}</td>
+											<td>${map['POSITION_NAME']}</td>
+											<td><fmt:formatDate value="${map['START_DATE']}" pattern="yyyy-MM-dd"/></td>
+											<td><a href="<c:url value='/admin/member/memberEdit?officialNo=${map["PROF_NO"] }'/>">수정</a></td>
+											<td><a href="<c:url value='/admin/member/deleteProfessor?profNo=${map["PROF_NO"] }'/>">삭제</a></td>
+										</tr>
+									<c:set var="idx" value="${idx+1 }" ></c:set>
 									</c:forEach>
-									<!-- 반복 끝 -->
-								</c:if> --%>
+								</c:if>
 							</tbody>
 						</table>
 					</div>
 					<div class="divPage">
 						<!-- 페이지 번호 추가 -->
-						<%-- 	<c:if test="${pagingInfo.firstPage>1 }">
-							<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"> <img
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"
+								class="imgNext"> <img
 								src='<c:url value="/resources/images/first.JPG" />' border="0">
 							</a>
-						</c:if> --%>
+							<a href="#" style="color: #3333339c" onclick="boardList(1)">
+								1 </a>
+							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
+						</c:if>
 
 						<!-- [1][2][3][4][5][6][7][8][9][10] -->
-						<%-- 	<c:forEach var="i" begin="${pagingInfo.firstPage }"
+						<c:forEach var="i" begin="${pagingInfo.firstPage }"
 							end="${pagingInfo.lastPage }">
 							<c:if test="${i==pagingInfo.currentPage }">
-								<span style="color: blue; font-weight: bold">${i }</span>
+								<span class="pageA">${i }</span>
 							</c:if>
 							<c:if test="${i!=pagingInfo.currentPage }">
-								<a href="#" onclick="boardList(${i})"> [${i }] </a>
+								<a href="#" style="color: #3333339c" onclick="boardList(${i})">
+									${i } </a>
 							</c:if>
 						</c:forEach>
 
 						<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-							<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"> <img
+							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
+							<a href="#" style="color: #3333339c"
+								onclick="boardList(${pagingInfo.totalPage})">
+								${pagingInfo.totalPage } </a>
+							<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"
+								class="imgNext"> <img
 								src="<c:url value="/resources/images/last.JPG" />" border="0">
 							</a>
-						</c:if> --%>
+						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
-
+				<div class="divRight">
+                  <select name="positionNo" id="positionNo">
+                     <option value="0">학적상태 변경</option>
+                  	<c:forEach var="vo" items="${profPositionList}">
+                     <option value="${vo.positionNo }">${vo.positionName }</option>
+					</c:forEach>
+                  </select>
+                  <input type="button" id="btMultiUpdateposition" value="변경" >
+               </div>
 					<div class="btdiv">
 						<input type="button"
-							class="btCustom btn btn-primary btn-lg login-button" onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"
+							class="btCustom btn btn-primary btn-lg login-button"
+							onclick="location.href='<c:url value="/admin/member/adminRegisterMember?sort=2"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
-							id="btMultiDel" value="선택한 학생 삭제"><br>
+							id="btMultiDel" value="선택한 교수 삭제"><br>
 					</div>
 				</div>
 			</form>
