@@ -9,6 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.will.portal.account_info.model.Account_InfoDAO;
 import com.will.portal.common.ProfSearchVO;
@@ -147,6 +148,24 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Override
 	public int getTotalRecord(ProfSearchVO profSearchVo) {
 		return professorDao.getTotalRecord(profSearchVo);
+	}
+
+	@Override
+	public int mutiUpdatePosition(List<ProfessorVO> list, int positionNo) {
+		int cnt = 0;
+		try {
+			for (ProfessorVO professorVO : list) {
+				if(professorVO.getProfNo() != null) {
+					professorVO.setPositionNo(positionNo);
+					cnt = professorDao.updatePosition(professorVO);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt = -1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
 	}
 	
 }
