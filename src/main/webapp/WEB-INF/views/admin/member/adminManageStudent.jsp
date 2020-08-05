@@ -171,8 +171,7 @@
 									<c:forEach var="map" items="${list }">
 										<tr>
 											  <td><input type="checkbox" name="stuList[${idx }].stuNo"
-                                    value="${map['STU_NO']}"> <input type="hidden"
-                                    name="pdItems[].imageURL" value=""></td>
+                                    value="${map['STU_NO']}"></td>
 											<td>${map['STU_NO']}</td>
 											<td>${map['NAME']}</td>
 											<td>${map['FACULTY_NAME']}</td>
@@ -185,7 +184,6 @@
 												href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
 										</tr>
 										  <c:set var="idx" value="${idx+1 }"/>
-
 									</c:forEach>
 									<!-- 반복 끝 -->
 								</c:if>
