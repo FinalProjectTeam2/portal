@@ -284,7 +284,6 @@ a:focus {
 								<td><input placeholder="학번" name="officialNo" id ="officialNo" type="text" class="validate" readonly="readonly" value="${officialNo }"></td>
 				      			<th>주민번호</th>
 				      			<td><input placeholder="주민번호" name="jumin" id="ssn" type="text" class="validate" readonly="readonly"></td>
-				      		
 				      		</tr>
 				      		<tr>
 				      			<th>은행명</th>
@@ -321,7 +320,6 @@ a:focus {
 				      		</tr>
 						
 				      	</table>
-				      
 				      	<div style="text-align: center; margin-top: 10px;">
 				      			<input type="submit" id="editBt" value="정보수정" style="color: white;">
 			    		</div>

@@ -24,6 +24,13 @@ public class ProfessorVO extends MemberDetails {
 	private String identityState;
 	private String identifyCode;
 
+	@Override
+	public String toString() {
+		return "ProfessorVO [profNo=" + profNo + ", pwd=" + pwd + ", profName=" + profName + ", depNo=" + depNo
+				+ ", positionNo=" + positionNo + ", startDate=" + startDate + ", resignationDate=" + resignationDate
+				+ ", identityState=" + identityState + ", identifyCode=" + identifyCode + "]";
+	}
+
 	public ProfessorVO() {
 		super();
 		type = "PROFESSOR";
