@@ -144,11 +144,9 @@ public class Official_infoController {
 			 map.put("ACCOUNT_NO","");
 			 map.put("ACCOUNT_NAME","");
 		 }
-		 
 		 if(map.get("ACCOUNT_NAME") == null) {
 			 map.put("ACCOUNT_NAME","");
 		 }
-		 
 		 
 		 
 		 String uploadPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE);
@@ -161,6 +159,5 @@ public class Official_infoController {
 		 //C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images
 		//C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png
 	 }
-	
 	
 }

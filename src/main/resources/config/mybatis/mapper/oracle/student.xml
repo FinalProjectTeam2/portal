@@ -45,7 +45,8 @@
 		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1 !=null and state1 !='')
 		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select * from STUDENT_VIEW
-			where substr(stu_no,1,4) between #{startNo} and #{endNo}
+			where substr(stu_no,1,4) between #{startNo}
+			and #{endNo}
 			<if test="stuNo!=null and stuNo !=''">
 				and stu_no=#{stuNo}
 			</if>
@@ -98,7 +99,7 @@
 		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1!=null and state1 !='')
 		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select count(*) from STUDENT_VIEW
-			 where substr(stu_no,1,4) between #{startNo} and #{endNo}
+			where substr(stu_no,1,4) between #{startNo} and #{endNo}
 			<if test="stuNo!=null and stuNo !=''">
 				and stu_no=#{stuNo}
 			</if>
@@ -133,6 +134,16 @@
 		</if>
 	</select>
 	<select id="selectStudentState" resultType="student_stateVO">
-	select * from student_state
+		select * from student_state
 	</select>
+	<update id="updateStudentState" parameterType="studentVO">
+		update student
+		set
+		state=#{state}
+		where stu_no=#{stuNo}
+	</update>
+	<delete id="deleteStudent" parameterType="String">
+		delete from student
+		where stu_no=#{stuNo}
+	</delete>
 </mapper>

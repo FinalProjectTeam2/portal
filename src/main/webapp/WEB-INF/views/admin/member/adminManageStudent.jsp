@@ -39,7 +39,6 @@
    });
 
 </script>
-
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="adminMngMem">
@@ -174,7 +173,6 @@
 											  <td><input type="checkbox" name="stuList[${idx }].stuNo"
                                     value="${map['STU_NO']}"> <input type="hidden"
                                     name="pdItems[].imageURL" value=""></td>
-
 											<td>${map['STU_NO']}</td>
 											<td>${map['NAME']}</td>
 											<td>${map['FACULTY_NAME']}</td>
@@ -187,7 +185,9 @@
 												href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
 										</tr>
 										  <c:set var="idx" value="${idx+1 }"/>
+
 									</c:forEach>
+									<!-- 반복 끝 -->
 								</c:if>
 								<%--	<c:if test="${!empty list }">
 									<!-- 반복 시작 -->
@@ -272,6 +272,7 @@
                   </select>
                   <input type="button" id="btMultiUpdateState" value="변경" >
                </div>
+
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"

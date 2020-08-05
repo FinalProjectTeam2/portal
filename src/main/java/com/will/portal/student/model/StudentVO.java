@@ -159,4 +159,13 @@ public class StudentVO extends MemberDetails {
 		return "STUDENT";
 	}
 
+	@Override
+	public String toString() {
+		return "StudentVO [stuNo=" + stuNo + ", pwd=" + pwd + ", name=" + name + ", major=" + major + ", semester="
+				+ semester + ", credits=" + credits + ", state=" + state + ", admissionDate=" + admissionDate
+				+ ", graduationDate=" + graduationDate + ", identityState=" + identityState + ", minor=" + minor
+				+ ", identifyCode=" + identifyCode + "]";
+	}
+
+	
 }

@@ -54,7 +54,15 @@ public class StudentDAOMybatis implements StudentDAO{
 	public int getTotalRecord(StudentSearchVO studentSearchVo) {
 		return sqlSession.selectOne(namespace+"getTotalRecord",studentSearchVo);
 	}
-	
-	
+
+	@Override
+	public int updateStudentState(StudentVO studentVO) {
+		return sqlSession.update(namespace + "updateStudentState",studentVO);
+	}
+
+	@Override
+	public int deleteStudent(String stuNo) {
+		return sqlSession.delete(namespace + "deleteStudent",stuNo);
+	}
 	
 }
