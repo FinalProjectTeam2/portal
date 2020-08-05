@@ -535,12 +535,9 @@ public class AdminMemberController {
 
 	@RequestMapping(value = "/memberEdit" , method = RequestMethod.POST)
 	 @ResponseBody
-	 public boolean edit_post(@RequestParam String officialNo, Model model,
-			 @ModelAttribute Account_infoVO accInfoVo,
-			 @ModelAttribute Official_infoVO offiVo,
-			 @RequestParam String hp,
-			 @RequestParam String email,
-			 @RequestParam (required = false )String oldFileName,
+	 public boolean edit_post(@RequestParam String officialNo, Model model, @ModelAttribute Account_infoVO accInfoVo,
+				@ModelAttribute Official_infoVO offiVo, @RequestParam String hp, @RequestParam String email,
+				@RequestParam(required = false) String oldFileName, HttpServletRequest request) {
 		
 		boolean bool = false;
 
@@ -647,14 +644,5 @@ public class AdminMemberController {
 		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png
 	}
 
-	@RequestMapping(value = "/memberEdit", method = RequestMethod.GET)
-	public String edit_get(String officialNo, Model model) {
-		logger.info("수정화면 페이지 보여주기, officialNo={}", officialNo);
-		List<BankVO> bankList = bankService.selectAllBank();
-		model.addAttribute("bankList", bankList);
-		model.addAttribute("officialNo", officialNo);
-
-		return "/admin/member/adminEditMember";
-	}
 
 }
