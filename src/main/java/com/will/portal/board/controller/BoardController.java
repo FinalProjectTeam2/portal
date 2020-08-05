@@ -82,7 +82,7 @@ public class BoardController {
 		int totalCount = postsService.selectPostsCount(bdSearchVo);
 
 		pagingInfo.setTotalRecord(totalCount);
-		if(pagingInfo.getTotalPage() < pagingInfo.getCurrentPage()) {
+		if (pagingInfo.getTotalPage() < pagingInfo.getCurrentPage()) {
 			pagingInfo.setCurrentPage(pagingInfo.getTotalPage());
 		}
 
@@ -106,6 +106,20 @@ public class BoardController {
 		logger.info("게시판 검색 결과 list.size={}, vo={}", list.size(), vo);
 
 		medel.addAttribute("vo", vo);
+		medel.addAttribute("list", list);
+	}
+	@RequestMapping(value = "/comment", method = RequestMethod.GET)
+	public void comment_get(@RequestParam(defaultValue = "0") int postNo, Model medel) {
+		logger.info("게시글 작성 페이지, 파라미터 postNo={}", postNo);
+		
+		PostsVO postVo = postsService.selectPostByPostNo(postNo);
+		
+		BoardVO vo = boardService.selectBoardByBdCode(postVo.getBdCode());
+		List<BoardVO> list = boardService.selectBoardByCategoryInline(postVo.getBdCode());
+		logger.info("게시판 검색 결과 list.size={}, vo={}", list.size(), vo);
+		
+		medel.addAttribute("vo", vo);
+		medel.addAttribute("postVo", postVo);
 		medel.addAttribute("list", list);
 	}
 
@@ -143,6 +157,56 @@ public class BoardController {
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
+	}
+	@RequestMapping(value = "/comment", method = RequestMethod.POST)
+	public String comment_post(@ModelAttribute PostsVO vo, HttpServletRequest request, Model model) {
+		logger.info("답변 작성 처리, 파라미터 vo={}", vo);
+		
+		int cnt = postsService.insertComment(vo);
+		logger.info("답변 작성 처리 결과, cnt={}, vo={}", cnt, vo);
+		
+		// 파일 업로드 처리
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
+		
+		String msg = "답변 작성 실패!", url = "/portal/board/comment?postNo=" + vo.getPostNo();
+		if (cnt > 0) {
+			for (Map<String, Object> map : fileList) {
+				FilesVO fileVo = new FilesVO();
+				fileVo.setFileName((String) map.get("fileName"));
+				fileVo.setFileSize((Long) map.get("fileSize"));
+				fileVo.setOriginalFileName((String) map.get("originalFName"));
+				fileVo.setPostNo(vo.getPostNo());
+				
+				cnt = filesSercive.insertFiles(fileVo);
+				logger.info("파일 insert 처리 결과 cnt={}", cnt);
+			}
+			url = "/portal/board/list?bdCode=" + vo.getBdCode();
+			msg = "답변 작성 성공!";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "common/message";
+	}
+
+	@RequestMapping(value = "/ajax/write", produces = "text/html;charset=utf8")
+	@ResponseBody
+	public String ajaxWrite(@RequestParam String contents, @RequestParam String officialNo,
+			@RequestParam String bdCode) {
+		PostsVO vo = new PostsVO();
+		vo.setBdCode(bdCode);
+		vo.setContents(contents);
+		vo.setTitle(contents.substring(0, 10) + "...");
+		vo.setOfficialNo(officialNo);
+		logger.info("게시글 작성 처리, 파라미터 vo={}", vo);
+
+		int cnt = postsService.insertPosts(vo);
+		logger.info("게시글 작성 처리 결과, cnt={}, vo={}", cnt, vo);
+
+		String msg = "게시글 작성 실패!";
+		if (cnt > 0) {
+			msg = "게시글 작성 성공!";
+		}
+		return msg;
 	}
 
 	@RequestMapping("/ajax/findBoard")
@@ -205,7 +269,7 @@ public class BoardController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit_get(@RequestParam(defaultValue = "0") int postNo, Model model) {
 		logger.info("게시글 수정 페이지");
-		if(postNo == 0) {
+		if (postNo == 0) {
 			model.addAttribute("msg", "잘못될 URL입니다.");
 			model.addAttribute("url", "/portal/board/list");
 			return "common/message";
@@ -227,13 +291,13 @@ public class BoardController {
 		model.addAttribute("postVo", postVo);
 		model.addAttribute("vo", bdvo);
 		model.addAttribute("list", list);
-		
+
 		return "portal/board/edit";
 	}
-	
+
 	@PostMapping(value = "/edit")
-	public String edit_post(@RequestParam String title, @RequestParam String contents,
-			@RequestParam int postNo,HttpServletRequest request, Model model) {
+	public String edit_post(@RequestParam String title, @RequestParam String contents, @RequestParam int postNo,
+			HttpServletRequest request, Model model) {
 		logger.info("게시글 수정 처리");
 		PostsVO vo = new PostsVO();
 		vo.setPostNo(postNo);
@@ -268,16 +332,36 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/delete")
-	public String deleteOk(@RequestParam(defaultValue = "0") int postNo) {
+	public String deleteOk(@RequestParam(defaultValue = "0") int postNo, HttpServletRequest request) {
 		logger.info("게시글 삭제 처리 파라미터 postNo={}", postNo);
 
-		String bdCode = postsService.selectBdCodeByPostNo(postNo);
-		logger.info("bdCode={}", bdCode);
+		PostsVO vo = postsService.selectPostByPostNo(postNo);
+		logger.info("vo={}", vo);
 
-		int cnt = postsService.deletePostByPostNo(postNo);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("post_no", vo.getPostNo()+"");
+		map.put("step", vo.getStep()+"");
+		map.put("group_no", vo.getGroupNo()+"");
+		int cnt = postsService.deletePostByPostNo(map);
 		logger.info("삭제 결과 cnt={}", cnt);
+		
+		List<FilesVO> list = filesSercive.selectFileByPostNo(postNo);
+		boolean bool = false;
+		for (FilesVO fvo : list) {
+			bool = fileUploadUtil.fileDelete(request, fvo.getFileName(), FileUploadUtil.PATH_PDS);
+			if (bool) {
+				cnt = filesSercive.deleteFile(fvo.getNo());
+				if (cnt <= 0) {
+					bool = false;
+				}
+			}
+		}
+		
+		logger.info("파일 삭제 처리 결과 bool={}", bool);
 
-		return "redirect:/portal/board/list?bdCode=" + bdCode;
+		
+		
+		return "redirect:/portal/board/list?bdCode=" + vo.getBdCode();
 	}
 
 	@RequestMapping(value = "/re", method = RequestMethod.GET)

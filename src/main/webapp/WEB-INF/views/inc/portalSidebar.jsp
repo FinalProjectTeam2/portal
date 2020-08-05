@@ -41,7 +41,11 @@
 					+ '<ul class="nav flex-column">'
 					+'<li class="nav-item"><a class="nav-link" href="#"><span'
 					+'class="bullets"></span>학사일정 </a></li>'
-					+'<li class="nav-item"><a class="nav-link" href="#"> <span'
+					+'<li class="nav-item"><a class="nav-link" href="#"'
+					+ "onclick=\"move('/portal/board/list?"
+					+ 'bdCode=QNA'
+					+ "')\">"
+					+ '<span'
 					+'class="bullets"></span>질문/답변'
 					+'</a></li>'
 					+'<li class="nav-item"><a class="nav-link" href="#"><span'
