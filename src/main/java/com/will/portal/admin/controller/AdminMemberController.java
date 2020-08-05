@@ -366,7 +366,11 @@ public class AdminMemberController {
 		idx--;
 		if (idx < 1)
 			return;
-		profSearchVo.setPositionNo3(slist[3]);
+		profSearchVo.setPositionNo4(slist[3]);
+		idx--;
+		if (idx < 1)
+			return;
+		profSearchVo.setPositionNo5(slist[4]);
 		idx--;
 		if (idx < 1)
 			return;

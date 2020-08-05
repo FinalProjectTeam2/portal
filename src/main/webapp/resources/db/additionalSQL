@@ -213,5 +213,3 @@ insert into prof_position
 values(prof_position_seq.nextval,'전임강사');
 insert into PROF_POSITION
 values(PROF_POSITION_SEQ.nextval,'퇴임');
-
-
