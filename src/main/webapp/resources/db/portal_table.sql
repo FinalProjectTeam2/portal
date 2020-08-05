@@ -1073,7 +1073,26 @@ join student_state st
 on s.state=st.state);
 
 /*professor_view*/
-create or replace view professor_view as
-select p.*, o.hp1, o.hp2, o.hp3, o.email1, o.email2, o.zipcode, o.address, o.addr_detail, o.ssn, o.gender, o.image_url
-from professor p join official_info o
-on p.prof_no=o.official_no;
+CREATE OR REPLACE VIEW 
+PROFESSOR_VIEW
+AS(
+
+SELECT p.*,o.*,a.dep_name,A.FACULTY_NAME,A.FACULTY_NO,bb.*,pp.position_name FROM
+professor P JOIN OFFICIAL_INFO O 
+ON P.PROF_NO = O.OFFICIAL_NO
+JOIN 
+(
+SELECT D.*,F.FACULTY_NAME FROM 
+DEPARTMENT D JOIN FACULTY F
+ON F.FACULTY_NO = D.FACULTY_NO
+)A 
+ON P.DEP_NO = A.DEP_NO
+JOIN
+(SELECT AI.OFFICIAL_NO AS "DUPPROFNO",AI.BANK_CODE,AI.ACCOUNT_NO,AI.ACCOUNT_NAME,B.BANK_NAME FROM ACCOUNT_INFO AI JOIN BANK B
+ON AI.BANK_CODE = B.BANK_CODE
+)BB
+ON O.OFFICIAL_NO = BB.DUPPROFNO
+join 
+(select * from prof_position)pp
+on pp.POSITION_NO = P.POSITION_NO
+);

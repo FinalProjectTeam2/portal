@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.will.portal.account_info.model.Account_InfoDAO;
+import com.will.portal.common.ProfSearchVO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
@@ -19,6 +20,7 @@ import com.will.portal.subject.model.SubjectAllVO;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
+
 	@Autowired
 	private ProfessorDAO professorDao;
 
@@ -137,7 +139,14 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public Map<String, Object> selectViewByProfNo(String profNo) {
 		return professorDao.selectViewByProfNo(profNo);
 	}
+	@Override
+	public List<Map<String, Object>> selectProfessorView(ProfSearchVO profSearchVo) {
+		return professorDao.selectProfessorView(profSearchVo);
+	}
 
-	
+	@Override
+	public int getTotalRecord(ProfSearchVO profSearchVo) {
+		return professorDao.getTotalRecord(profSearchVo);
+	}
 	
 }

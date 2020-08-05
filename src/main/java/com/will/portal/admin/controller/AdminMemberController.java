@@ -1,7 +1,6 @@
 package com.will.portal.admin.controller;
 
 import java.io.File;
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,8 +23,8 @@ import com.will.portal.authority.model.AuthorityVO;
 import com.will.portal.bank.model.BankService;
 import com.will.portal.bank.model.BankVO;
 import com.will.portal.common.FileUploadUtil;
-import com.will.portal.common.MemberDetails;
 import com.will.portal.common.PaginationInfo;
+import com.will.portal.common.ProfSearchVO;
 import com.will.portal.common.StudentSearchVO;
 import com.will.portal.common.Utility;
 import com.will.portal.department.model.DepartmentService;
@@ -48,6 +46,8 @@ import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.student.model.StudentListVO;
 import com.will.portal.student.model.StudentService;
 import com.will.portal.student.model.StudentVO;
+import com.will.portal.student_state.model.Student_stateService;
+import com.will.portal.student_state.model.Student_stateVO;
 
 @Controller
 @RequestMapping("/admin/member")
@@ -68,6 +68,8 @@ public class AdminMemberController {
 	@Autowired
 	StudentService studentService;
 	@Autowired
+	Student_stateService studentStateService;
+	@Autowired
 	Emp_departService empDepartService;
 	@Autowired
 	AuthorityService authorityService;
@@ -79,7 +81,7 @@ public class AdminMemberController {
 	FileUploadUtil fileUploadUtil;
 	@Autowired
 	Official_infoService offiService;
-	
+
 	/**
 	 * 회원등록 - 뷰
 	 * 
@@ -87,7 +89,7 @@ public class AdminMemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "/adminRegisterMember", method = RequestMethod.GET)
-	public String adminRegisterMember(@RequestParam(defaultValue = "0") int sort,Model model) {
+	public String adminRegisterMember(@RequestParam(defaultValue = "0") int sort, Model model) {
 		logger.info("adminRegisterMember, GET");
 
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
@@ -227,8 +229,10 @@ public class AdminMemberController {
 		List<DepartmentVO> departmentList = departmentService.selectDepartment();
 		if (state != null) {
 			String[] slist = state.split(",");
-			setState(studentSearchVo, slist, slist.length);
+			setState(studentSearchVo, slist);
 		}
+		List<Student_stateVO> stateList = studentStateService.selectStudentState();
+
 		// paging 처리 관련
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
@@ -241,6 +245,7 @@ public class AdminMemberController {
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList", departmentList);
+		model.addAttribute("stateList", stateList);
 
 		// db
 		List<Map<String, Object>> list = studentService.selectStudentView(studentSearchVo);
@@ -251,6 +256,7 @@ public class AdminMemberController {
 
 		pagingInfo.setTotalRecord(totalRecord);
 
+		model.addAttribute("studentSearchVo", studentSearchVo);
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
 	}
@@ -262,7 +268,8 @@ public class AdminMemberController {
 	 * @param slist
 	 * @param idx
 	 */
-	private void setState(StudentSearchVO studentSearchVo, String[] slist, int idx) {
+	private void setState(StudentSearchVO studentSearchVo, String[] slist) {
+		int idx = slist.length;
 		studentSearchVo.setState1(slist[0]);
 		idx--;
 		if (idx < 1)
@@ -283,6 +290,10 @@ public class AdminMemberController {
 		idx--;
 		if (idx < 1)
 			return;
+		studentSearchVo.setState6(slist[5]);
+		idx--;
+		if (idx < 1)
+			return;
 	}
 
 	/**
@@ -293,29 +304,72 @@ public class AdminMemberController {
 	 * @param model
 	 */
 	@RequestMapping("/adminManageProfessor")
-	public void adminManageProfessor(@ModelAttribute DepartmentVO searchVo,
+	public void adminManageProfessor(@ModelAttribute ProfSearchVO profSearchVo,
 			@RequestParam(required = false) String position, Model model) {
-		logger.info("adminManageProfessor, param: position={},  {}", position, searchVo);
+		logger.info("adminManageProfessor, param: position={},  {}", position, profSearchVo);
 
 		// for select 생성
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
 		List<DepartmentVO> departmentList = departmentService.selectDepartment();
+		if (position != null && !position.isEmpty()) {
+			String[] slist = position.split(",");
+			setPosition(profSearchVo, slist);
+		}
 		List<Prof_positionVO> profPositionList = profPositionService.selectProfPosition();
 
 		// paging 처리 관련
 		PaginationInfo pagingInfo = new PaginationInfo();
-		pagingInfo.setBlockSize(10);
-		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
-		pagingInfo.setRecordCountPerPage(10);
+		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
+		pagingInfo.setCurrentPage(profSearchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
 
-		searchVo.setRecordCountPerPage(10);
-		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		profSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
+		profSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList", departmentList);
 		model.addAttribute("profPositionList", profPositionList);
 
+		// db
+		List<Map<String, Object>> list = professorService.selectProfessorView(profSearchVo);
+		logger.info("교수  조회 결과, list.size={}", list.size());
+
+		int totalRecord = professorService.getTotalRecord(profSearchVo);
+		logger.info("교수조회 레코드 개수 : {}", totalRecord);
+
+		pagingInfo.setTotalRecord(totalRecord);
+
+		model.addAttribute("profSearchVo", profSearchVo);
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+	}
+
+	/**
+	 * 체크박스 조건 설정 - 교수 직책
+	 * 
+	 * @param studentSearchVo
+	 * @param slist
+	 * @param idx
+	 */
+	private void setPosition(ProfSearchVO profSearchVo, String[] slist) {
+		int idx = slist.length;
+		profSearchVo.setPositionNo1(slist[0]);
+		idx--;
+		if (idx < 1)
+			return;
+		profSearchVo.setPositionNo2(slist[1]);
+		idx--;
+		if (idx < 1)
+			return;
+		profSearchVo.setPositionNo3(slist[2]);
+		idx--;
+		if (idx < 1)
+			return;
+		profSearchVo.setPositionNo3(slist[3]);
+		idx--;
+		if (idx < 1)
+			return;
 	}
 
 	/**
@@ -361,41 +415,40 @@ public class AdminMemberController {
 	public void adminEditMember(String userid) {
 		logger.info("adminEditMember, Get");
 	}
-	
+
 	@RequestMapping(value = "/multiUpdateState")
-	public String multiUpdateState(@RequestParam(name = "states") String state, 
-			@ModelAttribute StudentListVO studentList,
-			Model model){
+	public String multiUpdateState(@RequestParam(name = "states") String state,
+			@ModelAttribute StudentListVO studentList, Model model) {
 		List<StudentVO> list = studentList.getStuList();
 		logger.info("studentCheck = {}", state);
 		logger.info("list.size = {}", list.size());
-		
+
 		for (StudentVO studentVO : list) {
 			logger.info("studentVo = {}", studentVO);
 		}
-		
+
 		int cnt = studentService.multiUpdateStudentState(list, state);
-		logger.info("cnt = {}",cnt);
+		logger.info("cnt = {}", cnt);
 		String msg = "학적상태 변경 실패", url = "/admin/member/adminManageStudent";
-		if(cnt>0) {
+		if (cnt > 0) {
 			msg = "학적상태 변경 성공";
 		}
-		
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
 	}
+
 	@RequestMapping(value = "/multiDelete")
-	public String multiDelete(@ModelAttribute StudentListVO studentList,
-			Model model) {
+	public String multiDelete(@ModelAttribute StudentListVO studentList, Model model) {
 		List<StudentVO> list = studentList.getStuList();
 		int cnt = studentService.deleteMulti(list);
-		
+
 		String msg = "학생 삭제 실패", url = "/admin/member/adminManageStudent";
-		if(cnt>0) {
+		if (cnt > 0) {
 			msg = "학생 삭제 성공";
 		}
-		
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
@@ -404,141 +457,134 @@ public class AdminMemberController {
 	@RequestMapping("/deleteStudent")
 	public String deleteStudent(String stuNo, Model model) {
 		int cnt = studentService.deleteStudent(stuNo);
-		
+
 		String msg = "삭제 실패", url = "/admin/member/adminManageStudent";
-		if(cnt>0) {
+		if (cnt > 0) {
 			msg = "삭제 성공";
 		}
-		
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
 	}
 
-	@RequestMapping(value = "/memberEdit" , method = RequestMethod.GET)
-	public String edit_get(String officialNo, Model model) {
-		logger.info("수정화면 페이지 보여주기, officialNo={}",officialNo);
-		List<BankVO> bankList = bankService.selectAllBank();
-		model.addAttribute("bankList", bankList);
-		model.addAttribute("officialNo", officialNo);
-		
-		return "/admin/member/adminEditMember";
-	}
-	
-	@RequestMapping(value = "/memberEdit" , method = RequestMethod.POST)
-	 @ResponseBody
-	 public boolean edit_post(@RequestParam String officialNo, Model model, 
-			 @ModelAttribute Account_infoVO accInfoVo,
-			 @ModelAttribute Official_infoVO offiVo,
-			 @RequestParam String hp,
-			 @RequestParam String email,
-			 @RequestParam (required = false )String oldFileName,
-			HttpServletRequest request) {
+	@RequestMapping(value = "/memberEdit", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean edit_post(@RequestParam String officialNo, Model model, @ModelAttribute Account_infoVO accInfoVo,
+			@ModelAttribute Official_infoVO offiVo, @RequestParam String hp, @RequestParam String email,
+			@RequestParam(required = false) String oldFileName, HttpServletRequest request) {
 		boolean bool = false;
 
 		accInfoVo.setOfficialNo(officialNo);
 		offiVo.setOfficialNo(officialNo);
 		String[] emailarr = email.split("@");
-		String email1 =emailarr[0], email2=emailarr[1];
+		String email1 = emailarr[0], email2 = emailarr[1];
 		String[] hparr = hp.split("-");
-		String hp1 = hparr[0] ,hp2=hparr[1] , hp3=hparr[2] ;
+		String hp1 = hparr[0], hp2 = hparr[1], hp3 = hparr[2];
 		offiVo.setEmail1(email1);
 		offiVo.setEmail2(email2);
 		offiVo.setHp1(hp1);
 		offiVo.setHp2(hp2);
 		offiVo.setHp3(hp3);
-		
-		//파일 업로드 처리
-		List<Map<String, Object>> fileList
-		=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_IMAGE);
-		
-		String NewfileName= "";
-		for(Map<String, Object> map : fileList) {
-			NewfileName =(String) map.get("fileName");
+
+		// 파일 업로드 처리
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_IMAGE);
+
+		String NewfileName = "";
+		for (Map<String, Object> map : fileList) {
+			NewfileName = (String) map.get("fileName");
 			offiVo.setImageUrl(NewfileName);
-		}		
-		
-		if(offiVo.getImageUrl()!= null && !offiVo.getImageUrl().isEmpty()) {
-			if(oldFileName != null && !oldFileName.isEmpty()) {
-				File oldFile = new File(fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE),oldFileName);
-				logger.info("oldFile={}",oldFile.getName());
-				if(oldFile.exists()) {
+		}
+
+		if (offiVo.getImageUrl() != null && !offiVo.getImageUrl().isEmpty()) {
+			if (oldFileName != null && !oldFileName.isEmpty()) {
+				File oldFile = new File(fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE), oldFileName);
+				logger.info("oldFile={}", oldFile.getName());
+				if (oldFile.exists()) {
 					boolean deletefile = oldFile.delete();
-					logger.info("파일삭제 여부 : {}" , deletefile);
+					logger.info("파일삭제 여부 : {}", deletefile);
 				}
 			}
 		}
-		
+
 		int cnt1 = bankService.updateAccount(accInfoVo);
 		int cnt2 = offiService.updateOfficialInfo(offiVo);
-		if(cnt1 > 0 && cnt2 >0) {
+		if (cnt1 > 0 && cnt2 > 0) {
 			bool = true;
 		}
-		
+
 		logger.info("oldFileName = {}", oldFileName);
 		logger.info("bool = {}", bool);
 		return bool;
-	 }
-	
-	
-	 @RequestMapping("/selectInfo")
-	 @ResponseBody
-	 public Map<String, Object> body(String officialNo,HttpServletRequest request) {
-		logger.info("officialNo={}",officialNo);
-		String num = officialNo.substring(4,5);
-		String type="";
+	}
 
-		if(num.equals("1")) {
-			type="ADMIN";
-		}else if(num.equals("2")) {
-			type="PROFESSOR";
-		}else if(num.equals("3")) {
-			type="STUDENT";
+	@RequestMapping("/selectInfo")
+	@ResponseBody
+	public Map<String, Object> body(String officialNo, HttpServletRequest request) {
+		logger.info("officialNo={}", officialNo);
+		String num = officialNo.substring(4, 5);
+		String type = "";
+
+		if (num.equals("1")) {
+			type = "ADMIN";
+		} else if (num.equals("2")) {
+			type = "PROFESSOR";
+		} else if (num.equals("3")) {
+			type = "STUDENT";
 		}
-		 
-		 logger.info("type={}",type);
-		 
-		 Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
-		 if(type.equals("STUDENT")) {
-			 map = studentService.selectViewByStuNo(officialNo);
-		 }else if(type.equals("PROFESSOR")) {
-			 map =professorService.selectViewByProfNo(officialNo);
-		 }else if(type.equals("ADMIN")) {
-			 map = employeeService.selectViewByEmpNo(officialNo);
-		 }
-		 
-		 logger.info("map={}" ,map);
-		 
-		 if(map.get("ZIPCODE") == null) {
-			 map.put("ZIPCODE","");
-		 }
-		 if(map.get("ADDRESS") == null) {
-			 map.put("ADDRESS","");
-		 }
-		 if(map.get("ADDR_DETAIL") == null) {
-			 map.put("ADDR_DETAIL","");
-		 }
-		 if(map.get("ADDRESS") == null) {
-			 map.put("ADDRESS","");
-		 }
-		 if(map.get("ACCOUNT_NO") == null) {
-			 map.put("ACCOUNT_NO","");
-			 map.put("ACCOUNT_NAME","");
-		 }
-		 if(map.get("ACCOUNT_NAME") == null) {
-			 map.put("ACCOUNT_NAME","");
-		 }
-		 
-		 String uploadPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE);
-		 map.put("uploadPath",uploadPath + "\\" + map.get("IMAGE_URL"));
-		 logger.info("uploadPath={}",map.get("uploadPath"));
-		 logger.info("IMAGE_URL={}",map.get("IMAGE_URL"));
-		 
-		 map.put("type", type);
-		 return map;
-		 //C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images
-		//C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png
-	 }
-	
-	
+
+		logger.info("type={}", type);
+
+		Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
+		if (type.equals("STUDENT")) {
+			map = studentService.selectViewByStuNo(officialNo);
+		} else if (type.equals("PROFESSOR")) {
+			map = professorService.selectViewByProfNo(officialNo);
+		} else if (type.equals("ADMIN")) {
+			map = employeeService.selectViewByEmpNo(officialNo);
+		}
+
+		logger.info("map={}", map);
+
+		if (map.get("ZIPCODE") == null) {
+			map.put("ZIPCODE", "");
+		}
+		if (map.get("ADDRESS") == null) {
+			map.put("ADDRESS", "");
+		}
+		if (map.get("ADDR_DETAIL") == null) {
+			map.put("ADDR_DETAIL", "");
+		}
+		if (map.get("ADDRESS") == null) {
+			map.put("ADDRESS", "");
+		}
+		if (map.get("ACCOUNT_NO") == null) {
+			map.put("ACCOUNT_NO", "");
+			map.put("ACCOUNT_NAME", "");
+		}
+		if (map.get("ACCOUNT_NAME") == null) {
+			map.put("ACCOUNT_NAME", "");
+		}
+
+		String uploadPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE);
+		map.put("uploadPath", uploadPath + "\\" + map.get("IMAGE_URL"));
+		logger.info("uploadPath={}", map.get("uploadPath"));
+		logger.info("IMAGE_URL={}", map.get("IMAGE_URL"));
+
+		map.put("type", type);
+		return map;
+		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images
+		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png
+	}
+
+	@RequestMapping(value = "/memberEdit", method = RequestMethod.GET)
+	public String edit_get(String officialNo, Model model) {
+		logger.info("수정화면 페이지 보여주기, officialNo={}", officialNo);
+		List<BankVO> bankList = bankService.selectAllBank();
+		model.addAttribute("bankList", bankList);
+		model.addAttribute("officialNo", officialNo);
+
+		return "/admin/member/adminEditMember";
+	}
+
 }

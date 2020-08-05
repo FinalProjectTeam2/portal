@@ -59,7 +59,93 @@
 		resultType="map">
 		select * from PROFESSOR_VIEW where prof_no=#{profNo}
 	</select>
-   	
+	<select id="selectProfessorView" parameterType="profSearchVO"
+		resultType="map">
+		select *
+		from
+		(
+		select rownum as RNUM, A.*
+		from(
+		<if
+			test="(profName==null or profName =='') and 
+		(facultyNo==null or facultyNo =='') and (depNo==null or depNo =='') and (positionNo1==null or positionNo1 =='') 
+		and (startNo==null or startNo=='') and (endNo==null or endNo=='')">
+			select * from PROFESSOR_VIEW
+		</if>
+		<if
+			test="(profName!=null and profName !='') or 
+		(facultyNo!=null and facultyNo !='') or (depNo!=null and depNo !='') or (positionNo1 !=null and positionNo1 !='')
+		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
+			select * from PROFESSOR_VIEW
+			where substr(stu_no,1,4) between #{startNo} and #{endNo}
+			<if test="profName!=null and profName !=''">
+				and prof_name like '%' || #{profName} || '%'
+			</if>
+			<if test="facultyNo!=null and facultyNo !=''">
+				and faculty_no=#{facultyNo}
+			</if>
+			<if test="depNo!=null and depNo !=''">
+				and dep_no=#{depNo}
+			</if>
+			<if test="positionNo1 !=null and positionNo1 !=''">
+				and position_no in (#{positionNo1}
+				<if test="positionNo2 !=null and positionNo2 !=''">
+					,#{positionNo2}
+				</if>
+				<if test="positionNo3 !=null and positionNo3 !=''">
+					,#{positionNo3}
+				</if>
+				<if test="positionNo4 !=null and positionNo4 !=''">
+					,#{positionNo4}
+				</if>
+				)
+			</if>
+		</if>
+		order by prof_no
+		)A
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="getTotalRecord" parameterType="profSearchVO"
+		resultType="int">
+		<if
+			test="(profName==null or profName =='') and 
+		(facultyNo==null or facultyNo =='') and (depNo==null or depNo =='') and (positionNo1==null or positionNo1 =='') 
+		and (startNo==null or startNo=='') and (endNo==null or endNo=='')">
+			select count(*) from PROFESSOR_VIEW
+		</if>
+		<if
+			test="(profName!=null and profName !='') or 
+		(facultyNo!=null and facultyNo !='') or (depNo!=null and depNo !='') or (positionNo1 !=null and positionNo1 !='')
+		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
+			select count(*) from PROFESSOR_VIEW
+			where substr(stu_no,1,4) between #{startNo} and #{endNo}
+			<if test="profName!=null and profName !=''">
+				and prof_name like '%' || #{profName} || '%'
+			</if>
+			<if test="facultyNo!=null and facultyNo !=''">
+				and faculty_no=#{facultyNo}
+			</if>
+			<if test="depNo!=null and depNo !=''">
+				and dep_no=#{depNo}
+			</if>
+			<if test="positionNo1 !=null and positionNo1 !=''">
+				and position_no in (#{positionNo1}
+				<if test="positionNo2 !=null and positionNo2 !=''">
+					,#{positionNo2}
+				</if>
+				<if test="positionNo3 !=null and positionNo3 !=''">
+					,#{positionNo3}
+				</if>
+				<if test="positionNo4 !=null and positionNo4 !=''">
+					,#{positionNo4}
+				</if>
+				)
+			</if>
+		</if>
+	</select>
 </mapper>
 
 

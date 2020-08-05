@@ -7,36 +7,36 @@
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
 <script>
-	$(function() {
-		$('#btMultiUpdateState').click(function() {
-			var len=$('tbody input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('학적상태를 변경하려는 학생부터 선택하세요');
-				return;
-			}else if($('#states').val() == '0'){
-				alert('변경하려는 학적상태를 선택하세요');
-				return;
-			}
-			
-			$('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateState'/>");
-			$('form[name=frmList]').submit();
-		});
-	
-		$('#btMultiDel').click(function() {
-			var len=$('tbody input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('학적상태를 변경하려는 학생부터 선택하세요');
-				return;
-		
-			}
-			
-			$('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDelete'/>");
-			$('form[name=frmList]').submit();
-		
-		});
-	
-	
-	});
+   $(function() {
+      $('#btMultiUpdateState').click(function() {
+         var len=$('tbody input[type=checkbox]:checked').length;
+         if(len==0){
+            alert('학적상태를 변경하려는 학생부터 선택하세요');
+            return;
+         }else if($('#states').val() == '0'){
+            alert('변경하려는 학적상태를 선택하세요');
+            return;
+         }
+         
+         $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateState'/>");
+         $('form[name=frmList]').submit();
+      });
+   
+      $('#btMultiDel').click(function() {
+         var len=$('tbody input[type=checkbox]:checked').length;
+         if(len==0){
+            alert('학적상태를 변경하려는 학생부터 선택하세요');
+            return;
+      
+         }
+         
+         $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDelete'/>");
+         $('form[name=frmList]').submit();
+      
+      });
+   
+   
+   });
 
 </script>
 <main role="main" class="flex-shrink-0">
@@ -55,8 +55,21 @@
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post"
 					action="<c:url value='/admin/member/adminManageStudent'/>">
-					<input type="hidden" name="sort" value=""> <input
-						type="hidden" name="currentPage">
+					<input type="hidden" name="name" value="${studentSearchVo.name}">
+					<input type="hidden" name="facultyNo"
+						value="${studentSearchVo.facultyNo}"> <input type="hidden"
+						name="major" value="${studentSearchVo.major}"> <input
+						type="hidden" name="state1" value="${studentSearchVo.state1}">
+					<input type="hidden" name="state2"
+						value="${studentSearchVo.state2}"> <input type="hidden"
+						name="state3" value="${studentSearchVo.state3}"> <input
+						type="hidden" name="state4" value="${studentSearchVo.state4}">
+					<input type="hidden" name="state5"
+						value="${studentSearchVo.state5}"> <input type="hidden"
+						name="state6" value="${studentSearchVo.state6}"> <input
+						type="hidden" name="startNo" value="${studentSearchVo.startNo}">
+					<input type="hidden" name="endNo" value="${studentSearchVo.endNo}">
+					<input type="hidden" name="currentPage">
 				</form>
 			</div>
 			<!-- 페이징 처리 form 끝 -->
@@ -70,34 +83,42 @@
 								name="facultyNo" id="faculty">
 								<option value="0">선택</option>
 								<c:forEach var="facVo" items="${facultyList }">
-									<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
+									<option value="${facVo.facultyNo }"
+										<c:if test="${facVo.facultyNo==param.facultyNo }">
+									 selected="selected"
+									</c:if>>${facVo.facultyName }</option>
 								</c:forEach>
-							</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
-								class="rightEnd" id="department">
-								<option value="">학부를 선택하세요</option>
+							</select> <label for="department"><span>학과</span></label> <select
+								name="major" class="rightEnd" id="department">
+								<option value="0">학부를 선택하세요</option>
 							</select>
 						</div>
 						<div class="ckState stud">
 							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
-								for="selectAll">전체</label> <input type="checkbox" name="state"
-								value="2" id="2"><label for="2">재학생</label> <input
-								type="checkbox" name="state" value="1" id="1"><label
-								for="1">신입생</label> <input type="checkbox" name="state"
-								value="3" id="3"><label for="3">휴학생</label> <input
-								type="checkbox" name="state" value="5" id="5"><label
-								for="5">졸업생</label> <input type="checkbox" name="state"
-								value="4" id="4"><label for="4">졸업가능</label>
-						</div>
+								for="selectAll">전체</label>
 
+
+							<c:forEach var="vo" items="${stateList}">
+								<input type="checkbox" name="state" value="${vo.state }"
+									id="${vo.state }">
+								<label for="${vo.state }"> ${vo.stateName }</label>
+							</c:forEach>
+						</div>
+						<jsp:useBean id="now" class="java.util.Date" />
+						<fmt:formatDate value="${now }" var="year" pattern="yyyy" />
 						학번<select name="startNo" class="date">
-							<option value="">---</option>
-							<c:forEach var="i" begin="0" end="39">
-								<option value="${2020-i }">${2020-i }</option>
+							<c:forEach var="i" begin="1990" end="${year }">
+								<option value="${i }"
+									<c:if test="${i==param.startNo }">
+									 selected="selected"
+									</c:if>>${i }</option>
 							</c:forEach>
 						</select>~<select name="endNo" class="date">
-							<option value="">---</option>
 							<c:forEach var="j" begin="0" end="39">
-								<option value="${2020-j }">${2020-j }</option>
+								<option value="${year-j }"
+									<c:if test="${year-j==param.endNo }">
+									 selected="selected"
+									</c:if>>${year-j }</option>
 							</c:forEach>
 						</select> 이름 <input type="text" name="name">
 						<button class="btCustom btn btn-primary btn-lg login-button"
@@ -145,23 +166,26 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-								<!-- 반복시작 -->
-									<c:set var="idx" value="0"/>
+								<!--반복시작-->
+								<c:set var="idx" value="0"/>
 									<c:forEach var="map" items="${list }">
 										<tr>
-											<td><input type="checkbox" name="stuList[${idx }].stuNo"
-												value="${map['STU_NO']}"> <input type="hidden"
-												name="pdItems[].imageURL" value=""></td>
+											  <td><input type="checkbox" name="stuList[${idx }].stuNo"
+                                    value="${map['STU_NO']}"> <input type="hidden"
+                                    name="pdItems[].imageURL" value=""></td>
 											<td>${map['STU_NO']}</td>
 											<td>${map['NAME']}</td>
 											<td>${map['FACULTY_NAME']}</td>
 											<td>${map['DEP_NAME']}</td>
 											<td>${map['SEMESTER']}</td>
 											<td>${map['STATE_NAME']}</td>
-											<td><a href="<c:url value='/admin/member/memberEdit?officialNo=${map["STU_NO"] }'/>">수정</a></td>
-											<td><a href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
+											<td><a
+												href="<c:url value='/admin/member/memberEdit?officialNo=${map["STU_NO"] }'/>">수정</a></td>
+											<td><a
+												href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
 										</tr>
-									<c:set var="idx" value="${idx+1 }"/>
+										  <c:set var="idx" value="${idx+1 }"/>
+
 									</c:forEach>
 									<!-- 반복 끝 -->
 								</c:if>
@@ -236,19 +260,19 @@
 						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
-					<div class="divRight">
-						<select name="states" id="states">
-							<option value="0">학적상태 변경</option>
-							<option value="1">신입생</option>
-							<option value="2">재학생</option>
-							<option value="3">휴학생</option>
-							<option value="4">졸업가능생</option>
-							<option value="5">졸업생</option>
-							<option value="6">제적생</option>
-						</select>
-						<input type="button" id="btMultiUpdateState" value="변경" >
-					</div>
-					
+					     <div class="divRight">
+                  <select name="states" id="states">
+                     <option value="0">학적상태 변경</option>
+                     <option value="1">신입생</option>
+                     <option value="2">재학생</option>
+                     <option value="3">휴학생</option>
+                     <option value="4">졸업가능생</option>
+                     <option value="5">졸업생</option>
+                     <option value="6">제적생</option>
+                  </select>
+                  <input type="button" id="btMultiUpdateState" value="변경" >
+               </div>
+
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
