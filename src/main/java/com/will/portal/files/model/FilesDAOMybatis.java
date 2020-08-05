@@ -1,5 +1,7 @@
 package com.will.portal.files.model;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,5 +32,10 @@ public class FilesDAOMybatis implements FilesDAO{
 	@Override
 	public int deleteFile(int no) {
 		return sqlSession.delete(namespace+"deleteFile",no);
+	}
+
+	@Override
+	public List<FilesVO> selectFileByPostNo(int postNo) {
+		return sqlSession.selectList(namespace+"selectFileByPostNo", postNo);
 	}
 }

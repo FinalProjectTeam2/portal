@@ -4,10 +4,16 @@ import com.will.portal.common.SearchVO;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@Getter @Setter @ToString
-public class BoardSearchVO extends SearchVO{
+@Getter
+@Setter
+public class BoardSearchVO extends SearchVO {
 	private String bdCode;
 	private String sort;
+
+	@Override
+	public String toString() {
+		return "BoardSearchVO [bdCode=" + bdCode + ", sort=" + sort + ", toString()=" + super.toString() + "]";
+	}
+
 }

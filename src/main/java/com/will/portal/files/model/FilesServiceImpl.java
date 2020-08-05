@@ -1,5 +1,7 @@
 package com.will.portal.files.model;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,11 @@ public class FilesServiceImpl implements FilesService{
 	@Override
 	public int deleteFile(int no) {
 		return filesDao.deleteFile(no);
+	}
+
+	@Override
+	public List<FilesVO> selectFileByPostNo(int postNo) {
+		return filesDao.selectFileByPostNo(postNo);
 	}
 	
 }

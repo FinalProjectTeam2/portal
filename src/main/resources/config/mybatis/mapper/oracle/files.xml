@@ -28,5 +28,9 @@
 	<delete id="deleteFile" parameterType="int">
 		delete from files where no = #{no}
 	</delete>
+	
+	<select id="selectFileByPostNo" parameterType="int" resultType="filesVo">
+		select * from files where post_no = #{postNo}
+	</select>
 </mapper>
 
