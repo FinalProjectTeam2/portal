@@ -146,6 +146,13 @@
 			</if>
 		</if>
 	</select>
+	
+	<update id="updatePosition" parameterType="professorVo">
+		update professor
+		set position_no = {positionNo}
+		where prof_no=#{profNo}	
+	</update>
+	
 </mapper>
 
 
