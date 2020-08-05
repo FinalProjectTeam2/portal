@@ -354,6 +354,7 @@ public class AdminMemberController {
 	 */
 	private void setPosition(ProfSearchVO profSearchVo, String[] slist) {
 		int idx = slist.length;
+		
 		profSearchVo.setPositionNo1(slist[0]);
 		idx--;
 		if (idx < 1)
