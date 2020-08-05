@@ -79,7 +79,7 @@ public class AdminMemberController {
 	FileUploadUtil fileUploadUtil;
 	@Autowired
 	Official_infoService offiService;
-
+	
 	/**
 	 * 회원등록 - 뷰
 	 * 
@@ -479,7 +479,6 @@ public class AdminMemberController {
 		logger.info("bool = {}", bool);
 		return bool;
 	 }
-	
 	
 	
 	 @RequestMapping("/selectInfo")
