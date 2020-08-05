@@ -155,10 +155,14 @@
 	
 	<update id="updatePosition" parameterType="professorVo">
 		update professor
-		set position_no = {positionNo}
+		set position_no = #{positionNo}
 		where prof_no=#{profNo}	
 	</update>
 	
+	<delete id="deleteProfessor" parameterType="String">
+		delete from professor
+		where prof_no=#{profNo}
+	</delete>
 </mapper>
 
 
