@@ -202,3 +202,16 @@ on s.type_code=ty.type_code
 join syllabus sy
 on o.open_sub_code=sy.open_sub_code;
 
+#PROF_POSITION
+insert into prof_position
+values(prof_position_seq.nextval,'정교수');
+insert into prof_position
+values(prof_position_seq.nextval,'부교수');
+insert into prof_position
+values(prof_position_seq.nextval,'조교수');
+insert into prof_position
+values(prof_position_seq.nextval,'전임강사');
+insert into PROF_POSITION
+values(PROF_POSITION_SEQ.nextval,'퇴임');
+
+
