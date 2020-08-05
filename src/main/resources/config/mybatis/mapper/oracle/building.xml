@@ -4,7 +4,7 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.building">
 	<select id="selectAllBuilding" resultType="buildingVo">
-		select * from bank
+		select * from building
 	</select>
 </mapper>
 

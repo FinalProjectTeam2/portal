@@ -22,8 +22,9 @@ public class BuildingController {
 	public String campusMap(Model model) {
 		logger.info("캠퍼스맵 보여주기 ");
 		List<BuildingVO> list = buildingService.selectAllBuilding();
+		
+		
 		model.addAttribute("list",list);
 		return "test/campusMap";
 	}
-	
 }
