@@ -22,17 +22,15 @@
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post"
 					action="<c:url value='/admin/member/adminManageProfessor'/>">
-					<input type="hidden" name="name" value="${profSearchVo.name}">
+					<input type="hidden" name="profName" value="${profSearchVo.profName}">
 					<input type="hidden" name="facultyNo" value="${profSearchVo.facultyNo}">
-					<input type="hidden" name="major" value="${profSearchVo.major}">
-					<input type="hidden" name="state1" value="${studentSearchVo.state1}">
-					<input type="hidden" name="state2" value="${studentSearchVo.state2}">
-					<input type="hidden" name="state3" value="${studentSearchVo.state3}">
-					<input type="hidden" name="state4" value="${studentSearchVo.state4}">
-					<input type="hidden" name="state5" value="${studentSearchVo.state5}">
-					<input type="hidden" name="state6" value="${studentSearchVo.state6}">
-					<input type="hidden" name="startNo" value="${studentSearchVo.startNo}">
-					<input type="hidden" name="endNo" value="${studentSearchVo.endNo}">
+					<input type="hidden" name="depNo" value="${profSearchVo.depNo}">
+					<input type="hidden" name="positionNo1" value="${profSearchVo.positionNo1}">
+					<input type="hidden" name="positionNo2" value="${profSearchVo.positionNo2}">
+					<input type="hidden" name="positionNo3" value="${profSearchVo.positionNo3}">
+					<input type="hidden" name="positionNo4" value="${profSearchVo.positionNo4}">
+					<input type="hidden" name="startNo" value="${profSearchVo.startNo}">
+					<input type="hidden" name="endNo" value="${profSearchVo.endNo}">
 					<input type="hidden" name="currentPage">
 				</form>
 			</div>
