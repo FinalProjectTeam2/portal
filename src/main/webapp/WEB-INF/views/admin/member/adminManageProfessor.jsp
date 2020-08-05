@@ -44,7 +44,7 @@
 						<div class="stud">
 							<label for="faculty"><span>학부</span></label> <select
 								name="facultyNo" id="faculty">
-								<option value="0">선택</option>
+								<option value="">선택</option>
 								<c:forEach var="facVo" items="${facultyList }">
 									<option value="${facVo.facultyNo }"
 										<c:if test="${facVo.facultyNo==param.facultyNo }">
@@ -53,7 +53,7 @@
 								</c:forEach>
 							</select> <label for="department"><span>학과</span></label> <select
 								name="depNo" class="rightEnd" id="department">
-								<option value="0">학부를 선택하세요</option>
+								<option value="">학부를 선택하세요</option>
 							</select>
 						</div>
 						<div class="ckState stud">
