@@ -133,13 +133,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDao.classroomByDepNo(depNo);
 	}
 
+	@Override
+	public Map<String, Object> selectViewByProfNo(String profNo) {
+		return professorDao.selectViewByProfNo(profNo);
+	}
 
-	
-	
-	
-	
-	
-	
 	
 	
 }

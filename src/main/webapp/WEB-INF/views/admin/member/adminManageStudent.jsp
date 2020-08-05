@@ -6,10 +6,41 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
+<script>
+	$(function() {
+		$('#btMultiUpdateState').click(function() {
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('학적상태를 변경하려는 학생부터 선택하세요');
+				return;
+			}else if($('#states').val() == '0'){
+				alert('변경하려는 학적상태를 선택하세요');
+				return;
+			}
+			
+			$('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateState'/>");
+			$('form[name=frmList]').submit();
+		});
+	
+		$('#btMultiDel').click(function() {
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('학적상태를 변경하려는 학생부터 선택하세요');
+				return;
+		
+			}
+			
+			$('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDelete'/>");
+			$('form[name=frmList]').submit();
+		
+		});
+	
+	
+	});
+
+</script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-
-
 		<div id="adminMngMem">
 			<div class="divTop">
 				<h2>학생 관리</h2>
@@ -24,8 +55,18 @@
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post"
 					action="<c:url value='/admin/member/adminManageStudent'/>">
-					<input type="hidden" name="sort" value=""> <input
-						type="hidden" name="currentPage">
+					<input type="hidden" name="name" value="${studentSearchVo.name}">
+					<input type="hidden" name="facultyNo" value="${studentSearchVo.facultyNo}">
+					<input type="hidden" name="major" value="${studentSearchVo.major}">
+					<input type="hidden" name="state1" value="${studentSearchVo.state1}">
+					<input type="hidden" name="state2" value="${studentSearchVo.state2}">
+					<input type="hidden" name="state3" value="${studentSearchVo.state3}">
+					<input type="hidden" name="state4" value="${studentSearchVo.state4}">
+					<input type="hidden" name="state5" value="${studentSearchVo.state5}">
+					<input type="hidden" name="state6" value="${studentSearchVo.state6}">
+					<input type="hidden" name="startNo" value="${studentSearchVo.startNo}">
+					<input type="hidden" name="endNo" value="${studentSearchVo.endNo}">
+					<input type="hidden" name="currentPage">
 				</form>
 			</div>
 			<!-- 페이징 처리 form 끝 -->
@@ -35,23 +76,51 @@
 				<div class="divRight">
 					<div class="divTop">
 						<div class="stud">
-							<label for="faculty"><span>학부</span></label> 
-							<select	name="facultyNo" id="faculty">
+							<label for="faculty"><span>학부</span></label> <select
+								name="facultyNo" id="faculty">
 								<option value="0">선택</option>
 								<c:forEach var="facVo" items="${facultyList }">
-									<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
+									<option value="${facVo.facultyNo }"
+										<c:if test="${facVo.facultyNo==param.facultyNo }">
+									 selected="selected"
+									</c:if>>${facVo.facultyName }</option>
 								</c:forEach>
-							</select> <label for="depNo"><span>학과</span></label> <select name="depNo"
-								class="rightEnd" id="department">
-								<option value="">학부를 선택하세요</option>
+							</select> <label for="department"><span>학과</span></label> <select
+								name="major" class="rightEnd" id="department">
+								<option value="0">학부를 선택하세요</option>
 							</select>
 						</div>
-
-						학번<input type="text" name="stuNo">
-						이름 <input type="text" size="8" name="name">
+						<div class="ckState stud">
+							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
+								for="selectAll">전체</label>
+								
+								
+								<c:forEach var="vo" items="${stateList}">
+								<input type="checkbox" name="state"
+								value="${vo.state }" id="${vo.state }"><label for="${vo.state }">
+								${vo.stateName }</label>
+								</c:forEach>
+						</div>
+						<jsp:useBean id="now" class="java.util.Date" />
+						<fmt:formatDate value="${now }" var="year" pattern="yyyy" />
+						학번<select name="startNo" class="date">
+							<c:forEach var="i" begin="1990" end="${year }">
+								<option value="${i }"
+									<c:if test="${i==param.startNo }">
+									 selected="selected"
+									</c:if>>${i }</option>
+							</c:forEach>
+						</select>~<select name="endNo" class="date">
+							<c:forEach var="j" begin="0" end="39">
+								<option value="${year-j }"
+									<c:if test="${year-j==param.endNo }">
+									 selected="selected"
+									</c:if>>${year-j }</option>
+							</c:forEach>
+						</select> 이름 <input type="text" name="name">
 						<button class="btCustom btn btn-primary btn-lg login-button"
 							id="btSearch">검색</button>
-						<p style="float: left">조회결과 : {}건</p>
+						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
 					</div>
 					<div class="divList">
 						<table class="box2" summary="학생 목록">
@@ -88,27 +157,33 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="map" items="${list }">
+								<c:if test="${empty list }">
 									<tr>
-										<td><input type="checkbox" name="pdItems[].productNo"
-											value=""> <input type="hidden"
-											name="pdItems[].imageURL" value=""></td>
-										<td>${map['STU_NO']}</td>
-										<td>${map['NAME']}</td>
-										<td>${map['FACULTY_NAME']}</td>
-										<td>${map['DEP_NAME']}</td>
-										<td>${map['SEMESTER']}</td>
-										<td>${map['STATE']}</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-								</c:forEach>
-								<%-- 	<c:if test="${empty list }">
-									<tr>
-										<td colspan="8">결과가 없습니다.</td>
+										<td colspan="9">결과가 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
+								<!-- 반복시작 -->
+									<c:set var="idx" value="0"/>
+									<c:forEach var="map" items="${list }">
+										<tr>
+											<td><input type="checkbox" name="stuList[${idx }].stuNo"
+												value="${map['STU_NO']}"> <input type="hidden"
+												name="pdItems[].imageURL" value=""></td>
+											<td>${map['STU_NO']}</td>
+											<td>${map['NAME']}</td>
+											<td>${map['FACULTY_NAME']}</td>
+											<td>${map['DEP_NAME']}</td>
+											<td>${map['SEMESTER']}</td>
+											<td>${map['STATE_NAME']}</td>
+											<td><a href="<c:url value='/admin/member/memberEdit?officialNo=${map["STU_NO"] }'/>">수정</a></td>
+											<td><a href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
+										</tr>
+									<c:set var="idx" value="${idx+1 }"/>
+									</c:forEach>
+									<!-- 반복 끝 -->
+								</c:if>
+								<%--	<c:if test="${!empty list }">
 									<!-- 반복 시작 -->
 									<c:set var="idx" value="0" />
 									<c:forEach var="vo" items="${list }">
@@ -145,35 +220,57 @@
 					</div>
 					<div class="divPage">
 						<!-- 페이지 번호 추가 -->
-						<%-- 	<c:if test="${pagingInfo.firstPage>1 }">
-							<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"> <img
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"
+								class="imgNext"> <img
 								src='<c:url value="/resources/images/first.JPG" />' border="0">
 							</a>
-						</c:if> --%>
+							<a href="#" style="color: #3333339c" onclick="boardList(1)">
+								1 </a>
+							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
+						</c:if>
 
 						<!-- [1][2][3][4][5][6][7][8][9][10] -->
-						<%-- 	<c:forEach var="i" begin="${pagingInfo.firstPage }"
+						<c:forEach var="i" begin="${pagingInfo.firstPage }"
 							end="${pagingInfo.lastPage }">
 							<c:if test="${i==pagingInfo.currentPage }">
-								<span style="color: blue; font-weight: bold">${i }</span>
+								<span class="pageA">${i }</span>
 							</c:if>
 							<c:if test="${i!=pagingInfo.currentPage }">
-								<a href="#" onclick="boardList(${i})"> [${i }] </a>
+								<a href="#" style="color: #3333339c" onclick="boardList(${i})">
+									${i } </a>
 							</c:if>
 						</c:forEach>
 
 						<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-							<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"> <img
+							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
+							<a href="#" style="color: #3333339c"
+								onclick="boardList(${pagingInfo.totalPage})">
+								${pagingInfo.totalPage } </a>
+							<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"
+								class="imgNext"> <img
 								src="<c:url value="/resources/images/last.JPG" />" border="0">
 							</a>
-						</c:if> --%>
+						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
-
+					<div class="divRight">
+						<select name="states" id="states">
+							<option value="0">학적상태 변경</option>
+							<option value="1">신입생</option>
+							<option value="2">재학생</option>
+							<option value="3">휴학생</option>
+							<option value="4">졸업가능생</option>
+							<option value="5">졸업생</option>
+							<option value="6">제적생</option>
+						</select>
+						<input type="button" id="btMultiUpdateState" value="변경" >
+					</div>
+					
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
-							onclick="location.href='<c:url value="/admin/member/adminRegisterMember"/>'"
+							onclick="location.href='<c:url value="/admin/member/adminRegisterMember?sort=1"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
 					<div class="btdiv">

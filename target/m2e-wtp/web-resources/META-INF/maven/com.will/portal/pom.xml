@@ -141,9 +141,9 @@
 		</dependency>
 
 		<!-- oracle -->
-		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc6</artifactId> 
-			<version>11.1.0.7.0</version> </dependency> <dependency> <groupId>com.oracle</groupId> 
-			<artifactId>ojdbc6</artifactId> <version>12.1.0.1-atlassian-hosted</version> 
+		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc6</artifactId>
+			<version>11.1.0.7.0</version> </dependency> <dependency> <groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId> <version>12.1.0.1-atlassian-hosted</version>
 			</dependency> -->
 
 		<dependency>
@@ -182,7 +182,7 @@
 
 
 		<!-- 화면에서 ajax처리시 Map처리 가능 -->
-		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-core-asl</artifactId> 
+		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-core-asl</artifactId>
 			<version>1.9.13</version> </dependency> -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -191,17 +191,14 @@
 		</dependency>
 
 		<!-- Jackson -->
-		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-annotations</artifactId> 
-			<version>2.7.5</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-annotations</artifactId>
+			<version>2.7.5</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId> <version>2.7.5</version> </dependency> -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.10.5</version>
 		</dependency>
-
-
-
 
 		<!-- Commons FileUpload for ckeditor -->
 		<dependency>
@@ -241,8 +238,6 @@
 			<artifactId>gson</artifactId>
 			<version>2.8.2</version>
 		</dependency>
-
-
 
 		<!-- Java Mail API -->
 		<dependency>
@@ -325,11 +320,17 @@
 			<version>3.2.3.RELEASE</version>
 		</dependency>
 
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.12</version>
+		    <scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 	<repositories>
-		<!-- <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> <url>http://maven.jahia.org/maven2</url> 
-			</repository> <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> 
+		<!-- <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> <url>http://maven.jahia.org/maven2</url>
+			</repository> <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name>
 			<url>https://maven.atlassian.com/3rdparty/</url> </repository> -->
 
 		<repository>

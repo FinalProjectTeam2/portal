@@ -80,10 +80,12 @@ function inputPhoneNumber(obj) {
 			formData.append("address", $("#address").val()); 
 			formData.append("addrDetail", $("#addrDetail").val());
 			
+			formData.append("oldFileName", $("#oldFileName").val());
+			
 			formData.append("upfile", $("#upfile")[0].files[0]);
 
 			$.ajax({
-				url : "<c:url value='/student/studentEdit' />",
+				url : "<c:url value='/member/memberEdit' />",
 				type: "post",
 				processData : false,
 	            contentType : false,
@@ -105,11 +107,11 @@ function inputPhoneNumber(obj) {
 	});
 	$.select = function () {
 		$.ajax({
-			url : "<c:url value='/student/selectInfo' />",
+			url : "<c:url value='/member/selectInfo' />",
 			type: "get",
 			dataType: "json",
 			success:function(res){
-							
+				
 				$('#bankCode').val(res.BANK_CODE);
 				$('#accountNo').val(res.ACCOUNT_NO);
 				$('#accountName').val(res.ACCOUNT_NAME);
@@ -122,13 +124,15 @@ function inputPhoneNumber(obj) {
 				
 				var imgDiv = "<img id='studentImg' alt='사진' src='${ pageContext.request.contextPath }/common/image?img=" +res.IMAGE_URL+ "'/>"
 						+'<div class="rowa" style=" margin-top: 20px;"> <label for="upfile">사진수정</label>'
-						+'<input type="file" name="upfile" id="upfile" ></div>	';	
+						+'<input type="file" name="upfile" id="upfile" ></div>	'
+						+'<input type="hidden" name="oldFileName" id="oldFileName" value=' + res.IMAGE_URL+ '>';	
 				
 				var defaultDiv = "<img id='studentImg' alt='사진' src='${ pageContext.request.contextPath }/resources/images/student.png'/>"
 						+'<div class="rowa" style=" margin-top: 20px;"> <label for="upfile">사진수정</label>'
-						+'<input type="file" name="upfile" id="upfile" ></div>	';	
+						+'<input type="file" name="upfile" id="upfile" ></div>	'	
+						+'<input type="hidden" name="oldFileName" id="oldFileName" value=' + res.IMAGE_URL+ '>';
 				
-				var inHtml = '<tr>'
+				var stuInfo = '<tr>'
 	      			+ '<th>학번</th>'
 	      			+ '<td>'+res.STU_NO+' / 입학날짜 : '+moment(res.ADMISSION_DATE).format('YYYY-MM-DD')
 	      			+ '</td>'
@@ -143,7 +147,53 @@ function inputPhoneNumber(obj) {
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>과정</th>'
-	      			+ '<td>학사: '+res.STATE+'/ '+res.SEMESTER+'학기 </td>'
+	      			+ '<td>학사: '+res.STATE_NAME+'/ '+res.SEMESTER+'학기 </td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>기타</th>'
+	      			+ '<td>'+res.HP1+'-'+res.HP2+'-'+res.HP3+' / '+res.EMAIL1+'@'+res.EMAIL2
+	      			+ '/ '+res.ZIPCODE+' '+res.ADDRESS+' '+res.ADDR_DETAIL+' / '+res.BANK_NAME+' '+res.ACCOUNT_NO +'('+res.ACCOUNT_NAME+')</td>'
+	      			+ '</tr>';
+	      			
+				var profInfo = '<tr>'
+	      			+ '<th>학번</th>'
+	      			+ '<td>'+res.PROF_NO+' / 임용날짜 : '+moment(res.REGIGNATION_DATE).format('YYYY-MM-DD')
+	      			+ '</td>'
+		      		+ '</tr>'
+		      		+ '<tr>'
+	      			+ '<th>교수</th>'
+	      			+ '<td>'+res.PROF_NAME+' / '+res.SSN+'/ 대한민국</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>소속</th>'
+	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME+'</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>직급</th>'
+	      			+ '<td>'+res.POSITION_NAME+' </td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>기타</th>'
+	      			+ '<td>'+res.HP1+'-'+res.HP2+'-'+res.HP3+' / '+res.EMAIL1+'@'+res.EMAIL2
+	      			+ '/ '+res.ZIPCODE+' '+res.ADDRESS+' '+res.ADDR_DETAIL+' / '+res.BANK_NAME+' '+res.ACCOUNT_NO +'('+res.ACCOUNT_NAME+')</td>'
+	      			+ '</tr>';
+	      			
+				var adminInfo = '<tr>'
+	      			+ '<th>학번</th>'
+	      			+ '<td>'+res.EMP_NO+' / 임용날짜 : '+moment(res.START_DATE).format('YYYY-MM-DD')
+	      			+ '</td>'
+		      		+ '</tr>'
+		      		+ '<tr>'
+	      			+ '<th>직원</th>'
+	      			+ '<td>'+res.EMP_NAME+' / '+res.SSN+'/ 대한민국</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>소속</th>'
+	      			+ '<td>'+res.DEP_NAME+'</td>'
+	      			+ '</tr>'
+	      			+ '<tr>'
+	      			+ '<th>직급</th>'
+	      			+ '<td>'+res.POSITION_NAME+' </td>'
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>기타</th>'
@@ -151,16 +201,24 @@ function inputPhoneNumber(obj) {
 	      			+ '/ '+res.ZIPCODE+' '+res.ADDRESS+' '+res.ADDR_DETAIL+' / '+res.BANK_NAME+' '+res.ACCOUNT_NO +'('+res.ACCOUNT_NAME+')</td>'
 	      			+ '</tr>';
 	      		
-				if(res.IMAGE_URL != 'default.jsp'){
+				if(res.IMAGE_URL != 'default.jpg'){
 					$('#imgDiv').html(imgDiv);
 				}else{
 					$('#imgDiv').html(defaultDiv);
 				}
 				
-	      		$('#studentTable').html(inHtml);
-	      		$('#ssn').val(res.SSN);
-	      		$('#name').val(res.NAME);
+				if(res.type == 'STUDENT'){
+	      			$('#infoTable').html(stuInfo);
+	      			$('#name').val(res.NAME);
+				}else if(res.type == 'PROFESSOR'){
+	      			$('#infoTable').html(profInfo);
+	      			$('#name').val(res.PROF_NAME);
+				}else if(res.type=='ADMIN'){
+	      			$('#infoTable').html(adminInfo);
+	      			$('#name').val(res.EMP_NAME);
+				}
 	      		
+	      		$('#ssn').val(res.SSN);
 			},
 			error:function(xhr,status,error){
 				alert(status + ", " + error);
@@ -176,7 +234,8 @@ select:focus {
 }
 
 li:focus {
-	background-color: #ffffff00;
+	background-color: #ffffff00;\
+	
 }
 a:focus {
 	background-color: #ffffff00;
@@ -197,12 +256,13 @@ a:focus {
 					   <div class="rowa" style=" margin-top: 20px;">
 					   		<label for="upfile">사진수정</label>
 					      	<input type="file" name="upfile" id="upfile" >
+					      	
 						</div>			      	
 					</div>
 					<div>
 			      </div>
 			      <div class="cola s9" id="info">
-			      	<table id="studentTable">
+			      	<table id="infoTable">
 			      	</table>
 			      </div>
 			      <!--  -->
@@ -212,16 +272,15 @@ a:focus {
 			      <!-- 기본정보 -->
 			      <div class="cola s12" id="canEdit">
 			      <hr><!-- style="border: 0.5px solid #01539d -->
-				      	
 				      	<table id="editInfo">
 				      		<tr>
 				      			<th>이름</th>
-				      			
 				      			<td><input placeholder="이름" name="name" id="name" type="text" class="validate" readonly="readonly"></td>
 								<th>학번</th>
 								<td><input placeholder="학번" name="officialNo" type="text" class="validate" readonly="readonly" value="${principal.officialNo }"></td>
 				      			<th>주민번호</th>
 				      			<td><input placeholder="주민번호" name="jumin" id="ssn" type="text" class="validate" readonly="readonly"></td>
+				      		
 				      		</tr>
 				      		<tr>
 				      			<th>은행명</th>
@@ -235,29 +294,27 @@ a:focus {
 								    </select>
 				      			</td>
 				      			<th>계좌번호</th>
-				      			<td><input placeholder="계좌번호" name="accountNo" id="accountNo" type="text" class="validate"></td>
+				      			<td><input placeholder="-없이 입력해주세요" name="accountNo" id="accountNo" type="text" class="validate"></td>
 				      			<th>예금주</th>
 				      			<td><input placeholder="예금주명" name="accountName" id="accountName" type="text" class="validate"></td>
-				      			
 				      		</tr>
 				      		<tr>
 				      			<th>우편번호</th>
-				      			<td><input placeholder="우편번호" name="zipcode" id="zipcode" type="text" class="validate" value="${map['ZIPCODE'] }">
+				      			<td><input placeholder="우편번호" name="zipcode" id="zipcode" type="text" class="validate" value="">
 				      			  <button  id="findZipBt" type="button" onclick="sample4_execDaumPostcode()">우편번호 찾기</button></td>
 				      			<th>주소</th>
-				      			<td><input placeholder="주소" name="address" id="address" type="text" class="validate" value="${map['ADDRESS'] }">
+				      			<td><input placeholder="주소" name="address" id="address" type="text" class="validate" value="">
 				      				<span id="dong"></span>
 				      			</td>
 				      			<th>상세주소</th>
-				      			<td><input placeholder="상세주소" name="addrDetail" id="addrDetail" type="text" class="validate" value="${map['ADDR_DETAIL'] }"></td>
+				      			<td><input placeholder="상세주소" name="addrDetail" id="addrDetail" type="text" class="validate" value=""></td>
 				      		</tr>
 				      		<tr>
 				      			<th>이메일</th>
-								<td><input placeholder="이메일" name="email" id="email" type="text" class="validate" value="${map['EMAIL1'] }@${map['EMAIL2'] }"></td>
+								<td><input placeholder="이메일" name="email" id="email" type="text" class="validate" value=""></td>
 								<th>전화번호</th>
-								<td><input placeholder="핸드폰번호" onKeyup="inputPhoneNumber(this);" name="hp" id="hp" type="text" class="validate" value="${map['HP1'] }-${map['HP2'] }-${map['HP3'] }"></td>
+								<td><input placeholder="핸드폰번호" onKeyup="inputPhoneNumber(this);" name="hp" id="hp" type="text" class="validate" value=""></td>
 				      		</tr>
-				      	
 						
 				      	</table>
 				      

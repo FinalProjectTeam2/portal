@@ -133,3 +133,44 @@ main>.container {
 .rightEnd {
 	margin-right: 0 !important;
 }
+
+.pageA {
+	border-color: #e4e4e4 !important;
+	color: #333;
+	border-radius: 2px;
+	border: 1px solid;
+	display: inline-block;
+	height: 26px;
+	padding: 0 8px;
+	box-sizing: border-box;
+	text-align: center;
+	font-weight: bold;
+}
+
+.imgNext {
+	width: 15px;
+	height: 15px;
+	text-decoration: none !important;
+}
+
+.imgNext img {
+	width: 15px;
+	height: 15px;
+}
+
+.ckState input[type=checkbox] {
+	margin: 0 5px 1px 10px;
+	text-align: right;
+	vertical-align: middle !important;
+}
+.ckState{
+	margin-bottom: 11px;
+}
+
+
+.stud label {
+	user-select: none;
+}
+.date{
+	margin: 0 10px 0 10px !important;
+}

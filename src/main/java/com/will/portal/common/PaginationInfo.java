@@ -1,5 +1,8 @@
 package com.will.portal.common;
 
+import lombok.ToString;
+
+@ToString
 public class PaginationInfo {
 	/**
 	 * Required Fields

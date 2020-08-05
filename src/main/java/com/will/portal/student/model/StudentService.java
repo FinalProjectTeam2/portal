@@ -20,4 +20,7 @@ public interface StudentService {
 	List<StudentVO> selectStudent();
 	List<Map<String, Object>> selectStudentView(StudentSearchVO studentSearchVo);
 	int getTotalRecord(StudentSearchVO studentSearchVo);
+	int multiUpdateStudentState(List<StudentVO> studentList,String state);
+	public int deleteMulti(List<StudentVO> list);
+	int deleteStudent(String stuNo);
 }

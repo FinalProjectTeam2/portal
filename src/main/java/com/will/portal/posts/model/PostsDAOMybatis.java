@@ -58,4 +58,9 @@ public class PostsDAOMybatis implements PostsDAO {
 	public int deletePostByPostNo(int postNo) {
 		return sqlSession.delete(namespace+"deletePostByPostNo", postNo);
 	}
+
+	@Override
+	public int updatePost(PostsVO vo) {
+		return sqlSession.update(namespace+"updatePost", vo);
+	}
 }
