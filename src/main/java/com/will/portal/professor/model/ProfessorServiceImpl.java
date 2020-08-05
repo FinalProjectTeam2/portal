@@ -167,5 +167,25 @@ public class ProfessorServiceImpl implements ProfessorService {
 		}
 		return cnt;
 	}
+
+	@Override
+	public int deleteProfessor(String profNo) {
+		return professorDao.deleteProfessor(profNo);
+	}
+
+	@Override
+	@Transactional
+	public int multiDelete(List<ProfessorVO> list) {
+		int cnt = 0;
+		for (ProfessorVO professorVO : list) {
+			if(professorVO.getProfNo() != null) {
+				cnt = professorDao.deleteProfessor(professorVO.getProfNo());
+			}
+		}
+		
+		return cnt;
+	}
+	
+	
 	
 }

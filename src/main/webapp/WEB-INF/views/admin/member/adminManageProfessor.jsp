@@ -6,6 +6,42 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
+	
+<script>
+$(function() {
+    $('#btMultiUpdateposition').click(function() {
+       var len=$('tbody input[type=checkbox]:checked').length;
+       if(len==0){
+          alert('직급을 변경하려는 교수를 선택하세요');
+          return;
+       }else if($('#positionNo').val() == '0'){
+          alert('변경하려는 직급을 선택하세요');
+          return;
+       }
+       
+       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateposition'/>");
+       $('form[name=frmList]').submit();
+    });
+    
+    
+    $('#btMultiDel').click(function() {
+       var len=$('tbody input[type=checkbox]:checked').length;
+       if(len==0){
+          alert('학적상태를 변경하려는 학생부터 선택하세요');
+          return;
+    
+       }
+       
+       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDeleteProfessor'/>");
+       $('form[name=frmList]').submit();
+    
+    });
+    
+    
+});
+</script>
+	
+	
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="adminMngMem">
@@ -129,10 +165,11 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
+									<c:set var="idx" value="0" ></c:set>
 									<c:forEach var="map" items="${list }">
 										<tr>
-											<td><input type="checkbox" name="pdItems[].productNo"
-												value=""> <input type="hidden"
+											<td><input type="checkbox" name="profList[${idx }].profNo"
+												value="${map['PROF_NO']}"> <input type="hidden"
 												name="pdItems[].imageURL" value=""></td>
 											<td>${map['PROF_NO']}</td>
 											<td>${map['PROF_NAME']}</td>
@@ -140,9 +177,10 @@
 											<td>${map['DEP_NAME']}</td>
 											<td>${map['POSITION_NAME']}</td>
 											<td><fmt:formatDate value="${map['START_DATE']}" pattern="yyyy-MM-dd"/></td>
-											<td><a href="#">수정</a></td>
-											<td><a href="#">삭제</a></td>
+											<td><a href="<c:url value='/admin/member/memberEdit?officialNo=${map["PROF_NO"] }'/>">수정</a></td>
+											<td><a href="<c:url value='/admin/member/deleteProfessor?profNo=${map["PROF_NO"] }'/>">삭제</a></td>
 										</tr>
+									<c:set var="idx" value="${idx+1 }" ></c:set>
 									</c:forEach>
 								</c:if>
 							</tbody>
@@ -184,6 +222,17 @@
 						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
+				<div class="divRight">
+                  <select name="positionNo" id="positionNo">
+                     <option value="0">학적상태 변경</option>
+                     <option value="1">정교수</option>
+                     <option value="2">부교수</option>
+                     <option value="3">조교수</option>
+                     <option value="4">전임강사</option>
+                     <option value="5">퇴임</option>
+                  </select>
+                  <input type="button" id="btMultiUpdateposition" value="변경" >
+               </div>
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"

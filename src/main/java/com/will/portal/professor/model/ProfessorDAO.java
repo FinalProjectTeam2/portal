@@ -21,4 +21,6 @@ public interface ProfessorDAO {
 	List<Map<String, Object>> selectProfessorView(ProfSearchVO profSearchVo);
 	int getTotalRecord(ProfSearchVO profSearchVo);
 	int updatePosition(ProfessorVO professorVo);
+	int deleteProfessor(String profNo);
+	
 }

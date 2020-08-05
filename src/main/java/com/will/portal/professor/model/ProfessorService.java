@@ -26,5 +26,7 @@ public interface ProfessorService {
 	List<Map<String, Object>> selectProfessorView(ProfSearchVO profSearchVo);
 	int getTotalRecord(ProfSearchVO profSearchVo);
 	int mutiUpdatePosition(List<ProfessorVO> list,int positionNo);
+	int deleteProfessor(String profNo);
+	int multiDelete(List<ProfessorVO> list);
 	
 }
