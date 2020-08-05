@@ -57,6 +57,7 @@ main .container {
 #boardFrm .row1{
 	overflow: hidden;
 	margin: 10px 0;
+	padding: 6px 0;
 }
 #boardFrm .row1:after {
   content: "";

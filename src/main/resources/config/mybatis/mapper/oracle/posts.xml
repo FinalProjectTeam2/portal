@@ -18,7 +18,13 @@
 		        	and ${searchCondition} like '%' 
 		        			|| #{searchKeyword} || '%'
 		        </if>
-		        order by POST_NO desc
+		        order by 
+		        <if test="sort == 'edit' ">
+		        	edit_date desc
+		        </if>
+		        <if test="sort == 'write' ">
+		        	POST_NO desc
+		        </if>
 		    )A    
 		)
 		<![CDATA[ 
@@ -102,5 +108,11 @@
 	<delete id="deletePostByPostNo" parameterType="int">
 		UPDATE posts SET del_flag = 'Y' where post_no=#{postNo}
 	</delete>
+	
+	<update id="updatePost" parameterType="postsVo">
+		update posts
+		set title = #{title}, contents = #{contents}
+		where post_no = #{postNo}
+	</update>
 </mapper>
 

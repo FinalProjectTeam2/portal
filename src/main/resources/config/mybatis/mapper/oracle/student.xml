@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="config.mybatis.mapper.oracle.student">
 	<select id="selectPwd" parameterType="String"
@@ -27,7 +27,7 @@
 		select * from student
 	</select>
 
-	<select id="selectStudentView" parameterType="studentSearchVo"
+	<select id="selectStudentView" parameterType="studentSearchVO"
 		resultType="map">
 		select *
 		from
@@ -35,15 +35,17 @@
 		select rownum as RNUM, A.*
 		from(
 		<if
-			test="(stuNo==null or stuNo =='') and (name==null or name =='') and 
-		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')">
+			test="(stuNo==null or stuNo =='') and (name==null or name =='') and
+		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')
+		and (startNo==null or startNo=='') and (endNo==null or endNo=='')">
 			select * from STUDENT_VIEW
 		</if>
 		<if
-			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or 
-		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1 !=null and state1 !='')">
+			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or
+		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1 !=null and state1 !='')
+		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select * from STUDENT_VIEW
-			where stu_no is not null
+			where substr(stu_no,1,4) between #{startNo} and #{endNo}
 			<if test="stuNo!=null and stuNo !=''">
 				and stu_no=#{stuNo}
 			</if>
@@ -70,33 +72,38 @@
 				<if test="state5!=null and state5!=''">
 					,#{state5}
 				</if>
+				<if test="state6!=null and state6!=''">
+					,#{state6}
+				</if>
 				)
 			</if>
 		</if>
 		order by stu_no
 		)A
 		)
-		<![CDATA[ 
+		<![CDATA[
 		where RNUM>#{firstRecordIndex}
 		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
-	<select id="getTotalRecord" parameterType="studentSearchVo"
+	<select id="getTotalRecord" parameterType="studentSearchVO"
 		resultType="int">
 		<if
-			test="(stuNo==null or stuNo =='') and (name==null or name =='') and 
-		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')">
+			test="(stuNo==null or stuNo =='') and (name==null or name =='') and
+		(facultyNo==0 or facultyNo =='') and (major==0 or major =='') and (state1==null or state1 =='')
+		 and (startNo==null or startNo=='') and (endNo==null or endNo='')">
 			select count(*) from STUDENT_VIEW
 		</if>
 		<if
-			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or 
-		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1!=null and state1 !='')">
+			test="(stuNo!=null and stuNo !='') or (name!=null and name !='') or
+		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1!=null and state1 !='')
+		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select count(*) from STUDENT_VIEW
-			where stu_no is not null
+			 where substr(stu_no,1,4) between #{startNo} and #{endNo}
 			<if test="stuNo!=null and stuNo !=''">
 				and stu_no=#{stuNo}
 			</if>
 			<if test="name!=null and name !=''">
-				and name=#{name}
+				and name like '%' || #{name} || '%'
 			</if>
 			<if test="facultyNo!=0 and facultyNo !=''">
 				and faculty_no=#{facultyNo}
@@ -118,8 +125,29 @@
 				<if test="state5!=null and state5!=''">
 					,#{state5}
 				</if>
+				<if test="state6!=null and state6!=''">
+					,#{state6}
+				</if>
 				)
 			</if>
 		</if>
 	</select>
+
+	<select id="selectStudentState" resultType="student_stateVO">
+	select * from student_state
+	</select>
+
+
+	<update id="updateStudentState" parameterType="studentVO">
+		update student
+		set state=#{state}
+		where stu_no=#{stuNo}
+	</update>
+
+	<delete id="deleteStudent" parameterType="String">
+		delete from student
+		where stu_no=#{stuNo}
+	</delete>
+
+
 </mapper>

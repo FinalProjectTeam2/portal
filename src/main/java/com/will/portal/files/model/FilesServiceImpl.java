@@ -23,5 +23,10 @@ public class FilesServiceImpl implements FilesService{
 	public int upDownCount(int no) {
 		return filesDao.upDownCount(no);
 	}
+
+	@Override
+	public int deleteFile(int no) {
+		return filesDao.deleteFile(no);
+	}
 	
 }

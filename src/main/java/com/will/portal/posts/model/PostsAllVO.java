@@ -7,9 +7,9 @@ import com.will.portal.files.model.FilesVO;
 public class PostsAllVO {
 
 	// type 변수
-	private static final int STUDENT = 1;
-	private static final int PROFESSOR = 2;
-	private static final int EMPLOYEE = 3;
+	public static final int STUDENT = 1;
+	public static final int PROFESSOR = 2;
+	public static final int EMPLOYEE = 3;
 	
 	private PostsVO postsVo;
 	private String userName;

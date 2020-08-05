@@ -41,4 +41,9 @@ public class ChatDAOMybatis implements ChatDAO{
 	public List<ChatMessage> selectMessage(String roomId) {
 		return sqlSession.selectList(tablespace+"selectMessage", roomId);
 	}
+
+	@Override
+	public int deleteRoom(String roomId) {
+		return sqlSession.delete(tablespace+"deleteRoom", roomId);
+	}
 }

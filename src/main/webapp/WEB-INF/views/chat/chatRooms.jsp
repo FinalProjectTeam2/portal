@@ -14,6 +14,8 @@
 	height: 100%;
 	overflow: auto;
 }
+.box {float:left; overflow: hidden; }
+.box-inner {}
 </style>
 <sec:authorize access="isAuthenticated()">
 	<script type="text/javascript">
@@ -52,4 +54,4 @@
 
 <div id="lnb"></div>
 
-<div id="bodyContents"></div>
+<div id="bodyContents" class="box-inner"></div>
