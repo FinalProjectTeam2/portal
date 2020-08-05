@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class RegistrationController {
 	
 	@RequestMapping(value = "/registration/openSubjList", method = RequestMethod.POST)
 	@ResponseBody
-	public List<OpenSubjListVO> openSubjList(@ModelAttribute RegistrationSearchVO regSearchVo, Model model) {
+	public Map<String, Object> openSubjList(@ModelAttribute RegistrationSearchVO regSearchVo, Model model) {
 		logger.info("개설된 강의 읽어가기 파라미터 registrationsearchvo={}", regSearchVo);
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
@@ -77,9 +78,12 @@ public class RegistrationController {
 		
 		List<OpenSubjListVO> list = registServ.openSubjList();
 		int count = list.size();
+		Map<String, Object> map = new HashedMap<String, Object>();
+		map.put("list", list);
+		map.put("count", count);
 		logger.info("리스트 개수 count={}", count);
 		
-		return list;
+		return map;
 		
 		
 	}

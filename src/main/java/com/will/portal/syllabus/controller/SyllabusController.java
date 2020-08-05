@@ -59,12 +59,12 @@ public class SyllabusController {
 	
 	@RequestMapping(value = "/syllabus/upload", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public boolean syllabusUpload(MultipartHttpServletRequest mtfRequest, @ModelAttribute SyllabusVO vo ,HttpServletRequest request) {
+	public String syllabusUpload(MultipartHttpServletRequest mtfRequest, @ModelAttribute SyllabusVO vo ,HttpServletRequest request) {
         logger.info("pdf업로드 페이지");
         
 		List<MultipartFile> fileList = mtfRequest.getFiles("files");
 		String openSubjCode = vo.getOpenSubCode().substring(4);
-		boolean bool=false;
+		String result="파일 등록 실패";
 		
 		logger.info("vo.getTheoryTime()={}, vo.getSubjCode={}", vo.getTheoryTime(), vo.getOpenSubCode());
 		logger.info("dataform={}", fileList);
@@ -76,14 +76,14 @@ public class SyllabusController {
 			int cnt = syllabusService.insertSyllabus(vo);
 			
 			if(cnt > 0) {
-				bool=true;
+				result="파일등록 성공";
 			}
 			
 		}
 		
 		
        
-        return bool;
+        return result;
     }
 
 

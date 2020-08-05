@@ -31,6 +31,7 @@
 		});
 		
 		
+		
 		//검색 버튼 눌렀을때 
 		$('.btn-search').click(function(){
 			
@@ -61,9 +62,12 @@
 			type:"post",
 			success:function(res){
 				var str = "";
-				$.each(res, function(idx, item){
+				var count=res.count;
+				$('#meta_1 em').text(count);
+				$.each(res.list, function(idx, item){
 					if(res==''){
-						
+						str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
+						str+="<td colspan='10'>일치하는 학과가 없습니다.</td></tr>"
 					}else{
 						
 							str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
@@ -73,7 +77,7 @@
 							str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+item.personnel+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.profName+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 5%;'>"+item.credit+"</td>";
-							str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.timetableName+"/"+item.classroomName+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 6%;'>"+item.type+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>한국어</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.syllabus+"</td>";
@@ -81,12 +85,42 @@
 					}
 				
 				});
-				$('#gridLecture tbody').html(str);
+				$('#gridLecture tbody:eq(0)').html(str);
 				$('#meta_1').find('em').text(res.count);
+				
+				
+				$('.applyBt').click(function(){
+					var tdArr= new Array();
+					var checkBtn= $(this);
+					
+					var tr = $(this).parent().parent();
+					var td = tr.children();
+					
+					var openSubCode=td.eq(1).text();
+					var subjName=td.eq(2).text();
+					var personnel=td.eq(3).text();
+					var profName=td.eq(4).text();
+					var credit=td.eq(5).text();
+					var col=td.eq(6).text().split("/");
+					var shortName = col[0];
+					var classroomName = col[1];
+					var type = td.eq(7).text();
+					var syllabus=td.eq(9).text();
+					alert('개설코드='+openSubCode+", 강의명="+subjName+", 정원="+personnel+", 교수명="+profName
+							+", 학점="+credit+", 시간="+shortName+", 강의실="+classroomName+", 수강기준="+ type+", 강의계획서="+syllabus);
+					
+				});
+				
+				
+				
+				
 			},
 			error:function(xhr, status, error){
 				alert(error);
 			}
+			
+			
+			
 		});
 	}
 	

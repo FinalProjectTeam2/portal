@@ -59,6 +59,24 @@
 		resultType="map">
 		select * from PROFESSOR_VIEW where prof_no=#{profNo}
 	</select>
+	
+	<select id="countByOpenCode" parameterType="string" resultType="int">
+		select count(*) from regi_timetable where open_sub_code=#{openSubCode}	
+	</select>
+   	
+   	<select id="selectShortName" parameterType="string" resultType="string">
+   		select short_name from timetable where timetable_code=#{timetableCode}
+   	</select>
+   	
+   	<insert id="insertTimetable" parameterType="regi_timetableVo">
+   		insert into regi_timetable
+   		values(#{openSubCode}, #{shortNames})
+   	</insert>
+   	<update id="updateTimetable" parameterType="regi_timetableVo">
+   		update regi_timetable
+   		set short_names = short_names || ',' || #{shortNames}
+   		where open_sub_code=#{openSubCode}
+   	</update>
    	
 </mapper>
 

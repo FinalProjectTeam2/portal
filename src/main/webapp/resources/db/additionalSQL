@@ -202,4 +202,10 @@ on d.faculty_no=f.faculty_no;
 		join subj_type st
 		on st.type_code=s.type_code
 		join syllabus sy
-		on sy.open_sub_code=o.open_sub_code;
+		on sy.open_sub_code=o.open_sub_code
+
+--timetable 추가 
+        ALTER TABLE TIMETABLE 
+ADD (SHORT_NAME VARCHAR2(20));
+
+ALTER TABLE timetable MODIFY (short_name NOT NULL);

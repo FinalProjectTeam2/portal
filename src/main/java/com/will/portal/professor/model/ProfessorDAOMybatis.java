@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.portal.regi_timetable.model.Regi_timetableVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 
@@ -66,6 +67,28 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 	public Map<String, Object> selectViewByProfNo(String profNo) {
 		return sqlsession.selectOne(namespace+"selectViewByProfNo",profNo);
 	}
+
+	@Override
+	public int countByOpenCode(String openSubCode) {
+		return sqlsession.selectOne(namespace+"countByOpenCode", openSubCode);
+	}
+
+	@Override
+	public String selectShortName(String timetableCode) {
+		return sqlsession.selectOne(namespace+"selectShortName", timetableCode);
+	}
+
+	@Override
+	public int insertTimetable(Regi_timetableVO vo) {
+		return sqlsession.insert(namespace+"insertTimetable", vo);
+	}
+
+	@Override
+	public int updateTimetable(Regi_timetableVO vo) {
+		return sqlsession.update(namespace+"updateTimetable", vo);
+	}
+	
+	
 	
 	
 	

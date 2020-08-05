@@ -10,6 +10,8 @@ public class OpenSubjListVO {
 	private String classroomName;
 	private String type;
 	private String syllabus;
+	private String shortNames;
+	
 	public String getOpenSubCode() {
 		return openSubCode;
 	}
@@ -64,12 +66,21 @@ public class OpenSubjListVO {
 	public void setSyllabus(String syllabus) {
 		this.syllabus = syllabus;
 	}
+	public String getShortNames() {
+		return shortNames;
+	}
+	public void setShortNames(String shortNames) {
+		this.shortNames = shortNames;
+	}
 	@Override
 	public String toString() {
 		return "OpenSubjListVO [openSubCode=" + openSubCode + ", subjName=" + subjName + ", personnel=" + personnel
 				+ ", profName=" + profName + ", credit=" + credit + ", timetableName=" + timetableName
-				+ ", classroomName=" + classroomName + ", type=" + type + ", syllabus=" + syllabus + "]";
+				+ ", classroomName=" + classroomName + ", type=" + type + ", syllabus=" + syllabus + ", shortNames="
+				+ shortNames + "]";
 	}
+	
+	
 	
 	
 	
