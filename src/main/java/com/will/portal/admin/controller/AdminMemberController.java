@@ -450,7 +450,7 @@ public class AdminMemberController {
 	}
 
 	/**
-	 *
+	 * 회원정보 조회/수정
 	 * @param userid
 	 */
 	@RequestMapping(value = "/adminEditMember", method = RequestMethod.GET)
