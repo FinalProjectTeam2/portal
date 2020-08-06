@@ -86,7 +86,7 @@ public class AdminMemberController {
 
 	/**
 	 * 회원등록 - 뷰
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -115,7 +115,7 @@ public class AdminMemberController {
 
 	/**
 	 * 회원등록 - 직원
-	 * 
+	 *
 	 * @param employeeVo
 	 * @param officialVo
 	 * @param email3
@@ -147,7 +147,7 @@ public class AdminMemberController {
 
 	/**
 	 * 회원등록 - 교수
-	 * 
+	 *
 	 * @param professorVo
 	 * @param officialVo
 	 * @param email3
@@ -183,7 +183,7 @@ public class AdminMemberController {
 
 	/**
 	 * 회원등록 - 학생
-	 * 
+	 *
 	 * @param studentVo
 	 * @param officialVo
 	 * @param depNo
@@ -216,7 +216,7 @@ public class AdminMemberController {
 
 	/**
 	 * 회원관리 - 학생
-	 * 
+	 *
 	 * @param searchVo
 	 * @param state
 	 * @param model
@@ -265,7 +265,7 @@ public class AdminMemberController {
 
 	/**
 	 * 체크박스 조건 설정
-	 * 
+	 *
 	 * @param studentSearchVo
 	 * @param slist
 	 * @param idx
@@ -300,7 +300,7 @@ public class AdminMemberController {
 
 	/**
 	 * 회원관리 - 교수
-	 * 
+	 *
 	 * @param searchVo
 	 * @param position
 	 * @param model
@@ -349,14 +349,14 @@ public class AdminMemberController {
 
 	/**
 	 * 체크박스 조건 설정 - 교수 직책
-	 * 
+	 *
 	 * @param studentSearchVo
 	 * @param slist
 	 * @param idx
 	 */
 	private void setPosition(ProfSearchVO profSearchVo, String[] slist) {
 		int idx = slist.length;
-		
+
 		profSearchVo.setPositionNo1(slist[0]);
 		idx--;
 		if (idx < 1)
@@ -381,7 +381,7 @@ public class AdminMemberController {
 
 	/**
 	 * 회원관리 - 직원
-	 * 
+	 *
 	 * @param searchVo
 	 * @param authority
 	 * @param empPosition
@@ -415,7 +415,7 @@ public class AdminMemberController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param userid
 	 */
 	@RequestMapping(value = "/adminEditMember", method = RequestMethod.GET)
@@ -445,15 +445,15 @@ public class AdminMemberController {
 		model.addAttribute("url", url);
 		return "common/message";
 	}
-	
+
 	@RequestMapping("/multiUpdateposition")
 	public String multiUpdateposition(@RequestParam String positionNo,
 			@ModelAttribute ProfessorListVO profList, Model model) {
-		
+
 		logger.info("profList={}positionNo={}",profList,positionNo);
 		List<ProfessorVO> list = profList.getProfList();
 		int cnt = professorService.mutiUpdatePosition(list, Integer.parseInt(positionNo));
-		
+
 		logger.info("cnt = {}", cnt);
 		String msg = "학적상태 변경 실패", url = "/admin/member/adminManageProfessor";
 		if (cnt > 0) {
@@ -463,9 +463,9 @@ public class AdminMemberController {
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
-		
+
 	}
-	
+
 	@RequestMapping(value = "/multiDelete")
 	public String multiDeleteStudent(@ModelAttribute StudentListVO studentList, Model model) {
 		List<StudentVO> list = studentList.getStuList();
@@ -480,22 +480,22 @@ public class AdminMemberController {
 		model.addAttribute("url", url);
 		return "common/message";
 	}
-	
+
 	@RequestMapping(value = "/multiDeleteProfessor")
 	public String multiDeleteProfessor(@ModelAttribute ProfessorListVO profList, Model model) {
 		List<ProfessorVO> list = profList.getProfList();
 		int cnt = professorService.multiDelete(list);
-		
+
 		String msg = "교수 삭제 실패", url = "/admin/member/adminManageProfessor";
 		if (cnt > 0) {
 			msg = "교수 삭제 성공";
 		}
-		
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
 	}
-	
+
 	@RequestMapping("/deleteStudent")
 	public String deleteStudent(String stuNo, Model model) {
 		int cnt = studentService.deleteStudent(stuNo);
@@ -512,24 +512,33 @@ public class AdminMemberController {
 	@RequestMapping("/deleteProfessor")
 	public String deleteProfessor(String profNo, Model model) {
 		int cnt = professorService.deleteProfessor(profNo);
-		
+
 		String msg = "삭제 실패", url = "/admin/member/adminManageProfessor";
 		if (cnt > 0) {
 			msg = "삭제 성공";
 		}
-
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
-		
-	}
-	
 
-	@RequestMapping(value = "/memberEdit", method = RequestMethod.POST)
-	@ResponseBody
-	public boolean edit_post(@RequestParam String officialNo, Model model, @ModelAttribute Account_infoVO accInfoVo,
-			@ModelAttribute Official_infoVO offiVo, @RequestParam String hp, @RequestParam String email,
-			@RequestParam(required = false) String oldFileName, HttpServletRequest request) {
+	}
+
+	@RequestMapping(value = "/memberEdit" , method = RequestMethod.GET)
+	public String edit_get(String officialNo, Model model) {
+		logger.info("수정화면 페이지 보여주기, officialNo={}",officialNo);
+		List<BankVO> bankList = bankService.selectAllBank();
+		model.addAttribute("bankList", bankList);
+		model.addAttribute("officialNo", officialNo);
+
+		return "/admin/member/adminEditMember";
+	}
+
+	@RequestMapping(value = "/memberEdit" , method = RequestMethod.POST)
+	 @ResponseBody
+	 public boolean edit_post(@RequestParam String officialNo, Model model, @ModelAttribute Account_infoVO accInfoVo,
+				@ModelAttribute Official_infoVO offiVo, @RequestParam String hp, @RequestParam String email,
+				@RequestParam(required = false) String oldFileName, HttpServletRequest request) {
+		
 		boolean bool = false;
 
 		accInfoVo.setOfficialNo(officialNo);
@@ -544,20 +553,21 @@ public class AdminMemberController {
 		offiVo.setHp2(hp2);
 		offiVo.setHp3(hp3);
 
-		// 파일 업로드 처리
-		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_IMAGE);
+		//파일 업로드 처리
+		List<Map<String, Object>> fileList
+		=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_IMAGE);
 
-		String NewfileName = "";
-		for (Map<String, Object> map : fileList) {
-			NewfileName = (String) map.get("fileName");
+		String NewfileName= "";
+		for(Map<String, Object> map : fileList) {
+			NewfileName =(String) map.get("fileName");
 			offiVo.setImageUrl(NewfileName);
 		}
 
-		if (offiVo.getImageUrl() != null && !offiVo.getImageUrl().isEmpty()) {
-			if (oldFileName != null && !oldFileName.isEmpty()) {
-				File oldFile = new File(fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE), oldFileName);
-				logger.info("oldFile={}", oldFile.getName());
-				if (oldFile.exists()) {
+		if(offiVo.getImageUrl()!= null && !offiVo.getImageUrl().isEmpty()) {
+			if(oldFileName != null && !oldFileName.isEmpty()) {
+				File oldFile = new File(fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE),oldFileName);
+				logger.info("oldFile={}",oldFile.getName());
+				if(oldFile.exists()) {
 					boolean deletefile = oldFile.delete();
 					logger.info("파일삭제 여부 : {}", deletefile);
 				}
@@ -634,14 +644,5 @@ public class AdminMemberController {
 		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png
 	}
 
-	@RequestMapping(value = "/memberEdit", method = RequestMethod.GET)
-	public String edit_get(String officialNo, Model model) {
-		logger.info("수정화면 페이지 보여주기, officialNo={}", officialNo);
-		List<BankVO> bankList = bankService.selectAllBank();
-		model.addAttribute("bankList", bankList);
-		model.addAttribute("officialNo", officialNo);
-
-		return "/admin/member/adminEditMember";
-	}
 
 }

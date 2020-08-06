@@ -9,4 +9,5 @@ public interface ChatService {
 	int countById(String roomId);
 	int insertMessage(ChatMessage message);
 	List<ChatMessage> selectMessage(String roomId);
+	int deleteRoom(String roomId);
 }

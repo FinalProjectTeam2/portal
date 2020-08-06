@@ -132,7 +132,7 @@ public class StudentServiceImpl implements StudentService {
 
 		return studentDao.getTotalRecord(studentSearchVo);
 	}
-	
+
 	@Override
 	@Transactional
 	public int multiUpdateStudentState(List<StudentVO> studentList, String state) {
@@ -155,14 +155,14 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public int deleteMulti(List<StudentVO> studentList) {
 		int cnt = 0;
-		
+
 		try {
 			for (StudentVO studentVO : studentList) {
 				if(studentVO.getStuNo()!=null) {
 					cnt = studentDao.deleteStudent(studentVO.getStuNo());
 				}
 			}
-			
+
 		}catch(RuntimeException e) {
 			cnt = -1;
 			e.printStackTrace();

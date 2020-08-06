@@ -16,6 +16,7 @@ import com.will.portal.common.ProfSearchVO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.regi_timetable.model.Regi_timetableVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 
@@ -151,6 +152,27 @@ public class ProfessorServiceImpl implements ProfessorService {
 	}
 
 	@Override
+
+	public int countByOpenCode(String openSubCode) {
+		return professorDao.countByOpenCode(openSubCode);
+	}
+
+	@Override
+	public String selectShortName(String timetableCode) {
+		return professorDao.selectShortName(timetableCode);
+	}
+
+	@Override
+	public int insertTimetable(Regi_timetableVO vo) {
+		return professorDao.insertTimetable(vo);
+	}
+
+	@Override
+	public int updateTimetable(Regi_timetableVO vo) {
+		return professorDao.updateTimetable(vo);
+	}
+
+
 	public int mutiUpdatePosition(List<ProfessorVO> list, int positionNo) {
 		int cnt = 0;
 		try {
@@ -182,10 +204,10 @@ public class ProfessorServiceImpl implements ProfessorService {
 				cnt = professorDao.deleteProfessor(professorVO.getProfNo());
 			}
 		}
-		
+
 		return cnt;
 	}
-	
-	
-	
+
+
+
 }

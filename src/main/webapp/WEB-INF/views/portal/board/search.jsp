@@ -59,7 +59,7 @@ textarea#ir1 {
 <div class="panel">
 	<span>의견 또는 오류신고 </span>
 	<textarea rows="10" cols="15" id="ir1" name="content" style="width:400px; height:40px; " placeholder="내용을 입력하세요"></textarea>
-	<button>접수</button>
+	<button type="button" id="btInsert">접수</button>
 </div>
 
 <script type="text/javascript">
@@ -77,4 +77,27 @@ for (i = 0; i < acc.length; i++) {
     } 
   });
 }
+$(function() {
+	$("#btInsert").click(function() {
+		$.ajax({
+			url : "<c:url value='/portal/board/ajax/write'/>",
+			data : {
+				officialNo : '${principal.officialNo}',
+				contents : $("#ir1").val(),
+				bdCode : 'QNA'
+			},
+			type : "get",
+			success : function(res) {
+				$("#ir1").val('');
+				alert(res);
+				var cur = $("#currentPage").val();
+				if(cur == 0){
+					cur = 1;
+				}
+				$.send($("#currentPage").val());
+				$(".accordion").trigger("click");
+			}
+		});
+	});
+});
 </script>

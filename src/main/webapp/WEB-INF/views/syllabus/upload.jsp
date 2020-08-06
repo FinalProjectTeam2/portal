@@ -87,9 +87,11 @@ form input{
     // 등록 가능한 총 파일 사이즈 MB
     var maxUploadSize = 500;
  
-    $(function (){
+    $(function(){
         // 파일 드롭 다운
         fileDropDown();
+        
+        
     });
  
     // 파일 드롭 다운
@@ -206,7 +208,19 @@ form input{
     function uploadFile(){
         // 등록할 파일 리스트
         var uploadFileList = Object.keys(fileList);
- 
+		
+        // 이론시간 등록되었는지 체크
+		if($('#theoryTime').val().length < 1){
+        	alert('이론시간을 입력해야 합니다.');
+        	return;
+        }
+
+        // 실기시간 등록되었는지 체크
+		if($('#trainingTime').val().length < 1){
+        	alert('실기시간을 입력해야 합니다.');
+        	return;
+        }
+        
         // 파일이 있는지 체크
         if(uploadFileList.length == 0){
             // 파일등록 경고창
@@ -220,7 +234,8 @@ form input{
             alert("총 용량 초과\n총 업로드 가능 용량 : " + maxUploadSize + " MB");
             return;
         }
-            
+        
+        
         if(confirm("등록 하시겠습니까?")){
             // 등록할 파일 리스트를 formData로 데이터 입력
             var form =document.getElementById("uploadForm");
@@ -241,14 +256,10 @@ form input{
                 contentType:false,
                 cache:false,
                 success:function(res){
-                    if(res){
-                    	console.log(res);
-                        location.href="<c:url value='/syllabus/upload'/>";
-                        alert("등록 완료");
-                    }else if(!res){
-                        alert("등록 실패");
-                        location.href="<c:url value='/syllabus/upload'/>";
-                    }
+                    	alert(res);
+                        location.reload();
+                        
+                
                 },error(xhr, status, error){
                 	alert(error);
                 }

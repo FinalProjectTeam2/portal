@@ -100,17 +100,22 @@
 </script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-		<form action="<c:url value='/portal/board/write'/>" class="writeFrm"
+		<form action="<c:url value='/portal/board/comment'/>" class="writeFrm"
 			id="boardFrm" method="post" enctype="multipart/form-data">
 			<input type="hidden" value="${principal.officialNo }"
 				name="officialNo"> <input type="hidden" id="contents"
 				name="contents">
+				<!-- hidden  필드에 원본글에 해당하는 정보 저장 -->
+			<input type="hidden" name="groupNo" value="${postVo.groupNo}">
+			<input type="hidden" name="step" value="${postVo.step}">
+			<input type="hidden" name="sortNo" value="${postVo.sortNo}">
+			<input type="hidden" name="bdCode" value="${postVo.bdCode}">
 			<div class="row1">
 				<div class="col-25">
 					<label for="l_title" class="formTitle">제목</label>
 				</div>
 				<div class="col-75">
-					<input type="text" id="title" name="title">
+					<input type="text" id="title" name="title" value="Re: ${postVo.title }">
 				</div>
 			</div>
 			<div class="row1">
@@ -118,14 +123,14 @@
 					<label for="l_category" class="formTitle">분류</label>
 				</div>
 				<div class="col-75">
-					<select id="bdCode" name="bdCode">
+					<select id="bdCode" name="bdCode" disabled="disabled">
 						<option value="">선택하세요</option>
-						<c:forEach var="vo" items="${list }">
-							<c:if test="${vo.usage == 'Y' }">
-								<option value="${vo.bdCode }"
-									<c:if test="${param.bdCode == vo.bdCode }">
+						<c:forEach var="vos" items="${list }">
+							<c:if test="${vos.usage == 'Y' }">
+								<option value="${vos.bdCode }"
+									<c:if test="${postVo.bdCode == vos.bdCode }">
 									selected="selected"
-								</c:if>>${vo.bdName }</option>
+								</c:if>>${vos.bdName }</option>
 							</c:if>
 						</c:forEach>
 					</select>
@@ -167,7 +172,7 @@
 								});
 			</script>
 			<div class="bts">
-				<input type="submit" id="write" value="등록"> <input
+				<input type="submit" id="write" value="답변"> <input
 					type="button" value="목록" id="list">
 			</div>
 		</form>

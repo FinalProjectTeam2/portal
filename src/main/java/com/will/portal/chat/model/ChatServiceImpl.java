@@ -38,4 +38,9 @@ public class ChatServiceImpl implements ChatService{
 	public List<ChatMessage> selectMessage(String roomId) {
 		return dao.selectMessage(roomId);
 	}
+
+	@Override
+	public int deleteRoom(String roomId) {
+		return dao.deleteRoom(roomId);
+	}
 }

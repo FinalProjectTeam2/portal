@@ -91,4 +91,17 @@ public class ChatController {
         
         return "/chat/";
     }
+    @GetMapping(value = "/room/delete", produces = "application/json; charset=utf8")
+    @ResponseBody
+    public String delRoom(@RequestParam String roomId) {
+    	log.info("채팅방 삭제 처리, 파라미터 roomId={}",roomId);
+    	String result = "삭제 실패";
+    	int cnt = chatService.deleteRoom(roomId);
+    	if(cnt > 0) {
+    		if(chatRoomRepository.deleteChatRoom(roomId)) {
+    			result = "삭제 성공";
+    		}
+    	}
+    	return result;
+    }
 }

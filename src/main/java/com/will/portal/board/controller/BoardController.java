@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,20 +73,25 @@ public class BoardController {
 
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
-		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
+		pagingInfo.setRecordCountPerPage(bdSearchVo.getRecordCountPerPage());
 		pagingInfo.setCurrentPage(bdSearchVo.getCurrentPage());
 
 		bdSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		bdSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
 
 		List<PostsVO> list = postsService.selectPostsList(bdSearchVo);
 		int totalCount = postsService.selectPostsCount(bdSearchVo);
 
 		pagingInfo.setTotalRecord(totalCount);
+		if (pagingInfo.getTotalPage() < pagingInfo.getCurrentPage()) {
+			pagingInfo.setCurrentPage(pagingInfo.getTotalPage());
+		}
 
 		Map<String, Object> map = new HashedMap<String, Object>();
 		map.put("list", list);
 		map.put("pagingInfo", pagingInfo);
+		map.put("bdSearchVo", bdSearchVo);
+		logger.info("list={}", list.size());
+		logger.info("pagingInfo={}", pagingInfo);
 
 		return map;
 
@@ -100,6 +106,20 @@ public class BoardController {
 		logger.info("게시판 검색 결과 list.size={}, vo={}", list.size(), vo);
 
 		medel.addAttribute("vo", vo);
+		medel.addAttribute("list", list);
+	}
+	@RequestMapping(value = "/comment", method = RequestMethod.GET)
+	public void comment_get(@RequestParam(defaultValue = "0") int postNo, Model medel) {
+		logger.info("게시글 작성 페이지, 파라미터 postNo={}", postNo);
+		
+		PostsVO postVo = postsService.selectPostByPostNo(postNo);
+		
+		BoardVO vo = boardService.selectBoardByBdCode(postVo.getBdCode());
+		List<BoardVO> list = boardService.selectBoardByCategoryInline(postVo.getBdCode());
+		logger.info("게시판 검색 결과 list.size={}, vo={}", list.size(), vo);
+		
+		medel.addAttribute("vo", vo);
+		medel.addAttribute("postVo", postVo);
 		medel.addAttribute("list", list);
 	}
 
@@ -138,6 +158,56 @@ public class BoardController {
 		model.addAttribute("url", url);
 		return "common/message";
 	}
+	@RequestMapping(value = "/comment", method = RequestMethod.POST)
+	public String comment_post(@ModelAttribute PostsVO vo, HttpServletRequest request, Model model) {
+		logger.info("답변 작성 처리, 파라미터 vo={}", vo);
+		
+		int cnt = postsService.insertComment(vo);
+		logger.info("답변 작성 처리 결과, cnt={}, vo={}", cnt, vo);
+		
+		// 파일 업로드 처리
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
+		
+		String msg = "답변 작성 실패!", url = "/portal/board/comment?postNo=" + vo.getPostNo();
+		if (cnt > 0) {
+			for (Map<String, Object> map : fileList) {
+				FilesVO fileVo = new FilesVO();
+				fileVo.setFileName((String) map.get("fileName"));
+				fileVo.setFileSize((Long) map.get("fileSize"));
+				fileVo.setOriginalFileName((String) map.get("originalFName"));
+				fileVo.setPostNo(vo.getPostNo());
+				
+				cnt = filesSercive.insertFiles(fileVo);
+				logger.info("파일 insert 처리 결과 cnt={}", cnt);
+			}
+			url = "/portal/board/list?bdCode=" + vo.getBdCode();
+			msg = "답변 작성 성공!";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "common/message";
+	}
+
+	@RequestMapping(value = "/ajax/write", produces = "text/html;charset=utf8")
+	@ResponseBody
+	public String ajaxWrite(@RequestParam String contents, @RequestParam String officialNo,
+			@RequestParam String bdCode) {
+		PostsVO vo = new PostsVO();
+		vo.setBdCode(bdCode);
+		vo.setContents(contents);
+		vo.setTitle(contents.substring(0, 10) + "...");
+		vo.setOfficialNo(officialNo);
+		logger.info("게시글 작성 처리, 파라미터 vo={}", vo);
+
+		int cnt = postsService.insertPosts(vo);
+		logger.info("게시글 작성 처리 결과, cnt={}, vo={}", cnt, vo);
+
+		String msg = "게시글 작성 실패!";
+		if (cnt > 0) {
+			msg = "게시글 작성 성공!";
+		}
+		return msg;
+	}
 
 	@RequestMapping("/ajax/findBoard")
 	@ResponseBody
@@ -148,17 +218,16 @@ public class BoardController {
 
 	@RequestMapping("/detailCount")
 	public String detailCount(@RequestParam(defaultValue = "0") int postNo, Model model) {
-		
+
 		int count = postsService.upReadCount(postNo);
 		logger.info("조회수 증가 결과 count={}", count);
 
-		return "redirect:/portal/board/detail?postNo="+postNo;
+		return "redirect:/portal/board/detail?postNo=" + postNo;
 	}
-	
+
 	@RequestMapping("/detail")
 	public void detail(@RequestParam(defaultValue = "0") int postNo, Model model) {
 		logger.info("게시판 상세보기 페이지");
-		
 
 		PostsAllVO vo = postsService.SelectByCodeE(postNo);
 		if (vo == null) {
@@ -172,36 +241,39 @@ public class BoardController {
 
 		model.addAttribute("vo", vo);
 	}
-	
+
 	@RequestMapping("/download")
-	public ModelAndView download(@RequestParam(defaultValue = "0") int no, @RequestParam String fileName
-			, HttpServletRequest request, Model model) {
-		//1.
+	public ModelAndView download(@RequestParam(defaultValue = "0") int no, @RequestParam String fileName,
+			HttpServletRequest request, Model model) {
+		// 1.
 		logger.info("다운로드 파라미터 no={}, fileName={}", no, fileName);
-		//2.
+		// 2.
 		int cnt = filesSercive.upDownCount(no);
-		logger.info("다운로드수 증가 cnt={}",cnt);
-		
-		//다운로드 처리를 위한 페이지로 넘겨준다
+		logger.info("다운로드수 증가 cnt={}", cnt);
+
+		// 다운로드 처리를 위한 페이지로 넘겨준다
 		String upPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDS);
 		File file = new File(upPath, fileName);
-		
-		//3.
-		
+
+		// 3.
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("file", file);
-		
-		
-		//4.
-		//model에 map 넣기
+
+		// 4.
+		// model에 map 넣기
 		ModelAndView mav = new ModelAndView("reBoardDownloadView", map);
 		return mav;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public void edit_get(@RequestParam int postNo, Model model) {
+	public String edit_get(@RequestParam(defaultValue = "0") int postNo, Model model) {
 		logger.info("게시글 수정 페이지");
-		
+		if (postNo == 0) {
+			model.addAttribute("msg", "잘못될 URL입니다.");
+			model.addAttribute("url", "/portal/board/list");
+			return "common/message";
+		}
 		PostsAllVO postVo = postsService.SelectByCodeE(postNo);
 		if (postVo == null) {
 			postVo = postsService.SelectByCodeS(postNo);
@@ -212,7 +284,6 @@ public class BoardController {
 
 		logger.info("게시판 수정 페이지 조회 결과 vo={}", postVo);
 
-		
 		BoardVO bdvo = boardService.selectBoardByBdCode(postVo.getPostsVo().getBdCode());
 		List<BoardVO> list = boardService.selectBoardByCategoryInline(postVo.getPostsVo().getBdCode());
 		logger.info("게시판 검색 결과 list.size={}, vo={}", list.size(), bdvo);
@@ -220,24 +291,77 @@ public class BoardController {
 		model.addAttribute("postVo", postVo);
 		model.addAttribute("vo", bdvo);
 		model.addAttribute("list", list);
+
+		return "portal/board/edit";
 	}
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public void edit_post() {
-		logger.info("게시글 수정 페이지");
+
+	@PostMapping(value = "/edit")
+	public String edit_post(@RequestParam String title, @RequestParam String contents, @RequestParam int postNo,
+			HttpServletRequest request, Model model) {
+		logger.info("게시글 수정 처리");
+		PostsVO vo = new PostsVO();
+		vo.setPostNo(postNo);
+		vo.setContents(contents);
+		vo.setTitle(title);
+		logger.info("게시글 수정 처리, 파라미터 vo={}", vo);
+
+		int cnt = postsService.updatePost(vo);
+		logger.info("게시글 수정 처리 결과, cnt={}, vo={}", cnt, vo);
+
+		// 파일 업로드 처리
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
+
+		String msg = "게시글 수정 실패!", url = "/portal/board/edit?postNo=" + postNo;
+		if (cnt > 0) {
+			for (Map<String, Object> map : fileList) {
+				FilesVO fileVo = new FilesVO();
+				fileVo.setFileName((String) map.get("fileName"));
+				fileVo.setFileSize((Long) map.get("fileSize"));
+				fileVo.setOriginalFileName((String) map.get("originalFName"));
+				fileVo.setPostNo(vo.getPostNo());
+
+				cnt = filesSercive.insertFiles(fileVo);
+				logger.info("파일 insert 처리 결과 cnt={}", cnt);
+			}
+			url = "/portal/board/detail?postNo=" + postNo;
+			msg = "게시글 수정 완료!";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "common/message";
 	}
-	
+
 	@RequestMapping(value = "/delete")
-	public String deleteOk(@RequestParam(defaultValue = "0") int postNo) {
-		logger.info("게시글 삭제 처리 파라미터 postNo={}",postNo);
+	public String deleteOk(@RequestParam(defaultValue = "0") int postNo, HttpServletRequest request) {
+		logger.info("게시글 삭제 처리 파라미터 postNo={}", postNo);
+
+		PostsVO vo = postsService.selectPostByPostNo(postNo);
+		logger.info("vo={}", vo);
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("post_no", vo.getPostNo()+"");
+		map.put("step", vo.getStep()+"");
+		map.put("group_no", vo.getGroupNo()+"");
+		int cnt = postsService.deletePostByPostNo(map);
+		logger.info("삭제 결과 cnt={}", cnt);
 		
-		String bdCode = postsService.selectBdCodeByPostNo(postNo);
-		logger.info("bdCode={}",bdCode);
+		List<FilesVO> list = filesSercive.selectFileByPostNo(postNo);
+		boolean bool = false;
+		for (FilesVO fvo : list) {
+			bool = fileUploadUtil.fileDelete(request, fvo.getFileName(), FileUploadUtil.PATH_PDS);
+			if (bool) {
+				cnt = filesSercive.deleteFile(fvo.getNo());
+				if (cnt <= 0) {
+					bool = false;
+				}
+			}
+		}
 		
-		int cnt = postsService.deletePostByPostNo(postNo);
-		logger.info("삭제 결과 cnt={}",cnt);
+		logger.info("파일 삭제 처리 결과 bool={}", bool);
+
 		
 		
-		return "redirect:/portal/board/list?bdCode="+bdCode;
+		return "redirect:/portal/board/list?bdCode=" + vo.getBdCode();
 	}
 
 	@RequestMapping(value = "/re", method = RequestMethod.GET)
@@ -292,8 +416,24 @@ public class BoardController {
 	public List<CategoryListVO> cateList() {
 		logger.info("ajax categoryList");
 		List<CategoryListVO> list = boardService.selectCategoryList();
-		logger.info("list.size={}",list.size());
+		logger.info("list.size={}", list.size());
 		return list;
 	}
 
+	@RequestMapping("/ajax/delFile")
+	@ResponseBody
+	public String name(@RequestParam int no, @RequestParam String fileName, HttpServletRequest request) {
+		logger.info("ajax - 파일 삭제 처리");
+		boolean bool = fileUploadUtil.fileDelete(request, fileName, FileUploadUtil.PATH_PDS);
+		logger.info("파일 삭제 처리 결과 bool={}", bool);
+
+		if (bool) {
+			int cnt = filesSercive.deleteFile(no);
+			if (cnt <= 0) {
+				bool = false;
+			}
+		}
+
+		return bool + "";
+	}
 }

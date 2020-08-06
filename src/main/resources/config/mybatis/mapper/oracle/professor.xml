@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.professor">
 	<select id="selectPwd" parameterType="String" resultType="String">
 		select pwd from professor where prof_no=#{profNo}
 	</select>
-   
+
    	<select id="selectByProfNo" parameterType="String" resultType="professorVO">
    		select * from professor where prof_no=#{profNo}
    	</select>
    	<select id="selectSsn" parameterType="string" resultType="string">
    		select ssn from official_info where official_no=#{officicalNo}
    	</select>
-   	
+
    	<select id="loadByProfNo" parameterType="string" resultType="subjectAllVo">
-   			select s.*, 
-   			 (select count(*) 
-   				from subj_time 
-   				 where open_sub_code=(select open_sub_code from open_subj 
-       			where  prof_no=#{profNo} and SUBJ_CODE=s.subj_code)) count 
-				from subject s 
+   			select s.*,
+   			 (select count(*)
+   				from subj_time
+   				 where open_sub_code=(select open_sub_code from open_subj
+       			where  prof_no=#{profNo} and SUBJ_CODE=s.subj_code)) count
+				from subject s
 				where prof_no=#{profNo}
    	</select>
-	
+
 	<select id="codeByProfNo" parameterType="string" resultType="string">
 		select OPEN_SUB_CODE from open_subj where prof_no=#{profNo}
 	</select>
-	
-	
-	
+
+
+
    	<select id="timeByCode" resultType="subj_timetableVo" parameterType="list">
-   		select t.*, s.subj_name 
-   		from subj_time t join subject s 
+   		select t.*, s.subj_name
+   		from subj_time t join subject s
    		on t.open_sub_code = substr(s.subj_code, 5)
    		<if test="list!=null">
 	   		where OPEN_SUB_CODE in
@@ -42,7 +42,7 @@
 	   		</foreach>
    		</if>
    	</select>
-   	
+
    	<insert id="insertSubjTime" parameterType="subj_timeVo">
    		<selectKey keyProperty="lectureTimeNo" order="BEFORE" resultType="int">
    			select subj_time_seq.nextval from dual
@@ -50,15 +50,35 @@
    		insert into subj_time(LECTURE_TIME_NO, OPEN_SUB_CODE, TIMETABLE_CODE, CLASSROOM_CODE)
    		values(#{lectureTimeNo}, #{openSubCode}, #{timetableCode}, #{classroomCode})
    	</insert>
-   	
+
    	<select id="classroomByDepNo" parameterType="string" resultType="map">
    		select * from class where dep_no=#{depNo}
    	</select>
-   	
+
    	<select id="selectViewByProfNo" parameterType="String"
 		resultType="map">
 		select * from PROFESSOR_VIEW where prof_no=#{profNo}
 	</select>
+
+
+	<select id="countByOpenCode" parameterType="string" resultType="int">
+		select count(*) from regi_timetable where open_sub_code=#{openSubCode}
+	</select>
+
+   	<select id="selectShortName" parameterType="string" resultType="string">
+   		select short_name from timetable where timetable_code=#{timetableCode}
+   	</select>
+
+   	<insert id="insertTimetable" parameterType="regi_timetableVo">
+   		insert into regi_timetable
+   		values(#{openSubCode}, #{shortNames})
+   	</insert>
+   	<update id="updateTimetable" parameterType="regi_timetableVo">
+   		update regi_timetable
+   		set short_names = short_names || ',' || #{shortNames}
+   		where open_sub_code=#{openSubCode}
+   	</update>
+
 	<select id="selectProfessorView" parameterType="profSearchVO"
 		resultType="map">
 		select *
@@ -67,13 +87,13 @@
 		select rownum as RNUM, A.*
 		from(
 		<if
-			test="(profName==null or profName =='') and 
-		(facultyNo==null or facultyNo =='') and (depNo==0 or depNo==null or depNo =='') and (positionNo1==null or positionNo1 =='') 
+			test="(profName==null or profName =='') and
+		(facultyNo==null or facultyNo =='') and (depNo==0 or depNo==null or depNo =='') and (positionNo1==null or positionNo1 =='')
 		and (startNo==null or startNo=='') and (endNo==null or endNo=='')">
 			select * from PROFESSOR_VIEW
 		</if>
 		<if
-			test="(profName!=null and profName !='') or 
+			test="(profName!=null and profName !='') or
 		(facultyNo!=null and facultyNo !='') or (depNo!=0 and depNo!=null and depNo !='') or (positionNo1 !=null and positionNo1 !='')
 		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select * from PROFESSOR_VIEW
@@ -107,20 +127,20 @@
 		order by prof_no
 		)A
 		)
-		<![CDATA[ 
+		<![CDATA[
 		where RNUM>#{firstRecordIndex}
 		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
 	<select id="getTotalRecord" parameterType="profSearchVO"
 		resultType="int">
 		<if
-			test="(profName==null or profName =='') and 
-		(facultyNo==null or facultyNo =='') and (depNo==0 or depNo==null or depNo =='') and (positionNo1==null or positionNo1 =='') 
+			test="(profName==null or profName =='') and
+		(facultyNo==null or facultyNo =='') and (depNo==0 or depNo==null or depNo =='') and (positionNo1==null or positionNo1 =='')
 		and (startNo==null or startNo=='') and (endNo==null or endNo=='')">
 			select count(*) from PROFESSOR_VIEW
 		</if>
 		<if
-			test="(profName!=null and profName !='') or 
+			test="(profName!=null and profName !='') or
 		(facultyNo!=null and facultyNo !='') or (depNo!=0 and depNo!=null and depNo !='') or (positionNo1 !=null and positionNo1 !='')
 		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select count(*) from PROFESSOR_VIEW
@@ -152,26 +172,15 @@
 			</if>
 		</if>
 	</select>
-	
+
 	<update id="updatePosition" parameterType="professorVo">
 		update professor
 		set position_no = #{positionNo}
-		where prof_no=#{profNo}	
+		where prof_no=#{profNo}
 	</update>
-	
+
 	<delete id="deleteProfessor" parameterType="String">
 		delete from professor
 		where prof_no=#{profNo}
 	</delete>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-

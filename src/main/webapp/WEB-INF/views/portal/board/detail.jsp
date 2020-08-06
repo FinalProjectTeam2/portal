@@ -11,7 +11,6 @@
 	href="<c:url value='/resources/css/board/detail.css'/>" />
 <style>
 
-}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -25,6 +24,9 @@
 		});
 		$("#list").click(function() {
 			location.href = "<c:url value='/portal/board/list?bdCode=${vo.postsVo.bdCode }'/>";
+		});
+		$("#btComment").click(function() {
+			location.href = "<c:url value='/portal/board/comment?postNo=${vo.postsVo.postNo}'/>";
 		});
 	});
 </script>
@@ -69,12 +71,16 @@
 			</div>
 
 			<div class="bts">
+			<c:if test="${vo.boardVo.isComment == 'Y' }">
+				<input type="button" value="답글달기" id="btComment" style="float: left;">
+			</c:if>
 				<input type="button" value="목록" id="list">
 				<c:if test="${vo.postsVo.officialNo == principal.officialNo or principal.type == 'ADMIN'}">
 					<input type="button" id="edit" value="수정"> <input type="button" id="delete"
 						value="삭제"> 
 				</c:if>
 			</div>
+			<%@include file="re.jsp" %>
 		</div>
 		<!-- bottom -->
 		<%@ include file="../../inc/bottom.jsp"%>

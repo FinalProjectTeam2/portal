@@ -181,7 +181,7 @@ ALTER TABLE student
 
 
 
---수강신청 들어갈때 해당학생 기본정보 
+--수강신청 들어갈때 해당학생 기본정보
 select s.name, s.stu_no, s.major, d.dep_name, f.faculty_no, f.faculty_name
 from department d  join student s
 on s.major=d.dep_no
@@ -189,6 +189,29 @@ join faculty f
 on d.faculty_no=f.faculty_no;
 
 --검색했을때 나오는정보들
+
+ select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, tt.timetable_name, cr.classroom_name, st.type, sy.syllabus
+		from open_subj o join subject s
+		on o.subj_code=s.subj_code
+		join professor p
+		on s.prof_no=p.prof_no
+		join subj_time stime
+		on st.open_sub_code=o.open_sub_code
+		join timetable tt
+		on tt.timetable_code=stime.timetable_code
+		join classroom cr
+		on cr.classroom_code=stime.classroom_code
+		join subj_type st
+		on st.type_code=s.type_code
+		join syllabus sy
+		on sy.open_sub_code=o.open_sub_code
+
+--timetable 추가
+        ALTER TABLE TIMETABLE
+ADD (SHORT_NAME VARCHAR2(20));
+
+ALTER TABLE timetable MODIFY (short_name NOT NULL);
+
 select o.open_sub_code, s.subj_name, p.prof_name, s.credit, st.classroom_code, c.classroom_name, ty.type, sy.syllabus
 from open_subj o join subject s
 on o.subj_code=s.subj_code
