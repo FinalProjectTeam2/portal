@@ -1,5 +1,7 @@
 package com.will.portal.reply.model;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +22,11 @@ public class ReplyDAOMybatis implements ReplyDAO{
 	@Override
 	public int insertRereply(RereplyVO vo) {
 		return sqlSession.insert(namespace+"insertRereply", vo);
+	}
+
+	@Override
+	public List<ReplyAllVO> selectReplyByPostNo(int postNo) {
+		return sqlSession.selectList(namespace+"selectReplyByPostNo", postNo);
 	}
 
 }

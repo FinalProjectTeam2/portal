@@ -33,6 +33,7 @@ import com.will.portal.files.model.FilesVO;
 import com.will.portal.posts.model.PostsAllVO;
 import com.will.portal.posts.model.PostsService;
 import com.will.portal.posts.model.PostsVO;
+import com.will.portal.reply.model.ReplyAllVO;
 import com.will.portal.reply.model.ReplyService;
 import com.will.portal.reply.model.ReplyVO;
 import com.will.portal.reply.model.RereplyVO;
@@ -446,10 +447,11 @@ public class BoardController {
 	@RequestMapping(value = "/ajax/reply", produces = "text/html;charset=utf8")
 	@ResponseBody
 	public String reply(@RequestParam String officialNo,@RequestParam String contents, 
-			@RequestParam int postNo, @RequestParam int replyNo) {
+			@RequestParam int postNo, @RequestParam int replyNo, @RequestParam String officialName) {
 		logger.info("ajax - 댓글 등록 처리");
 		logger.info("파라미터 - officialNo={}, contents={}",officialNo,contents);
 		logger.info("파라미터 - postNo={}, replyNo={}",postNo,replyNo);
+		logger.info("파라미터 - officialName={}",officialName);
 		
 		String result = "댓글 등록 실패";
 		int cnt = 0;
@@ -458,12 +460,14 @@ public class BoardController {
 			vo.setContents(contents);
 			vo.setOfficialNo(officialNo);
 			vo.setPostNo(postNo);
+			vo.setOfficialName(officialName);
 			cnt = replyService.insertReply(vo);
 		}else {
 			RereplyVO vo = new RereplyVO();
 			vo.setContents(contents);
 			vo.setOfficialNo(officialNo);
 			vo.setReplyNo(replyNo);
+			vo.setOfficialName(officialName);
 			cnt = replyService.insertRereply(vo);
 		}
 		
@@ -471,5 +475,17 @@ public class BoardController {
 			result = "댓글 등록 성공!";
 		}
 		return result;
+	}
+	
+	@RequestMapping("/ajax/replyList")
+	@ResponseBody
+	public Map<String, Object> replyList(@RequestParam int postNo){
+		logger.info("ajax - 댓글 보여주기, 파라미터 postNo={}",postNo);
+		List<ReplyAllVO> list = replyService.selectReplyByPostNo(postNo);
+		logger.info("댓글 조회 결과, list.size=",list.size());
+		
+		Map<String, Object> map = new HashedMap<String, Object>();
+		map.put("list", list);
+		return map;
 	}
 }

@@ -14,5 +14,6 @@ public class ReplyVO {
 	private String contents;
 	private String delFlag;
 	private int postNo;
-	
+	private String officialName;
+	private double now;
 }

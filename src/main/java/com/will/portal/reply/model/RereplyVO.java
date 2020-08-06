@@ -14,5 +14,6 @@ public class RereplyVO {
 	private Timestamp regDate;
 	private String contents;
 	private String delFlag;
-	
+	private String officialName;
+	private double now;
 }
