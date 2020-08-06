@@ -68,26 +68,42 @@ $(function(){
 		})	 */
 	 
 	    function addSubject() {
-	     $.ajax({
-	    	 url:"<c:url value='/lecture/addSubject'/>",
-	    	 type:"post",
-	    	 data:{
-	    		 "subject":$('#subject option:selected').val(),
-	    		 "time":$('#time').val(),
-	    		 "classroom":$('#classroom option:selected').val()
-	    	 },	    	
-	    	 success:function(res){
-	    		 alert(res);
-	    		 dialog.dialog( "close" );
-	    		 timeTable();
-	    		 updateTable();
-	    	 },
-	    	 error:function(xhr, status, error){
-	    		 alert(error);
-	    	 }
-	    	 
-	    	 
-	     });
+			
+			$('.lectureList').each(function(){
+				//화면 우측 테이블에 현재 입력하려는 과목의 학점과 입력한 개수가 같으면 더이상 입력이 되지않도록 처리
+				if($(this).children().eq(0).text()==$('#subject option:selected').text()){
+					if($(this).children().eq(1).text()==$(this).children().eq(2).text()){
+						alert('더이상 등록할 수 없습니다.');
+						return;
+					}else{
+						
+					     $.ajax({
+					    	 url:"<c:url value='/lecture/addSubject'/>",
+					    	 type:"post",
+					    	 data:{
+					    		 "subject":$('#subject option:selected').val(),
+					    		 "time":$('#time').val(),
+					    		 "classroom":$('#classroom option:selected').val()
+					    	 },	    	
+					    	 success:function(res){
+					    		 alert(res);
+					    		 dialog.dialog( "close" );
+					    		 timeTable();
+					    		 updateTable();
+					    	 },
+					    	 error:function(xhr, status, error){
+					    		 alert(error);
+					    	 }
+					    	 
+					    	 
+					     });
+					}
+						
+				}
+				
+				
+			});
+			
 	    }
 			 
 	    dialog = $( "#dialog-form" ).dialog({
@@ -279,7 +295,7 @@ function timeTable(){
 							<th>입력 학점</th>
 						</tr>
 						<c:forEach var="vo" items="${list }">
-							<tr>
+							<tr class="lectureList">
 								<td class="subName">${vo.subjName }</td>
 								<td class="cred">${vo.credit }</td>
 								<td class="cnt">${vo.count }</td>

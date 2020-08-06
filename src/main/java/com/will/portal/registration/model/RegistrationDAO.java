@@ -11,4 +11,11 @@ public interface RegistrationDAO {
 	List<FacultyVO> selectFaculty();
 	List<DepartmentVO> selectDepartment(int facultyNo);
 	List<OpenSubjListVO> openSubjList();
+	List<String> selectRegisted(String stuNo);
+	List<OpenSubjListVO> registedList(List<String> list);
+	int countForDup(Map<String, Object> map);
+	int insertReg(Map<String, Object> map);
+	int deleteReg(Map<String, Object> map);
+	int insertEval(Map<String, Object> map);
+	int deleteEval(Map<String, Object> map);
 }
