@@ -5,17 +5,30 @@
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link rel="stylesheet" href="<c:url value='/resources/css/lecture/weekcalendar.css'/>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.css'/>">
 <link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.theme.css'/>">
 <style>
+ 
     label, input { display:block; }
     input.text { margin-bottom:12px; width:95%; padding: .4em; }
     fieldset { padding:0; border:0; margin-top:25px; }
     h1 { font-size: 1.2em; margin: .6em 0; }
     .ui-dialog .ui-state-error { padding: .3em; }
     .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    
+    #syllabus:hover{
+    	text-decoration: none;
+    	color: black;
+    
+    	
+    }
+    #syllabus{
+    	text-decoration: none;
+    	color: black;
+    
+    	
+    }
     
     .tab{
     	float: left;
@@ -32,6 +45,7 @@
     	all:unset;
     	font-size: 0.8em;
     }
+   
 </style>
 <script type="text/javascript">
 	var time = '';
@@ -207,7 +221,7 @@ function timeTable(){
 
 <main role="main" class="flex-shrink-0">
 <div class="container">
-	<h2>강의시간 설정</h2><label for="syllabus" style="float: right; margin-right: 500px;">강의 계획서 업로드<a id="syllabus" href="#"><img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
+	<h2>강의시간 설정</h2><a id="syllabus" href="#" style="float: right; margin-right: 500px;">강의 계획서 업로드<img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
 	<h4>${principal.name} 교수님의 시간표 </h4>
 	<div class='tab'>
 	  <table border='0' cellpadding='0' cellspacing='0'>

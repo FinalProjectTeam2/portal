@@ -207,7 +207,7 @@ on d.faculty_no=f.faculty_no;
 		on sy.open_sub_code=o.open_sub_code
 
 --timetable 추가
-        ALTER TABLE TIMETABLE
+ALTER TABLE TIMETABLE
 ADD (SHORT_NAME VARCHAR2(20));
 
 ALTER TABLE timetable MODIFY (short_name NOT NULL);
@@ -237,3 +237,6 @@ insert into prof_position
 values(prof_position_seq.nextval,'전임강사');
 insert into PROF_POSITION
 values(PROF_POSITION_SEQ.nextval,'퇴임');
+
+
+
