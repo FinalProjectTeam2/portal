@@ -11,9 +11,9 @@ public class TuitionServiceImpl implements TuitionService {
 	@Autowired private TuitionDAO tuitionDao;
 
 	@Override
-	public List<TuitionStuVO> selectStu() {
+	public List<TuitionStuVO> selectStu(String officialNo) {
 
-		return tuitionDao.selectStu();
+		return tuitionDao.selectStu(officialNo);
 	}
 
 	@Override

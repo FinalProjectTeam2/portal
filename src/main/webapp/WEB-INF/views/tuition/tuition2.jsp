@@ -78,17 +78,22 @@ body {
 	<div class="divTable" > 
 		<div class="divTableBody"> 
 			<div class="divTableRow"> 
-				<div class="cellColor">학부</div> 
-				<div class="divTableCell">${faculty_name}</div> 			
-				<div class="cellColor">학과</div>
-				<div class="divTableCell">${dep_name} </div> 
+				<c:if test="${!empty list }"> 
+					<c:forEach var="TuitionStuVO" items="${list }">
+						<div class="cellColor">학부</div> 
+						<div class="divTableCell">${faculty_name}</div> 			
+						<div class="cellColor">학과</div>
+						<div class="divTableCell">${dep_name} </div> 
 			</div> 
-		<div class="divTableRow"> 
-			<div class="cellColor">학번</div> 
-			<div class="divTableCell">{stu_no}</div> 						
-			<div class="cellColor">이름</div>
-			<div class="divTableCell">${name }</div> 
-		</div> 
+			<div class="divTableRow"> 
+				<div class="cellColor">학번</div> 
+				<div class="divTableCell">${stu_no}</div> 						
+				<div class="cellColor">이름</div>
+				<div class="divTableCell">${name }</div> 
+				
+					</c:forEach>
+				</c:if>
+			</div> 
 		<div class="divTableRow"> 
 			<div class="cellColor">학기</div> 
 			<div class="divTableCell">

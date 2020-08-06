@@ -3,9 +3,6 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
 <sec:authentication var="principal" property="principal" />
-<main role="main" class="flex-shrink-0">
-<div class="container">
-
 <style type="text/css">
 .divTable { 
 	display: table; 
@@ -80,6 +77,7 @@ $(function() {
 	});
 });
 </script>
+<div class="container">
 <h1>등록금 납부 상세 내역</h1>
 <div id="tuition1">
 <form name="frmWrite" method="post" action="<c:url value=''/>" >
@@ -176,24 +174,26 @@ $(function() {
 			</tr>
 		</thead>
 		<tbody>
+		<c:if test="${!empty list }"> 
+			<c:forEach var="TuitionStuVO" items="${list }">
 			<tr>
 				<td>입학금</td>
-				<td>${admissionfee }</td>
+				<td>${TuitionStuVO.TuitionVO.admissionfee }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>수업료</td>
-				<td>${tuition }</td>
+				<td>${TuitionStuVO.TuitionVO.tuition }</td>
 				<td>수강신청학점:15학점</td>
 			</tr>
 			<tr>
 				<td>실습비</td>
-				<td>${practicecost }</td>
+				<td>${TuitionStuVO.TuitionVO.practicecost }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>학생회비</td>
-				<td>${studentfee }</td>
+				<td>${TuitionStuVO.TuitionVO.studentfee }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
@@ -218,18 +218,20 @@ $(function() {
 			</tr>
 			<tr>
 				<td>납부할 금액</td>
-				<td>0원</td>
+				<td>${TuitionStuVO.TuitionVO.total }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>납부현황</td>
-				<td>${deposit_state }</td>
+				<td>${TuitionStuVO.TuitionVO.deposit_state }</td>
 				<td>&nbsp;</td>
 			</tr>
+			</c:forEach>
+				</c:if>
 		</tbody>
 </table>
 </div>
 
-<input type="submit" value="영수증으로 보기" id="bt">
+<input type="submit" value="영수증 보기" id="bt">
 </div>
 <%@ include file="../inc/bottom.jsp"%>

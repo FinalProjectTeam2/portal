@@ -18,7 +18,7 @@ public class TuitionDAOMybatis implements TuitionDAO {
 
 
 	@Override
-	public List<TuitionStuVO> selectStu() {
+	public List<TuitionStuVO> selectStu(String officialNo) {
 		
 		return sqlSession.selectList(namespace+"selectStu");
 	}
