@@ -46,7 +46,7 @@ $(function() {
 	<div class="container">
 		<div id="adminMngMem">
 			<div class="divTop">
-				<h2>교수 관리</h2>
+				<h2>직원 관리</h2>
 				<input type="button" class="btTop btCustom btn btn-primary" id="bt1"
 					value="학생 관리"
 					onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input
@@ -74,10 +74,10 @@ $(function() {
 			<!-- 페이징 처리 form 끝 -->
 
 			<form name="frmList" method="post"
-				action="<c:url value='/admin/member/adminManageProfessor'/>">
+				action="<c:url value='/admin/member/adminManageEmployee'/>">
 				<div class="divRight">
 					<div class="divTop">
-						<div class="stud">
+						<%-- <div class="stud">
 							<label for="faculty"><span>학부</span></label> <select
 								name="facultyNo" id="faculty">
 								<option value="">선택</option>
@@ -91,7 +91,7 @@ $(function() {
 								name="depNo" class="rightEnd" id="department">
 								<option value="">학부를 선택하세요</option>
 							</select>
-						</div>
+						</div> --%>
 						<div class="ckState stud">
 							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
 								for="selectAll">전체</label>

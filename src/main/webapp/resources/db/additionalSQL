@@ -110,11 +110,12 @@ on ss.position_no = S.position_no
 );
 
 #직원 정보 VIEW
+
 CREATE OR REPLACE VIEW
 employee_VIEW
 AS(
 
-SELECT s.*,o.*,bb.*, ss.POSITION_NAME,D.DEP_NAME FROM
+SELECT s.*,o.*,bb.*, ss.POSITION_NAME,D.DEP_NAME,a.AUTH_NAME,a.AUTH_DESC,a.AUTH_LEVEL FROM
 EMPLOYEE S JOIN OFFICIAL_INFO O
 ON S.EMP_NO = O.OFFICIAL_NO
 JOIN
@@ -127,9 +128,9 @@ join
 on ss.position_CODE = S.position_CODE
 JOIN EMP_DEPART D
 ON D.DEP_CODE = S.DEP_CODE
-);
-
-
+ join 
+(select * from authority)a
+on s.AUTH_CODE = a.AUTH_CODE);
 
 #학적상태 테이블 추가
 /* 학적상태 */
