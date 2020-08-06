@@ -1,6 +1,7 @@
 package com.will.portal.posts.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class PostsDAOMybatis implements PostsDAO {
 	@Override
 	public int insertPosts(PostsVO vo) {
 		return sqlSession.insert(namespace+"insertPosts", vo);
+	}
+	
+	@Override
+	public int insertComment(PostsVO vo) {
+		return sqlSession.insert(namespace+"insertComment", vo);
 	}
 
 	@Override
@@ -55,12 +61,17 @@ public class PostsDAOMybatis implements PostsDAO {
 	}
 
 	@Override
-	public int deletePostByPostNo(int postNo) {
-		return sqlSession.delete(namespace+"deletePostByPostNo", postNo);
+	public int deletePostByPostNo(Map<String, String> map) {
+		return sqlSession.delete(namespace+"deletePostByPostNo", map);
 	}
 
 	@Override
 	public int updatePost(PostsVO vo) {
 		return sqlSession.update(namespace+"updatePost", vo);
+	}
+
+	@Override
+	public PostsVO selectPostByPostNo(int postNo) {
+		return sqlSession.selectOne(namespace+"selectPostByPostNo", postNo);
 	}
 }

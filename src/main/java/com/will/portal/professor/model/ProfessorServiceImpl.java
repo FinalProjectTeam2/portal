@@ -9,16 +9,20 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.will.portal.account_info.model.Account_InfoDAO;
+import com.will.portal.common.ProfSearchVO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.regi_timetable.model.Regi_timetableVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
+
 	@Autowired
 	private ProfessorDAO professorDao;
 
@@ -137,7 +141,73 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public Map<String, Object> selectViewByProfNo(String profNo) {
 		return professorDao.selectViewByProfNo(profNo);
 	}
+	@Override
+	public List<Map<String, Object>> selectProfessorView(ProfSearchVO profSearchVo) {
+		return professorDao.selectProfessorView(profSearchVo);
+	}
 
-	
-	
+	@Override
+	public int getTotalRecord(ProfSearchVO profSearchVo) {
+		return professorDao.getTotalRecord(profSearchVo);
+	}
+
+	@Override
+
+	public int countByOpenCode(String openSubCode) {
+		return professorDao.countByOpenCode(openSubCode);
+	}
+
+	@Override
+	public String selectShortName(String timetableCode) {
+		return professorDao.selectShortName(timetableCode);
+	}
+
+	@Override
+	public int insertTimetable(Regi_timetableVO vo) {
+		return professorDao.insertTimetable(vo);
+	}
+
+	@Override
+	public int updateTimetable(Regi_timetableVO vo) {
+		return professorDao.updateTimetable(vo);
+	}
+
+
+	public int mutiUpdatePosition(List<ProfessorVO> list, int positionNo) {
+		int cnt = 0;
+		try {
+			for (ProfessorVO professorVO : list) {
+				if(professorVO.getProfNo() != null) {
+					professorVO.setPositionNo(positionNo);
+					cnt = professorDao.updatePosition(professorVO);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt = -1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int deleteProfessor(String profNo) {
+		return professorDao.deleteProfessor(profNo);
+	}
+
+	@Override
+	@Transactional
+	public int multiDelete(List<ProfessorVO> list) {
+		int cnt = 0;
+		for (ProfessorVO professorVO : list) {
+			if(professorVO.getProfNo() != null) {
+				cnt = professorDao.deleteProfessor(professorVO.getProfNo());
+			}
+		}
+
+		return cnt;
+	}
+
+
+
 }

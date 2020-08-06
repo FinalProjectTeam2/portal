@@ -9,7 +9,7 @@
 		(
 		    select rownum as RNUM, A.*
 		    from(
-		        select post_no, official_no, title, reg_date,
+		        select post_no, official_no, title, reg_date, group_No, sort_no, step,
 			    read_count, contents, del_flag, bd_code,
 			    (sysdate-reg_date)*24 as newImgTerm,
 			    (select count(*) from files f where f.post_no = p.post_no) file_count 
@@ -22,21 +22,23 @@
 		        <if test="sort == 'edit' ">
 		        	edit_date desc
 		        </if>
-		        <if test="sort == 'write' ">
-		        	POST_NO desc
+		        <if test="sort != 'edit' ">
+		        	group_NO desc
 		        </if>
+		        
 		    )A    
 		)
 		<![CDATA[ 
 		where RNUM>#{firstRecordIndex}
 		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+		ORDER BY GROUP_no desc, sort_no
 	</select>
 	
 	<select id="selectPostsCount" parameterType="boardSearchVo" resultType="int">
         select count(*)
 	    from posts where bd_code=#{bdCode}
 	    <if test="searchKeyword!=null and searchKeyword !=''">
-        	where ${searchCondition} like '%' 
+        	and ${searchCondition} like '%' 
         			|| #{searchKeyword} || '%'
         </if>
 	</select>
@@ -45,12 +47,24 @@
 		<selectKey order="BEFORE" keyProperty="postNo" resultType="int">
 			select POSTS_SEQ.nextval from dual
 		</selectKey>
-		insert into posts(POST_NO,OFFICIAL_NO,TITLE,CONTENTS,BD_CODE)
-		values(#{postNo},#{officialNo},#{title},#{contents},#{bdCode})
+		insert into posts(POST_NO,OFFICIAL_NO,TITLE,CONTENTS,BD_CODE,group_No)
+		values(#{postNo},#{officialNo},#{title},#{contents},#{bdCode},#{postNo})
+	</insert>
+	
+	<insert id="insertComment" parameterType="postsVo">
+		<selectKey order="BEFORE" keyProperty="postNo" resultType="int">
+			select POSTS_SEQ.nextval from dual
+		</selectKey>
+		insert into posts(POST_NO,OFFICIAL_NO,TITLE,CONTENTS,BD_CODE,group_No, step, sort_no)
+		values(#{postNo},#{officialNo},#{title},#{contents},#{bdCode},#{groupNo},#{step}+1,#{sortNo}+1)
 	</insert>
 	
 	<select id="selectFilesByNo" parameterType="int" resultType="filesVo">
 		select * from files where post_no = #{postNo}
+	</select>
+	
+	<select id="selectBoardBybdCode" parameterType="String" resultType="boardVo">
+		select * from board where bd_Code = #{bdCode}
 	</select>
 	
 	<resultMap type="postsAllVO" id="selectByCodeEResultMap">
@@ -68,6 +82,24 @@
 			<result column="SORT_NO" jdbcType="NUMERIC" property="sortNo" />
 			<result column="step" jdbcType="NUMERIC" property="step" />
 			<result column="newImgTerm" jdbcType="NUMERIC" property="newImgTerm" />
+		</association>
+		<association property="boardVo" javaType="boardVo" select="selectBoardBybdCode"
+			column="BD_CODE">
+			<id column="BD_CODE" property="bdCode" jdbcType="VARCHAR" />
+			<result column="OFFICIAL_NO" jdbcType="VARCHAR" property="officialNo" />
+			<result column="BD_NAME" jdbcType="VARCHAR" property="bdName" />
+			<result column="reg_date" jdbcType="TIMESTAMP" property="regDate" />
+			<result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+			<result column="BD_ORDER" jdbcType="NUMERIC" property="bd_order" />
+			<result column="USAGE" jdbcType="CHAR" property="usage" />
+			<result column="IS_REPLY" jdbcType="CHAR" property="isReply" />
+			<result column="IS_COMMENT" jdbcType="CHAR" property="isComment" />
+			<result column="IS_PRIVATE" jdbcType="CHAR" property="isPrivate" />
+			<result column="IS_UPLOAD" jdbcType="CHAR" property="isUpload" />
+			<result column="MAX_UPFILE" jdbcType="NUMERIC" property="maxUpfile" />
+			<result column="MAX_FILESIZE" jdbcType="NUMERIC" property="maxFilesize" />
+			<result column="CATEGORY_CODE" jdbcType="VARCHAR" property="categoryCode" />
+			<result column="AUTH_CODE" jdbcType="VARCHAR" property="authCode" />
 		</association>
 		<association property="userName" javaType="string" column="user_name">
 			<result column="user_name" jdbcType="VARCHAR" property="userName" />
@@ -104,14 +136,26 @@
 	<select id="selectBdCodeByPostNo" parameterType="int" resultType="String">
 		select bd_code from posts where post_No = #{postNo}
 	</select>
+	<select id="selectPostByPostNo" parameterType="int" resultType="postsVo">
+		select * from posts where post_No = #{postNo}
+	</select>
 	
-	<delete id="deletePostByPostNo" parameterType="int">
+	<!-- <delete id="deletePostByPostNo" parameterType="int">
 		UPDATE posts SET del_flag = 'Y' where post_no=#{postNo}
+	</delete> -->
+	
+	<parameterMap type="map" id="deleteParam">
+		<parameter property="post_no" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="group_no" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	<delete id="deletePostByPostNo" parameterMap="deleteParam">
+		call DELETEPOSTS(?, ?, ?)
 	</delete>
 	
 	<update id="updatePost" parameterType="postsVo">
 		update posts
-		set title = #{title}, contents = #{contents}
+		set title = #{title}, contents = #{contents}, edit_date = sysdate
 		where post_no = #{postNo}
 	</update>
 </mapper>

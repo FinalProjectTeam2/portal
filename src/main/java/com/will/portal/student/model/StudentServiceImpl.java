@@ -134,6 +134,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	@Transactional
 	public int multiUpdateStudentState(List<StudentVO> studentList, String state) {
 		int cnt = 0;
 		try {
