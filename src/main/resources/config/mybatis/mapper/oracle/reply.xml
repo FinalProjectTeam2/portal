@@ -28,6 +28,7 @@
 			<result column="reg_Date" jdbcType="TIMESTAMP" property="regDate" />
 			<result column="post_no" jdbcType="NUMERIC" property="postNo"/>
 			<result column="now" jdbcType="NUMERIC" property="now"/>
+			<result column="image_url" jdbcType="NUMERIC" property="imageUrl"/>
 		</association>
 		<collection property="rereplyList" column="reply_no"
 			javaType="ArrayList" ofType="rereplyVo" select="selectRereplyByReplyNo">
@@ -35,10 +36,12 @@
 	</resultMap>
 	
 	<select id="selectReplyByPostNo" parameterType="int" resultMap="replyListResultMap">
-		select r.*, sysdate-reg_date now from reply r where post_no = #{postNo}
+		select r.*, sysdate-reg_date now , (select image_url from official_info where official_no=r.official_no) image_url
+		from reply r where post_no = #{postNo} order by reply_No desc
 	</select>
 	
 	<select id="selectRereplyByReplyNo" parameterType="int" resultType="rereplyVo">
-		select r.*, sysdate-reg_date now from rereply r where reply_no = #{replyNo}
+		select r.*, sysdate-reg_date now , (select image_url from official_info where official_no=r.official_no) image_url
+		from rereply r where reply_no = #{replyNo} order by rereply_No
 	</select>
 </mapper>

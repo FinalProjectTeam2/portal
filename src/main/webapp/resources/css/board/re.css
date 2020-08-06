@@ -24,6 +24,7 @@ input[type=button] {
 
 .divData {
 	overflow: hidden;
+    margin: 10px 0;
 }
 
 .divIcon, .divContents {
@@ -90,4 +91,10 @@ input[type=button] {
 }
 .show{
 	display: block;
+}
+.studentImg{
+	width: 2.5em;
+}
+.divContents {
+    max-width: 95%;
 }
