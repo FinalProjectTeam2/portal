@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.will.portal.account_info.model.Account_infoVO;
 
 @Service
 public class BuildingServiceImpl implements BuildingService{
@@ -15,6 +14,16 @@ public class BuildingServiceImpl implements BuildingService{
 	@Override
 	public List<BuildingVO> selectAllBuilding() {
 		return buildingDao.selectAllBuilding();
+	}
+
+	@Override
+	public List<BuildingVO> selectDong(String dong) {
+		return buildingDao.selectDong(dong);
+	}
+
+	@Override
+	public List<BuildingVO> selectBuildingName() {
+		return buildingDao.selectBuildingName();
 	}
 
 }

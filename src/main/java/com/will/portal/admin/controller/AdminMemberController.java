@@ -250,7 +250,7 @@ public class AdminMemberController {
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList", departmentList);
 		model.addAttribute("stateList", stateList);
-
+		
 		// db
 		List<Map<String, Object>> list = studentService.selectStudentView(studentSearchVo);
 		logger.info("학생  조회 결과, list.size={}", list.size());

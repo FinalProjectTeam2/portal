@@ -4,7 +4,16 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.building">
 	<select id="selectAllBuilding" resultType="buildingVo">
-		select * from bank
+		select * from building
+	</select>
+	
+	<select id="selectDong" resultType="buildingVo" parameterType="String">
+		select * from building
+		where building_name = #{dong}
+	</select>
+	
+	<select id="selectBuildingName" resultType="buildingVo">
+		select distinct building_name from building
 	</select>
 </mapper>
 

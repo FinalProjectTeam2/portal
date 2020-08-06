@@ -2,8 +2,8 @@ package com.will.portal.building.model;
 
 import java.util.List;
 
-import com.will.portal.account_info.model.Account_infoVO;
-
 public interface BuildingService {
 	public List<BuildingVO> selectAllBuilding();
+	public List<BuildingVO> selectDong(String dong);
+	public List<BuildingVO> selectBuildingName();
 }
