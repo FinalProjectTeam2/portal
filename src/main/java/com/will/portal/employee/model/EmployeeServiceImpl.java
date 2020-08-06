@@ -2,14 +2,17 @@ package com.will.portal.employee.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.will.portal.account_info.model.Account_InfoDAO;
+import com.will.portal.common.EmployeeSearchVO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
@@ -111,4 +114,54 @@ public class EmployeeServiceImpl implements EmployService {
 		return employeeDao.selectViewByEmpNo(officialNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectEmployeeView(EmployeeSearchVO empSearchVo) {
+		return employeeDao.selectEmployeeView(empSearchVo);
+	}
+
+	@Override
+	public int getTotalRecord(EmployeeSearchVO empSearchVo) {
+		return employeeDao.getTotalRecord(empSearchVo);
+	}
+
+	@Override
+	public int updatePosition(EmployeeVO empVo) {
+		return employeeDao.updatePosition(empVo);
+	}
+
+	@Override
+	public int deleteEmployee(String empNo) {
+		return employeeDao.deleteEmployee(empNo);
+	}
+
+	@Override
+	public int multiUpdatePosition(List<EmployeeVO> list, String positionCode) {
+		int cnt=0;
+		try {
+			for(EmployeeVO vo : list) {
+				if(vo.getEmpNo() !=null) {
+					vo.setPositionCode(positionCode);
+					cnt=employeeDao.updatePosition(vo);
+				}
+			}
+		} catch (RuntimeException e) {
+			cnt=-1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
+	}
+
+	@Override
+	public int multiDelete(List<EmployeeVO> list) {
+		int cnt=0;
+		for(EmployeeVO vo : list) {
+			if(vo.getEmpNo()!=null) {
+				cnt=employeeDao.deleteEmployee(vo.getEmpNo());
+			}
+		}
+		
+		return cnt;
+	}
 }

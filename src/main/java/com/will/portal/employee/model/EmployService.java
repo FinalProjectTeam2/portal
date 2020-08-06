@@ -1,7 +1,9 @@
 package com.will.portal.employee.model;
 
+import java.util.List;
 import java.util.Map;
 
+import com.will.portal.common.EmployeeSearchVO;
 import com.will.portal.official_info.model.Official_infoVO;
 
 public interface EmployService {
@@ -15,4 +17,10 @@ public interface EmployService {
 	int insertEmployee(EmployeeVO employeeVo, Official_infoVO officialVo, int sort);
 	boolean loginCheckSec(String loginPwd, String password, String officialNo);
 	public Map<String, Object> selectViewByEmpNo(String empNo);
+	List<Map<String, Object>> selectEmployeeView(EmployeeSearchVO empSearchVo);
+	int getTotalRecord(EmployeeSearchVO empSearchVo);
+	int updatePosition(EmployeeVO empVo);
+	int deleteEmployee(String empNo);
+	int multiUpdatePosition(List<EmployeeVO> list,String positionCode);
+	int multiDelete(List<EmployeeVO> list);
 }
