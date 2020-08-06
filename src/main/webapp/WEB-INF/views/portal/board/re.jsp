@@ -17,26 +17,51 @@ $(function() {
 			$(this).find('.spCount').show();
 		}
 	});
+	
 	$(".reWrite").click(function() {
 		$('#replyText').val('@'+$(this).parent().find('.spName').text() + ' ');
+		$('#replyNo').val($(this).find("input").val());
 		$('#replyText').focus();
+	});
+		
+	
+	$('#replyText').keyup(function() {
+		if($(this).val() == ''){
+			$('#replyNo').val(0);
+		}
 	});
 	
 	$('#replySend').click(function() {
 		$.ajax({
-			url : "",
+			url : "<c:url value='/portal/board/ajax/reply'/>",
 			data : {
-				officialNo : "",
-				contents : $(),
-				postNo : "",
-				
+				officialNo : "${principal.officialNo}",
+				contents : $('#replyText').val(),
+				postNo : "${vo.postsVo.postNo }",
+				replyNo : $("#replyNo").val()
 			},
 			type : "get",
-			success : function() {
-				
+			success : function(res) {
+				alert(res);
+				$('#replyText').val('');
+				$('#replyNo').val(0);
 			}
 		});
 	});
+	function openReply() {
+		$.ajax({
+			url : "<c:url value='/portal/board/ajax/replyList'/>",
+			data : {
+				postNo : "${vo.postsVo.postNo }"
+			},
+			type : "get",
+			success : function(res) {
+				alert(res);
+				$('#replyText').val('');
+				$('#replyNo').val(0);
+			}
+		});
+	}
 });
 
 </script>
@@ -55,8 +80,10 @@ $(function() {
 				<div class="divRe">
 					<span class="spName">김테스트(202030010001)</span>
 					<p class="pContent">안녕하세요</p>
-					<span class="spTime">20시간</span><a class="reWrite">답글
-						달기</a>
+					<span class="spTime">20시간</span>
+					<a class="reWrite">답글달기
+						<input type="hidden" value="3">
+					</a>
 				</div>
 				<div class="divReList">
 					<div class="_7mCbS"></div>
@@ -76,7 +103,7 @@ $(function() {
 									<span class="spName">김교수(202020010001)</span>
 									<p class="pContent">대댓입니다~~</p>
 									<span class="spTime">2시간</span><a class="reWrite">답글
-										달기</a>
+										달기<input type="hidden" value="2"></a>
 								</div>
 							</div>
 						</div>
@@ -86,7 +113,7 @@ $(function() {
 		</div>
 	</div>
 	<div class="divText">
-		<input type="hidden" id="replyNo" value="0">
+		<input type="text" id="replyNo" value="0">
 		<input class="textbox" type="text" id="replyText"
 			placeholder="다른 사람의 권리를 침해하거나 명예를 훼손하는 댓글은 이용약관 및 관련 법률에 의해 제재를 받을 수 있습니다." />
 		<input type="button" value="게시" id="replySend"/>

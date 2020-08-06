@@ -33,6 +33,9 @@ import com.will.portal.files.model.FilesVO;
 import com.will.portal.posts.model.PostsAllVO;
 import com.will.portal.posts.model.PostsService;
 import com.will.portal.posts.model.PostsVO;
+import com.will.portal.reply.model.ReplyService;
+import com.will.portal.reply.model.ReplyVO;
+import com.will.portal.reply.model.RereplyVO;
 
 @Controller
 @RequestMapping("/portal/board")
@@ -49,7 +52,10 @@ public class BoardController {
 	private FileUploadUtil fileUploadUtil;
 
 	@Autowired
-	private FilesService filesSercive;
+	private FilesService filesService;
+	
+	@Autowired
+	private ReplyService replyService;
 
 	@RequestMapping("/main")
 	public void boardMain(@RequestParam(defaultValue = "B") String categoryCode) {
@@ -148,7 +154,7 @@ public class BoardController {
 				fileVo.setOriginalFileName((String) map.get("originalFName"));
 				fileVo.setPostNo(vo.getPostNo());
 
-				cnt = filesSercive.insertFiles(fileVo);
+				cnt = filesService.insertFiles(fileVo);
 				logger.info("파일 insert 처리 결과 cnt={}", cnt);
 			}
 			url = "/portal/board/list?bdCode=" + vo.getBdCode();
@@ -177,7 +183,7 @@ public class BoardController {
 				fileVo.setOriginalFileName((String) map.get("originalFName"));
 				fileVo.setPostNo(vo.getPostNo());
 				
-				cnt = filesSercive.insertFiles(fileVo);
+				cnt = filesService.insertFiles(fileVo);
 				logger.info("파일 insert 처리 결과 cnt={}", cnt);
 			}
 			url = "/portal/board/list?bdCode=" + vo.getBdCode();
@@ -248,7 +254,7 @@ public class BoardController {
 		// 1.
 		logger.info("다운로드 파라미터 no={}, fileName={}", no, fileName);
 		// 2.
-		int cnt = filesSercive.upDownCount(no);
+		int cnt = filesService.upDownCount(no);
 		logger.info("다운로드수 증가 cnt={}", cnt);
 
 		// 다운로드 처리를 위한 페이지로 넘겨준다
@@ -320,7 +326,7 @@ public class BoardController {
 				fileVo.setOriginalFileName((String) map.get("originalFName"));
 				fileVo.setPostNo(vo.getPostNo());
 
-				cnt = filesSercive.insertFiles(fileVo);
+				cnt = filesService.insertFiles(fileVo);
 				logger.info("파일 insert 처리 결과 cnt={}", cnt);
 			}
 			url = "/portal/board/detail?postNo=" + postNo;
@@ -345,12 +351,12 @@ public class BoardController {
 		int cnt = postsService.deletePostByPostNo(map);
 		logger.info("삭제 결과 cnt={}", cnt);
 		
-		List<FilesVO> list = filesSercive.selectFileByPostNo(postNo);
+		List<FilesVO> list = filesService.selectFileByPostNo(postNo);
 		boolean bool = false;
 		for (FilesVO fvo : list) {
 			bool = fileUploadUtil.fileDelete(request, fvo.getFileName(), FileUploadUtil.PATH_PDS);
 			if (bool) {
-				cnt = filesSercive.deleteFile(fvo.getNo());
+				cnt = filesService.deleteFile(fvo.getNo());
 				if (cnt <= 0) {
 					bool = false;
 				}
@@ -428,12 +434,42 @@ public class BoardController {
 		logger.info("파일 삭제 처리 결과 bool={}", bool);
 
 		if (bool) {
-			int cnt = filesSercive.deleteFile(no);
+			int cnt = filesService.deleteFile(no);
 			if (cnt <= 0) {
 				bool = false;
 			}
 		}
 
 		return bool + "";
+	}
+	
+	@RequestMapping(value = "/ajax/reply", produces = "text/html;charset=utf8")
+	@ResponseBody
+	public String reply(@RequestParam String officialNo,@RequestParam String contents, 
+			@RequestParam int postNo, @RequestParam int replyNo) {
+		logger.info("ajax - 댓글 등록 처리");
+		logger.info("파라미터 - officialNo={}, contents={}",officialNo,contents);
+		logger.info("파라미터 - postNo={}, replyNo={}",postNo,replyNo);
+		
+		String result = "댓글 등록 실패";
+		int cnt = 0;
+		if(replyNo == 0) {
+			ReplyVO vo = new ReplyVO();
+			vo.setContents(contents);
+			vo.setOfficialNo(officialNo);
+			vo.setPostNo(postNo);
+			cnt = replyService.insertReply(vo);
+		}else {
+			RereplyVO vo = new RereplyVO();
+			vo.setContents(contents);
+			vo.setOfficialNo(officialNo);
+			vo.setReplyNo(replyNo);
+			cnt = replyService.insertRereply(vo);
+		}
+		
+		if(cnt > 0) {
+			result = "댓글 등록 성공!";
+		}
+		return result;
 	}
 }
