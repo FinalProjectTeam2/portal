@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
+<style type="text/css">
+.scholarship {
+	margin-left: 20%;
+	margin-top: -20%;
+	min-height: 500px;
+}
+
+hr {
+	width: 45%;
+}
+</style>
 
 <div class="scholarship">
 <h1>장학금 확인 페이지</h1>

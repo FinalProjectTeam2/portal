@@ -16,22 +16,7 @@
 	</select>
 	
 	
-	<resultMap type="TuitionStuVO" id="tuitionResultMap">
-		<association property="tuitionVo" javaType="tuitionVo" column="stuNo">
-			<id column="stuNo" property="stuNo" jdbcType="VARCHART"/>
-			<result column="deposit_state" property="deposit_state" jdbcType="VARCHAR"/>
-			<result column="deposit_date" property="deposit_date" jdbcType="TIMESTAMP"/>
-			<result column="tuition" property="tuition" jdbcType="BIGINT"/>
-			<result column="admissionfee" property="admissionfee" jdbcType="BIGINT"/>
-			<result column="practicecost" property="practicecost" jdbcType="BIGINT"/>
-			<result column="studentfee" property="studentfee" jdbcType="BIGINT"/>
-			<result column="total" property="total" jdbcType="BIGINT"/>
-		</association>
-		<collection property="" column="stuNo"
-			javaType="ArrayList" 
-			ofType="map" select="">		
-		</collection>
-	</resultMap>
+	
 </mapper>
 
 

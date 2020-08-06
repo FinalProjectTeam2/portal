@@ -1,97 +1,183 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
+<style type="text/css">
+.attendance {
+	margin-left: 20%;
+	margin-top: -20%;
+	min-height: 500px;
+}
 
+hr {
+	width: 35%;
+	min-width: 15%;	
+}
+
+.btSearch {
+	margin-left: 30%;
+	margin-top: -1.8%;
+}
+
+.table1, .table2 {
+	width: 80%;
+	min-width: 500px;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin: 20px 10px;
+}
+
+.table1 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #efefef;
+    text-align: center;
+}
+.table1 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+</style>
 <div class="attendance">
 <h1>출결관리 페이지</h1>
-	<div>
-		<label>날짜 : 2020. 8. 6. 목</label>
-	</div>
-	
-	<div class=""><%@ include file="../board_food/dateTerm.jsp"%> </div> 
-	
-	<div> 
-		<input type="checkbox">
+<hr align="left">
+<br>
+	<div class="">
+		<label><h3>2020. 8. 6. 목</h3></label>
 	</div>
 	
 	<div>
-		<label>학부</label>
-		<select>
-			<option> -- 구분 -- </option>
-			<option>경영대학</option>
-			<option>예체능</option>
-		</select>
+		<div class=""><%@ include file="../board_food/dateTerm.jsp"%> </div> 
+		<div class="btSearch"><input type="button" value="검색"></div>
 	</div>
-
-	<div>
-		<label>학과</label>
-		<select>
-			<option> -- 구분 -- </option>
-			<option>경영대학</option>
-			<option>예체능</option>
-		</select>
+<br>
+<!-- 학생 정보 -->	
+	<div calss="divTable1">
+		<table class="table1">
+			<colgroup>
+				<col style="width:25%">
+				<col style="width:25%">
+				<col style="width:35%">
+				<col style="width:5%">
+				<col style="width:5">		
+				<col style="width:*">		
+			</colgroup>
+	
+			<thead>
+				<tr>
+					<th scope="col">학부</th>
+					<th scope="col">
+						<select>
+							<option> -- 구분 -- </option>
+							<option>경영대학</option>
+							<option>예체능</option>
+						</select> 
+					</th>
+					<th scope="col">학과</th>
+					<th scope="col">
+						<select>
+							<option> -- 구분 -- </option>
+							<option>경영학과</option>
+							<option>경제학과</option>
+						</select>
+					</th>
+				</tr>
+				<tr>
+					<th scope="col">학년</th>
+					<th scope="col">
+						<select>
+							<option> -- 구분 -- </option>
+							<option>1학년</option>
+							<option>2학년</option>
+						</select>
+					</th>
+					
+					<th scope="col">학기</th>
+					<th scope="col">
+						<select>
+							<option> -- 구분 -- </option>
+							<option>1학기</option>
+							<option>2학기</option>
+						</select>
+					</th>
+				</tr>
+				<tr>
+					<th scope="col">이름</th>
+					<th scope="col">홍길동</th>
+				</tr>	
+			</thead>		
+		</table>
+	</div>		
+<br>
+		
+<!-- 출결 상태 -->		
+	<div class="divTable2">		
+		<table class="table2">
+			<colgroup>
+					<col style="width:3%">
+					<col style="width:15%"> 
+					<col style="width:15%"> 
+					<col style="width:5%"> 
+					<col style="width:5"> 
+					<col style="width:15%"> 
+					<col style="width:5%">
+					<col style="width:5%"> 
+					<col style="width:5%"> 
+					<col style="width:5"> 
+					<col style="width:*">	
+				</colgroup>
+		
+				<thead>
+					<tr>
+						<th scope="col"><input type="checkbox"></th>
+						<th scope="col">학부</th>
+						<th scope="col">학과</th>
+						<th scope="col">학년</th>
+						<th scope="col">이름</th>
+						<th scope="col">강의명</th>
+						<th scope="col">교수명</th>
+						<th scope="col" colspan="3">출석</th>
+						<th scope="col" >비고</th>
+						
+					</tr>
+					<tr>
+						<th scope="col" rowspan="1"></th>
+						<th scope="col" rowspan="1"></th>
+						<th scope="col" rowspan="1"></th>
+						<th scope="col" rowspan="1"></th>
+						<th scope="col" rowspan="1"></th>
+						<th scope="col" rowspan="1"></th>
+						<th scope="col" rowspan="1"></th>
+						<th scope="col">지각</th>
+						<th scope="col">조퇴</th>
+						<th scope="col">결석</th>
+						<th scope="col" rowspan="1"><input type="button" value="상세보기"></th>
+					</tr>	
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td>경영학부</td>
+						<td>경영학과</td>
+						<td>1학년</td>
+						<td>홍길동</td>
+						<td>경영이론1</td>
+						<td>변사또</td>
+						<td><input type="checkbox"></td>			
+						<td><input type="checkbox"></td>			
+						<td><input type="checkbox"></td>
+					</tr>
+				</tbody>			
+		</table>
 	</div>
 	
-	<div>
-		<label>학기</label>
-		<select>
-			<option> -- 구분 -- </option>
-			<option>1학년1학기</option>
-			<option>1학년2학기</option>
-		</select>
-	</div>
-	
-	
-	<div>
-		<label>학년</label>
-		<select>
-			<option> -- 구분 -- </option>
-			<option>1학년</option>
-			<option>2학년</option>
-		</select>
-	</div>
-	
-	<div>
-		<label>이름</label>
-		<input id="name" type="text" disabled>
-	</div>
-	
-	<div>
-		<label>과목</label>
-		<select>
-			<option> -- 구분 -- </option>
-			<option>1학년</option>
-			<option>2학년</option>
-		</select>
-	</div>
-	
-	<div>
-		<label>교수</label>
-		<input id="name" type="text" disabled>
-	</div>
-	
-	<div>
-		<label>지각</label>
-		<input id="chek" type="checkbox">
-	</div>
-	
-	<div>
-		<label>조퇴<<label>
-		<input id="chek" type="checkbox">
-	</div>
-	
-	<div>
-		<label>결석</label>
-		<input id="chek" type="checkbox">
-	</div>
-	
-	<div>
-		<label>출석률</label>
-		<label>96%</label>
-	</div>
-
-	<div>
-		상세보기 - 버튼 클릭시 팝업창떠서 현재까지 지각, 조퇴, 결석 몇 번 했는지 숫자로 보여주기? 
-	</div>
+<!-- 페이징처리 -->	
 </div>
 <%@ include file="../inc/bottom.jsp"%>
