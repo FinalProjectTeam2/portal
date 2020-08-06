@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>등록금</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<sec:authentication var="principal" property="principal" />
 <style type="text/css">
 .divTable { 
 	display: table; 
@@ -47,8 +46,7 @@
 	display: table-row-group; 
 }
 
-<!-- 테이블 -->
-		
+<!-- 테이블 -->	
 .box {
 	width: 1000px;
 	margin:10px 0;
@@ -62,26 +60,40 @@
 	padding: 4px;
 	
 }
-
-
 </style>
-</head>
-<body>
-<h1>등록금 납부 내역 조회 </h1>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
+<script type="text/javascript">
+$(function() {
+	$.ajax({
+		url:"<c:url value=''/>",
+		type:"get",
+		dataType:"json",
+		success:function(res){
+			$("").append(res);
+		},
+		error:function(xhr, status, error){
+			alert(error);
+		}
+	});
+});
+</script>
+<div class="container">
+<h1>등록금 납부 상세 내역</h1>
+<div id="tuition1">
 <form name="frmWrite" method="post" action="<c:url value=''/>" >
 	<div class="divTable" > 
 		<div class="divTableBody"> 
 			<div class="divTableRow"> 
-				<div class="cellColor">대학</div> 
-				<div class="divTableCell">문과대학</div> 			
+				<div class="cellColor">학부</div> 
+				<div class="divTableCell">${faculty_name}</div> 			
 				<div class="cellColor">학과</div>
-				<div class="divTableCell">국어국문과</div> 
+				<div class="divTableCell">${dep_name} </div> 
 			</div> 
 		<div class="divTableRow"> 
 			<div class="cellColor">학번</div> 
-			<div class="divTableCell">20202020</div> 						
+			<div class="divTableCell">{stu_no}</div> 						
 			<div class="cellColor">이름</div>
-			<div class="divTableCell">홍길동</div> 
+			<div class="divTableCell">${name }</div> 
 		</div> 
 		<div class="divTableRow"> 
 			<div class="cellColor">학기</div> 
@@ -99,8 +111,8 @@
 			<div class="divTableCell">&nbsp;</div> 
 	</div>
 	</div>
-</div>
-		
+</div>	
+</form>		
 		
 <br><br><br>
 <div class="divTable">
@@ -162,24 +174,26 @@
 			</tr>
 		</thead>
 		<tbody>
+		<c:if test="${!empty list }"> 
+			<c:forEach var="TuitionStuVO" items="${list }">
 			<tr>
 				<td>입학금</td>
-				<td>0원</td>
+				<td>${TuitionStuVO.TuitionVO.admissionfee }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>수업료</td>
-				<td>1,000,000원</td>
+				<td>${TuitionStuVO.TuitionVO.tuition }</td>
 				<td>수강신청학점:15학점</td>
 			</tr>
 			<tr>
 				<td>실습비</td>
-				<td>0원</td>
+				<td>${TuitionStuVO.TuitionVO.practicecost }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>학생회비</td>
-				<td>0원</td>
+				<td>${TuitionStuVO.TuitionVO.studentfee }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
@@ -204,17 +218,20 @@
 			</tr>
 			<tr>
 				<td>납부할 금액</td>
-				<td>0원</td>
+				<td>${TuitionStuVO.TuitionVO.total }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>납부현황</td>
-				<td>납부</td>
+				<td>${TuitionStuVO.TuitionVO.deposit_state }</td>
 				<td>&nbsp;</td>
 			</tr>
+			</c:forEach>
+				</c:if>
 		</tbody>
 </table>
 </div>
-<input type="submit" value="영수증으로 보기" id="bt">
-</body>
-</html>
+
+<input type="submit" value="영수증 보기" id="bt">
+</div>
+<%@ include file="../inc/bottom.jsp"%>

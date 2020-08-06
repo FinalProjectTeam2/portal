@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>등록금</title>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<sec:authentication var="principal" property="principal" />
+<main role="main" class="flex-shrink-0">
+
 <style type="text/css">
 body {
 	margin: 2%; 50%;
@@ -67,27 +67,33 @@ body {
 	padding: 4px;
 	
 }
-
-
 </style>
-</head>
-<body>
-<h1>대학 등록금 납부 내역 조회 </h1>
-<form name="frmWrite" method="post" action="<c:url value=''/>" >
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
+<script type="text/javascript">
+</script>
+
+<div id="tuition1">
+<h1>등록금 납부 내역 조회 </h1>
+<form name="frmWrite" method="post" action="<c:url value='tuition/tuition3'/>" >
 	<div class="divTable" > 
 		<div class="divTableBody"> 
 			<div class="divTableRow"> 
-				<div class="cellColor">대학</div> 
-				<div class="divTableCell">문과대학</div> 			
-				<div class="cellColor">학과</div>
-				<div class="divTableCell">국어국문과</div> 
+				<c:if test="${!empty list }"> 
+					<c:forEach var="TuitionStuVO" items="${list }">
+						<div class="cellColor">학부</div> 
+						<div class="divTableCell">${faculty_name}</div> 			
+						<div class="cellColor">학과</div>
+						<div class="divTableCell">${dep_name} </div> 
 			</div> 
-		<div class="divTableRow"> 
-			<div class="cellColor">학번</div> 
-			<div class="divTableCell">20202020</div> 						
-			<div class="cellColor">이름</div>
-			<div class="divTableCell">홍길동</div> 
-		</div> 
+			<div class="divTableRow"> 
+				<div class="cellColor">학번</div> 
+				<div class="divTableCell">${stu_no}</div> 						
+				<div class="cellColor">이름</div>
+				<div class="divTableCell">${name }</div> 
+				
+					</c:forEach>
+				</c:if>
+			</div> 
 		<div class="divTableRow"> 
 			<div class="cellColor">학기</div> 
 			<div class="divTableCell">
@@ -107,7 +113,7 @@ body {
 </div>
 		
 <br><br><br>
-
+<div class="container">
 <div class="divTable">
 	<table class="box">
 		<colgroup>
@@ -149,5 +155,6 @@ body {
 </div>
 </form>
 </div>
-</body>
-</html>
+</div>
+
+<%@ include file="../inc/bottom.jsp"%>
