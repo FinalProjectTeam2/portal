@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<head>
+
 <title>대학 공시 정보</title>
 <style type="text/css">
+
 /* Style the tab */
 .tab {
   overflow: hidden;
@@ -164,6 +168,10 @@ hr {
   }
 }
 
+img {
+	width: 160px;
+	background-color: gray;
+}
 </style>
 <script type="text/javascript">
 function openMenu(evt, cityName) {
@@ -193,11 +201,11 @@ function myFunction() {
   }
 }
 </script>
-</head>
-<body>
+
+<div id="tuition1">
 <div class="infobox">
 	<div class="img-box">
-		<h3>로고자리</h3>
+		<img src="<c:url value='/resources/images/logo.png'/>">
 		
 	</div>
 	<div class="info">
@@ -318,7 +326,5 @@ function myFunction() {
   <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
 
 </div>
-	
-		
-</body>
-</html>
+</div>
+<%@ include file="../inc/bottom.jsp"%>

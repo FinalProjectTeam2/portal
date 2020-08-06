@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
-<%@ include file="../inc/mainSidebar.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
 <link href="<c:url value='/resources/css/index.css' />" rel="stylesheet">
 <style type="text/css">
 .calendar_head{
@@ -258,7 +261,8 @@
 }
 .exchange_student11 .ct1 b{font-weight:500;color:#1e386f}
 </style>
-<main role="main" class="flex-shrink-0">
+
+<div id="tuition1">
 <div class="container">
 <article class="calendar">
 	<div class="calendar_head">
@@ -655,4 +659,5 @@
 		</ul>
 	</div>
 </article>
+</div>
 <%@ include file="../inc/bottom.jsp"%>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.reply">
+	<insert id="insertReply" parameterType="replyVo">
+		<selectKey order="BEFORE" resultType="int" keyProperty="replyNo">
+			select reply_seq.nextval from dual
+		</selectKey>
+		INSERT INTO reply(REPLY_NO,OFFICIAL_NO,CONTENTS,POST_NO,official_name)
+		VALUES (#{replyNo},#{officialNo},#{contents},#{postNo},#{officialName})
+	</insert>
+	<insert id="insertRereply" parameterType="rereplyVo">
+		<selectKey order="BEFORE" resultType="int" keyProperty="rereplyNo">
+			select rereply_seq.nextval from dual
+		</selectKey>
+		INSERT INTO rereply(rereply_no,REPLY_NO,OFFICIAL_NO,CONTENTS,official_name)
+		VALUES (#{rereplyNo},#{replyNo},#{officialNo},#{contents},#{officialName})
+	</insert>
+	
+	<resultMap type="replyAllVO" id="replyListResultMap">
+		<association property="replyVo" javaType="replyVo" column="reply_no">
+			<id column="reply_no" property="replyNo" jdbcType="NUMERIC" />
+			<result column="official_no" jdbcType="VARCHAR" property="officialNo" />
+			<result column="contents" jdbcType="VARCHAR" property="contents" />
+			<result column="official_name" jdbcType="VARCHAR" property="officialName" />
+			<result column="del_flag" jdbcType="CHAR" property="delFlag" />
+			<result column="reg_Date" jdbcType="TIMESTAMP" property="regDate" />
+			<result column="post_no" jdbcType="NUMERIC" property="postNo"/>
+			<result column="now" jdbcType="NUMERIC" property="now"/>
+		</association>
+		<collection property="rereplyList" column="reply_no"
+			javaType="ArrayList" ofType="rereplyVo" select="selectRereplyByReplyNo">
+		</collection>
+	</resultMap>
+	
+	<select id="selectReplyByPostNo" parameterType="int" resultMap="replyListResultMap">
+		select r.*, sysdate-reg_date now from reply r where post_no = #{postNo}
+	</select>
+	
+	<select id="selectRereplyByReplyNo" parameterType="int" resultType="rereplyVo">
+		select r.*, sysdate-reg_date now from rereply r where reply_no = #{replyNo}
+	</select>
+</mapper>

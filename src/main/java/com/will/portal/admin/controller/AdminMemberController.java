@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -250,7 +249,7 @@ public class AdminMemberController {
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList", departmentList);
 		model.addAttribute("stateList", stateList);
-
+		
 		// db
 		List<Map<String, Object>> list = studentService.selectStudentView(studentSearchVo);
 		logger.info("학생  조회 결과, list.size={}", list.size());

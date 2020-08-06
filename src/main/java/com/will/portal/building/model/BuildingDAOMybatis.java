@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.will.portal.account_info.model.Account_infoVO;
 
 @Repository
 public class BuildingDAOMybatis implements BuildingDAO {
@@ -17,6 +16,16 @@ public class BuildingDAOMybatis implements BuildingDAO {
 	@Override
 	public List<BuildingVO> selectAllBuilding() {
 		return sqlSession.selectList(namespace + "selectAllBuilding");
+	}
+
+	@Override
+	public List<BuildingVO> selectDong(String dong) {
+		return sqlSession.selectList(namespace + "selectDong", dong);
+	}
+
+	@Override
+	public List<BuildingVO> selectBuildingName() {
+		return sqlSession.selectList(namespace + "selectBuildingName");
 	}
 
 	

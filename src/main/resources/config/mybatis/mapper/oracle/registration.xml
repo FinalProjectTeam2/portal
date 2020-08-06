@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="openSubjList" resultType="openSubjListVo">
-		select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus
+		select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus, count(r.stu_no) as count
 		from open_subj o join subject s
 		on o.subj_code=s.subj_code
 		join professor p
@@ -31,8 +31,68 @@
 		on st.type_code=s.type_code
 		join syllabus sy
 		on sy.open_sub_code=o.open_sub_code
+		left join registration r
+        on r.sub_code=o.open_sub_code
 		group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus
 	</select>
+	
+	
+	
+	<select id="selectRegisted" parameterType="string" resultType="string">
+		select * from registration where stu_no=#{value}
+	</select>
+	
+	
+	
+	<select id="registedList" parameterType="list" resultType="openSubjListVo">
+        <if test="list!=null">
+		select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus, count(r.stu_no) as count
+		from open_subj o join subject s
+		on o.subj_code=s.subj_code
+		join professor p
+		on s.prof_no=p.prof_no
+		join subj_time stime
+		on stime.open_sub_code=o.open_sub_code
+		join regi_timetable rt
+		on rt.open_sub_code=o.open_sub_code
+		join classroom cr
+		on cr.classroom_code=stime.classroom_code
+		join subj_type st
+		on st.type_code=s.type_code
+		join syllabus sy
+		on sy.open_sub_code=o.open_sub_code
+		left join registration r
+        on r.sub_code=o.open_sub_code
+        	where r.sub_code in
+        	<foreach collection="list" item="item" index="index"
+	   			open="(" separator="," close=")">
+	   			#{item}
+	   		</foreach>
+		group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus
+        </if>
+		
+	</select>
+	
+	<insert id="insertReg" parameterType="hashMap">
+		insert into registration(sub_code, stu_no, classification)
+		values(#{openSubCode}, #{stuNo}, (select type_code from subj_type where type=#{type}))
+	</insert>
+	<insert id="insertEval" parameterType="hashMap">
+		insert into evaluation(sub_code, stu_no, classification)
+		values(#{openSubCode}, #{stuNo}, (select type_code from subj_type where type=#{type}))
+	</insert>
+	
+	<select id="countForDup" parameterType="hashMap" resultType="int">
+		select count(*) from registration where sub_code=#{openSubCode} and stu_no=#{stuNo}
+	</select>
+	
+	<delete id="deleteReg" parameterType="hashMap">
+		delete from registration where stu_no=#{stuNo} and sub_code=#{openSubCode}
+	</delete>
+	
+	<delete id="deleteEval" parameterType="hashMap">
+		delete from evaluation where stu_no=#{stuNo} and sub_code=#{openSubCode}
+	</delete>
 
 </mapper>
 

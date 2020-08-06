@@ -95,18 +95,20 @@ div#chatDataIn {
 					send();
 				}
 			});
-			$("#deleteRoom").click(function(key) {
-				sock.close();
-				$.ajax({
-					url : "<c:url value='/chat/room/delete'/>",
-					data : {roomId : roomId},
-					dataType : "text",
-					type : "get",
-					success: function(res) {
-						console.log(res);
-						acyncMovePage('<c:url value="/chat/"/>', 'get');
-					}
-				});
+			$("#deleteRoom").click(function() {
+				if(confirm('현재 채팅방을 삭제하시겠습니까?')){
+					sock.close();
+					$.ajax({
+						url : "<c:url value='/chat/room/delete'/>",
+						data : {roomId : roomId},
+						dataType : "text",
+						type : "get",
+						success: function(res) {
+							console.log(res);
+							acyncMovePage('<c:url value="/chat/"/>', 'get');
+						}
+					});
+				}
 			});
 
 		});
