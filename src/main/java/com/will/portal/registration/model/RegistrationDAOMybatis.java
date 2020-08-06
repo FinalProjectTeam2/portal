@@ -31,6 +31,41 @@ public class RegistrationDAOMybatis implements RegistrationDAO{
 	public List<OpenSubjListVO> openSubjList() {
 		return sqlSession.selectList(namespace+"openSubjList");
 	}
+
+	@Override
+	public List<String> selectRegisted(String stuNo) {
+		return sqlSession.selectList(namespace+"selectRegisted", stuNo);
+	}
+
+	@Override
+	public List<OpenSubjListVO> registedList(List<String> list) {
+		return sqlSession.selectList(namespace+"registedList", list);
+	}
+
+	@Override
+	public int countForDup(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"countForDup", map);
+	}
+
+	@Override
+	public int insertReg(Map<String, Object> map) {
+		return sqlSession.insert(namespace+"insertReg", map);
+	}
+
+	@Override
+	public int deleteReg(Map<String, Object> map) {
+		return sqlSession.delete(namespace+"deleteReg", map);
+	}
+
+	@Override
+	public int insertEval(Map<String, Object> map) {
+		return sqlSession.insert(namespace+"insertEval", map);
+	}
+
+	@Override
+	public int deleteEval(Map<String, Object> map) {
+		return sqlSession.delete(namespace+"deleteEval", map);
+	}
 	
 	
 	
