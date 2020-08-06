@@ -16,4 +16,5 @@ public class RereplyVO {
 	private String delFlag;
 	private String officialName;
 	private double now;
+	private String imageUrl;
 }

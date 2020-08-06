@@ -24,6 +24,7 @@ public class PostsVO {
 	private int newImgTerm;
 	private int fileCount;
 	private String name;
+	private int reCount;
 
 	
 }
