@@ -319,14 +319,11 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>3.2.3.RELEASE</version>
 		</dependency>
-
 		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.18.12</version>
-		    <scope>provided</scope>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.16</version>
 		</dependency>
-
 	</dependencies>
 	<repositories>
 		<!-- <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> <url>http://maven.jahia.org/maven2</url>
