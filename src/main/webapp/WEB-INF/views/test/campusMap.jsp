@@ -7,36 +7,176 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- main 시작 -->
-<main role="main" class="flex-shrink-0" id="mainmain">
-<div class="container">
 <script type="text/javascript">
 $(document).ready(function() {
 $('#tabs').tabs(); // 탭
 });
-
 </script>
-<!-- <div id="tabs">
-<ul>
-	<li><a id="tab1" href="#tabContent_1">탭 제목1</a></li>
-	<li><a id="tab2" href="#tabContent_2">탭 제목2</a></li>
-	<li><a id="tab3" href="#tabContent_3">탭 제목3</a></li>
-</ul>
-	<div id="tabContent_1"><p>첫번째 영역의 내용</p></div>
-	<div id="tabContent_2"><p>두번째 영역의 내용</p></div>
-	<div id="tabContent_3"><p>세번째 영역의 내용</p></div>
-</div> -->
-<%-- <img alt="캠퍼스맵" src="<c:url value='/resources/images/campusMap.JPG' />"> --%>
-<p>1.인문사회동 2.공과대학동 3.본관 4.예술대학동 5.의과대학동 6.자연과학동</p>
-<div id="tabs">
-<ul>	
-	<li><a id="tab1" href="#tabContent_1">본문</a></li>
-	<li><a id="tab2" href="#tabContent_2">인문사회동</a></li>
-	<li><a id="tab3" href="#tabContent_3">공과대학동</a></li>
-	<li><a id="tab4" href="#tabContent_4">예술대학동</a></li>
-	<li><a id="tab5" href="#tabContent_5">의과대학동</a></li>
-	<li><a id="tab6" href="#tabContent_6">자연과학동</a></li>
-</ul>
+<style>
+
+	#tabs table, th, td{
+		text-align: center;
+	}
 	
+	#tabs td, th{
+		padding: 10px;
+	}
+	
+	#tabs table{
+		margin: 0 auto;
+		width: 100%;
+		font-size: 1.1em;
+	}
+</style>
+<main role="main" class="flex-shrink-0" id="mainmain">
+<div class="container">
+<div id="cmap">
+	<div style="margin-bottom: 2%">
+		<img alt="" src="<c:url value='/resources/images/mapLogo.png' />" width="60px;">
+		<span style="font-size: 2em; font-weight: bold">CAMPUS MAP</span>
+	</div>
+	<img alt="캠퍼스맵" src="<c:url value='/resources/images/campusMap2.jpg' />" width="100%" height="650px;"> 
+
+<div id="tabs">
+	<ul>
+		<c:set var="idx" value="1"></c:set>
+		<c:forEach var="name" items="${buildingName }">
+			<li><a id="tab${idx }" href="#tabContent_${idx }">${name.buildingName }</a></li>	
+			<c:set var="idx" value="${idx+1 }"></c:set>
+		</c:forEach>
+	</ul>
+		<div id="tabContent_1" class="tabs">
+			<table border="1">
+				<colgroup>
+					<col width="15%">
+					<col width="60%">
+					<col width="25%">
+				</colgroup>
+				
+				<tr class="table-info">
+					<th>강의실</th>
+					<th>상세위치</th>
+					<th>전화번호</th>
+				</tr>
+			<c:forEach var="vo" items="${mainList }">
+				<tr class="table-light">
+					<td>${vo.buildingCode }</td>				
+					<td style="text-align: left;">${vo.detail }</td>				
+					<td>${vo.tel }</td>				
+				</tr>	
+			</c:forEach>
+			</table>				
+		</div>
+		
+		<div id="tabContent_2" class="tabs">
+			<table border="1">
+				<colgroup>
+					<col width="15%">
+					<col width="60%">
+					<col width="25%">
+				</colgroup>
+				<tr class="table-info">
+					<th>강의실</th>
+					<th>상세위치</th>
+					<th>전화번호</th>
+				</tr>
+			<c:forEach var="vo" items="${gongList }">
+				<tr class="table-light">
+					<td>${vo.buildingCode }</td>				
+					<td style="text-align: left;">${vo.detail }</td>				
+					<td>${vo.tel }</td>				
+				</tr>	
+			</c:forEach>
+			</table>			
+		</div>
+		
+		<div id="tabContent_3" class="tabs">
+			<table border="1">
+				<colgroup>
+					<col width="15%">
+					<col width="60%">
+					<col width="25%">
+				</colgroup>
+				<tr class="table-info">
+					<th>강의실</th>
+					<th>상세위치</th>
+					<th>전화번호</th>
+				</tr>
+			<c:forEach var="vo" items="${scienceList }">
+				<tr class="table-light">
+					<td>${vo.buildingCode }</td>				
+					<td style="text-align: left;">${vo.detail }</td>				
+					<td>${vo.tel }</td>				
+				</tr>	
+			</c:forEach>
+			</table>
+		</div>
+		
+		<div id="tabContent_4" class="tabs">
+			<table border="1">
+				<colgroup>
+					<col width="15%">
+					<col width="60%">
+					<col width="25%">
+				</colgroup>
+				<tr class="table-info">
+					<th>강의실</th>
+					<th>상세위치</th>
+					<th>전화번호</th>
+				</tr>
+			<c:forEach var="vo" items="${mediList }">
+				<tr class="table-light">
+					<td>${vo.buildingCode }</td>				
+					<td style="text-align: left;">${vo.detail }</td>				
+					<td>${vo.tel }</td>				
+				</tr>	
+			</c:forEach>
+			</table>
+		</div>
+		<div id="tabContent_5" class="tabs"> 
+			<table border="1">
+				<colgroup>
+					<col width="15%">
+					<col width="60%">
+					<col width="25%">
+				</colgroup>
+				<tr class="table-info">
+					<th>강의실</th>
+					<th>상세위치</th>
+					<th>전화번호</th>
+				</tr>
+			<c:forEach var="vo" items="${artList }">
+				<tr class="table-light">  
+					<td>${vo.buildingCode }</td>				
+					<td style="text-align: left;">${vo.detail }</td>				
+					<td>${vo.tel }</td>				
+				</tr>	
+			</c:forEach>
+			</table>
+		</div>
+		<div id="tabContent_6" class="tabs">
+			<table border="1">
+				<colgroup>
+					<col width="15%">
+					<col width="60%">
+					<col width="25%">
+				</colgroup>
+				<tr class="table-info">
+					<th>강의실</th>
+					<th>상세위치</th>
+					<th>전화번호</th>
+				</tr>
+			<c:forEach var="vo" items="${inmoonList }">
+				<tr class="table-light">
+					<td>${vo.buildingCode }</td>				
+					<td style="text-align: left;">${vo.detail }</td>				
+					<td>${vo.tel }</td>				
+				</tr>	
+			</c:forEach>
+			</table>
+		</div>
 </div>
+</div>
+
 <!-- bottom -->		
 <%@ include file="../inc/bottom.jsp"%>

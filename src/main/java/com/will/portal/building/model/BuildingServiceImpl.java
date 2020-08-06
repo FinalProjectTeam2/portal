@@ -16,4 +16,14 @@ public class BuildingServiceImpl implements BuildingService{
 		return buildingDao.selectAllBuilding();
 	}
 
+	@Override
+	public List<BuildingVO> selectDong(String dong) {
+		return buildingDao.selectDong(dong);
+	}
+
+	@Override
+	public List<BuildingVO> selectBuildingName() {
+		return buildingDao.selectBuildingName();
+	}
+
 }

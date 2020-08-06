@@ -18,6 +18,16 @@ public class BuildingDAOMybatis implements BuildingDAO {
 		return sqlSession.selectList(namespace + "selectAllBuilding");
 	}
 
+	@Override
+	public List<BuildingVO> selectDong(String dong) {
+		return sqlSession.selectList(namespace + "selectDong", dong);
+	}
+
+	@Override
+	public List<BuildingVO> selectBuildingName() {
+		return sqlSession.selectList(namespace + "selectBuildingName");
+	}
+
 	
 	
 }
