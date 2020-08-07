@@ -83,7 +83,6 @@ public class AdminMemberController {
 	FileUploadUtil fileUploadUtil;
 	@Autowired
 	Official_infoService offiService;
-
 	/**
 	 * 회원등록 - 뷰
 	 * 
@@ -498,6 +497,11 @@ public class AdminMemberController {
 	
 	@RequestMapping("/deleteStudent")
 	public String deleteStudent(String stuNo, Model model) {
+		Official_infoVO offiVo = offiService.selectByNo(stuNo);
+		if(!offiVo.getImageUrl().equals("default.jpg")) {
+			offiVo.getImageUrl();
+		}
+		
 		int cnt = studentService.deleteStudent(stuNo);
 
 		String msg = "삭제 실패", url = "/admin/member/adminManageStudent";
@@ -577,8 +581,9 @@ public class AdminMemberController {
 
 	@RequestMapping("/selectInfo")
 	@ResponseBody
-	public Map<String, Object> body(String officialNo, HttpServletRequest request) {
+	public Map<String, Object> body(String officialNo, @RequestParam String facultyNo,HttpServletRequest request) {
 		logger.info("officialNo={}", officialNo);
+		logger.info("수정화면 페이지 보여주기, facultyNo={}", facultyNo);
 		String num = officialNo.substring(4, 5);
 		String type = "";
 
@@ -591,10 +596,11 @@ public class AdminMemberController {
 		}
 
 		logger.info("type={}", type);
-
+		List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(Integer.parseInt(facultyNo));
 		Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
 		if (type.equals("STUDENT")) {
 			map = studentService.selectViewByStuNo(officialNo);
+			map.put("departmentList", departmentList);
 		} else if (type.equals("PROFESSOR")) {
 			map = professorService.selectViewByProfNo(officialNo);
 		} else if (type.equals("ADMIN")) {
@@ -637,9 +643,12 @@ public class AdminMemberController {
 	@RequestMapping(value = "/memberEdit", method = RequestMethod.GET)
 	public String edit_get(String officialNo, Model model) {
 		logger.info("수정화면 페이지 보여주기, officialNo={}", officialNo);
+
 		List<BankVO> bankList = bankService.selectAllBank();
+		List<FacultyVO> facultyList = facultyService.selectFaculty();
 		model.addAttribute("bankList", bankList);
 		model.addAttribute("officialNo", officialNo);
+		model.addAttribute("facultyList", facultyList);
 
 		return "/admin/member/adminEditMember";
 	}
