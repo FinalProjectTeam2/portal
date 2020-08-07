@@ -63,6 +63,7 @@ public class TuitionController {
 		
 		List<TuitionStuVO> list= tuitionService.selectStu(officialNo);
 		model.addAttribute("list", list);
+		
 	}
 
 }

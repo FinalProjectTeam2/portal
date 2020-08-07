@@ -12,7 +12,7 @@ hr {
 	width: 45%;
 }
 
-.divPayments {
+.tablePayments {
 	width: 1400px;
 	min-width: 500px;
     border-collapse: separate;
@@ -26,12 +26,11 @@ hr {
 
 <div class="scholarship">
 <h1>장학금 확인 페이지</h1>
-<!-- 학생정보 검색? 상태? -->
-<!--학번/ 학과/ 학년/ 이름/ 학적상태(재학/휴학/입학)/   -->
-
+<hr align="left" width="55%">
+<br>
 <!-- 장학금 신청 -->
 	<div class="divPayments">
-		<table class=tablePayments">
+		<table class="tablePayments">
 			<thead>
 				<tr>
 					<th>장학금분류</th>
