@@ -83,8 +83,7 @@ function inputPhoneNumber(obj) {
 			formData.append("addrDetail", $("#addrDetail").val());
 			
 			formData.append("oldFileName", $("#oldFileName").val());
-
-			formData.append("name", $("#name").val());
+			formData.append("officialNo", $('#officialNo').val());
 			
 			formData.append("upfile", $("#upfile")[0].files[0]);
 
@@ -108,11 +107,16 @@ function inputPhoneNumber(obj) {
 			});
 			return false;
 		});	
+		
+		$('#back').click(function() {
+			location.href = "<c:url value='/admin/member/adminManageStudent' />";
+		});
+		
 	});
 	
 	$.select = function () {
 		var officialNo = $('#officialNo').val();
-		
+		console.log(officialNo);
 		$.ajax({
 			url : "<c:url value='/admin/member/selectInfo' />",
 			type: "get",
@@ -329,6 +333,7 @@ a:focus {
 				      	</table>
 				      	<div style="text-align: center; margin-top: 10px;">
 				      			<input type="submit" id="editBt" value="정보수정" style="color: white;">
+				      			<input type="button" id="back" value="되돌아가기" style="color: white;">
 			    		</div>
 			      </div>
 			   </div>
