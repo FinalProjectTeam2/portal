@@ -218,6 +218,10 @@
 		$("#btLogin").click(function() {
 			location.href = "<c:url value='/login' />";
 		});
+		
+		$("#goMessage").click(function() {
+			location.href = "<c:url value='/message/messageBox'/>";
+		});
 	});
 </script>
 <meta name="theme-color" content="#563d7c">
@@ -306,8 +310,7 @@
 					</c:if>
 					</sec:authorize>
 
-					<li><a class="nav-link" href="#">웹메일</a></li>
-					<li><a class="nav-link" href="#"> 쪽지함 <span
+					<li><a class="nav-link" href="#" id="goMessage"> 쪽지함 <span
 							class="badge badge-pill bg-light align-text-bottom">27</span>
 					</a></li>
 				</ul>

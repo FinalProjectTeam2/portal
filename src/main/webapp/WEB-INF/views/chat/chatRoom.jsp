@@ -58,9 +58,7 @@ div#chatDataIn {
 			disconnect();
 		}
 		var roomId = '${room.roomId}';
-		console.log(roomId);
 		var sock = null;
-		console.log('officialNo는!!! ${principal.officialNo}');
 
 		$(function() {
 			var scrollPosition = $("#chatDataIn").height();
@@ -68,7 +66,6 @@ div#chatDataIn {
 			$("#chatData").animate({
 				scrollTop : scrollPosition
 			}, 0);
-			console.log("chatting data : " + data);
 			
 			$(window).bind('beforeunload',function(){
 
@@ -104,7 +101,6 @@ div#chatDataIn {
 						dataType : "text",
 						type : "get",
 						success: function(res) {
-							console.log(res);
 							acyncMovePage('<c:url value="/chat/"/>', 'get');
 						}
 					});
@@ -145,10 +141,7 @@ div#chatDataIn {
 			var sessionId = null;
 			var message = null;
 
-
 			var currentUser_session = $("#sessionUser").val();
-			console.log("current session id : " + currentUser_session);
-
 			
 			if(data.indexOf('|') == -1){
 	        	data = data.replace('"','');
@@ -190,18 +183,13 @@ div#chatDataIn {
 
 					$("#chatDataIn").append(printHtml);
 				}
-	        	/* $("#chatData").animate({
-				scrollTop: $("#chatData").height()
-				},800); */
-				/* $("#chatData").scrollTop($("#chatData").height()); */
+	        	
 				var scrollPosition = $("#chatDataIn").height();
-				console.log("hegiht : " + scrollPosition);
+				
 				$("#chatData").animate({
 					scrollTop : scrollPosition
 				}, 800);
-				console.log("chatting data : " + data);
 	        }
-			
 		}
 	</script>
 </sec:authorize>
