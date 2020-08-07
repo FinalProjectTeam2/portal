@@ -20,6 +20,17 @@ ul.pagination {
 .delFlag {
 	color: gray;
 }
+.reCount{
+	color: #4a4747;
+	font-size: 0.9em;
+}
+#tableList a{
+	color: black;
+}
+#tableList a:hover{
+	color: blue;
+	text-decoration: none;
+}
 </style>
 <!-- 공지사항 -->
 <script type="text/javascript">
@@ -141,7 +152,11 @@ ul.pagination {
 									if (item.newImgTerm < 24) {
 										str += "<img alt=\"newPost\" src=\"<c:url value='/resources/images/new.gif'/>\">";
 									}
-									str += "</a></td>";
+									str += "</a>"
+									if(item.reCount > 0){
+										str += '<span class="reCount">('+ item.reCount + ")</span>";
+									}
+									str += "</td>";
 								} else {
 									str += '<td class="delFlag">삭제된 게시물입니다.</td>';
 								}

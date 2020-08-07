@@ -11,6 +11,7 @@ public class OpenSubjListVO {
 	private String type;
 	private String syllabus;
 	private String shortNames;
+	private int count;
 	
 	public String getOpenSubCode() {
 		return openSubCode;
@@ -72,15 +73,19 @@ public class OpenSubjListVO {
 	public void setShortNames(String shortNames) {
 		this.shortNames = shortNames;
 	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	@Override
 	public String toString() {
 		return "OpenSubjListVO [openSubCode=" + openSubCode + ", subjName=" + subjName + ", personnel=" + personnel
 				+ ", profName=" + profName + ", credit=" + credit + ", timetableName=" + timetableName
 				+ ", classroomName=" + classroomName + ", type=" + type + ", syllabus=" + syllabus + ", shortNames="
-				+ shortNames + "]";
+				+ shortNames + ", count=" + count + "]";
 	}
-	
-	
 	
 	
 	

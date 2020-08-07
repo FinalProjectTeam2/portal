@@ -80,7 +80,9 @@
 						value="삭제"> 
 				</c:if>
 			</div>
-			<%@include file="re.jsp" %>
+			<c:if test="${vo.boardVo.isReply == 'Y' }">
+				<%@include file="re.jsp" %>
+			</c:if>
 		</div>
 		<!-- bottom -->
 		<%@ include file="../../inc/bottom.jsp"%>

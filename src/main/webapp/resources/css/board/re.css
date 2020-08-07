@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+.divText {
+	width: 100%;
+	padding: 2% 1%;
+	border-top: 1px solid #e5e5e5;
+	margin-top: 20px;
+}
+
+.textbox {
+	width: 92%;
+	height: 50px;
+}
+
+input[type=button] {
+	background-color: skyblue;
+	color: white;
+	padding: 20px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 7%;
+}
+
+.divData {
+	overflow: hidden;
+    margin: 10px 0;
+}
+
+.divIcon, .divContents {
+	float: left;
+}
+
+.divRe {
+	margin: 0 4px;
+}
+
+.spName {
+	font-weight: bold;
+	font-size: 0.9em;
+}
+
+.more {
+	color: gray;
+}
+
+.pContent {
+	margin: 0;
+	word-break: break-all;
+}
+
+._7mCbS {
+	border-bottom: 1px solid #8e8e8e;
+	border-bottom: 1px solid rgba(var(- -f52, 142, 142, 142), 1);
+	display: inline-block;
+	height: 0;
+	margin-right: 16px;
+	vertical-align: middle;
+	width: 24px;
+}
+
+.spTime, .reWrite, .more {
+	color: gray;
+	font-size: 0.85em;
+	margin-right: 12px;
+}
+
+#divReply {
+	border-top: 1px solid #e5e5e5;
+	margin-top: 50px;
+	padding-top: 20px;
+}
+
+#divReply a:not([href]) {
+    color: gray;
+    text-decoration: none;
+}
+
+.divReList {
+	margin-left: 5px;
+	overflow: hidden;
+}
+.divReContent {
+    overflow: hidden;
+    padding-left: 0px;
+    margin: 10px 0;
+    display: none;
+}
+#divReply a{
+	cursor: pointer;
+}
+.show{
+	display: block;
+}
+.studentImg{
+	width: 2.5em;
+}
+.divContents {
+    max-width: 95%;
+}

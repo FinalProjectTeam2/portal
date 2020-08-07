@@ -12,14 +12,14 @@ $(function() {
     $('#btMultiUpdateposition').click(function() {
        var len=$('tbody input[type=checkbox]:checked').length;
        if(len==0){
-          alert('직급을 변경하려는 교수를 선택하세요');
+          alert('직급을 변경하려는 직원를 선택하세요');
           return;
-       }else if($('#positionNo').val() == '0'){
+       }else if($('#positionC').val() == '0'){
           alert('변경하려는 직급을 선택하세요');
           return;
        }
        
-       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateposition'/>");
+       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiUpdateEmpPosition'/>");
        $('form[name=frmList]').submit();
     });
     
@@ -32,7 +32,7 @@ $(function() {
     
        }
        
-       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDeleteProfessor'/>");
+       $('form[name=frmList]').prop("action","<c:url value='/admin/member/multiDeleteEmployee'/>");
        $('form[name=frmList]').submit();
     
     });
@@ -40,13 +40,11 @@ $(function() {
     
 });
 </script>
-	
-	
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="adminMngMem">
 			<div class="divTop">
-				<h2>교수 관리</h2>
+				<h2>직원 관리</h2>
 				<input type="button" class="btTop btCustom btn btn-primary" id="bt1"
 					value="학생 관리"
 					onclick="location.href='<c:url value="/admin/member/adminManageStudent"/>'"><input
@@ -57,55 +55,58 @@ $(function() {
 					onclick="location.href='<c:url value="/admin/member/adminManageEmployee"/>'">
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post"
-					action="<c:url value='/admin/member/adminManageProfessor'/>">
-					<input type="hidden" name="profName" value="${profSearchVo.profName}">
-					<input type="hidden" name="facultyNo" value="${profSearchVo.facultyNo}">
-					<input type="hidden" name="depNo" value="${profSearchVo.depNo}">
-					<input type="hidden" name="positionNo1" value="${profSearchVo.positionNo1}">
-					<input type="hidden" name="positionNo2" value="${profSearchVo.positionNo2}">
-					<input type="hidden" name="positionNo3" value="${profSearchVo.positionNo3}">
-					<input type="hidden" name="positionNo4" value="${profSearchVo.positionNo4}">
-					<input type="hidden" name="positionNo5" value="${profSearchVo.positionNo5}">
-					<input type="hidden" name="startNo" value="${profSearchVo.startNo}">
-					<input type="hidden" name="endNo" value="${profSearchVo.endNo}">
+					action="<c:url value='/admin/member/adminManageEmployee'/>">
+					<input type="hidden" name="empName" value="${empSearchVo.empName}">
+					<input type="hidden" name="depCode" value="${empSearchVo.depCode}">
+					<input type="hidden" name="positionCode" value="${empSearchVo.positionCode}">
+					<input type="hidden" name="authCode1" value="${empSearchVo.authCode1}">
+					<input type="hidden" name="authCode2" value="${empSearchVo.authCode2}">
+					<input type="hidden" name="authCode3" value="${empSearchVo.authCode3}">
+					<input type="hidden" name="startNo" value="${empSearchVo.startNo}">
+					<input type="hidden" name="endNo" value="${empSearchVo.endNo}">
 					<input type="hidden" name="currentPage">
 				</form>
 			</div>
 			<!-- 페이징 처리 form 끝 -->
 
 			<form name="frmList" method="post"
-				action="<c:url value='/admin/member/adminManageProfessor'/>">
+				action="<c:url value='/admin/member/adminManageEmployee'/>">
 				<div class="divRight">
 					<div class="divTop">
 						<div class="stud">
-							<label for="faculty"><span>학부</span></label> <select
-								name="facultyNo" id="faculty">
+							<label for="depCode"><span>부서</span></label> <select
+								name="depCode" id="depCode">
 								<option value="">선택</option>
-								<c:forEach var="facVo" items="${facultyList }">
-									<option value="${facVo.facultyNo }"
-										<c:if test="${facVo.facultyNo==param.facultyNo }">
+								<c:forEach var="vo" items="${empDepartList }">
+									<option value="${vo.depCode }"
+										<c:if test="${vo.depCode==param.depCode }">
 									 selected="selected"
-									</c:if>>${facVo.facultyName }</option>
+									</c:if>>${vo.depName }</option>
 								</c:forEach>
-							</select> <label for="department"><span>학과</span></label> <select
-								name="depNo" class="rightEnd" id="department">
-								<option value="">학부를 선택하세요</option>
+							</select>
+							<label for="positionCode"><span>직책</span></label> <select
+								name="positionCode" id="positionCode">
+								<option value="">선택</option>
+								<c:forEach var="vo" items="${empPositionList }">
+									<option value="${vo.positionCode }"
+										<c:if test="${vo.positionCode==param.positionCode }">
+									 selected="selected"
+									</c:if>>${vo.positionName }</option>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="ckState stud">
 							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
 								for="selectAll">전체</label>
-								
-								
-								<c:forEach var="vo" items="${profPositionList}">
-								<input type="checkbox" name="position"
-								value="${vo.positionNo }" id="${vo.positionNo }"><label for="${vo.positionNo }">
-								${vo.positionName }</label>
+								<c:forEach var="vo" items="${authorityList}">
+								<input type="checkbox" name="authCode"
+								value="${vo.authCode }" id="${vo.authCode }"><label for="${vo.authCode }">
+								${vo.authName }</label>
 								</c:forEach>
 						</div>
 						<jsp:useBean id="now" class="java.util.Date" />
 						<fmt:formatDate value="${now }" var="year" pattern="yyyy" />
-						등록년도<select name="startNo" class="date">
+						입사연도<select name="startNo" class="date">
 							<c:forEach var="i" begin="1990" end="${year }">
 								<option value="${i }"
 									<c:if test="${i==param.startNo }">
@@ -119,14 +120,14 @@ $(function() {
 									 selected="selected"
 									</c:if>>${year-j }</option>
 							</c:forEach>
-						</select> 이름 <input type="text" name="profName">
+						</select> 이름 <input type="text" name="empName">
 						<button class="btCustom btn btn-primary btn-lg login-button"
 							id="btSearch">검색</button>
 						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
 					</div>
 					<div class="divList">
-						<table class="box2" summary="교수 목록">
-							<caption>교수 목록</caption>
+						<table class="box2" summary="직원 목록">
+							<caption>직원 목록</caption>
 							<colgroup>
 								<col style="width: 5%" />
 								<!-- 체크박스 -->
@@ -148,12 +149,12 @@ $(function() {
 							<thead>
 								<tr>
 									<th><input type="checkbox" name="chkAll"></th>
-									<th scope="col">번호</th>
+									<th scope="col">사번</th>
 									<th scope="col">이름</th>
-									<th scope="col">학부</th>
-									<th scope="col">학과</th>
-									<th scope="col">교수직급</th>
-									<th scope="col">부임일</th>
+									<th scope="col">부서</th>
+									<th scope="col">직책</th>
+									<th scope="col">권한</th>
+									<th scope="col">입사일</th>
 									<th scope="col">수정</th>
 									<th scope="col">삭제</th>
 								</tr>
@@ -168,17 +169,16 @@ $(function() {
 									<c:set var="idx" value="0" ></c:set>
 									<c:forEach var="map" items="${list }">
 										<tr>
-											<td><input type="checkbox" name="profList[${idx }].profNo"
-												value="${map['PROF_NO']}"> <input type="hidden"
-												name="pdItems[].imageURL" value=""></td>
-											<td>${map['PROF_NO']}</td>
-											<td>${map['PROF_NAME']}</td>
-											<td>${map['FACULTY_NAME']}</td>
+											<td><input type="checkbox" name="empList[${idx }].empNo"
+												value="${map['EMP_NO']}"></td>
+											<td>${map['EMP_NO']}</td>
+											<td>${map['EMP_NAME']}</td>
 											<td>${map['DEP_NAME']}</td>
 											<td>${map['POSITION_NAME']}</td>
+											<td>${map['AUTH_NAME']}</td>
 											<td><fmt:formatDate value="${map['START_DATE']}" pattern="yyyy-MM-dd"/></td>
-											<td><a href="<c:url value='/admin/member/memberEdit?officialNo=${map["PROF_NO"] }'/>">수정</a></td>
-											<td><a href="<c:url value='/admin/member/deleteProfessor?profNo=${map["PROF_NO"] }'/>">삭제</a></td>
+											<td><a href="<c:url value='/admin/member/memberEdit?officialNo=${map["EMP_NO"] }'/>">수정</a></td>
+											<td><a href="<c:url value='/admin/member/deleteEmployee?empNo=${map["EMP_NO"] }'/>">삭제</a></td>
 										</tr>
 									<c:set var="idx" value="${idx+1 }" ></c:set>
 									</c:forEach>
@@ -223,10 +223,10 @@ $(function() {
 						<!--  페이지 번호 끝 -->
 					</div>
 				<div class="divRight">
-                  <select name="positionNo" id="positionNo">
-                     <option value="0">학적상태 변경</option>
-                  	<c:forEach var="vo" items="${profPositionList}">
-                     <option value="${vo.positionNo }">${vo.positionName }</option>
+                  <select name="positionC" id="positionC">
+                     <option value="0">직책 변경</option>
+                  	<c:forEach var="vo" items="${empPositionList}">
+                     <option value="${vo.positionCode }">${vo.positionName }</option>
 					</c:forEach>
                   </select>
                   <input type="button" id="btMultiUpdateposition" value="변경" >
@@ -234,13 +234,13 @@ $(function() {
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
-							onclick="location.href='<c:url value="/admin/member/adminRegisterMember?sort=2"/>'"
+							onclick="location.href='<c:url value="/admin/member/adminRegisterMember?sort=1"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
 					<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
-							id="btMultiDel" value="선택한 교수 삭제"><br>
+							id="btMultiDel" value="선택한 직원 삭제"><br>
 					</div>
 				</div>
 			</form>

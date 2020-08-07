@@ -226,7 +226,18 @@
 	<!-- top 시작 -->
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand" href="<c:url value='/index'/>"
+			<a class="navbar-brand" 
+			<sec:authorize access="isAuthenticated()">
+			<c:if test="${principal.type == 'ADMIN' }">
+				href="<c:url value='/admin/adminMain'/>"
+			</c:if>
+			<c:if test="${principal.type != 'ADMIN' }">
+				href="<c:url value='/index'/>"
+			</c:if>
+			</sec:authorize>
+			<sec:authorize access="isAnonymous()">
+					href="<c:url value='/index'/>"
+				</sec:authorize>
 				style="border-right: 1px solid white; padding: 0 20px 0 0;"> <img
 				class="logo" alt="로고"
 				src="<c:url value='/resources/images/logo.png' />">

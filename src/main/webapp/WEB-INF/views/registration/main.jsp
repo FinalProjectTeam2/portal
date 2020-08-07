@@ -7,6 +7,7 @@
 	$(function(){
 		getDate();
 		subjList();
+		getRegistList()
 		//학부 선택시 해당되는 학과만 나오도록 함
 		$('#p_daehak').change(function(){
 			var facultyNo=$('#p_daehak option:selected').val();
@@ -23,35 +24,34 @@
 					});
 						str+="</select>";
 						$('#major').html(str);
-				},
-				error(xhr, status, error){
-					alert(error);
 				}
+				
 			});
 		});
 		
 		
 		
 		//검색 버튼 눌렀을때 
-		$('.btn-search').click(function(){
-			
+		$('#selectBt').click(function(){
+			subjList();
 		});
 	});
 	
+	//수강신청 모든 리스트(검색기능 사용시 검색할 내용만 sort)
 	function subjList(){
-		var faculty=$('p_daehak').val();
-		var department=$('p_major').val();
-		var subjName=$('p_subjt').val();
-		var time1=$('p_day').val();
-		var time2=$('p_time').val();
-		var profName=$('p_teach').val();
-		var openSubCode=$('p_code').val();
+		var faculty=$('#p_daehak').val();
+		var department=$('#p_major').val();
+		var subjName=$('#p_subjt').val();
+		var time1=$('#p_day').val();
+		var time2=$('#p_time').val();
+		var profName=$('#p_teach').val();
+		var openSubCode=$('#p_code').val();
 		
 		$.ajax({
 			url:"<c:url value='/registration/openSubjList'/>",
 			data:{
-				"faculty":faculty,
-				"department":department,
+				"facultyNo":faculty,
+				"depNo":department,
 				"subjName":subjName,
 				"time1":time1,
 				"time2":time2,
@@ -63,18 +63,21 @@
 			success:function(res){
 				var str = "";
 				var count=res.count;
+				var checkNull=res.checkNull;
+				console.log(checkNull);
 				$('#meta_1 em').text(count);
-				$.each(res.list, function(idx, item){
-					if(res==''){
+					if(checkNull=='Y'){
 						str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
-						str+="<td colspan='10'>일치하는 학과가 없습니다.</td></tr>"
-					}else{
+						str+="<td colspan='10'>검색된 학과가 없습니다.</td></tr>";
+						
+					}else if(checkNull=='N'){
+							$.each(res.list, function(idx, item){
 						
 							str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
 							str+="<td role='gridcell' style='height: 0px; width: 7%;'><button class='applyBt'>신청</button></td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 18%; text-align: center'>"+item.subjName+"</td>";
-							str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+item.personnel+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+item.count/item.credit + "/" +item.personnel+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.profName+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 5%;'>"+item.credit+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
@@ -82,10 +85,11 @@
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>한국어</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.syllabus+"</td>";
 							str+="</tr>";
+						});
 					}
 				
-				});
-				$('#gridLecture tbody:eq(0)').html(str);
+				$('#gridLecture1 tbody').html(str);
+				
 				$('#meta_1').find('em').text(res.count);
 				
 				
@@ -98,29 +102,107 @@
 					
 					var openSubCode=td.eq(1).text();
 					var subjName=td.eq(2).text();
-					var personnel=td.eq(3).text();
+					var col1=td.eq(3).text().split("/");
+					var count=col1[0];
+					var personnel=col1[1];
 					var profName=td.eq(4).text();
 					var credit=td.eq(5).text();
-					var col=td.eq(6).text().split("/");
-					var shortName = col[0];
-					var classroomName = col[1];
+					var col2=td.eq(6).text().split("/");
+					var shortName = col2[0];
+					var classroomName = col2[1];
 					var type = td.eq(7).text();
 					var syllabus=td.eq(9).text();
-					alert('개설코드='+openSubCode+", 강의명="+subjName+", 정원="+personnel+", 교수명="+profName
-							+", 학점="+credit+", 시간="+shortName+", 강의실="+classroomName+", 수강기준="+ type+", 강의계획서="+syllabus);
+					if(count>=personnel){
+						
+					 	alert('정원초과 다른 강의를 선택하세요.');
+					 	return;
+					}else{
+						$.ajax({
+							url:"<c:url value='/registration/insertReg'/>",
+							data:{
+								"type":type,
+								"openSubCode":openSubCode
+							},
+							type:"post",
+							success:function(res){
+								alert(res);
+								getRegistList();
+							},
+							error:function(xhr, status, error){
+								alert(error);
+							}
+						});
+					}
 					
 				});
 				
 				
 				
 				
-			},
-			error:function(xhr, status, error){
-				alert(error);
 			}
 			
 			
 			
+		});
+	}
+	
+	
+	//해당학생이 수강신청 한 리스트만 검색 후 출력
+	function getRegistList(){
+		$.ajax({
+			url:"<c:url value='/registration/registList'/>",
+			type:"post",
+			dataType:"json",
+			success:function(res){
+				var str = "";
+				var sum = 0;
+				if(res.checkNull=="N"){
+					$.each(res.subList, function(idx, item){
+						sum+=item.credit;
+						str+="<tr class='jqgfirstrow' role='row' id='appliedList'>";
+						str+="<td role='gridcell' style='height: 0px; width: 7%;'><button class='cancelBt'>취소</button></td>";
+						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
+						str+="<td role='gridcell' style='height: 0px; width: 18%; text-align: center'>"+item.subjName+"</td>";
+						str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+item.personnel+"</td>";
+						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.profName+"</td>";
+						str+="<td role='gridcell' style='height: 0px; width: 5%;'>"+item.credit+"</td>";
+						str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
+						str+="<td role='gridcell' style='height: 0px; width: 6%;'>"+item.type+"</td>";
+						str+="<td role='gridcell' style='height: 0px; width: 9%;'>한국어</td>";
+						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.syllabus+"</td>";
+						str+="</tr>";
+					});
+				}else if(res.checkNull=="Y"){
+					str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
+					str+="<td colspan='10'>수강신청 내역이 없습니다.</td></tr>"
+				}
+				$('#gridLecture2 tbody').html(str);
+				$('#numOfSubj').val(res.appliedCount);
+				$('#sumCredit').val(sum);
+				
+				$('.cancelBt').click(function(){
+					var tdArr= new Array();
+					var tr = $(this).parent().parent();
+					var td = tr.children();
+					var openSubCode=td.eq(1).text();
+					
+					$.ajax({
+						url:"<c:url value='/registration/deleteReg'/>",
+						data:{
+							"openSubCode":openSubCode
+						},
+						type:"post",
+						success:function(res){
+							alert(res);
+							getRegistList();
+						},
+						error:function(xhr, status, error){
+							alert(error);
+						}
+					});
+				});
+				
+			}
 		});
 	}
 	
@@ -219,7 +301,7 @@
 						<th id="hide5">학과</th>
 						<td id="major">
 							<select name="p_major" id="p_major" style="width: 100%">
-								<option value="All">---All---</option>
+								<option value="0">---All---</option>
 									<c:if test="${!empty dList }">
 										<c:forEach var="dVo" items="${dList }">
 											<option value="${dVo.depNo }">${dVo.depName }</option>
@@ -270,7 +352,7 @@
 				</tbody>
 			</table>
 			<div class="buttonset">
-				<button class="btn-search" onclick="javascript:gridLecture('Y');" id="selectBt" style="width: 40px;">조회</button>
+				<button class="btn-search"  id="selectBt" style="width: 40px;">조회</button>
 			</div>
 		</div>
 
@@ -432,7 +514,7 @@
 					</div>
 					<div class="ui-jqgrid-bdiv" >
 						<div style="position: relative;">
-							<table id="gridLecture" tabindex="0" cellspacing="0"
+							<table id="gridLecture1" tabindex="0" cellspacing="0"
 								cellpadding="0" border="0" role="presentation"
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
@@ -594,7 +676,7 @@
 					</div>
 					<div class="ui-jqgrid-bdiv" >
 						<div style="position: relative;">
-							<table id="gridLecture" tabindex="0" cellspacing="0"
+							<table id="gridLecture2" tabindex="0" cellspacing="0"
 								cellpadding="0" border="0" role="presentation"
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
@@ -622,9 +704,9 @@
 			<div style="margin-bottom: 20px; margin-top: 10px;">
 				<form action="" style="float: right;">
 					<label>신청과목수 : </label>
-					<input type="text" style="width: 80px;">
+					<input type="text" id="numOfSubj" style="width: 80px;">
 					<label>신청학점 : </label>
-					<input type="text" style="width: 80px;">
+					<input type="text" id="sumCredit" style="width: 80px;">
 					<label>최대한도학점 : </label>
 					<input type="text" style="width: 80px;">
 				</form>
