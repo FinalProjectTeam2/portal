@@ -433,7 +433,6 @@ public class AdminMemberController {
 		model.addAttribute("empDepartList", empDepartList);
 		model.addAttribute("authorityList", authorityList);
 		model.addAttribute("empPositionList", empPositionList);
-		model.addAttribute("authCode",authCode);
 
 	}
 	
