@@ -95,12 +95,19 @@ $(function() {
 								</c:forEach>
 							</select>
 						</div>
+						<input type="text" value="${empSearchVo.authCode1}">
+						<input type="text" value="${param.authCode}">
+						<input type="text" value="${fn:indexOf(param.authCode,'ADMIN')}">
 						<div class="ckState stud">
 							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
 								for="selectAll">전체</label>
 								<c:forEach var="vo" items="${authorityList}">
 								<input type="checkbox" name="authCode"
-								value="${vo.authCode }" id="${vo.authCode }"><label for="${vo.authCode }">
+								value="${vo.authCode }" id="${vo.authCode }"
+								<c:if test="${fn:indexOf(param.authCode,vo.authCode)>-1 }">
+									 checked="checked"
+								</c:if>
+								><label for="${vo.authCode }">
 								${vo.authName }</label>
 								</c:forEach>
 						</div>
@@ -120,7 +127,7 @@ $(function() {
 									 selected="selected"
 									</c:if>>${year-j }</option>
 							</c:forEach>
-						</select> 이름 <input type="text" name="empName">
+						</select> 이름 <input type="text" name="empName"  value="${empSearchVo.empName}">
 						<button class="btCustom btn btn-primary btn-lg login-button"
 							id="btSearch">검색</button>
 						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
@@ -209,7 +216,6 @@ $(function() {
 									${i } </a>
 							</c:if>
 						</c:forEach>
-
 						<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
 							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
 							<a href="#" style="color: #3333339c"

@@ -90,7 +90,19 @@
 								</c:forEach>
 							</select> <label for="department"><span>학과</span></label> <select
 								name="major" class="rightEnd" id="department">
+								<c:if test="${empty param.facultyNo }">
 								<option value="0">학부를 선택하세요</option>
+								</c:if>
+								<c:if test="${!empty param.facultyNo }">
+								<option value='0'>선택</option>
+								<c:forEach var="vo" items="${departmentList}">
+								<option value="${vo.depNo}"
+									<c:if test="${param.major==vo.depNo }">
+									 selected="selected" 
+									</c:if>
+								>${vo.depName }</option>
+								</c:forEach>								
+								</c:if>
 							</select>
 						</div>
 						<div class="ckState stud">
@@ -120,7 +132,7 @@
 									 selected="selected"
 									</c:if>>${year-j }</option>
 							</c:forEach>
-						</select> 이름 <input type="text" name="name">
+						</select> 이름 <input type="text" name="name" value="${studentSearchVo.name}">
 						<button class="btCustom btn btn-primary btn-lg login-button"
 							id="btSearch">검색</button>
 						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
