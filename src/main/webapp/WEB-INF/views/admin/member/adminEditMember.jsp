@@ -102,7 +102,9 @@ function inputPhoneNumber(obj) {
 					$.select();
 				},
 				error:function(xhr,status,error){
+					
 					alert(status + ", " + error);
+					alert("code = "+ xhr.status + " message = " + xhr.responseText + " error = " + error);
 				}
 			});
 			return false;
