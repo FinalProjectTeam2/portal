@@ -499,6 +499,7 @@ public class AdminMemberController {
 	public String deleteStudent(String stuNo, Model model) {
 		Official_infoVO offiVo = offiService.selectByNo(stuNo);
 		if(!offiVo.getImageUrl().equals("default.jpg")) {
+			
 			offiVo.getImageUrl();
 		}
 		

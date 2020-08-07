@@ -44,6 +44,12 @@ div#chatDataIn {
 #chattingDiv .portlet {
     margin-bottom: 10px;
 }
+#chattingDiv .portlet .portlet-heading .portlet-title h4 {
+   	float: left;
+}
+#chattingDiv .portlet .portlet-heading .portlet-title {
+   width: 100%;
+}
 </style>
 <sec:authorize access="isAuthenticated()">
 	
@@ -87,6 +93,21 @@ div#chatDataIn {
 			$("#message").keydown(function(key) {
 				if (key.keyCode == 13) {
 					send();
+				}
+			});
+			$("#deleteRoom").click(function() {
+				if(confirm('현재 채팅방을 삭제하시겠습니까?')){
+					sock.close();
+					$.ajax({
+						url : "<c:url value='/chat/room/delete'/>",
+						data : {roomId : roomId},
+						dataType : "text",
+						type : "get",
+						success: function(res) {
+							console.log(res);
+							acyncMovePage('<c:url value="/chat/"/>', 'get');
+						}
+					});
 				}
 			});
 
@@ -209,6 +230,10 @@ div#chatDataIn {
 								<h4>
 									<i class="fa fa-circle text-green"></i>실시간 채팅방 - ${room.name}
 								</h4>
+								<c:if test="${room.officialNo == principal.officialNo }">
+									<input id="deleteRoom" type="button" value="방 삭제"
+										style="margin-top: 5px;">
+								</c:if>
 							</div>
 							<div class="clearfix"></div>
 						</div>

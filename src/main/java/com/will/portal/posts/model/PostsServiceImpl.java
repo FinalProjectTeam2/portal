@@ -1,6 +1,7 @@
 package com.will.portal.posts.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class PostsServiceImpl implements PostsService{
 	@Override
 	public int insertPosts(PostsVO vo) {
 		return postsDao.insertPosts(vo);
+	}
+	
+	@Override
+	public int insertComment(PostsVO vo) {
+		return postsDao.insertComment(vo);
 	}
 
 	@Override
@@ -53,8 +59,18 @@ public class PostsServiceImpl implements PostsService{
 	}
 
 	@Override
-	public int deletePostByPostNo(int postNo) {
-		return postsDao.deletePostByPostNo(postNo);
+	public int deletePostByPostNo(Map<String, String> map) {
+		return postsDao.deletePostByPostNo(map);
+	}
+
+	@Override
+	public int updatePost(PostsVO vo) {
+		return postsDao.updatePost(vo);
+	}
+
+	@Override
+	public PostsVO selectPostByPostNo(int postNo) {
+		return postsDao.selectPostByPostNo(postNo);
 	}
 	
 	

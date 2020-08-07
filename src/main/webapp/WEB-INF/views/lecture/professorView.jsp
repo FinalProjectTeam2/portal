@@ -10,7 +10,13 @@
 <style>
 #tableDiv th{
 	color: black;
+	text-align: center;
 }
+#tableDiv td{
+	color: black;
+	text-align: center;
+}
+
 
 </style>
 
@@ -22,55 +28,97 @@
 		$('#subjCode').change(function(){
 			showList();	
 		});
+		
+		
+		
+		
 	});
 	
 	
 	function showList(){
-	
-	$.ajax({
-		url:"<c:url value='/lecture/evaluation'/>",
-		type:"post",
-		data:{"subCode":"$('#subjCode').val()"},
-		dataType:"json",
-		success:function(res){
-			$('#listTitle').text($("#subjCode option:selected").text()+" 수강생 목록");
-			var table = "<table border='1'>"+
-							"<tr>"+
-								"<th>수강신청 코드</th>"+
-								"<th>학번</th>"+
-								"<th>이름</th>"+
-								"<th>수강구분</th>"+
-								"<th>중간고사</th>"+
-								"<th>기말고사</th>"+
-								"<th>과제</th>"+
-								"<th>출석</th>"+
-								"<th>기타</th>"+
-								"<th>총점</th>"+
-							"</tr>";
-				$.each(res, function(index, item){
-					table += "<tr>"+
-								"<td>"+ item.subCode +"</td>"+
-								"<td>"+ item.stuNo +"</td>"+
-								"<td>"+ item.name +"</td>"+
-								"<td>"+ item.classification +"</td>"+
-								"<td>"+ item.midterm +"</td>"+
-								"<td>"+ item.finals +"</td>"+
-								"<td>"+ item.assignment +"</td>"+
-								"<td>"+ item.attendance +"</td>"+
-								"<td>"+ item.etc +"</td>"+
-								"<td>"+ item.totalGrade +"</td>"+
-							"</tr>";
-				});
-				table+="</table>";
-				
-				$('#tableDiv').html(table);
-				
-		}, 
-		error:function(xhr, status, error){
-			alert(error)
-		}
-	});
-	
+		$.ajax({
+			url:"<c:url value='/lecture/evaluation'/>",
+			type:"post",
+			data:{"subCode":$('#subjCode').val()},
+			dataType:"json",
+			success:function(res){
+				$('#listTitle').text($("#subjCode option:selected").text()+" 수강생 목록");
+				var table = "<table border='1'>"+
+								"<colgroup>"+
+									"<col width='12%'>"+
+									"<col width='10%'>"+
+									"<col width='10%'>"+
+									"<col width='10%'>"+
+									"<col width='8%'>"+
+									"<col width='8%'>"+
+									"<col width='8%'>"+
+									"<col width='8%'>"+
+									"<col width='8%'>"+
+									"<col width='8%'>"+
+									"<col width='10%'>"+
+								"</colgroup>"+
+								"<tr>"+
+									"<th>수강신청 코드</th>"+
+									"<th>학번</th>"+
+									"<th>이름</th>"+
+									"<th>수강구분</th>"+
+									"<th>중간고사</th>"+
+									"<th>기말고사</th>"+
+									"<th>과제</th>"+
+									"<th>출석</th>"+
+									"<th>기타</th>"+
+									"<th>총점</th>"+
+									"<th></th>"
+								"</tr>";
+					$.each(res, function(index, item){
+						$('tr:odd').find('input').css('background', '#efefef');
+						table += "<tr>"+
+									"<td>"+ item.subCode +"</td>"+
+									"<td>"+ item.stuNo +"</td>"+
+									"<td>"+ item.name +"</td>"+
+									"<td>"+ item.classification +"</td>"+
+									"<td><input type='text' size='3' value='"+ item.midterm +"'></td>"+
+									"<td><input type='text' size='3' value='"+ item.finals +"'></td>"+
+									"<td><input type='text' size='3' value='"+ item.assignment +"'></td>"+
+									"<td><input type='text' size='3' value='"+ item.attendance +"'></td>"+
+									"<td><input type='text' size='3' value='"+ item.etc +"'></td>"+
+									"<td><input type='text' size='3' value='"+ item.totalGrade +"'></td>"+
+									"<td><button type='button' class='btn btn-primary btOk'>입력</button></td>"+
+								"</tr>";
+					});
+					table+="</table>";
+					
+					$('#tableDiv').html(table);
+					
+					$('.btOk').click(function(){
+						var srt = "";
+						var tdArr= new Array();
+						var checkBtn= $(this);
+						
+						var tr = checkBtn.parent().parent();
+						var td = tr.children();
+						
+						var subCode=td.eq(0).text();
+						var stuNo=td.eq(1).text();
+						var name=td.eq(2).text();
+						var classification=td.eq(3).text();
+						var midTerm=td.eq(4).children().val();
+						var finals=td.eq(5).children().val();
+						var assignment=td.eq(6).children().val();
+						var attendance=td.eq(7).children().val();
+						var etc=td.eq(8).children().val();
+						var totalGrade=td.eq(9).children().val();
+						
+						alert('subCode='+subCode+', stuNo='+stuNo+', name='+name+', classification'+classification+', midTerm='+midTerm
+								+', finals='+finals+', assignment='+assignment+', attendance='+attendance+', etc='+etc+', totalGrade='+totalGrade);
+					});
+					
+			}, 
+			error:function(xhr, status, error){
+				alert(error)
+			}
+		});
+		
 	
 }
 

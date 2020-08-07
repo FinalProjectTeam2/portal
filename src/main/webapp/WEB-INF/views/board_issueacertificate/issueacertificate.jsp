@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>증명서발급 안내</title>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
 <style>
 /*TITILE*/
 .tit_sub{
@@ -3501,22 +3501,12 @@ content: '';
 
 }
 
-
 </style>
-</head>
-<body>
+<div id="tuition1">
 <div class="list_tab_wrap">
 			<button>증명서 발급안내</button>
 			<ul class="list_tab tab3 parentTab" style="display: block;">
-				
-					
-					
-					
-						
-					
-					<li>
-						
-							<a href="#" onclick="fn_contentInfo(this,1)" class="on" title="증명서 발급안내:선택됨" data-contno="2" data-subcnt="0" data-pageviewyn="N">증명서 발급안내</a>							
+				<li><a href="#" onclick="fn_contentInfo(this,1)" class="on" title="증명서 발급안내:선택됨" data-contno="2" data-subcnt="0" data-pageviewyn="N">증명서 발급안내</a>							
 						
 						
 					</li>
@@ -3887,5 +3877,5 @@ content: '';
       </table>
       </div>
    </article>
-</body>
-</html>
+ </div>
+<%@ include file="../inc/bottom.jsp"%>  

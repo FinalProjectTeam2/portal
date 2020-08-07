@@ -16,8 +16,20 @@ ul.pagination {
 .title img {
 	margin: 0 5px 0 0;
 }
-.delFlag{
+
+.delFlag {
 	color: gray;
+}
+.reCount{
+	color: #4a4747;
+	font-size: 0.9em;
+}
+#tableList a{
+	color: black;
+}
+#tableList a:hover{
+	color: blue;
+	text-decoration: none;
 }
 </style>
 <!-- 공지사항 -->
@@ -31,106 +43,139 @@ ul.pagination {
 			return false;
 		});
 
-		$("#boardWrite").click(function() {
-			location.href = "<c:url value='/portal/board/write?bdCode=${boardVo.bdCode}'/>";
+		$("#boardWrite")
+				.click(
+						function() {
+							location.href = "<c:url value='/portal/board/write?bdCode=${boardVo.bdCode}'/>";
+						});
+
+		$("#recordCountPerPage").change(function() {
+			$.send($("#currentPage").val());
+		});
+		$("#sort").change(function() {
+			$.send($("#currentPage").val());
 		});
 	});
 
 	$.send = function(curPage) {
 		$("#currentPage").val(curPage);
 
-		$.ajax({
-			url : "<c:url value='/portal/board/ajax/list'/>",
-			data : $("form[name=frmSearch]").serializeArray(),
-			dataType : "json",
-			type : "post",
-			success : function(res) {
-				makeList(res);
-				pageMake(res); //페이징 처리 함수
-				$('body').scrollTop(0);
-			}
-		});
+		$
+				.ajax({
+					url : "<c:url value='/portal/board/ajax/list'/>",
+					data : $("form[name=frmSearch]").serializeArray(),
+					dataType : "json",
+					type : "post",
+					success : function(res) {
+						makeList(res);
+						pageMake(res); //페이징 처리 함수
+						$('body').scrollTop(0);
+						$("#recordCountPerPage").val(
+								res.pagingInfo.recordCountPerPage);
+						
+						var sortName = res.bdSearchVo.sort;
+						if (sortName == null || sortName == '') {
+							sortName == 'write';
+						}
+						
+						$("#sort").val(sortName);
+						
+						$("#searchCondition").val(res.bdSearchVo.searchCondition);
+						$("#searchKeyword").val(res.bdSearchVo.searchKeyword);
+					}
+				});
 	}
 
 	function makeList(obj) {
-		
-		var str = '<table id="myTable">'
-			+ '<colgroup>'
-			+ '<col width="5%">'
-			+ '<col width="60%">'
-			+ '<col width="15%">'
-			+ '<col width="10%">'
-			+ '<col width="10%">'
-			+ '</colgroup>'
-			+ '<thead>'
-			+ '<tr class="maTable_tr1">'
-			+ '<th scope="col">번호</th>'
-			+ '<th scope="col">제목</th>'
-			+ '<th scope="col">작성자</th>'
-			+ '<th scope="col">작성일</th>'
-			+ '<th scope="col">조회수</th>'
-			+ '</tr>'
-			+ '</thead>';
-		
+
+		var str = '<table id="myTable">' + '<colgroup>' + '<col width="5%">'
+				+ '<col width="60%">' + '<col width="15%">'
+				+ '<col width="10%">' + '<col width="10%">' + '</colgroup>'
+				+ '<thead>' + '<tr class="maTable_tr1">'
+				+ '<th scope="col">번호</th>' + '<th scope="col">제목</th>'
+				+ '<th scope="col">작성자</th>' + '<th scope="col">작성일</th>'
+				+ '<th scope="col">조회수</th>' + '</tr>' + '</thead>';
+
 		str += "<tbody>";
-		
-		if(obj.pagingInfo.totalRecord == 0){
-			str += "<tr>"
-				+ '<td colspan="5">게시물이 없습니다.</td>'
-			+ "</tr>";
-		}else{
-			$(".listinfo1").html("<span>전체 "+obj.pagingInfo.totalRecord+"건&ensp;&ensp;|&ensp;&ensp;페이지 "+obj.pagingInfo.currentPage+"/"
-					+obj.pagingInfo.totalPage+ "</span>");
-			
-			$.each(obj.list, function(idx, item) {
-				
-				$.ajax({
-					url : "<c:url value='/common/ajax/member'/>",
-					data : {officialNo: item.officialNo},
-					dataType: "json",
-					type : "get",
-					success : function(res) {
-						name = res.name;
-						offi = "."+item.officialNo;
-						$(offi).html(name+"("+item.officialNo+")");
-					}
-				});
-				str += "<tr>";
-				str += "<td>"+ item.postNo +"</td>";
-				if(item.delFlag == 'N'){
-					str += "<td class='title'><a href=\"<c:url value='/portal/board/detailCount'/>?postNo="
-						+ item.postNo + "\" title=\""+item.title+"\">";
-					if(item.fileCount > 0){
-						str += "<img alt=\"file\" src=\"<c:url value='/resources/images/file.gif'/>\">";
-					}
-					str	+= '<span style="margin-right: 5px;">'
-					if(item.title.length >= 60){
-						str += item.title.substring(0,60) + "...";
-					}else{
-						str += item.title
-					}
-					str += '</span>';
-					if(item.newImgTerm < 24){
-						str += "<img alt=\"newPost\" src=\"<c:url value='/resources/images/new.gif'/>\">";
-					}
-					str += "</a></td>";
-				}else{
-					str += '<td class="delFlag">삭제된 게시물입니다.</td>';
-				}
-				
-				str += "<td class='"+item.officialNo+"'></td>";
-				str += "<td>"+  moment(item.regDate).format('YYYY-MM-DD') +"</td>";
-				str += "<td>"+ item.readCount +"</td>";
-				str += "</tr>";
-			});
-			
+
+		if (obj.pagingInfo.totalRecord == 0) {
+			str += "<tr>" + '<td colspan="5">게시물이 없습니다.</td>' + "</tr>";
+		} else {
+			$(".listinfo1").html(
+					"<span>전체 " + obj.pagingInfo.totalRecord
+							+ "건&ensp;&ensp;|&ensp;&ensp;페이지 "
+							+ obj.pagingInfo.currentPage + "/"
+							+ obj.pagingInfo.totalPage + "</span>");
+
+			$
+					.each(
+							obj.list,
+							function(idx, item) {
+
+								$
+										.ajax({
+											url : "<c:url value='/common/ajax/member'/>",
+											data : {
+												officialNo : item.officialNo
+											},
+											dataType : "json",
+											type : "get",
+											success : function(res) {
+												name = res.name;
+												offi = "." + item.officialNo;
+												$(offi)
+														.html(
+																name
+																		+ "("
+																		+ item.officialNo
+																		+ ")");
+											}
+										});
+								str += "<tr>";
+								str += "<td>" + item.postNo + "</td>";
+								if (item.delFlag == 'N') {
+									str += "<td class='title'><a href=\"<c:url value='/portal/board/detailCount'/>?postNo="
+											+ item.postNo
+											+ "\" title=\""
+											+ item.title + "\">";
+									if (item.fileCount > 0) {
+										str += "<img alt=\"file\" src=\"<c:url value='/resources/images/file.gif'/>\">";
+									}
+									str += '<span style="margin-right: 5px;">'
+									if (item.title.length >= 60) {
+										str += item.title.substring(0, 60)
+												+ "...";
+									} else {
+										str += item.title
+									}
+									str += '</span>';
+									if (item.newImgTerm < 24) {
+										str += "<img alt=\"newPost\" src=\"<c:url value='/resources/images/new.gif'/>\">";
+									}
+									str += "</a>"
+									if(item.reCount > 0){
+										str += '<span class="reCount">('+ item.reCount + ")</span>";
+									}
+									str += "</td>";
+								} else {
+									str += '<td class="delFlag">삭제된 게시물입니다.</td>';
+								}
+
+								str += "<td class='"+item.officialNo+"'></td>";
+								str += "<td>"
+										+ moment(item.regDate).format(
+												'YYYY-MM-DD') + "</td>";
+								str += "<td>" + item.readCount + "</td>";
+								str += "</tr>";
+							});
+
 		}
 		str += "</tbody>";
 		str += '</table>';
-		
+
 		$("#tableList").html(str);
 	}
-	
+
 	function pageMake(obj) {
 		var pagingInfo = obj.pagingInfo;
 
@@ -161,14 +206,15 @@ ul.pagination {
 		//다음 블록
 		if (pagingInfo.lastPage < pagingInfo.totalPage) {
 			str += '<li class="page-item">' + '<a class="page-link" href="#" '
-					+ 'aria-label="Previous" onclick="$.send(' + (pagingInfo.lastPage + 1)
-					+ ')">' + '<span aria-hidden="true">&laquo;</span>'
-					+ '</a></li>';
+					+ 'aria-label="Previous" onclick="$.send('
+					+ (pagingInfo.lastPage + 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
 		}
 
 		str += '</ul></nav>';
 
 		$("#divPage").html(str);
+		$("#currentPage").val(pagingInfo.currentPage);
 	}
 </script>
 <main role="main" class="flex-shrink-0">
@@ -194,40 +240,46 @@ ul.pagination {
 		<!-- ------------------------------------------------->
 
 		<!-- 게시판 -->
-		<div id="menu1" class="tabcontent">
-			<div class="listinfo1"></div>
-			<div class="listinfo2">
-				<span>정렬:</span> <a href="#">수정일</a> <a href="#">작성일</a>
+		<form name="frmSearch" method="post" action="">
+			<div id="menu1" class="tabcontent">
+				<div class="listinfo1"></div>
+				<div class="listinfo2">
+					<select name="sort" id="sort">
+						<option value="write">작성일</option>
+						<option value="edit">수정일</option>
+					</select> <select name="recordCountPerPage" id="recordCountPerPage">
+						<option value="10">10개</option>
+						<option value="20">20개</option>
+					</select>
+				</div>
+
+				<!-- 게시판 -->
+				<div id="tableList"></div>
+
+				<div class="divbt">
+					<!-- 비회원은 버튼 안 보임! -->
+					<button type="button" class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
+				</div>
 			</div>
+			<!-- 페이지번호 -->
+			<div class="divPage" id="divPage"></div>
 
-			<!-- 게시판 -->
-			<div id="tableList"></div>
+			<!-- 검색 -->
+			<div class="divSearch">
 
-			<div class="divbt">
-				<!-- 비회원은 버튼 안 보임! -->
-				<button class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
-			</div>
-		</div>
-		<!-- 페이지번호 -->
-		<div class="divPage" id="divPage"></div>
-
-		<!-- 검색 -->
-		<div class="divSearch">
-			<form name="frmSearch" method="post" action="">
 				<input type="hidden" name="currentPage" value="1" id="currentPage" />
-				<!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
-				<input type="hidden" name="countPerPage" value="5" id="countPerPage" />
-				<!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
+
 				<input type="hidden" name="bdCode" id="bdCode"
-					value="${boardVo.bdCode }" /> <select name="searchCondition">
+					value="${boardVo.bdCode }" /> <select name="searchCondition"
+					id="searchCondition">
 					<option value="title">제목</option>
-					<option value="content">내용</option>
-					<option value="name">작성자</option>
-				</select> <input type="text" name="searchKeyword" title="검색"> <input
-					type="submit" value="검색"><br> <br> <strong>인기검색어
-					:</strong> 교직 , 토익 , 토익 , 단소리
-			</form>
-		</div>
+					<option value="contents">내용</option>
+					<option value="official_no">작성자</option>
+				</select> <input type="text" name="searchKeyword" title="검색"
+					id="searchKeyword"> <input type="submit" value="검색"><br>
+				<br> 
+			</div>
+		</form>
 
 		<script>
 			function myFunction() {

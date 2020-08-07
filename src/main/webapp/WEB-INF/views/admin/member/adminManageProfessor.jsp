@@ -169,8 +169,7 @@ $(function() {
 									<c:forEach var="map" items="${list }">
 										<tr>
 											<td><input type="checkbox" name="profList[${idx }].profNo"
-												value="${map['PROF_NO']}"> <input type="hidden"
-												name="pdItems[].imageURL" value=""></td>
+												value="${map['PROF_NO']}"></td>
 											<td>${map['PROF_NO']}</td>
 											<td>${map['PROF_NAME']}</td>
 											<td>${map['FACULTY_NAME']}</td>
@@ -224,7 +223,7 @@ $(function() {
 					</div>
 				<div class="divRight">
                   <select name="positionNo" id="positionNo">
-                     <option value="0">학적상태 변경</option>
+                     <option value="0">직책 변경</option>
                   	<c:forEach var="vo" items="${profPositionList}">
                      <option value="${vo.positionNo }">${vo.positionName }</option>
 					</c:forEach>

@@ -45,7 +45,7 @@
     <tr>
         <td colspan="6" class="header">강의계획 (syllabus)</td>
     </tr>
-     <tr class="column-header">
+    <tr class="column-header">
         <td>논리명</td>
         <td>물리명</td>
         <td>도메인</td>
@@ -126,7 +126,7 @@
         <td>강의실코드(FK)</td>
         <td>classroom_code</td>
         <td>N/A</td>
-        <td>VARCHAR2(10)</td>
+        <td>VARCHAR2(20)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -147,7 +147,7 @@
         <td>강의실코드(PK)</td>
         <td>classroom_code</td>
         <td>N/A</td>
-        <td>VARCHAR2(10)</td>
+        <td>VARCHAR2(20)</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -714,6 +714,14 @@
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
+    <tr>
+        <td>인원</td>
+        <td>PERSONNEL</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
@@ -1104,6 +1112,14 @@
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
+    <tr>
+        <td>요약교시명</td>
+        <td>short_name</td>
+        <td>N/A</td>
+        <td>VARCHAR2(20)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
 </table>
 <table class="entity" cellpadding="0" cellspacing="0">
     <tr>
@@ -1146,30 +1162,6 @@
         <td>contents</td>
         <td>N/A</td>
         <td>CLOB</td>
-        <td>N</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>원본글번호</td>
-        <td>group_no</td>
-        <td>N/A</td>
-        <td>NUMBER</td>
-        <td>N</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>정렬번호</td>
-        <td>sort_no</td>
-        <td>N/A</td>
-        <td>NUMBER</td>
-        <td>N</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>차수</td>
-        <td>step</td>
-        <td>N/A</td>
-        <td>NUMBER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -2099,7 +2091,7 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td>학적상태</td>
+        <td>학적상태번호(FK)</td>
         <td>state</td>
         <td>N/A</td>
         <td>VARCHAR2(100)</td>
@@ -2151,6 +2143,210 @@
         <td>change_date</td>
         <td>N/A</td>
         <td>DATE</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">학적상태 (student_state)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>학적상태번호(PK)</td>
+        <td>state</td>
+        <td>N/A</td>
+        <td>VARCHAR2(100)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>학적상태이름</td>
+        <td>state_name</td>
+        <td>N/A</td>
+        <td>VARCHAR2(100)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">대댓글 (rereply)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>대댓글번호(PK)</td>
+        <td>rereply_no</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>댓글번호(FK)</td>
+        <td>reply_no</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>관계자번호</td>
+        <td>official_no</td>
+        <td>N/A</td>
+        <td>VARCHAR2(100)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>등록일</td>
+        <td>reg_date</td>
+        <td>N/A</td>
+        <td>DATE</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>내용</td>
+        <td>contents</td>
+        <td>N/A</td>
+        <td>CLOB</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>삭제여부</td>
+        <td>del_flag</td>
+        <td>N/A</td>
+        <td>CHAR(1)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">채팅방 (chatroom)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>채팅방아이디(PK)</td>
+        <td>ROOM_ID</td>
+        <td>N/A</td>
+        <td>VARCHAR2(100)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>채팅방명</td>
+        <td>NAME</td>
+        <td>N/A</td>
+        <td>VARCHAR2(50)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>관계자번호</td>
+        <td>OFFICIAL_NO</td>
+        <td>N/A</td>
+        <td>VARCHAR2(50)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>등록일</td>
+        <td>REG_DATE</td>
+        <td>N/A</td>
+        <td>DATE</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">채팅메시지 (chatmessage)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>번호(PK)</td>
+        <td>NO</td>
+        <td>N/A</td>
+        <td>NUMBER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>채팅방아이디(FK)</td>
+        <td>ROOM_ID</td>
+        <td>N/A</td>
+        <td>VARCHAR2(100)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>관계자번호</td>
+        <td>WRITER_ID</td>
+        <td>N/A</td>
+        <td>VARCHAR2(100)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>작성자이름</td>
+        <td>WRITER_NAME</td>
+        <td>N/A</td>
+        <td>VARCHAR2(30)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>메세지</td>
+        <td>MESSAGE</td>
+        <td>N/A</td>
+        <td>VARCHAR2(2000)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>등록일</td>
+        <td>REG_DATE</td>
+        <td>N/A</td>
+        <td>DATE</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>타입</td>
+        <td>TYPE</td>
+        <td>N/A</td>
+        <td>VARCHAR(20)</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
