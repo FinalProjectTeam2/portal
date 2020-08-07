@@ -39,6 +39,7 @@
     }
 </script>
 <script>
+
 //핸드폰 번호에 자동으로 "-"입력
 function inputPhoneNumber(obj) {
     var number = obj.value.replace(/[^0-9]/g, "");
@@ -71,8 +72,6 @@ function inputPhoneNumber(obj) {
 		$('#editFrm').submit(function () {
 			var formData = new FormData(); 
 			
-			formData.append("officialNo", $("#officialNo").val()); 
-			
 			formData.append("bankCode", $("#bankCode").val()); 
 			formData.append("accountNo", $("#accountNo").val()); 
 			formData.append("accountName", $("#accountName").val()); 
@@ -84,6 +83,8 @@ function inputPhoneNumber(obj) {
 			formData.append("addrDetail", $("#addrDetail").val());
 			
 			formData.append("oldFileName", $("#oldFileName").val());
+
+			formData.append("name", $("#name").val());
 			
 			formData.append("upfile", $("#upfile")[0].files[0]);
 
@@ -108,13 +109,14 @@ function inputPhoneNumber(obj) {
 			return false;
 		});	
 	});
+	
 	$.select = function () {
 		var officialNo = $('#officialNo').val();
-		var facultyNo = $('#facultyNo').val();
+		
 		$.ajax({
 			url : "<c:url value='/admin/member/selectInfo' />",
 			type: "get",
-			data : "officialNo=" + officialNo+"&facultyNo="+facultyNo,
+			data : "officialNo=" + officialNo,
 			dataType: "json",
 			success:function(res){
 				$('#bankCode').val(res.BANK_CODE);
@@ -127,7 +129,8 @@ function inputPhoneNumber(obj) {
 				$('#address').val(res.ADDRESS); 
 				$('#addrDetail').val(res.ADDR_DETAIL);
 				
-				$('#facultyNo').val(res.FACULTY_NO);
+				$('#faculty').val(res.FACULTY_NO);
+				$('#major').val(res.MAJOR);
 				
 				var imgDiv = "<img id='studentImg' alt='사진' src='${ pageContext.request.contextPath }/common/image?img=" +res.IMAGE_URL+ "'/>"
 						+'<div class="rowa" style=" margin-top: 20px;"> <label for="upfile">사진수정</label>'
@@ -298,6 +301,7 @@ a:focus {
 								      	</c:forEach>
 								      </c:if>
 								    </select>
+
 				      			</td>
 				      			<th>계좌번호</th>
 				      			<td><input placeholder="-없이 입력해주세요" name="accountNo" id="accountNo" type="text" class="validate"></td>
@@ -321,29 +325,7 @@ a:focus {
 								<th>전화번호</th>
 								<td><input placeholder="핸드폰번호" onKeyup="inputPhoneNumber(this);" name="hp" id="hp" type="text" class="validate" value=""></td>
 				      		</tr>
-				      		<tr>
-				      			<th>학부/학과</th>
-								<td>
-									<select class="browser-default" name="facultyNo" id="facultyNo">
-										<option value="0">선택</option>
-										<c:if test="${!empty facultyList }" >
-											<c:forEach var="faculty" items="${facultyList }">
-												<option value="${faculty.facultyNo }">${faculty.facultyName }</option>
-											</c:forEach>
-										</c:if>
-								    </select>
-								    <!-- 학과선택 -->
-									<select class="browser-default" name="departmentNo" id="departmentNo">
-										<option value="0">선택</option>
-										<c:if test="${!empty res.departmentList }" >
-											<c:forEach var="department" items="${res.departmentList }">
-												<option value="${department.depNo }">${department.depName }</option>
-											</c:forEach>
-										</c:if>
-								    </select>
-								    <!-- -->
-								</td>
-				      		</tr>
+	
 				      	</table>
 				      	<div style="text-align: center; margin-top: 10px;">
 				      			<input type="submit" id="editBt" value="정보수정" style="color: white;">
