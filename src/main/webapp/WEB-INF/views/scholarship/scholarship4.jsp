@@ -3,21 +3,31 @@
 <%@ include file="../inc/portalSidebar.jsp"%>
 <style type="text/css">
 .scholarship {
-	margin-left: 20%;
-	margin-top: -20%;
-	min-height: 500px;
+	margin-left: 5%;
+	margin-top: 2%;
+	
 }
 
 hr {
 	width: 45%;
 }
 
+.tableSearch,  .tableApply, .tablePayments {
+	width: 1400px;
+	min-width: 500px;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin: 20px 10px;
+}
 </style>
 
 <div class="scholarship">
 <h1>장학금 관리 페이지</h1>
 <hr align="left">
-
+<br>
 <!-- 학생정보 검색? 상태? -->
 	<div class="divSearch">
 		<table class=tableSearch">
@@ -39,7 +49,7 @@ hr {
 			</tbody>	
 		</table>
 	</div>
-
+<br>
 
 <!-- 장학금 신청 내역  -->
 	<div class="divApply">
@@ -70,6 +80,7 @@ hr {
 			</tbody>	
 		</table>
 	</div>
+<br>
 <!-- 장학금 지급 내역 -->
 	<div class="divPayments">
 		<table class=tablePayments">

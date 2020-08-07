@@ -3,13 +3,24 @@
 <%@ include file="../inc/portalSidebar.jsp"%>
 <style type="text/css">
 .scholarship {
-	margin-left: 20%;
-	margin-top: -20%;
+	margin-left: 5%;
+	margin-top: 2%;
 	min-height: 500px;
 }
 
 hr {
 	width: 45%;
+}
+
+.divTable {
+	width: 1400px;
+	min-width: 500px;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin: 20px 10px;
 }
 </style>
 <div class="scholarship">
@@ -17,9 +28,7 @@ hr {
 <br>
 
 <!-- 학생정보 검색? 상태? -->
-	<div class="">
-	학번/ 학과/ 학년/ 이름/ 학적상태(재학/휴학/입학)/ 
-	</div>
+
 
 <!-- 장학금 신청 -->
 	<div class="">
@@ -42,13 +51,6 @@ hr {
 					<td></td>
 				</tr>
 			</tbody>
-장학금명/ 신청지급구분(미지급/ 지급완료)/ 신청일자/ 신청상태(신청/ 최종승인)/ 승인일자
-년도
-학기
-장학금명
-장학금
-지급일자 
-기준평점
 		</table>
 	</div>
 
