@@ -229,7 +229,7 @@ public class AdminMemberController {
 
 		// select 생성
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
-		List<DepartmentVO> departmentList = departmentService.selectDepartment();
+		List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(studentSearchVo.getFacultyNo());
 		if (state != null) {
 			String[] slist = state.split(",");
 			setState(studentSearchVo, slist);
@@ -248,6 +248,7 @@ public class AdminMemberController {
 		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("departmentList", departmentList);
+		logger.info("{}",departmentList);
 		model.addAttribute("stateList", stateList);
 		
 		// db
@@ -262,6 +263,7 @@ public class AdminMemberController {
 		model.addAttribute("studentSearchVo", studentSearchVo);
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
+		model.addAttribute("state",state);
 	}
 
 	/**
@@ -313,7 +315,11 @@ public class AdminMemberController {
 
 		// for select 생성
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
-		List<DepartmentVO> departmentList = departmentService.selectDepartment();
+		if(profSearchVo.getFacultyNo()!=null && !profSearchVo.getFacultyNo().isEmpty()) {
+			List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(Integer.parseInt(profSearchVo.getFacultyNo()));
+			model.addAttribute("departmentList", departmentList);
+			
+		}
 		if (position != null && !position.isEmpty()) {
 			String[] slist = position.split(",");
 			setPosition(profSearchVo, slist);
@@ -329,9 +335,8 @@ public class AdminMemberController {
 		profSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
 		profSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 
-		logger.info("list.size, {}, {}", facultyList.size(), departmentList.size());
+		logger.info("list.size, {}", facultyList.size());
 		model.addAttribute("facultyList", facultyList);
-		model.addAttribute("departmentList", departmentList);
 		model.addAttribute("profPositionList", profPositionList);
 
 		// db
@@ -450,7 +455,7 @@ public class AdminMemberController {
 	}
 
 	/**
-	 *
+	 * 회원정보 조회/수정
 	 * @param userid
 	 */
 	@RequestMapping(value = "/adminEditMember", method = RequestMethod.GET)
