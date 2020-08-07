@@ -1,7 +1,6 @@
 package com.will.portal.registration.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.portal.common.MemberDetails;
 import com.will.portal.common.PaginationInfo;
+import com.will.portal.common.RegistrationSearchVO;
 import com.will.portal.common.Utility;
 import com.will.portal.department.model.DepartmentVO;
 import com.will.portal.faculty.model.FacultyVO;
@@ -70,22 +70,33 @@ public class RegistrationController {
 	@RequestMapping(value = "/registration/openSubjList", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> openSubjList(@ModelAttribute RegistrationSearchVO regSearchVo, Model model) {
+		
+		
 		logger.info("개설된 강의 읽어가기 파라미터 registrationsearchvo={}", regSearchVo);
 		PaginationInfo pagingInfo = new PaginationInfo();
+		
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
 		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
 		pagingInfo.setCurrentPage(regSearchVo.getCurrentPage());
 
 		regSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		regSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
-		
-		List<OpenSubjListVO> list = registServ.openSubjList();
+		String checkNull = "";
+		List<OpenSubjListVO> list = registServ.openSubjList(regSearchVo);
 		int count = list.size();
+		logger.info("리스트 개수 count={}", count);
+		
+		if(count < 1) {
+			checkNull="Y";
+		}else {
+			checkNull="N";
+					
+		}
+		logger.info("checkNull={}", checkNull);
 		Map<String, Object> map = new HashedMap<String, Object>();
 		map.put("list", list);
 		map.put("count", count);
-		logger.info("리스트 개수 count={}", count);
-		
+		map.put("checkNull", checkNull);
 		return map;
 		
 		

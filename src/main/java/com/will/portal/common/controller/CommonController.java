@@ -90,6 +90,7 @@ public class CommonController {
 	      ResponseEntity<byte[]> entity = null;
 	      logger.info("FILE NAME : " + img);
 	      String uploadPath =session.getServletContext().getRealPath("pd_images");
+	      logger.info("uploadPath={}",uploadPath);
 
 	      try {
 	         String formatName = img.substring(img.lastIndexOf(".") + 1);

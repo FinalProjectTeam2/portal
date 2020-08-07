@@ -4,10 +4,15 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@Getter @Setter @ToString
+@Getter @Setter 
 public class ReplyAllVO {
 	private ReplyVO replyVo;
 	private List<RereplyVO> rereplyList;
+	@Override
+	public String toString() {
+		return "ReplyAllVO [replyVo=" + replyVo + ", rereplyList=" + rereplyList + "]";
+	}
+	
+	
 }
