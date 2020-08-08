@@ -5,19 +5,32 @@
 <mapper namespace="config.mybatis.mapper.oracle.files">
 	<insert id="insertFiles" parameterType="filesVo">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
-			select FILES_SEQ.nextval from dual
+			select
+			FILES_SEQ.nextval from dual
 		</selectKey>
 		insert into files(NO,POST_NO,FILE_NAME,FILE_SIZE,ORIGINAL_FILE_NAME)
 		values(#{no},#{postNo},#{fileName},#{fileSize},#{originalFileName})
 	</insert>
-	<select id="selectCountByPostNo" parameterType="int" resultType="int">
+
+	<select id="selectCountByPostNo" parameterType="int"
+		resultType="int">
 		select count(*) from files
 		where post_no = #{postNo}
 	</select>
+
 	<update id="upDownCount" parameterType="int">
 		update files
-		set down_count = down_count+1
+		set
+		down_count = down_count+1
 		where no = #{no}
 	</update>
+	
+	<delete id="deleteFile" parameterType="int">
+		delete from files where no = #{no}
+	</delete>
+	
+	<select id="selectFileByPostNo" parameterType="int" resultType="filesVo">
+		select * from files where post_no = #{postNo}
+	</select>
 </mapper>
 

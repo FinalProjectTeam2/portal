@@ -226,7 +226,18 @@
 	<!-- top 시작 -->
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand" href="<c:url value='/index'/>"
+			<a class="navbar-brand" 
+			<sec:authorize access="isAuthenticated()">
+			<c:if test="${principal.type == 'ADMIN' }">
+				href="<c:url value='/admin/adminMain'/>"
+			</c:if>
+			<c:if test="${principal.type != 'ADMIN' }">
+				href="<c:url value='/index'/>"
+			</c:if>
+			</sec:authorize>
+			<sec:authorize access="isAnonymous()">
+					href="<c:url value='/index'/>"
+				</sec:authorize>
 				style="border-right: 1px solid white; padding: 0 20px 0 0;"> <img
 				class="logo" alt="로고"
 				src="<c:url value='/resources/images/logo.png' />">
@@ -281,7 +292,7 @@
 					<li><a class="nav-link" href="#"> 학사서비스 </a>
 						<ul>
 							<li><a href="#">학사정보</a></li>
-							<li><a href="#">수강신청</a></li>
+							<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
 						</ul></li>
 					</c:if>
 					<c:if test="${principal.type=='PROFESSOR' }">
@@ -289,6 +300,8 @@
 						<ul>
 							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
 							<li><a href="#">강의 개설 신청</a></li>
+							<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
+							
 						</ul></li>
 					</c:if>
 					</sec:authorize>

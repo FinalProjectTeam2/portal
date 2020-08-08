@@ -6,9 +6,9 @@ $(function() {
 					$(this).remove();
 				});
 
-				var faculty = $(this).val();
-				if (faculty != "") {
-					$('#department').append("<option value=''>선택</option>");
+				var faculty = $('#faculty').val();
+				if (faculty != "" && faculty!=0) {
+					$('#department').append("<option value='0'>선택</option>");
 					$.ajax({
 						type : 'get',
 						url : "/portal/common/departmentList",
@@ -30,12 +30,12 @@ $(function() {
 							return;
 						}
 
-					})
-				}else{
-					$('#department').append("<option value=''>학부를 선택하세요</option>");
+					});
+				} else {
+					$('#department').append(
+							"<option value='0'>학부를 선택하세요</option>");
 				}
 			});
-
 
 	$('#btMultiDel').click(
 			function() {
@@ -57,10 +57,14 @@ $(function() {
 		$('.ckState input[type=checkbox]').prop('checked', this.checked);
 	});
 
-
 });// document.ready
 
 function boardList(curPage) {
 	$("input[name=currentPage]").val(curPage);
 	$('form[name=frmPage]').submit();
 }
+/*
+function boardList(curPage) {
+	$("input[name=currentPage]").val(curPage);
+	$('form[name=frmPage]').submit();
+}*/

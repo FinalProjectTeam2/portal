@@ -1,19 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<title>등록금 납부 안내</title>
-<style type="text/css">
-body {
-	margin: 5% 25%;
-}
-
-h1{
-	text-align: center;
-}
-</style>
-</head>
-<body>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+<div id="tuition1">
 <h1>등록금 납부 안내</h1>
 <table cellspacing="1" cellpadding="2" width="1000" bgcolor="#dddddd" border="0">
 	<tbody>
@@ -237,5 +227,5 @@ h1{
 </table>
 
 <a href="#"><h3>등록금 납부 관련 FAQ 바로 가기</h3></a>
-</body>
-</html>
+</div>
+<%@ include file="../inc/bottom.jsp"%>

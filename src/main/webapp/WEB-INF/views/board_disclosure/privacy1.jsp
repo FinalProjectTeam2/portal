@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
 <title>개인정보처리 방침</title>
-</head>
-<body>
+<div id="tuition1">
 <div class="sub_tit_area" id="sub_tit_area">
 			<h3><span>개인정보처리방침</span></h3>
 			<menu class="content_util">
@@ -133,10 +133,5 @@
 </div>
 </div>
 </div>
-
-
-
-
 </div>
-</body>
-</html>
+<%@ include file="../inc/bottom.jsp"%>

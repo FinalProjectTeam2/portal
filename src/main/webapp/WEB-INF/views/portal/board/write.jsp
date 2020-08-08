@@ -6,23 +6,6 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/board/write.css'/>" />
 <style type="text/css">
-.col-25 {
-	padding-left: 2%;
-}
-#addFile{
-	margin: 5px 0 0 5px;
-    font-size: 1em;
-    padding: 0px 4px;
-    float: left;
-}
-button[name=delFile] {
-    background-color: #ffffff00;
-    border: 0;
-    padding: 0 5px;
-}
-button[name=delFile]:hover {
-	color: red;
-}
 </style>
 <script type="text/javascript">
 	
@@ -33,6 +16,11 @@ button[name=delFile]:hover {
 		if(${vo.isUpload == 'N'}){
 			$("#fileList").hide();
 		}
+		
+		$("input[type=file]").change(function(){
+			var fileName = $(this).val().substr( $(this).val().lastIndexOf( "\\" ) + 1);
+			$(this).next().html(fileName);
+		});
 		
 		$("#boardFrm").submit(function() {
 			if($("#title").val().length < 1){
@@ -112,10 +100,11 @@ button[name=delFile]:hover {
 </script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-		<form action="<c:url value='/portal/board/write'/>" class="writeFrm" id="boardFrm" method="post"
-			enctype="multipart/form-data">
-			<input type="hidden" value="${principal.officialNo }" name="officialNo">
-			<input type="hidden" id="contents" name="contents">
+		<form action="<c:url value='/portal/board/write'/>" class="writeFrm"
+			id="boardFrm" method="post" enctype="multipart/form-data">
+			<input type="hidden" value="${principal.officialNo }"
+				name="officialNo"> <input type="hidden" id="contents"
+				name="contents">
 			<div class="row1">
 				<div class="col-25">
 					<label for="l_title" class="formTitle">제목</label>
@@ -126,18 +115,17 @@ button[name=delFile]:hover {
 			</div>
 			<div class="row1">
 				<div class="col-25">
-					<label for="l_category"  class="formTitle">분류</label>
+					<label for="l_category" class="formTitle">분류</label>
 				</div>
 				<div class="col-75">
 					<select id="bdCode" name="bdCode">
 						<option value="">선택하세요</option>
 						<c:forEach var="vo" items="${list }">
 							<c:if test="${vo.usage == 'Y' }">
-								<option value="${vo.bdCode }" 
-								<c:if test="${param.bdCode == vo.bdCode }">
+								<option value="${vo.bdCode }"
+									<c:if test="${param.bdCode == vo.bdCode }">
 									selected="selected"
-								</c:if>
-								>${vo.bdName }</option>
+								</c:if>>${vo.bdName }</option>
 							</c:if>
 						</c:forEach>
 					</select>
@@ -145,17 +133,19 @@ button[name=delFile]:hover {
 			</div>
 			<div class="row1" id="fileList">
 				<div class="col-25">
-					<label for="l_date"  class="formTitle">파일</label>
-					<button type="button" id="addFile" class="btn btn-info">파일 추가</button>
+					<label for="l_date" class="formTitle">파일</label>
+					<button type="button" id="addFile" class="btn btn-info">파일
+						추가</button>
 				</div>
 				<div class="input-group mb-3 col-75">
 					<div class="input-group-prepend">
 						<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
 					</div>
 					<div class="custom-file">
-						<input type="file" class="custom-file-input" name="files" id="inputGroupFile01"
-							aria-describedby="inputGroupFileAddon01"> <label
-							class="custom-file-label" for="inputGroupFile01">파일을 선택하세요</label>
+						<input type="file" class="custom-file-input" name="files"
+							id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+						<label class="custom-file-label" for="inputGroupFile01">파일을
+							선택하세요</label>
 					</div>
 				</div>
 			</div>

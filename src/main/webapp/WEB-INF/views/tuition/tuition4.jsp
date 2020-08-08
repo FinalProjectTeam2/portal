@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>등록금납입고지서&영수증</title>
@@ -68,11 +69,8 @@ td, th, tr {
 }
 </style>
 
-
-
-</head>
-<body>
-<h1>납입금고지서&납입금영수증 </h1>
+<h1>납입금고지서&납입금영수증 </h1><br>
+<div id="tuition1">
 <!-- 인쇄버튼 -->
 <div class="divbtn">
 	<button class="btn" onclick="window.print()"><i class="fa fa-download"></i>납입내역출력하기</button> 
@@ -285,8 +283,8 @@ td, th, tr {
 				</tr>
 		</tbody>
 </table>
-<br><br>
 </div>
+<br><br>
 <!-- 학생회비고지서_학생용 -->
 <div class="divForm4">
 	<table class="t4">
@@ -339,5 +337,5 @@ td, th, tr {
 </table>
 </div>
 </div>
-</body>
-</html>
+</div>
+<%@ include file="../inc/bottom.jsp"%>

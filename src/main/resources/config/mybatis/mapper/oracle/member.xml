@@ -124,11 +124,20 @@
    		update official_info
 		set hp1 = #{hp1}, hp2 = #{hp2}, hp3 = #{hp3}, email1 =#{email1}, email2 =#{email2}, zipcode =#{zipcode}, 
 		address=#{address}, addr_detail=#{addrDetail}
-		<if test="!imageUrl.equals('default.jpg')">
-		, image_url = #{imageUrl}
+		<if test="imageUrl != null and imageUrl != ''">
+			, image_url = #{imageUrl}
 		</if>
 		where official_no=#{officialNo}
    	</update>
+   	
+   	<update id="updateChangeDate" parameterType="string">
+   		update professor
+   		set change_date=sysdate
+   		where prof_no=#{profNo}
+   	</update>
+   	
+   	
+   	
 </mapper>
 
 

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
+<main role="main" class="flex-shrink-0">
+<div class="container">
+
 <title>개인정보 취급방침</title>
 <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -67,8 +69,8 @@ img {
 
     })
 </script>
-</head>
-<body>
+<div id="tuition1">
+
     <div class="information_wrap">
         <div class="email_information">
 	        <p class="logo"><img src="https://portal.dankook.ac.kr/www-theme/images/custom/common/h1_logo_pc.png" alt="단국대 로고" /></p>
@@ -79,5 +81,5 @@ img {
 	    </div>
 	   <button class="btn"><i class="fa fa-close"></i> Close</button>
 	</div>
-</body>
-</html>
+</div>
+<%@ include file="../inc/bottom.jsp"%>

@@ -5,17 +5,30 @@
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link rel="stylesheet" href="<c:url value='/resources/css/lecture/weekcalendar.css'/>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.css'/>">
 <link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.theme.css'/>">
 <style>
+ 
     label, input { display:block; }
     input.text { margin-bottom:12px; width:95%; padding: .4em; }
     fieldset { padding:0; border:0; margin-top:25px; }
     h1 { font-size: 1.2em; margin: .6em 0; }
     .ui-dialog .ui-state-error { padding: .3em; }
     .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    
+    #syllabus:hover{
+    	text-decoration: none;
+    	color: black;
+    
+    	
+    }
+    #syllabus{
+    	text-decoration: none;
+    	color: black;
+    
+    	
+    }
     
     .tab{
     	float: left;
@@ -32,19 +45,26 @@
     	all:unset;
     	font-size: 0.8em;
     }
+   
 </style>
 <script type="text/javascript">
 	var time = '';
 
 $(function(){
 	timeTable();
-	
 	var dialog, form,
 	subject = $( "#subject" ),
 	time = $( "#time" ),
 	credit = $( "#credit" ),
 	allFields = $( [] ).add( subject ).add( time ).add( credit ),
 	tips = $( ".validateTips" );
+	
+	//강의 계획서 업로드 
+	$('#syllabus').click(function(){
+		window.open("<c:url value='/syllabus/upload'/>", "syllabusUpload", "width:800, height:700")
+	});
+	
+	
 	
 	function updateTips( t ) {
 	      tips
@@ -62,34 +82,51 @@ $(function(){
 		})	 */
 	 
 	    function addSubject() {
-	     $.ajax({
-	    	 url:"<c:url value='/lecture/addSubject'/>",
-	    	 type:"post",
-	    	 data:{
-	    		 "subject":$('#subject option:selected').val(),
-	    		 "time":$('#time').val(),
-	    		 "classroom":$('#classroom option:selected').val()
-	    	 },	    	
-	    	 success:function(res){
-	    		 alert(res);
-	    		 dialog.dialog( "close" );
-	    		 timeTable();
-	    	 },
-	    	 error:function(xhr, status, error){
-	    		 alert(error);
-	    	 }
-	    	 
-	    	 
-	     });
+			
+			$('.lectureList').each(function(){
+				//화면 우측 테이블에 현재 입력하려는 과목의 학점과 입력한 개수가 같으면 더이상 입력이 되지않도록 처리
+				if($(this).children().eq(0).text()==$('#subject option:selected').text()){
+					if($(this).children().eq(1).text()==$(this).children().eq(2).text()){
+						alert('더이상 등록할 수 없습니다.');
+						return;
+					}else{
+						
+					     $.ajax({
+					    	 url:"<c:url value='/lecture/addSubject'/>",
+					    	 type:"post",
+					    	 data:{
+					    		 "subject":$('#subject option:selected').val(),
+					    		 "time":$('#time').val(),
+					    		 "classroom":$('#classroom option:selected').val()
+					    	 },	    	
+					    	 success:function(res){
+					    		 alert(res);
+					    		 dialog.dialog( "close" );
+					    		 timeTable();
+					    		 updateTable();
+					    	 },
+					    	 error:function(xhr, status, error){
+					    		 alert(error);
+					    	 }
+					    	 
+					    	 
+					     });
+					}
+						
+				}
+				
+				
+			});
+			
 	    }
-	 
+			 
 	    dialog = $( "#dialog-form" ).dialog({
 	      autoOpen: false,
 	      height: 500,
 	      width: 350,
 	      modal: true,
 	      buttons: {
-	        "등록하기": addSubject,
+	        "등록하기":addSubject,
 	        "취소": function() {
 	          dialog.dialog( "close" );
 	        }
@@ -113,6 +150,38 @@ $(function(){
 	      });
 });
 
+function updateTable(){
+	$.ajax({
+		url:"<c:url value='/lecture/updateTable'/>",
+		dataType:"json",
+		success:function(res){
+			var table="<p>${principal.name} 교수님의 전체 강의 계획</p>"+
+				"<table border='1'>"+
+					"<tr>"+
+						"<th>과목명</th>"+
+						"<th>학점</th>"+
+						"<th>입력 학점</th>"+
+					"</tr>";
+				$.each(res, function(index, item){
+					table+="<tr>";
+					table+="<td class='subName'>"+item.subjName+"</td>";
+					table+="<td class='cred'>"+item.credit+"</td>";
+					table+="<td class='cnt'>"+item.count+"</td>";
+					table+="</tr>";
+				});	
+				table+="</table>";
+				$('#timetableDiv').html(table);
+		},
+		error:function(xhr, status, error){
+			alert(error);
+		}
+	});
+}
+
+
+
+
+
 function timeTable(){
 	$.ajax({
 		url:"<c:url value='/lecture/timeByProfNo'/>",
@@ -125,8 +194,12 @@ function timeTable(){
 				var tdId=item.timetableCode;
 				tdId = '#'+tdId;
 				console.log(tdId);
-				$(tdId).html(item.classroomCode);
-				$(tdId).css('background','skyblue');
+				var bColor = '#A'+ item.classroomCode.substring(5, 8);
+				var color = '#5'+ item.classroomCode.substring(5, 8);
+				console.log(bColor);
+				$(tdId).html(item.subjName);
+				$(tdId).css('background', bColor);
+				$(tdId).css('color', color);
 			});
 		},
 		error:function(xhr, status, error){
@@ -148,7 +221,7 @@ function timeTable(){
 
 <main role="main" class="flex-shrink-0">
 <div class="container">
-	<h2>강의시간 설정</h2><label style="float: right; margin-right: 500px;">강의 계획서 업로드<a href="#"><img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
+	<h2>강의시간 설정</h2><a id="syllabus" href="#" style="float: right; margin-right: 500px;">강의 계획서 업로드<img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
 	<h4>${principal.name} 교수님의 시간표 </h4>
 	<div class='tab'>
 	  <table border='0' cellpadding='0' cellspacing='0'>
@@ -229,20 +302,20 @@ function timeTable(){
 	<c:if test="${!empty list}">
 		<div id="timetableDiv">
 			<p>${principal.name} 교수님의 전체 강의 계획</p>
-			<table border="1">
-				<tr>
-					<th>과목명</th>
-					<th>학점</th>
-					<th>입력 학점</th>
-				</tr>
-				<c:forEach var="vo" items="${list }">
-	      			<tr>
-						<td>${vo.subjName }</td>      				
-						<td>${vo.credit }</td>
-						<td>${vo.count }</td> 				
-	      			</tr>
-	      		</c:forEach>	
-			</table>
+			<table border='1'>
+						<tr>
+							<th>과목명</th>
+							<th>학점</th>
+							<th>입력 학점</th>
+						</tr>
+						<c:forEach var="vo" items="${list }">
+							<tr class="lectureList">
+								<td class="subName">${vo.subjName }</td>
+								<td class="cred">${vo.credit }</td>
+								<td class="cnt">${vo.count }</td>
+							</tr>
+						</c:forEach>
+					</table>
 		</div>
  	</c:if>
 <div id="dialog-form" title="수업 등록">

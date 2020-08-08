@@ -11,11 +11,14 @@ public class StudentSearchVO extends SearchVO {
 	private String state3; // 상태(재학, 휴학, 졸업)
 	private String state4; // 상태(재학, 휴학, 졸업)
 	private String state5; // 상태(재학, 휴학, 졸업)
+	private String state6; // 상태(재학, 휴학, 졸업)
 	private String startNo; // 범위 시작학번
 	private String endNo; // 범위 끝 학번
 
+	
+
 	public StudentSearchVO(String stuNo, String name, int facultyNo, int major, String state1, String state2,
-			String state3, String state4, String state5, String startNo, String endNo) {
+			String state3, String state4, String state5, String state6, String startNo, String endNo) {
 		super();
 		this.stuNo = stuNo;
 		this.name = name;
@@ -26,6 +29,7 @@ public class StudentSearchVO extends SearchVO {
 		this.state3 = state3;
 		this.state4 = state4;
 		this.state5 = state5;
+		this.state6 = state6;
 		this.startNo = startNo;
 		this.endNo = endNo;
 	}
@@ -114,6 +118,14 @@ public class StudentSearchVO extends SearchVO {
 		this.startNo = startNo;
 	}
 
+	public String getState6() {
+		return state6;
+	}
+
+	public void setState6(String state6) {
+		this.state6 = state6;
+	}
+
 	public String getEndNo() {
 		return endNo;
 	}
@@ -126,6 +138,6 @@ public class StudentSearchVO extends SearchVO {
 	public String toString() {
 		return "StudentSearchVO [stuNo=" + stuNo + ", name=" + name + ", facultyNo=" + facultyNo + ", major=" + major
 				+ ", state1=" + state1 + ", state2=" + state2 + ", state3=" + state3 + ", state4=" + state4
-				+ ", state5=" + state5 + ", startNo=" + startNo + ", endNo=" + endNo + "]";
+				+ ", state5=" + state5 + ", state6=" + state6 + ", startNo=" + startNo + ", endNo=" + endNo + "]";
 	}
 }

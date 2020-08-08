@@ -3,18 +3,121 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.employee">
-	<select id="selectPwd" parameterType="String" resultType="String">
+	<select id="selectPwd" parameterType="String"
+		resultType="String">
 		select pwd from employee where emp_no=#{empNo}
 	</select>
-   
-   	<select id="selectByEmpNo" parameterType="String" resultType="employeeVO">
-   		select * from employee where emp_no=#{empNo}
-   	</select>
-   	
-   	<select id="selectSsn" parameterType="string" resultType="string">
-   		select ssn from official_info where official_no=#{officicalNo}
-   	</select>
-   
+
+	<select id="selectByEmpNo" parameterType="String"
+		resultType="employeeVO">
+		select * from employee where emp_no=#{empNo}
+	</select>
+
+	<select id="selectSsn" parameterType="string"
+		resultType="string">
+		select ssn from official_info where official_no=#{officicalNo}
+	</select>
+
+	<select id="selectViewByEmpNo" parameterType="String"
+		resultType="map">
+		select * from EMPLOYEE_VIEW where official_no=#{officialNo}
+	</select>
+	<select id="selectEmployeeView" parameterType="employeeSearchVO"
+		resultType="map">
+		select *
+		from
+		(
+		select rownum as RNUM, A.*
+		from(
+		<if
+			test="(empName==null or empName =='') and
+		(depCode==null or depCode =='') and (positionCode==null or positionCode=='') and (authCode1==null or authCode1 =='')
+		and (startNo==null or startNo=='') and (endNo==null or endNo=='')">
+			select * from employee_view
+		</if>
+		<if
+			test="(empName!=null and empName !='') or
+		(depCode!=null and depCode !='') or (positionCode !=null and positionCode !='') or (authCode1 !=null and authCode1 !='')
+		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
+			select * from employee_view
+			where substr(EMP_NO,1,4) between
+			#{startNo} and #{endNo}
+			<if test="empName!=null and empName !=''">
+				and emp_name like '%' || #{empName} || '%'
+			</if>
+			<if test="depCode!=null and depCode !=''">
+				and dep_code=#{depCode}
+			</if>
+			<if test="positionCode !=null and positionCode !=''">
+				and POSITION_CODE=#{positionCode}
+			</if>
+			<if test="authCode1 !=null and authCode1 !=''">
+				and auth_code in (#{authCode1}
+				<if test="authCode2 !=null and authCode2 !=''">
+					,#{authCode2}
+				</if>
+				<if test="authCode3 !=null and authCode3 !=''">
+					,#{authCode3}
+				</if>
+				)
+			</if>
+		</if>
+		order by EMP_NO
+		)A
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="getTotalRecord" parameterType="employeeSearchVO"
+		resultType="int">
+		<if
+			test="(empName==null or empName =='') and
+		(depCode==null or depCode =='') and (positionCode==null or positionCode=='') and (authCode1==null or authCode1 =='')
+		and (startNo==null or startNo=='') and (endNo==null or endNo=='')">
+			select count(*) from employee_view
+		</if>
+		<if
+			test="(empName!=null and empName !='') or
+		(depCode!=null and depCode !='') or (positionCode !=null and positionCode !='') or (authCode1 !=null and authCode1 !='')
+		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
+			select count(*) from employee_view
+			where substr(EMP_NO,1,4) between
+			#{startNo} and #{endNo}
+			<if test="empName!=null and empName !=''">
+				and emp_name like '%' || #{empName} || '%'
+			</if>
+			<if test="depCode!=null and depCode !=''">
+				and dep_code=#{depCode}
+			</if>
+			<if test="positionCode !=null and positionCode !=''">
+				and POSITION_CODE=#{positionCode}
+			</if>
+			<if test="authCode1 !=null and authCode1 !=''">
+				and auth_code in (#{authCode1}
+				<if test="authCode2 !=null and authCode2 !=''">
+					,#{authCode2}
+				</if>
+				<if test="authCode3 !=null and authCode3 !=''">
+					,#{authCode3}
+				</if>
+				)
+			</if>
+		</if>
+	</select>
+
+	<update id="updatePosition" parameterType="employeeVO">
+		update employee
+		set
+		POSITION_CODE = #{positionCode}
+		where EMP_NO=#{empNo}
+	</update>
+
+	<delete id="deleteEmployee" parameterType="String">
+		delete from employee
+		where EMP_NO=#{empNo}
+	</delete>
+
 </mapper>
 
 

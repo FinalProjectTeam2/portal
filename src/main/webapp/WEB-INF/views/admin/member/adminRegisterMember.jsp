@@ -63,7 +63,7 @@
 								<div class="form-group">
 									<label for="hp2" class="cols-sm-2 control-label">전화번호</label>
 									<div class="cols-sm-10">
-										<div class="input-group">
+										<div class="hp input-group">
 											<span class="input-group-addon"><i
 												class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
 												type="text" class="form-control" name="hp1" id="hp1"
@@ -80,7 +80,7 @@
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<input type="text" class="form-control" name="email1"
-												id="email1" />@ <select name="email2" id="email2">
+												id="email1" /> <h4>&nbsp;@</h4> <select name="email2" id="email2">
 												<option value="naver.com">naver.com</option>
 												<option value="gmail.com">gmail.com</option>
 												<option value="daum.net">daum.net</option>

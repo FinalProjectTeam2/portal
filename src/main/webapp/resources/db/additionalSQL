@@ -7,6 +7,19 @@ modify(classroom_code VARCHAR2(20));
 alter table subj_time
 modify(classroom_code VARCHAR2(20));
 
+#class룸 확인하는 view
+create or replace view class as
+select d.dep_no, c.classroom_code, c.classroom_name
+from department d join classroom c
+on c.building_code=d.building_code;
+
+#추가 시퀀스
+create sequence subj_time_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
+
+
 #은행DB
 CREATE SEQUENCE bank_SEQ
 INCREMENT BY 1
@@ -48,29 +61,88 @@ values(bank_seq.nextval, '제주은행');
 
 
 #학생 정보 VIEW 다시 만들었습니다
-CREATE OR REPLACE VIEW 
+CREATE OR REPLACE VIEW
 STUDENT_VIEW
 AS(
 
-SELECT s.*,o.*,ss.state_name FROM
-STUDENT S JOIN OFFICIAL_INFO O 
+SELECT * FROM
+STUDENT S JOIN OFFICIAL_INFO O
 ON S.STU_NO = O.OFFICIAL_NO
-JOIN 
+JOIN
 (
-SELECT D.*,F.FACULTY_NAME FROM 
+SELECT D.*,F.FACULTY_NAME FROM
 DEPARTMENT D JOIN FACULTY F
 ON F.FACULTY_NO = D.FACULTY_NO
-)A 
+)A
 ON S.MAJOR = A.DEP_NO
 JOIN
 (SELECT AI.OFFICIAL_NO AS "DUPSTUNO",AI.BANK_CODE,AI.ACCOUNT_NO,AI.ACCOUNT_NAME,B.BANK_NAME FROM ACCOUNT_INFO AI JOIN BANK B
 ON AI.BANK_CODE = B.BANK_CODE
 )BB
 ON O.OFFICIAL_NO = BB.DUPSTUNO
-join 
-(select * from student_state)ss
-on ss.state = S.STATE
+join
+(select STATE as "DUPSTATE", STATE_NAME from student_state)ss
+on ss.DUPSTATE = S.STATE
 );
+
+#교수 정보 VIEW
+CREATE OR REPLACE VIEW
+professor_VIEW
+AS(
+SELECT s.*,o.*,A.DEP_NAME,A.FACULTY_NO, A.FACULTY_NAME,A.BUILDING_CODE,A.TEL,A.TOTAL_CREDIT, bb.*,ss.POSITION_NAME FROM
+professor S JOIN OFFICIAL_INFO O
+ON S.prof_NO = O.OFFICIAL_NO
+JOIN
+(
+SELECT D.*,F.FACULTY_NAME FROM
+DEPARTMENT D JOIN FACULTY F
+ON F.FACULTY_NO = D.FACULTY_NO
+)A
+ON S.DEP_NO = A.DEP_NO
+JOIN
+(SELECT AI.OFFICIAL_NO AS "DUPPONO",AI.BANK_CODE,AI.ACCOUNT_NO,AI.ACCOUNT_NAME,B.BANK_NAME FROM ACCOUNT_INFO AI JOIN BANK B
+ON AI.BANK_CODE = B.BANK_CODE
+)BB
+ON O.OFFICIAL_NO = BB.DUPPONO
+join
+(select * from prof_position)ss
+on ss.position_no = S.position_no
+);
+
+#직원 정보 VIEW
+
+CREATE OR REPLACE VIEW
+employee_VIEW
+AS(
+
+SELECT s.*,o.*,bb.*, ss.POSITION_NAME,D.DEP_NAME,a.AUTH_NAME,a.AUTH_DESC,a.AUTH_LEVEL FROM
+EMPLOYEE S JOIN OFFICIAL_INFO O
+ON S.EMP_NO = O.OFFICIAL_NO
+JOIN
+(SELECT AI.OFFICIAL_NO AS "DUPOFFINO",AI.BANK_CODE,AI.ACCOUNT_NO,AI.ACCOUNT_NAME,B.BANK_NAME FROM ACCOUNT_INFO AI JOIN BANK B
+ON AI.BANK_CODE = B.BANK_CODE
+)BB
+ON O.OFFICIAL_NO = BB.DUPOFFINO
+join
+(select * from EMP_position)ss
+on ss.position_CODE = S.position_CODE
+JOIN EMP_DEPART D
+ON D.DEP_CODE = S.DEP_CODE
+ join 
+(select * from authority)a
+on s.AUTH_CODE = a.AUTH_CODE);
+
+#학적상태 테이블 추가
+/* 학적상태 */
+CREATE TABLE student_state (
+   state VARCHAR2(100) NOT NULL, /* 학적상태번호 */
+   state_name VARCHAR2(100) /* 학적상태이름 */
+);
+
+ALTER TABLE student MODIFY (state DEFAULT '1');
+update student
+set state=1;
+
 insert into student_state
 values('1','신입생');
 insert into student_state
@@ -81,3 +153,90 @@ insert into student_state
 values('4','졸업가능');
 insert into student_state
 values('5','졸업생');
+insert into student_state
+values('6','제적생');
+
+commit;
+CREATE UNIQUE INDEX PK_student_state
+   ON student_state (
+      state ASC
+   );
+ALTER TABLE student_state
+   ADD
+      CONSTRAINT PK_student_state
+      PRIMARY KEY (
+         state
+      );
+
+ALTER TABLE student
+   ADD
+      CONSTRAINT FK_student_state_TO_student
+      FOREIGN KEY (
+         state
+      )
+      REFERENCES student_state (
+         state
+      );
+
+
+
+
+--수강신청 들어갈때 해당학생 기본정보
+select s.name, s.stu_no, s.major, d.dep_name, f.faculty_no, f.faculty_name
+from department d  join student s
+on s.major=d.dep_no
+join faculty f
+on d.faculty_no=f.faculty_no;
+
+--검색했을때 나오는정보들
+
+ select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, tt.timetable_name, cr.classroom_name, st.type, sy.syllabus
+		from open_subj o join subject s
+		on o.subj_code=s.subj_code
+		join professor p
+		on s.prof_no=p.prof_no
+		join subj_time stime
+		on st.open_sub_code=o.open_sub_code
+		join timetable tt
+		on tt.timetable_code=stime.timetable_code
+		join classroom cr
+		on cr.classroom_code=stime.classroom_code
+		join subj_type st
+		on st.type_code=s.type_code
+		join syllabus sy
+		on sy.open_sub_code=o.open_sub_code
+
+--timetable 추가
+ALTER TABLE TIMETABLE
+ADD (SHORT_NAME VARCHAR2(20));
+
+ALTER TABLE timetable MODIFY (short_name NOT NULL);
+
+select o.open_sub_code, s.subj_name, p.prof_name, s.credit, st.classroom_code, c.classroom_name, ty.type, sy.syllabus
+from open_subj o join subject s
+on o.subj_code=s.subj_code
+join professor p
+on o.prof_no=p.prof_no
+join subj_time st
+on o.open_sub_code=st.open_sub_code
+join classroom c
+on st.classroom_code=c.classroom_code
+join subj_type ty
+on s.type_code=ty.type_code
+join syllabus sy
+on o.open_sub_code=sy.open_sub_code;
+
+#PROF_POSITION
+insert into prof_position
+values(prof_position_seq.nextval,'정교수');
+insert into prof_position
+values(prof_position_seq.nextval,'부교수');
+insert into prof_position
+values(prof_position_seq.nextval,'조교수');
+insert into prof_position
+values(prof_position_seq.nextval,'전임강사');
+insert into PROF_POSITION
+values(PROF_POSITION_SEQ.nextval,'퇴임');
+
+
+

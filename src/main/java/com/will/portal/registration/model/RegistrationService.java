@@ -1,0 +1,19 @@
+package com.will.portal.registration.model;
+
+import java.util.List;
+import java.util.Map;
+
+import com.will.portal.common.RegistrationSearchVO;
+import com.will.portal.department.model.DepartmentVO;
+import com.will.portal.faculty.model.FacultyVO;
+
+public interface RegistrationService {
+	List<FacultyVO> selectFaculty();
+	List<DepartmentVO> selectDepartment(int facultyNo);
+	List<OpenSubjListVO> openSubjList(RegistrationSearchVO vo);
+	List<String> selectRegisted(String stuNo);
+	List<OpenSubjListVO> registedList(List<String> list);
+	int countForDup(Map<String, Object> map);
+	int insertReg(Map<String, Object> map);
+	int deleteReg(Map<String, Object> map);
+}
