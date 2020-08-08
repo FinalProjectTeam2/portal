@@ -44,7 +44,6 @@
 	}
 </script>
 <script type="text/javascript">
-	
 	//핸드폰 번호에 자동으로 "-"입력
 	function inputPhoneNumber(obj) {
 		var number = obj.value.replace(/[^0-9]/g, "");
@@ -257,22 +256,12 @@ a:focus {
 	background-color: #ffffff00;
 }
 
-#editDep:hover {
-	color: #444444;
-	background-color: #ffec3f;
-	border-color: #444444;
-}
-
 #editDep {
-	color: #444444;
-	background-color: #dc99ff;
-	border-color: #dc99ff;
-	width: 74px;
-	height: 27px;
-	font-size: 14px;
-	padding: 0;
-	margin: 0 0 4px 10px;
-	font-weight: bold;
+	width: 65px;
+	height: 25px;
+	font-size: 12px;
+	padding: 0 0 1px 0;
+	margin: 0 0 5px 10px;
 }
 </style>
 <main role="main" class="flex-shrink-0">
