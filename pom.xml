@@ -207,8 +207,6 @@
 			<version>1.18.12</version>
 			<scope>provided</scope>
 		</dependency>
-
-
 		<!-- Commons FileUpload for ckeditor -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
