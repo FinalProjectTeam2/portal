@@ -90,10 +90,10 @@
 								</c:forEach>
 							</select> <label for="department"><span>학과</span></label> <select
 								name="major" class="rightEnd" id="department">
-								<c:if test="${empty param.facultyNo }">
+								<c:if test="${param.facultyNo==0 || empty param.facultyNo }">
 									<option value="0">학부를 선택하세요</option>
 								</c:if>
-								<c:if test="${!empty param.facultyNo }">
+								<c:if test="${!empty param.facultyNo && param.facutyNo!=0}">
 									<option value='0'>선택</option>
 									<c:forEach var="vo" items="${departmentList}">
 										<option value="${vo.depNo}"
