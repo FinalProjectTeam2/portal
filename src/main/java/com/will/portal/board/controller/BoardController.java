@@ -479,13 +479,12 @@ public class BoardController {
 	
 	@RequestMapping("/ajax/replyList")
 	@ResponseBody
-	public Map<String, Object> replyList(@RequestParam int postNo){
+	public List<ReplyAllVO> replyList(@RequestParam int postNo){
 		logger.info("ajax - 댓글 보여주기, 파라미터 postNo={}",postNo);
 		List<ReplyAllVO> list = replyService.selectReplyByPostNo(postNo);
 		logger.info("댓글 조회 결과, list.size=",list.size());
+		logger.info("댓글 조회 결과, list=",list);
 		
-		Map<String, Object> map = new HashedMap<String, Object>();
-		map.put("list", list);
-		return map;
+		return list;
 	}
 }

@@ -1,6 +1,4 @@
-package com.will.portal.registration.controller;
-
-import com.will.portal.common.SearchVO;
+package com.will.portal.common;
 
 public class RegistrationSearchVO extends SearchVO{
 	private int facultyNo;
@@ -9,7 +7,8 @@ public class RegistrationSearchVO extends SearchVO{
 	private String time1;
 	private String time2;
 	private String profName;
-	private String openSubName;
+	private String openSubCode;
+	
 	public int getFacultyNo() {
 		return facultyNo;
 	}
@@ -46,19 +45,21 @@ public class RegistrationSearchVO extends SearchVO{
 	public void setProfName(String profName) {
 		this.profName = profName;
 	}
-	public String getOpenSubName() {
-		return openSubName;
+	public String getOpenSubCode() {
+		return openSubCode;
 	}
-	public void setOpenSubName(String openSubName) {
-		this.openSubName = openSubName;
+	public void setOpenSubCode(String openSubCode) {
+		this.openSubCode = openSubCode;
 	}
-	
 	@Override
 	public String toString() {
 		return "RegistrationSearchVO [facultyNo=" + facultyNo + ", depNo=" + depNo + ", subjName=" + subjName
-				+ ", time1=" + time1 + ", time2=" + time2 + ", profName=" + profName + ", openSubName=" + openSubName
+				+ ", time1=" + time1 + ", time2=" + time2 + ", profName=" + profName + ", openSubCode=" + openSubCode
 				+ "]";
 	}
+	
+	
+	
 	
 	
 }

@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.will.portal.common.RegistrationSearchVO;
 import com.will.portal.department.model.DepartmentVO;
 import com.will.portal.faculty.model.FacultyVO;
-import com.will.portal.registration.controller.RegistrationSearchVO;
 
 @Service
 public class RegistraitionServiceImpl implements RegistrationService{
@@ -27,8 +27,8 @@ public class RegistraitionServiceImpl implements RegistrationService{
 	}
 
 	@Override
-	public List<OpenSubjListVO> openSubjList() {
-		return registrationDao.openSubjList();
+	public List<OpenSubjListVO> openSubjList(RegistrationSearchVO vo) {
+		return registrationDao.openSubjList(vo);
 	}
 
 	@Override

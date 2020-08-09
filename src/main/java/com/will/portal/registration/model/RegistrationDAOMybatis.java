@@ -7,9 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.portal.common.RegistrationSearchVO;
 import com.will.portal.department.model.DepartmentVO;
 import com.will.portal.faculty.model.FacultyVO;
-import com.will.portal.registration.controller.RegistrationSearchVO;
 
 @Repository
 public class RegistrationDAOMybatis implements RegistrationDAO{
@@ -28,8 +28,8 @@ public class RegistrationDAOMybatis implements RegistrationDAO{
 	}
 
 	@Override
-	public List<OpenSubjListVO> openSubjList() {
-		return sqlSession.selectList(namespace+"openSubjList");
+	public List<OpenSubjListVO> openSubjList(RegistrationSearchVO vo) {
+		return sqlSession.selectList(namespace+"openSubjList", vo);
 	}
 
 	@Override

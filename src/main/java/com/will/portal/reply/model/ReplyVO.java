@@ -16,4 +16,5 @@ public class ReplyVO {
 	private int postNo;
 	private String officialName;
 	private double now;
+	private String imageUrl;
 }
