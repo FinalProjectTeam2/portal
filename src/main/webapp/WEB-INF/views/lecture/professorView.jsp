@@ -29,7 +29,19 @@
 			showList();	
 		});
 		
-		
+		$('#btXls').click(function(){
+			$.ajax({
+				url:"<c:url value='/lecture/downloadScore'/>",
+				type:"post",
+				data:{
+					"subjCode":$('#subjCode option:selected').val()
+				},
+				success:function(res){
+					alert(res);
+				}
+				
+			});
+		});
 		
 		
 	});
@@ -119,13 +131,16 @@
 			}
 		});
 		
+		
+		
+		
 	
 }
 
 </script>
 <main role="main" class="flex-shrink-0">
 <div class="container">
-	<h2>과목을 선택하세요</h2>
+	<div><h2>과목을 선택하세요</h2><input type="button" id="btXls" value="excel로 다운받기" style="float: right; margin-right: 100px;"></div>
 	<select class="form-control" id="subjCode" style="width: 72%;">
 		<c:if test="${!empty sList }">
 			<c:forEach var="map" items="${sList }">

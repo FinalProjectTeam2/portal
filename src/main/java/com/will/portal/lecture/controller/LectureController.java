@@ -1,11 +1,24 @@
 package com.will.portal.lecture.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.api.client.http.HttpResponse;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.evaluation.model.EvaluationAllVO;
 import com.will.portal.evaluation.model.EvaluationService;
@@ -171,7 +185,168 @@ public class LectureController {
 	}
 	
 	
+	@RequestMapping(value = "/lecture/downloadScore", produces="text/plain;charset=UTF-8", method = RequestMethod.POST)
+	@ResponseBody
+	public void downloadScore(HttpServletResponse response, @RequestParam String subjCode, Model model) {
+		
+		logger.info("엑셀 다운처리 페이지 파라미터 subjCode={}", subjCode);
+		String fileName = "test";
+		
+		//excel 파일 틀 설
+		XSSFWorkbook xlsWb = new XSSFWorkbook(); //xlsx 엑셀 2007 이상
+		//HSSFWorkbook xlsWb = new HSSFWorkbook(); //xls 엑셀 97~03
 	
+		
+		//시트 생성 및 시트명 설정 - 매개변수를 비우면 default 형태로 입력된다.
+		Sheet sheet1 = xlsWb.createSheet("성적표"); //시트명 설정
+		
+		//엑셀 가운데, 중앙 정렬 - 4.10 버전 기준
+		CellStyle cellStyle = xlsWb.createCellStyle();
+		cellStyle.setAlignment(HorizontalAlignment.CENTER); //가운데 정렬
+		cellStyle.setVerticalAlignment(VerticalAlignment.CENTER); //중앙 정렬
+		
+		Row headerRow = null;
+		Cell headerCell = null;
+		
+		headerRow = sheet1.createRow(0); //0행 열을 생성 후
+		headerCell = headerRow.createCell(0); //0열 셀을 생성
+		headerCell.setCellValue("수강신청 코드"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		headerCell = headerRow.createCell(1); //0열 셀을 생성
+		headerCell.setCellValue("학번"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		headerCell = headerRow.createCell(2); //0열 셀을 생성
+		headerCell.setCellValue("이름"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		headerCell = headerRow.createCell(3); //0열 셀을 생성
+		headerCell.setCellValue("수강구분"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		headerCell = headerRow.createCell(4); //0열 셀을 생성
+		headerCell.setCellValue("중간고사"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		headerCell = headerRow.createCell(5); //0열 셀을 생성
+		headerCell.setCellValue("기말고사"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		headerCell = headerRow.createCell(6); //0열 셀을 생성
+		headerCell.setCellValue("과제"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+	
+		headerCell = headerRow.createCell(7); //0열 셀을 생성
+		headerCell.setCellValue("출석"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		headerCell = headerRow.createCell(8); //0열 셀을 생성
+		headerCell.setCellValue("기타"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		headerCell = headerRow.createCell(9); //0열 셀을 생성
+		headerCell.setCellValue("총점"); //엑셀 셀에 데이터 삽입 > 0행 0열에 "데이터"라는 문자열이 삽입된다.
+		headerCell.setCellStyle(cellStyle); //위에서 만들어놓은 셀 스타일 적용
+		
+		List<EvaluationAllVO> list = evaluationServ.selectAllListforEval(subjCode);
+		int rowCnt = 1;
+		for(EvaluationAllVO vo : list) {
+			//스타일 적용 및 셀 데이터 삽입
+			Row row = null;
+			Cell cell = null;
+
+			row = sheet1.createRow(rowCnt); //0행 열을 생성 후
+			
+			cell = row.createCell(0); //0열 셀을 생성
+			cell.setCellValue(vo.getSubCode()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(1); //1열 셀을 생성
+			cell.setCellValue(vo.getStuNo()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(2); //2열 셀을 생성
+			cell.setCellValue(vo.getName()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(3); //3열 셀을 생성
+			cell.setCellValue(vo.getClassification()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(4); //4열 셀을 생성
+			cell.setCellValue(vo.getMidterm()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(5); //5열 셀을 생성
+			cell.setCellValue(vo.getFinals()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(6); //6열 셀을 생성
+			cell.setCellValue(vo.getAssignment()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(7); //7열 셀을 생성
+			cell.setCellValue(vo.getAttendance()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(8); //8열 셀을 생성
+			cell.setCellValue(vo.getEtc()); //
+			cell.setCellStyle(cellStyle); //
+			
+			cell = row.createCell(9); //9열 셀을 생성
+			cell.setCellValue(vo.getTotalGrade()); //
+			cell.setCellStyle(cellStyle); //
+			
+			
+			
+			
+			rowCnt++;
+		}
+		
+		/*
+		response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+		 */
+		OutputStream os = null;
+		
+		 response.reset();
+         response.setHeader("Content-Disposition", "attachment;filename=stbcs_history.xls");
+         response.setContentType("application/vnd.ms-excel;charset=utf-8");
+       
+       try {
+    	   //xlsWb = (SXSSFWorkbook)model.get("workbook");
+           
+    	   os = new FileOutputStream("D:\\"+fileName+".xls");
+    	   //os = response.getOutputStream();
+           
+           
+           // 파일생성
+           //workbook.write(os);
+           xlsWb.write(os);
+           os.flush();
+       }catch (Exception e) {
+           e.printStackTrace();
+       } finally {
+           if(xlsWb != null) {
+               try {
+                   xlsWb.close();
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+           }
+           
+           if(os != null) {
+               try {
+                   os.close();
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+           }
+       }
+		
+	}
 	
 	
 }
