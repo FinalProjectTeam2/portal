@@ -234,6 +234,7 @@
 </script>
 <main role="main" class="flex-shrink-0">
 <div class="container">
+
 <div id="regi">
 	<div class="content-panel">
 		<div class="pnl-search">
@@ -317,11 +318,11 @@
 						<th id="hide7">요일</th>
 						<td><select name="p_day" id="p_day" style="width: 100%">
 								<option value="all">- All -</option>
-								<option value="MO">월요일</option>
-								<option value="TU">화요일</option>
-								<option value="WE">수요일</option>
-								<option value="TH">목요일</option>
-								<option value="FR">금요일</option>
+								<option value="월">월요일</option>
+								<option value="화">화요일</option>
+								<option value="수">수요일</option>
+								<option value="목">목요일</option>
+								<option value="금">금요일</option>
 						</select></td>
 						<th id="hide8">수업시간</th>
 						<td><select name="p_time" id="p_time" style="width: 100%">

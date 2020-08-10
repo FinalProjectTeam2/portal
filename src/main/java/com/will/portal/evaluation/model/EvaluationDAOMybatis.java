@@ -20,6 +20,10 @@ public class EvaluationDAOMybatis implements EvaluationDAO{
 	public List<Map<String, Object>> subjectByProfNo(String profNo) {
 		return sqlSession.selectList(namespace+"subjectByProfNo", profNo);
 	}
+	@Override
+	public int inputScore(EvaluationVO vo) {
+		return sqlSession.update(namespace+"inputScore", vo);
+	}
 	
 	
 	

@@ -7,6 +7,7 @@ public class SubjectVO {
 	private String typeCode;
 	private int credit;
 	private String profNo;
+	private int personnel;
 	public String getSubjCode() {
 		return subjCode;
 	}
@@ -43,11 +44,19 @@ public class SubjectVO {
 	public void setProfNo(String profNo) {
 		this.profNo = profNo;
 	}
+	public int getPersonnel() {
+		return personnel;
+	}
+	public void setPersonnel(int personnel) {
+		this.personnel = personnel;
+	}
 	@Override
 	public String toString() {
 		return "SubjectVO [subjCode=" + subjCode + ", subjName=" + subjName + ", explanation=" + explanation
-				+ ", typeCode=" + typeCode + ", credit=" + credit + ", profNo=" + profNo + "]";
+				+ ", typeCode=" + typeCode + ", credit=" + credit + ", profNo=" + profNo + ", personnel=" + personnel
+				+ "]";
 	}
+	
 	
 	
 	

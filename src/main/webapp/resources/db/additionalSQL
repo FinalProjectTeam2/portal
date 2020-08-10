@@ -82,7 +82,7 @@ ON O.OFFICIAL_NO = BB.DUPSTUNO
 join
 (select STATE as "DUPSTATE", STATE_NAME from student_state)ss
 on ss.DUPSTATE = S.STATE
-left outer join 
+left outer join
 (
 SELECT Fm.FACULTY_NO as "minor_faculty_no", dm.dep_name as "minor_dep_name", Dm.dep_no as "minor_dep_no",Fm.FACULTY_NAME as "minor_faculty_name" FROM
 DEPARTMENT Dm JOIN FACULTY Fm
@@ -133,7 +133,7 @@ join
 on ss.position_CODE = S.position_CODE
 JOIN EMP_DEPART D
 ON D.DEP_CODE = S.DEP_CODE
- join 
+ join
 (select * from authority)a
 on s.AUTH_CODE = a.AUTH_CODE);
 
@@ -251,12 +251,16 @@ values('척척학사','021-7289-1382','07541','서울시 강남구','테헤란�
 CREATE OR REPLACE VIEW DEPARTMENT_VIEW
 AS
 (
-select d.*,F.FACULTY_NAME,b.BUILDING_NAME,b.TEL as "BUILDING_TEL" 
-from department d join building b 
+select d.*,F.FACULTY_NAME,b.BUILDING_NAME,b.TEL as "BUILDING_TEL"
+from department d join building b
 on d.BUILDING_CODE = b.BUILDING_CODE
 JOIN (SELECT * FROM FACULTY)F
 ON d.FACULTY_NO = F.FACULTY_NO
 );
 
 
-
+/*수업등록 seq*/
+create sequence subject_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE;

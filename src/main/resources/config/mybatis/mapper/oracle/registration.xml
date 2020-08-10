@@ -39,8 +39,9 @@
         	<if test="facultyNo!=0">and d.faculty_no=#{facultyNo}</if>
         	<if test="depNo!=0">and d.dep_no=#{depNo}</if>
         	<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
-        	<if test="time1!='all'">and rt.short_names like '%' || select substr(short_name, 1, 1) from timetable where substr(timetable_code, 1, 2)=#{time1} || '%'</if>
-        	<if test="time2!='all'">and rt.short_names like '%' || #{time2} || '%'</if>
+        	<if test="time1!='all' and time2=='all'">and rt.short_names like '%' || #{time1} || '%'</if>
+        	<if test="time2!='all' and time1=='all'">and rt.short_names like '%' || #{time2} || '%'</if>
+        	<if test="time1!='all' and time2!='all'">and rt.short_names like '%' || #{time} || '%'</if>
         	<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
         	<if test="openSubCode!=null">and o.open_sub_code like '%' || #{openSubCode} || '%'</if>
         </where>

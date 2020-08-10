@@ -61,7 +61,7 @@ $(function(){
 	
 	//강의 계획서 업로드 
 	$('#syllabus').click(function(){
-		window.open("<c:url value='/syllabus/upload'/>", "syllabusUpload", "width:800, height:700")
+		window.open("<c:url value='/syllabus/upload'/>", "syllabusUpload", "width:500, height:500")
 	});
 	
 	
@@ -104,6 +104,7 @@ $(function(){
 					    		 dialog.dialog( "close" );
 					    		 timeTable();
 					    		 updateTable();
+					    		
 					    	 },
 					    	 error:function(xhr, status, error){
 					    		 alert(error);
@@ -223,7 +224,7 @@ function timeTable(){
 <div class="container">
 	<h2>강의시간 설정</h2><a id="syllabus" href="#" style="float: right; margin-right: 500px;">강의 계획서 업로드<img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
 	<h4>${principal.name} 교수님의 시간표 </h4>
-	<div class='tab'>
+	<div class='tab' id="timetableMain">
 	  <table border='0' cellpadding='0' cellspacing='0'>
 	    <tr class='days'>
 	      <th></th>
