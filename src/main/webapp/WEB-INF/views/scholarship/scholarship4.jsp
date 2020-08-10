@@ -29,10 +29,11 @@
 .tableSearch tr, td {
 	padding: 10px;
 	border-bottom: 1px solid #ddd;
+	margin: 1%, 5%, 1%, 1%;
 }
 
 #search {
-	margin-left: 102%;
+	margin-left: 46%;
 	margin-top: -105%;
 	border: none;
 	padding: 14px 28px;
@@ -40,6 +41,8 @@
 	color: white;	
 	font-size: 16px;
 	cursor: pointer;
+	margin-top: 1.5%;
+	margin-bottom: 1.5%;
 }
 
 #search:hover {
@@ -47,7 +50,6 @@
 }	
 
 /* 지급내역 css */	
-
 .tablePayments {
 	width: 1000px;
 	min-width: 500px;
@@ -143,13 +145,19 @@
 			</tr>
 		</table>
 		<div>
-			<input type="button" id="search" value="검색">
+			<input type="submit" id="search" value="검색">
 		</div>
 	</div>
 
 <br>
 <!-- 장학금 지급 내역 -->
-	<div class="divPayments" style="width: 77%;">
+	<div class="divPayments" style="width: 100%;">
+		<div class="btn"> 
+			<input type="button" value="추가">
+			<input type="button" value="수정">
+			<input type="button" value="삭제">
+		</div>
+		
 		<table class="tablePayments">
 			<colgroup>
 				<col style="width:3%;" /> 
@@ -178,6 +186,7 @@
 				<td>승인일자</td>
 				<td>지급구분</td>
 				<td>지급액</td>
+				<td>비고</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox"></td>
@@ -192,34 +201,11 @@
 				<td>&nbsp;</td>
 				<td>미지급</td>
 				<td>&nbsp;</td>
+				<td><input type="button" value="학생정보"></td> <!-- 학점, 출결관리 정보 -> 팝업창으로 -->
 			</tr>	
 		</table>
 	</div>
 <br>	
-<!-- 학생 상세 정보 -->
-	<div class="divSearch">
-		<table class="tableSearch">
-			<thead>
-				<tr>
-					<th>학부</th>
-					<th>학과</th>
-					<th>학번</th>
-					<th>이름</th>
-					<th>학점</th>
-					<th>출석률</th>				
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>경영학부</td>				
-					<td>경영학과</td>
-					<td>202020222</td>
-					<td>홍길동</td>
-					<td>4.0</td>
-					<td>100%</td>
-				</tr>	
-			</tbody>	
-		</table>
-	</div>
+<!-- 페이징처리 -->		
 </div>
 <%@ include file="../inc/bottom.jsp"%>

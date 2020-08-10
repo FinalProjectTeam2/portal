@@ -6,6 +6,8 @@
 	margin-left: 5%;
 	margin-top: 2%;
 	min-height: 500px;
+	min-width: 500px;
+	font-family: 'nanum gothic',맑은 고딕, 한컴돋움, 돋움;
 }
 
 hr {
@@ -19,8 +21,17 @@ hr {
     border-spacing: 1px;
     text-align: left;
     line-height: 1.5;
-    border-top: 1px solid #ccc;
+   	border-top: 1px solid #ccc;
     margin: 20px 10px;
+}
+
+th {
+	border-bottom: 1px solid #ccc;
+	padding: 10px;
+}
+
+td {
+	padding: 6px;
 }
 </style>
 

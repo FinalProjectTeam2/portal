@@ -10,7 +10,7 @@
 }
 
 .tableWrite {
-	width: 1000px;
+	width: 1400px;
 	min-width: 500px;
 	border-collapse:collapse;
  	border-spacing: 1px;
@@ -30,13 +30,6 @@
 	background-color: skyblue;
 }
 
-/* 버튼 css*/
-.btnOk{
-}
-
-.btnList {
-	margin-left: 6%;
-}
 </style>
 
 <div class="scholarship">
@@ -132,10 +125,8 @@
 					<td><input type="text"></td>
 				</tr>
 			</table>
-			<div class="btnOk">
+			<div class="btn">
 				<input type="button" value="등록">
-			</div>
-			<div class="btnList">
 				<input type="button" value="목록">
 			</div>
 		</form>
