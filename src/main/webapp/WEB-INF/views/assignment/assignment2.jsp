@@ -81,6 +81,11 @@ hr {
 
 	<div class="divTable">
 		<div class="btn">
+			<select>
+				<option> -- 구분 -- </option>
+				<option>제출자</option>
+				<option>제출여부</option>
+			</select> 
 			<input type="text">
 			<input type="button" value="검색">
 		</div>
@@ -93,7 +98,7 @@ hr {
 					<th>과제명</th>
 					<th>제출자</th>
 					<th>제출여부</th>
-					<th>채점상황</th>
+					<th>채점</th>
 					<th>비고</th>
 			</thead>
 			<tbody>
@@ -104,8 +109,8 @@ hr {
 					<td>시장조사분석</td>	
 					<td>홍길동</td>	
 					<td>미제출</td>
-					<td>X</td>	
-					<td><input type=button value="수정"></td>
+					<td>F</td>	
+					<td><input type="button" value="수정"></td>
 				</tr>
 			</tbody>
 		</table>
