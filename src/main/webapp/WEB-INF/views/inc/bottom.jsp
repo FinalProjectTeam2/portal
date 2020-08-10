@@ -41,7 +41,6 @@ a.bottom {
 		
 		$.ajax({
 			url:"<c:url value='/admin/foot' />",
-			dataType:"json",
 			success:function(res){
 				$('#companyName').html(res.companyName);
 				$('#tel').html('통합콜센터 : '+res.tel);

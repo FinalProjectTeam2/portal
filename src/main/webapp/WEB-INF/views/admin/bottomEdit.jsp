@@ -41,7 +41,7 @@
 	$(function() {
 		$('#frm').submit(function() {
 			$.ajax({
-				url:"<c:url value='/admin/bottomEdit' />",
+				url:"<c:url value='/admin/bottomEdit'/>",
 				type:"post",
 				data: $(this).serialize(),
 				success:function(res){
