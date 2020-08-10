@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -170,12 +171,26 @@ public class MessageController {
 		model.addAttribute("vo", vo);
 	}
 	
-	@RequestMapping("/messageDeleteNo")
+	@PostMapping("/messageDeleteNo")
 	@ResponseBody
-	public String messageDeleteNo(@RequestParam int no) {
-		log.info("ajax - messageDeleteNo, 파라미터 no={}",no);
-		int cnt = service.deleteInboxByNo(no);
+	public String messageDeleteNo( @RequestParam(value = "chbox[]") List<String> chArr) {
+		log.info("ajax - messageDeleteNo, 파라미터 chArr={}",chArr.toString());
+		int cnt = 0;
+		for (String no : chArr) {
+			cnt += service.deleteInboxByNo(Integer.parseInt(no));
+		}
 		log.info("쪽지 삭제 결과, cnt={}",cnt);
+		return cnt+"";
+	}
+	@PostMapping("/messageKeep")
+	@ResponseBody
+	public String messageKeep( @RequestParam(value = "chbox[]") List<String> chArr) {
+		log.info("ajax - messageKeep, 파라미터 chArr={}",chArr.toString());
+		int cnt = 0;
+		for (String no : chArr) {
+			cnt += service.updateKeepMsg(Integer.parseInt(no));
+		}
+		log.info("쪽지 보관 결과, cnt={}",cnt);
 		return cnt+"";
 	}
 }

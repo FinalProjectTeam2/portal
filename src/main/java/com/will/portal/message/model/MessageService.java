@@ -19,4 +19,5 @@ public interface MessageService {
 	MessageAllVO selectByNo(int no);
 	int updateReadDateByNo(int no);
 	int deleteInboxByNo(int no);
+	int updateKeepMsg(int no);
 }

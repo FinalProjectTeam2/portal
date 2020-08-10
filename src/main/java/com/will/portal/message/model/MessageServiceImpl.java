@@ -85,4 +85,9 @@ public class MessageServiceImpl implements MessageService{
 		return dao.deleteInboxByNo(no);
 	}
 
+	@Override
+	public int updateKeepMsg(int no) {
+		return dao.updateKeepMsg(no);
+	}
+
 }

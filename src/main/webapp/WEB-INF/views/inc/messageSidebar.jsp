@@ -38,16 +38,16 @@
 		</div>
 		<div class="category">쪽지함</div>
 		<ul class="nav flex-column">
-			<li class="nav-item"><a class="nav-link" href="#"> <span
+			<li class="nav-item" onclick="event.cancelBubble=true"><a class="nav-link" href="<c:url value='/message/messageBox?type=in'/>"> <span
 					class="bullets"></span> 받은쪽지함
 			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#"> <span
+			<li class="nav-item" onclick="event.cancelBubble=true"><a class="nav-link" href="<c:url value='/message/messageBox?type=out'/>"> <span
 					class="bullets"></span> 보낸쪽지함
 			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#"> <span
+			<li class="nav-item" onclick="event.cancelBubble=true"><a class="nav-link" href="<c:url value='/message/messageBox?type=save'/>"> <span
 					class="bullets"></span> 쪽지보관함
 			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#"> <span
+			<li class="nav-item" onclick="event.cancelBubble=true"><a class="nav-link" href="<c:url value='/message/messageBox?type=self'/>"> <span
 					class="bullets"></span> 내게쓴쪽지함
 			</a></li>
 		</ul>

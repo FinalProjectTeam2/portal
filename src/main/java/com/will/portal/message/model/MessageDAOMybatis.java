@@ -85,6 +85,11 @@ public class MessageDAOMybatis implements MessageDAO{
 	public int deleteInboxByNo(int no) {
 		return sqlSession.delete(namespace+"deleteInboxByNo", no);
 	}
+
+	@Override
+	public int updateKeepMsg(int no) {
+		return sqlSession.update(namespace+"updateKeepMsg", no);
+	}
 	
 	
 

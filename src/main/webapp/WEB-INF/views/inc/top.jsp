@@ -118,46 +118,53 @@
 	float: left;
 	margin-right: 10px;
 }
+
 .toast {
-    top: 60px;
-    position: fixed;
-    left: 1200px;
-    width: 260px;
-    text-align: center;
+	top: 60px;
+	position: fixed;
+	left: 1200px;
+	width: 260px;
+	text-align: center;
 }
+
 .toast-body {
-    background: #343a40;
-    color: white;
+	background: #343a40;
+	color: white;
+}
+
+#bookmark {
+	margin-left: 20px;
 }
 </style>
 <script type="text/javascript">
-	$.ajaxSetup({
-		error : function(jqXHR, exception) {
-			if (jqXHR.status === 0) {
-				alert('Not connect.\n Verify Network.');
-			} else if (jqXHR.status == 400) {
-				alert('Server understood the request, but request content was invalid. [400]');
-			} else if (jqXHR.status == 401) {
-				alert('Unauthorized access. [401]');
-			} else if (jqXHR.status == 403) {
-				alert('Forbidden resource can not be accessed. [403]');
-			} else if (jqXHR.status == 404) {
-				alert('Requested page not found. [404]');
-			} else if (jqXHR.status == 500) {
-				alert('Internal server error. [500]');
-			} else if (jqXHR.status == 503) {
-				alert('Service unavailable. [503]');
-			} else if (exception === 'parsererror') {
-				alert('Requested JSON parse failed. [Failed]');
-			} else if (exception === 'timeout') {
-				alert('Time out error. [Timeout]');
-			} else if (exception === 'abort') {
-				alert('Ajax request aborted. [Aborted]');
-			} else {
-				alert('Uncaught Error.n' + jqXHR.responseText);
-			}
-		}
-	});
+	$
+			.ajaxSetup({
+				error : function(jqXHR, exception) {
+					if (jqXHR.status === 0) {
+						alert('Not connect.\n Verify Network.');
+					} else if (jqXHR.status == 400) {
+						alert('Server understood the request, but request content was invalid. [400]');
+					} else if (jqXHR.status == 401) {
+						alert('Unauthorized access. [401]');
+					} else if (jqXHR.status == 403) {
+						alert('Forbidden resource can not be accessed. [403]');
+					} else if (jqXHR.status == 404) {
+						alert('Requested page not found. [404]');
+					} else if (jqXHR.status == 500) {
+						alert('Internal server error. [500]');
+					} else if (jqXHR.status == 503) {
+						alert('Service unavailable. [503]');
+					} else if (exception === 'parsererror') {
+						alert('Requested JSON parse failed. [Failed]');
+					} else if (exception === 'timeout') {
+						alert('Time out error. [Timeout]');
+					} else if (exception === 'abort') {
+						alert('Ajax request aborted. [Aborted]');
+					} else {
+						alert('Uncaught Error.n' + jqXHR.responseText);
+					}
+				}
+			});
 	function clock() {
 		var date = new Date();
 		var month = date.getMonth();
@@ -212,61 +219,115 @@
 	});
 </script>
 <sec:authorize access="isAuthenticated()">
-<script
-	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script type="text/javascript">
-	if (sock12 != null) {
-		disconnect12();
-	}
-	var sock12 = null;
-
-	$(function() {
-		$('.toast').toast({
-		    'autohide': false
-		  });
-		$(".toast-body").click(function() {
-			location.href = "<c:url value='/message/messageBox'/>";
-		});
-		$(window).bind('beforeunload', function() {
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script type="text/javascript">
+		if (sock12 != null) {
 			disconnect12();
-			return;
-		});
-
-		sock12 = new SockJS("<c:url value='/messageSock'/>");
-		sock12.onmessage = onMessage12;
-		sock12.onclose = onClose12;
-		sock12.onopen = onOpen12;
-
-	});
-	function disconnect12() {
-		sock12.close();
-	}
-	function send12(officialNo) {
-		sock12.send(JSON.stringify({
-			writeNote : "조회",
-			officialNo : officialNo
-		}));
-
-	}
-	function onOpen12() {
-
-	}
-	function onClose12() {
-		disconnect12();
-	}
-
-	/* evt 는 websocket이 보내준 데이터 */
-	function onMessage12(evt) {
-		var data = evt.data;
-		$("#messageCount").html(data);
-		if(data != '0'){
-			$('.toast').toast('show');
 		}
-	}
-</script>
+		var sock12 = null;
+
+		$(function() {
+			$('.toast').toast({
+				'autohide' : false
+			});
+			$(".toast-body").click(function() {
+				location.href = "<c:url value='/message/messageBox'/>";
+			});
+			$(window).bind('beforeunload', function() {
+				disconnect12();
+				return;
+			});
+
+			sock12 = new SockJS("<c:url value='/messageSock'/>");
+			sock12.onmessage = onMessage12;
+			sock12.onclose = onClose12;
+			sock12.onopen = onOpen12;
+
+			$("#bookmarkUrl").val($(location).attr('pathname')
+					+ $(location).attr('search'));
+			
+			$("#saveBookmark").submit(function() {
+				$.ajax({
+					url : "<c:url value='/bookmark/insert'/>",
+					data : {
+						url : $("#bookmarkUrl").val(),
+						name : $("#bookmarkName").val()
+					},
+					type : "post",
+					success : function() {
+						alert("저장완료!");
+						$('#exampleModal').modal('toggle');
+					}
+				});
+				return false;
+			});
+			/* $("#bookmark").click(
+					function() {
+						alert($(location).attr('pathname')
+								+ $(location).attr('search'));
+					}); */
+		});
+		function disconnect12() {
+			sock12.close();
+		}
+		function send12(officialNo) {
+			sock12.send(JSON.stringify({
+				writeNote : "조회",
+				officialNo : officialNo
+			}));
+
+		}
+		function onOpen12() {
+
+		}
+		function onClose12() {
+			disconnect12();
+		}
+
+		/* evt 는 websocket이 보내준 데이터 */
+		function onMessage12(evt) {
+			var data = evt.data;
+			$("#messageCount").html(data);
+			if (data != '0') {
+				$('.toast').toast('show');
+			}
+		}
+	</script>
 </sec:authorize>
 <meta name="theme-color" content="#563d7c">
 </head>
+<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="flase">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">북마크 저장</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<form id="saveBookmark" action="" method="post" name="saveBookmark">
+								<div class="modal-body">
+										<div class="form-group">
+											<label for="recipient-name" class="col-form-label">URL:</label>
+											<input type="text" class="form-control" id="bookmarkUrl" value="">
+										</div>
+										<div class="form-group">
+											<label for="message-text" class="col-form-label">Name:</label>
+											<input type="text" class="form-control" id="bookmarkName">
+										</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">닫기</button>
+									<button type="submit" class="btn btn-primary">북마크 저장</button>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
 <body class="d-flex flex-column h-100">
 	<!-- top 시작 -->
 	<header>
@@ -311,12 +372,21 @@
 						<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
 							id="logoutBtn">로그아웃</button>
 					</form>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="button" data-toggle="modal"
+						id="bookmark" data-target="#exampleModal" data-whatever="@getbootstrap">
+						<svg width="1.2em" height="1.2em" viewBox="0 0 16 16"
+							class="bi bi-tags" fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg">
+						  <path fill-rule="evenodd"
+								d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z" />
+						  <path fill-rule="evenodd"
+								d="M5.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+						  <path
+								d="M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" />
+						</svg>
+					</button>
+					
 				</sec:authorize>
-				<select class="custom-select"
-					style="margin: 0 0 0 15px; font-size: 0.7em; width: 100px;">
-					<option>한국어</option>
-					<option>영어</option>
-				</select>
 			</div>
 		</nav>
 		<div class="nav-scroller bg-white shadow-sm">
@@ -334,22 +404,24 @@
 								href="<c:url value='/board_calender/calendarDetail'/>">서비스</a></li>
 						</ul></li>
 					<sec:authorize access="isAuthenticated()">
-					<c:if test="${principal.type=='STUDENT' }">
-					<li><a class="nav-link" href="#"> 학사서비스 </a>
-						<ul>
-							<li><a href="#">학사정보</a></li>
-							<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
-						</ul></li>
-					</c:if>
-					<c:if test="${principal.type=='PROFESSOR' }">
-					<li><a class="nav-link" href="#"> 강의 관리 </a>
-						<ul>
-							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
-							<li><a href="<c:url value='/lecture/createLecture'/>">강의 개설</a></li>
-							<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
+						<c:if test="${principal.type=='STUDENT' }">
+							<li><a class="nav-link" href="#"> 학사서비스 </a>
+								<ul>
+									<li><a href="#">학사정보</a></li>
+									<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
+								</ul></li>
+						</c:if>
+						<c:if test="${principal.type=='PROFESSOR' }">
+							<li><a class="nav-link" href="#"> 강의 관리 </a>
+								<ul>
+									<li><a href="<c:url value='/lecture/openLecture'/>">시간표
+											관리</a></li>
+									<li><a href="<c:url value='/lecture/createLecture'/>">강의
+											개설</a></li>
+									<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
 
-						</ul></li>
-					</c:if>
+								</ul></li>
+						</c:if>
 					</sec:authorize>
 
 					<li><a class="nav-link" href="#" id="goMessage"> 쪽지함 <span
@@ -361,19 +433,21 @@
 					style="color: black; font-size: 0.8em; margin: 15px 25px; width: 100%; text-align: right;"></span>
 			</nav>
 			<sec:authorize access="isAuthenticated()">
-			<div class="toast" role="alert" aria-live="assertive"
-				aria-atomic="true">
-				<div class="toast-header">
-					<img src="<c:url value='/resources/images/logoIcon.ico'/>" style="width: 1em;"
-						class="rounded mr-2" alt="로고"> <strong class="mr-auto">척척학사</strong>
-					<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+				<div class="toast" role="alert" aria-live="assertive"
+					aria-atomic="true">
+					<div class="toast-header">
+						<img src="<c:url value='/resources/images/logoIcon.ico'/>"
+							style="width: 1em;" class="rounded mr-2" alt="로고"> <strong
+							class="mr-auto">척척학사</strong>
+						<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="toast-body" style="cursor: pointer;">쪽지가 도착했습니다.
+					</div>
 				</div>
-				<div class="toast-body" style="cursor: pointer;">쪽지가 도착했습니다.
-				</div>
-			</div>
+
 			</sec:authorize>
 		</div>
 	</header>

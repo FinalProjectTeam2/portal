@@ -194,4 +194,10 @@
 		DELETE from inbox
 		where no = #{no}
 	</delete>
+	
+	<update id="updateKeepMsg" parameterType="int">
+		update inbox
+		set keep_flag = 'Y'
+		where no = #{no}
+	</update>
 </mapper>

@@ -60,6 +60,9 @@ div#messagePaging nav {
 .read td, .read td a{
 	color: gray;
 }
+input.chBox {
+    margin-left: 0.1em;
+}
 </style>
 <script type="text/javascript">
 function sendTwo(cur) {
@@ -107,6 +110,43 @@ $(function() {
 			$("input[type=checkbox]").prop("checked",false); 
 		} 
 	});
+	
+	$("#delMessage").click(function() {
+		var confirm_val = confirm("정말 삭제하시겠습니까?");
+		  
+		  if(confirm_val) {
+		   var checkArr = new Array();
+		   
+		   $("input[class='chBox']:checked").each(function(){
+		    checkArr.push($(this).attr("data-cartNum"));
+		   });
+		    
+		   $.ajax({
+		    url : "<c:url value='/message/messageDeleteNo'/>",
+		    type : "post",
+		    data : { chbox : checkArr },
+		    success : function(){
+		    	$.send(1);
+		    }
+		   });
+		  } 
+	});
+	$("#KeepMessage").click(function() {
+	   var checkArr = new Array();
+	   
+	   $("input[class='chBox']:checked").each(function(){
+	    checkArr.push($(this).attr("data-cartNum"));
+	   });
+	    
+	   $.ajax({
+	    url : "<c:url value='/message/messageKeep'/>",
+	    type : "post",
+	    data : { chbox : checkArr },
+	    success : function(){
+	    	$.send(1);
+	    }
+	   });
+	});
 
 });
 
@@ -129,7 +169,7 @@ $.send = function(curPage) {
 			$("#type").val(res.vo.type);
 			$("intput[name=searchKeyword]").val(res.vo.searchKeyword);
 			$("select[name=searchCondition]").val(res.vo.searchCondition);
-			if(res.vo.type != 'in'){
+			if(res.vo.type != 'in' && res.vo.type != 'save'){
 				$("#messageTop button").each(function() {
 					$(this).css("display","none");
 					$("input[type=checkbox]").prop("disabled","disabled");
@@ -162,7 +202,7 @@ function makeList(obj) {
 		$.each(obj.list,function(idx, item) {
 			if(item.readDate != null){
 				str += '<tr class="read" onclick="detail('+item.no+')">'
-				    + '<td scope="row"><input type="checkbox" value="'+item.no+'"></td>'
+				    + '<td onclick="event.cancelBubble=true" scope="row"><input class="chBox" type="checkbox" value="'+item.no+'" data-cartNum="'+item.no+'"></td>'
 				    + '<td onclick="event.cancelBubble=true"><a href="#" onclick="reMessage('+item.officialNo+')">'+item.officialName
 				    +'('+item.officialNo+')</a></td>'
 				    + '<td>'+item.inOffi+'</td>'
@@ -171,7 +211,7 @@ function makeList(obj) {
 				   	+ '</tr>';
 			}else{
 				str += '<tr class="nonRead" onclick="detail('+item.no+')">'
-				    + '<td scope="row"><input type="checkbox" value="'+item.no+'"></td>'
+				    + '<td onclick="event.cancelBubble=true" scope="row"><input class="chBox" type="checkbox" value="'+item.no+'" data-cartNum="'+item.no+'"></td>'
 				    + '<td onclick="event.cancelBubble=true"><a href="#" onclick="reMessage('+item.officialNo+')">'+item.officialName
 				    +'('+item.officialNo+')</a></td>'
 				    + '<td>'+item.inOffi+'</td>'
