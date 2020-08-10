@@ -246,7 +246,7 @@
 
 			$("#bookmarkUrl").val($(location).attr('pathname')
 					+ $(location).attr('search'));
-			
+
 			$("#saveBookmark").submit(function() {
 				$.ajax({
 					url : "<c:url value='/bookmark/insert'/>",
@@ -385,7 +385,7 @@
 								d="M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" />
 						</svg>
 					</button>
-					
+
 				</sec:authorize>
 			</div>
 		</nav>
@@ -404,24 +404,23 @@
 								href="<c:url value='/board_calender/calendarDetail'/>">서비스</a></li>
 						</ul></li>
 					<sec:authorize access="isAuthenticated()">
-						<c:if test="${principal.type=='STUDENT' }">
-							<li><a class="nav-link" href="#"> 학사서비스 </a>
-								<ul>
-									<li><a href="#">학사정보</a></li>
-									<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
-								</ul></li>
-						</c:if>
-						<c:if test="${principal.type=='PROFESSOR' }">
-							<li><a class="nav-link" href="#"> 강의 관리 </a>
-								<ul>
-									<li><a href="<c:url value='/lecture/openLecture'/>">시간표
-											관리</a></li>
-									<li><a href="<c:url value='/lecture/createLecture'/>">강의
-											개설</a></li>
-									<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
+					<c:if test="${principal.type=='STUDENT' }">
+					<li><a class="nav-link" href="#"> 학사서비스 </a>
+						<ul>
+							<li><a href="#">학사정보</a></li>
+							<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
+						</ul></li>
+					</c:if>
+					<c:if test="${principal.type=='PROFESSOR' }">
+					<li><a class="nav-link" href="#"> 강의 관리 </a>
+						<ul>
+							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
+							<li><a href="<c:url value='/lecture/createLecture'/>">강의 개설</a></li>
+							<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
+							<li><a href="<c:url value='/lecture/phoneBook'/>">수강생 연락처</a></li>
 
-								</ul></li>
-						</c:if>
+						</ul></li>
+					</c:if>
 					</sec:authorize>
 
 					<li><a class="nav-link" href="#" id="goMessage"> 쪽지함 <span

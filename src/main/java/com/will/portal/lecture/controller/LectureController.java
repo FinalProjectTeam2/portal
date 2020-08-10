@@ -37,6 +37,7 @@ import com.will.portal.evaluation.model.EvaluationAllVO;
 import com.will.portal.evaluation.model.EvaluationService;
 import com.will.portal.evaluation.model.EvaluationVO;
 import com.will.portal.open_subj.model.Open_subjVO;
+import com.will.portal.phoneBook.model.PhoneBookVO;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.regi_timetable.model.Regi_timetableVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
@@ -476,4 +477,37 @@ public class LectureController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value = "/lecture/phoneBook", method = RequestMethod.GET)
+	public String phoneBook(Principal principal,  @RequestParam(required = false) String subCode, Model model) {
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		//select option에 들어갈 list
+		List<Map<String, Object>> sList = evaluationServ.subjectByProfNo(profNo);
+		//학생list
+		List<PhoneBookVO> list = profService.phoneBook(subCode);
+		logger.info("연락처 페이지 list.size()={}, selectList.size={}", list.size(), sList.size());
+		model.addAttribute("list", list);
+		model.addAttribute("sList", sList);
+		
+		
+		return "lecture/phoneBook";
+	}
+	
+	@RequestMapping(value = "/lecture/selectPhoneBook", method = RequestMethod.POST)
+	@ResponseBody
+	public List<PhoneBookVO> phonebook_post(Principal principal, @RequestParam(required = false) String subCode, Model model) {
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		//학생list
+		
+		List<PhoneBookVO> list = profService.phoneBook(subCode);
+		
+		logger.info("학생평가 페이지 list.size()={}, 매개변수 subCode={}", list.size(), subCode);
+		
+		return list;
+	}
+	
+	
+	
 }

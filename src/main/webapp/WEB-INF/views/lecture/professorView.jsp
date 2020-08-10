@@ -67,9 +67,9 @@
 	function showList(){
 		$.ajax({
 			url:"<c:url value='/lecture/evaluation'/>",
-			type:"post",
 			data:{"subCode":$('#subjCode').val()},
 			dataType:"json",
+			type:"post",
 			success:function(res){
 				$('#listTitle').text($("#subjCode option:selected").text()+" 수강생 목록");
 				var table = "<table border='1'>"+
