@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,10 +35,15 @@ import com.google.api.client.http.HttpResponse;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.evaluation.model.EvaluationAllVO;
 import com.will.portal.evaluation.model.EvaluationService;
+import com.will.portal.evaluation.model.EvaluationVO;
+import com.will.portal.open_subj.model.Open_subjVO;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.regi_timetable.model.Regi_timetableVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
+import com.will.portal.subj_type.model.Subj_typeVO;
 import com.will.portal.subject.model.SubjectAllVO;
+import com.will.portal.subject.model.SubjectService;
+import com.will.portal.subject.model.SubjectVO;
 
 @Controller
 public class LectureController {
@@ -46,6 +52,8 @@ public class LectureController {
 	private ProfessorService profService;
 	@Autowired
 	private EvaluationService evaluationServ;
+	@Autowired
+	private SubjectService subjectServ;
 	
 	@RequestMapping("/lecture/openLecture_bak")
 	public void openLecture_bak() {
@@ -84,12 +92,14 @@ public class LectureController {
 	
 	@RequestMapping(value = "/lecture/addSubject", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String addSubject(@RequestParam String subject, @RequestParam String time, 
+	public String addSubject(Principal principal ,@RequestParam String subject, @RequestParam String time, 
 			@RequestParam String classroom, HttpSession session, Model model) {
 		logger.info("입력한 과목 처리 페이지 파라미터 subject={}, time={}", subject, time);
 		logger.info("추가 파라미터 classroom={}", classroom);
 		//교수번호 session에서 확인
-		String profNo = (String)session.getAttribute("officialNo");
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		
 		String openSubCode = subject.substring(4);
 		String timetableCode = time;
 		Subj_timeVO vo = new Subj_timeVO();
@@ -99,7 +109,7 @@ public class LectureController {
 		
 		Regi_timetableVO rVo = new Regi_timetableVO();
 		rVo.setOpenSubCode(openSubCode);
-		rVo.setShortNames(profService.selectShortName(timetableCode));
+		rVo.setShortNames(profService.selectShortName(time));
 		
 		int codeCount = profService.countByOpenCode(openSubCode);
 		logger.info("해당 코드에 등록된 수 codeCount={}", codeCount);
@@ -187,10 +197,18 @@ public class LectureController {
 	
 	@RequestMapping(value = "/lecture/downloadScore", produces="text/plain;charset=UTF-8", method = RequestMethod.POST)
 	@ResponseBody
-	public void downloadScore(HttpServletResponse response, @RequestParam String subjCode, Model model) {
+	public String downloadScore(Principal principal, HttpServletResponse response, @RequestParam String subjCode, 
+			@RequestParam String subjName, Model model) {
 		
-		logger.info("엑셀 다운처리 페이지 파라미터 subjCode={}", subjCode);
-		String fileName = "test";
+		logger.info("엑셀 다운처리 페이지 파라미터 subjCode={}, subjName={}", subjCode, subjName);
+		
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		
+		
+		String fileName = profNo+"-"+subjName;
+		String filePath = "d:\\"+fileName+".xls";
+		
 		
 		//excel 파일 틀 설
 		XSSFWorkbook xlsWb = new XSSFWorkbook(); //xlsx 엑셀 2007 이상
@@ -318,7 +336,7 @@ public class LectureController {
        try {
     	   //xlsWb = (SXSSFWorkbook)model.get("workbook");
            
-    	   os = new FileOutputStream("D:\\"+fileName+".xls");
+    	   os = new FileOutputStream(filePath);
     	   //os = response.getOutputStream();
            
            
@@ -345,8 +363,117 @@ public class LectureController {
                }
            }
        }
-		
+       
+       return filePath;
 	}
 	
 	
+	@RequestMapping("/lecture/createLecture")
+	public void createLecture(Principal principal, Model model) {
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		logger.info("교수 수업등록 페이지 교수번호 profNo={}", profNo);
+		
+		List<Subj_typeVO> list = subjectServ.selectType();
+		logger.info("list.size={}", list.size());
+		model.addAttribute("list", list);
+		
+		
+	}
+	
+	@RequestMapping(value = "/lecture/insertSubject", produces="text/plain;charset=UTF-8", method = RequestMethod.POST)
+	@ResponseBody
+	public String insertSubject(Principal principal, @ModelAttribute SubjectVO vo, Model model) {
+		logger.info("수업등록 처리 페이지 vo={}", vo);
+		String seq=Integer.toString(subjectServ.subjectSeq());
+		//subject_seq에서 받아온 값으로 3자리가 안될경우 0으로 채운다
+		if(seq.length() == 1) {
+			seq = "00"+seq;
+		}else if(seq.length() == 2) {
+			seq = "0"+seq;
+		}
+		String result = "강의 등록 실패";
+		
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		String typeCode = vo.getTypeCode()+"-"+profNo.substring(5, 8)+"-"+seq;
+		vo.setProfNo(profNo);
+		vo.setSubjCode(typeCode);
+		
+		//subject에 insert한다
+		int cnt = subjectServ.insertSubject(vo);
+		
+		//opensubj역시 insert한다
+		Open_subjVO oVo = new Open_subjVO();
+		oVo.setOpenSubCode(typeCode.substring(4));
+		oVo.setSubjCode(typeCode);
+		oVo.setProfNo(profNo);
+		
+		cnt = subjectServ.insertOpenSubj(oVo);
+		
+		if(cnt > 0) {
+			result = "강의가 개설되었습니다.";
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/lecture/inputScore", produces="text/plain;charset=UTF-8", method = RequestMethod.POST)
+	@ResponseBody
+	public String inputScore(@RequestParam String subCode, @RequestParam String stuNo, @RequestParam(defaultValue = "0") int midterm, 
+			@RequestParam(defaultValue = "0") int finals, @RequestParam(defaultValue = "0") int assignment, 
+			@RequestParam(defaultValue = "0") int attendance,@RequestParam(defaultValue = "0") int etc, Model model) {
+		
+		logger.info("한줄 성적입력 처리 subCode={}, stuNo={}", subCode, stuNo);
+		logger.info("한줄 성적입력 처리 midterm={}, finals={}", midterm, finals);
+		logger.info("한줄 성적입력 처리 assignment={}, etc={}", assignment, etc);
+		
+		int total = 0;
+		int count = 0;
+		
+		if(midterm != 0) {
+			total+=midterm;
+			count++;
+		}else if(finals != 0) {
+			total+=finals;
+			count++;
+		}else if(assignment != 0) {
+			total+=assignment;
+			count++;
+		}else if(attendance != 0) {
+			total+=attendance;
+			count++;
+		}else if(etc != 0) {
+			total+=etc;
+			count++;
+		}
+		String result = "성적입력 실패";
+		int totalGrade=0;
+		try{
+		totalGrade = (int)Math.round((total/count)*10F)/10;
+        }catch(ArithmeticException e){
+            System.out.println("0으로 나눌 수 없습니다. : " + e.toString());
+        }
+		
+		
+		
+		
+		EvaluationVO vo = new EvaluationVO();
+		vo.setSubCode(subCode);
+		vo.setStuNo(stuNo);
+		vo.setMidterm(midterm);
+		vo.setFinals(finals);
+		vo.setAssignment(assignment);
+		vo.setAttendance(attendance);
+		vo.setEtc(etc);
+		vo.setTotalGrade(totalGrade);
+		
+		int cnt = evaluationServ.inputScore(vo);
+		
+		if(cnt > 0) {
+			result="성적이 입력되었습니다.";
+		}
+		
+		return result;
+	}
 }

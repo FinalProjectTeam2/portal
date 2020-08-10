@@ -6,6 +6,7 @@ public class RegistrationSearchVO extends SearchVO{
 	private String subjName;
 	private String time1;
 	private String time2;
+	private String time;
 	private String profName;
 	private String openSubCode;
 	
@@ -51,13 +52,18 @@ public class RegistrationSearchVO extends SearchVO{
 	public void setOpenSubCode(String openSubCode) {
 		this.openSubCode = openSubCode;
 	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	@Override
 	public String toString() {
 		return "RegistrationSearchVO [facultyNo=" + facultyNo + ", depNo=" + depNo + ", subjName=" + subjName
-				+ ", time1=" + time1 + ", time2=" + time2 + ", profName=" + profName + ", openSubCode=" + openSubCode
-				+ "]";
+				+ ", time1=" + time1 + ", time2=" + time2 + ", time=" + time + ", profName=" + profName
+				+ ", openSubCode=" + openSubCode + "]";
 	}
-	
 	
 	
 	

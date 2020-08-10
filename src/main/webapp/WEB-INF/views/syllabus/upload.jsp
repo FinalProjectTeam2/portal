@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+
 <style type="text/css">
 body{
   background: rgba(0,0,0,0.3);
@@ -15,17 +17,17 @@ form{
   top: 50%;
   left: 50%;
   margin-top: -100px;
-  margin-left: -250px;
-  width: 500px;
+  margin-left: -265px;
+  width: 445px;
   height: 200px;
-  border: 4px dashed #fff;
+  border: 4px dashed gray;
 }
 form p{
   width: 100%;
   height: 100%;
   text-align: center;
   line-height: 170px;
-  color: #ffffff;
+  color: black;
   font-family: Arial;
 }
 form input{
@@ -43,7 +45,7 @@ form input{
   color: #fff;
   background: #16a085;
   border: none;
-  width: 508px;
+  width: 445px;
   height: 35px;
   margin-left: -4px;
   border-radius: 4px;
@@ -72,8 +74,13 @@ form input{
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript"> </script>
 <script src="<c:url value='/resources/js/jquery.MultiFile.min.js'/>" type="text/javascript"> </script>
+<!--Bootsrap 4 CDN-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   
+<!--Fontawesome CDN-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <script type="text/javascript">
- 
+
     // 파일 리스트 번호
     var fileIndex = 0;
     // 등록할 전체 파일 사이즈
@@ -275,16 +282,16 @@ form input{
 <BODY>
 
     	<div id="info">
-    		<label for="openSubj">과목명  : &nbsp;&nbsp;</label>
-	    	<select id="openSubj" class="selectpicker">
+    		<span class="input-group-text" style="float: left">과목명 :&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	    	<select class="form-control" id="openSubj" class="selectpicker" style="float: left; width: 70%">
 	    		<c:if test="${!empty list }">
 	    			<c:forEach var="vo" items="${list}">
 	    				<option value="${vo.subjCode }">${vo.subjName }</option>
 	    			</c:forEach>
 	    		</c:if>
 	    	</select><br>
-	    	<label for="theoryTime"> 이론시간 : </label><input type="text" id="theoryTime"><br>
-	    	<label for="trainingTime"> 실습시간 : </label><input type="text" id="trainingTime">
+	    	<span class="input-group-text" style="float: left">이론시간 :</span> <input type="text" class="form-control"  id="theoryTime" style="width: 70%" style="float: left">
+	    	<span class="input-group-text" style="float: left">이론시간 :</span><input type="text" class="form-control"  id="trainingTime" style="float: left;width: 70%">
 	    	
     	</div>
     <form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">

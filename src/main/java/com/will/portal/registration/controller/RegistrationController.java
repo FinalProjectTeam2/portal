@@ -71,6 +71,9 @@ public class RegistrationController {
 	@ResponseBody
 	public Map<String, Object> openSubjList(@ModelAttribute RegistrationSearchVO regSearchVo, Model model) {
 		
+		if(!regSearchVo.getTime1().equals("all") && !regSearchVo.getTime2().equals("all")) {
+			regSearchVo.setTime(regSearchVo.getTime1()+regSearchVo.getTime2());
+		}
 		
 		logger.info("개설된 강의 읽어가기 파라미터 registrationsearchvo={}", regSearchVo);
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -85,6 +88,21 @@ public class RegistrationController {
 		List<OpenSubjListVO> list = registServ.openSubjList(regSearchVo);
 		int count = list.size();
 		logger.info("리스트 개수 count={}", count);
+		//학점과 등록된 시간표의 시간 개수가 일치하지 않으면 삭제한다.
+		if(list!=null && !list.isEmpty()) {
+			for(int i = 0; i < list.size(); i++) {
+				OpenSubjListVO vo = list.get(i);
+				String[] sArr = vo.getShortNames().split(",");
+				if(vo.getCredit() != sArr.length) {
+					list.remove(i);
+				}
+				
+			}
+		}
+		
+		
+		
+		
 		
 		if(count < 1) {
 			checkNull="Y";

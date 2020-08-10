@@ -6,4 +6,5 @@ import java.util.Map;
 public interface EvaluationService {
 	List<EvaluationAllVO> selectAllListforEval(String subCode);
 	List<Map<String, Object>> subjectByProfNo(String profNo);
+	int inputScore(EvaluationVO vo);
 }

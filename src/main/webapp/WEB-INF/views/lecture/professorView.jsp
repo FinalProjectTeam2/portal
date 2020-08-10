@@ -34,14 +34,31 @@
 				url:"<c:url value='/lecture/downloadScore'/>",
 				type:"post",
 				data:{
-					"subjCode":$('#subjCode option:selected').val()
+					"subjCode":$('#subjCode option:selected').val(),
+					"subjName":$('#subjCode option:selected').text()
 				},
 				success:function(res){
-					alert(res);
+					alert(res+'로 저장 되었습니다.');
 				}
 				
 			});
 		});
+		
+		
+		
+		
+		$('.score').on("change keyup paste", function() {
+		    var currentVal = $(this).val();
+		    if(currentVal == oldVal) {
+		        return;
+		    }
+		 
+		    oldVal = currentVal;
+		    alert("changed!");
+		});
+		
+		
+		
 		
 		
 	});
@@ -89,12 +106,12 @@
 									"<td>"+ item.stuNo +"</td>"+
 									"<td>"+ item.name +"</td>"+
 									"<td>"+ item.classification +"</td>"+
-									"<td><input type='text' size='3' value='"+ item.midterm +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.finals +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.assignment +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.attendance +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.etc +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.totalGrade +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.midterm +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.finals +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.assignment +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.attendance +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.etc +"'></td>"+
+									"<td class='total'><input type='text' size='3' value='"+ item.totalGrade +"'></td>"+
 									"<td><button type='button' class='btn btn-primary btOk'>입력</button></td>"+
 								"</tr>";
 					});
@@ -114,16 +131,36 @@
 						var stuNo=td.eq(1).text();
 						var name=td.eq(2).text();
 						var classification=td.eq(3).text();
-						var midTerm=td.eq(4).children().val();
+						var midterm=td.eq(4).children().val();
 						var finals=td.eq(5).children().val();
 						var assignment=td.eq(6).children().val();
 						var attendance=td.eq(7).children().val();
 						var etc=td.eq(8).children().val();
 						var totalGrade=td.eq(9).children().val();
 						
-						alert('subCode='+subCode+', stuNo='+stuNo+', name='+name+', classification'+classification+', midTerm='+midTerm
-								+', finals='+finals+', assignment='+assignment+', attendance='+attendance+', etc='+etc+', totalGrade='+totalGrade);
+						$.ajax({
+							url:"<c:url value='/lecture/inputScore'/>",
+							data:{
+								"subCode":subCode,
+								"stuNo":stuNo,
+								"midterm":midterm,
+								"finals":finals,
+								"assignment":assignment,
+								"attendance":attendance,
+								"etc":etc
+							},
+							type:"post",
+							success:function(res){
+								alert(res);
+								showList();
+							}
+							
+						});
+						
 					});
+					
+					
+					
 					
 			}, 
 			error:function(xhr, status, error){

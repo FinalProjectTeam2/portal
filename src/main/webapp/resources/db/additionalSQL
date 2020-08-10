@@ -238,5 +238,8 @@ values(prof_position_seq.nextval,'전임강사');
 insert into PROF_POSITION
 values(PROF_POSITION_SEQ.nextval,'퇴임');
 
-
-
+/*수업등록 seq*/
+create sequence subject_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE;
