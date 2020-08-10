@@ -305,6 +305,7 @@
 							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
 							<li><a href="<c:url value='/lecture/createLecture'/>">강의 개설</a></li>
 							<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
+							<li><a href="<c:url value='/lecture/phoneBook'/>">수강생 연락처</a></li>
 							
 						</ul></li>
 					</c:if>

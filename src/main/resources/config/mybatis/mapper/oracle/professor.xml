@@ -183,4 +183,17 @@
 		delete from professor
 		where prof_no=#{profNo}
 	</delete>
+	
+	<select id="phoneBook" resultType="phoneBookVO" parameterType="string">
+		select r.stu_no, s.name, s.semester, d.dep_name, o.hp1 || o.hp2 || o.hp3 as phoneNo 
+		from registration r join official_info o
+		on r.stu_no=o.official_no
+		join student s
+		on r.stu_no=s.stu_no
+		join department d
+		on s.major=d.dep_no
+		<if test="value!=null">
+			where r.sub_code=#{subCode}
+		</if> 
+	</select>
 </mapper>

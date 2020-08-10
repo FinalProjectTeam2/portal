@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.will.portal.regi_timetable.model.Regi_timetableVO;
 import com.will.portal.common.ProfSearchVO;
-
+import com.will.portal.phoneBook.model.PhoneBookVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 
@@ -29,5 +29,7 @@ public interface ProfessorDAO {
 	int getTotalRecord(ProfSearchVO profSearchVo);
 	int updatePosition(ProfessorVO professorVo);
 	int deleteProfessor(String profNo);
+	
+	List<PhoneBookVO> phoneBook(String subCode);
 
 }
