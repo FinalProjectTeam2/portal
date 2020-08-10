@@ -40,8 +40,9 @@ a.bottom {
 		});
 		
 		$.ajax({
-			url:"<c:url value='/admin/foot' />",
+			url:"<c:url value='/admin/ajax/foot' />",
 			dataType:"json",
+			type : "get",
 			success:function(res){
 				$('#companyName').html(res.companyName);
 				$('#tel').html('통합콜센터 : '+res.tel);
@@ -49,9 +50,6 @@ a.bottom {
 				$('#address1').html(res.address1);
 				$('#address2').html(res.address2);
 				$('#startYear').html(res.startYear);
-			},
-			error:function(xhr,status,error){
-				alert(status + ", " + error);
 			}
 		});
 		
