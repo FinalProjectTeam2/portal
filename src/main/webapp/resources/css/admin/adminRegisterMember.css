@@ -101,7 +101,7 @@
 	border-color: #01539d;
 }
 
-#selLine {
+.selLine {
 	width: 100% !important;
 	margin: 20px 0 20px 0;
 }

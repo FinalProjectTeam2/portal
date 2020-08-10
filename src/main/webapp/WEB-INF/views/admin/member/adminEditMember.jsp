@@ -72,7 +72,9 @@
 	}
 
 	$(function() {
+		    
 		$.select();
+
 		$('#editFrm').submit(function() {
 			var formData = new FormData();
 
@@ -113,6 +115,7 @@
 			return false;
 		});
 	});
+			  
 	$.select = function() {
 		var officialNo = $('#officialNo').val();
 		$
@@ -167,14 +170,15 @@
 								+ res.DEP_NAME
 								+ '<input type="button"'
 								+ 'class="btCustom btn btn-primary btn-lg login-button"'
-								+ 'onclick="editDep()"' + "id='editDep'"
-								+ "value='전공관리'" + '>' + '</td>' + '</tr>'
-								+ '<tr>' + '<th>과정</th>' + '<td>학사: '
-								+ res.STATE_NAME + '/ ' + res.SEMESTER
-								+ '학기 </td>' + '</tr>' + '<tr>' + '<th>기타</th>'
-								+ '<td>' + res.HP1 + '-' + res.HP2 + '-'
-								+ res.HP3 + ' / ' + res.EMAIL1 + '@'
-								+ res.EMAIL2 + '/ ' + res.ZIPCODE + ' '
+								+' onclick="location.href=\'/portal/admin/member/adminManageMajor?stuNo='+res.STU_NO+'\'"'
+								+ "id='editDep'"
+								+ "value='전공관리'" + '>'
+								+ '</td>' + '</tr>' + '<tr>' + '<th>과정</th>'
+								+ '<td>학사: ' + res.STATE_NAME + '/ '
+								+ res.SEMESTER + '학기 </td>' + '</tr>' + '<tr>'
+								+ '<th>기타</th>' + '<td>' + res.HP1 + '-'
+								+ res.HP2 + '-' + res.HP3 + ' / ' + res.EMAIL1
+								+ '@' + res.EMAIL2 + '/ ' + res.ZIPCODE + ' '
 								+ res.ADDRESS + ' ' + res.ADDR_DETAIL + ' / '
 								+ res.BANK_NAME + ' ' + res.ACCOUNT_NO + '('
 								+ res.ACCOUNT_NAME + ')</td>' + '</tr>';
@@ -240,6 +244,8 @@
 					}
 				});
 	}
+	
+
 </script>
 
 

@@ -1,6 +1,7 @@
 package com.will.portal.admin.controller;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -618,6 +619,32 @@ public class AdminMemberController {
 		model.addAttribute("officialNo", officialNo);
 
 		return "/admin/member/adminEditMember";
+	}
+	
+	/**
+	 * 학생 수정 - 전공 변경
+	 * @param stuNo
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/adminManageMajor")
+	public String adminManageMajor(String stuNo, Model model) {
+		logger.info("전공수정 페이지 보여주기, stuNo={}", stuNo);
+		
+		Map<String, Object> map = studentService.selectViewByStuNo(stuNo);
+		logger.info("{}",map);
+	
+		int facultyNo=Integer.parseInt(map.get("FACULTY_NO").toString());
+		int minorFacultyNo=Integer.parseInt(map.get("minor_faculty_no").toString());
+		List<FacultyVO> facultyList = facultyService.selectFaculty();
+		List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(facultyNo);
+		List<DepartmentVO> departmentList2 = departmentService.selectDepartmentByFaculty(minorFacultyNo);
+		
+		model.addAttribute("facultyList",facultyList);
+		model.addAttribute("departmentList",departmentList);
+		model.addAttribute("departmentList2",departmentList2);
+		model.addAttribute("map",map);
+		return "/admin/member/adminManageMajor";
 	}
 
 	@RequestMapping(value = "/memberEdit", method = RequestMethod.POST)
