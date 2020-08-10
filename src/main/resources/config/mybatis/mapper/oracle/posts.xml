@@ -167,5 +167,25 @@
 		set title = #{title}, contents = #{contents}, edit_date = sysdate
 		where post_no = #{postNo}
 	</update>
+	
+	<select id="selectByBdcode" parameterType="String" resultType="postsVO">
+		select A.* from
+			(select rownum, p.* from posts p where bd_code = #{bdCode} order by post_no desc)A
+		<![CDATA[ where rownum <= 6]]>	
+	</select>
+	
+	<resultMap type="boardMainVO" id="selectByBdcodeResultMap">
+		<association property="bdCode" javaType="string" column="bd_code">
+			<result column="bd_code" jdbcType="VARCHAR" property="bdCode" />
+		</association>
+		<collection property="postsList" column="bd_code"
+			javaType="ArrayList" ofType="PostsVO" select="selectByBdcode">
+		</collection>
+	</resultMap>
+	
+	<select id="selectBdcodeBycategory" resultMap="selectByBdcodeResultMap" parameterType="String">
+		select bd_code from board where category_code = #{categoryCode}
+	</select>
+	
 </mapper>
 
