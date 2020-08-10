@@ -10,12 +10,12 @@
 		$("#writeMsg").click(function() {
 			var win = window.open("<c:url value='/message/sendMessage?type=send'/>", "_blank",
 			"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=500,height=390");
-
+			return false;
 		});
 		$("#selfMsg").click(function() {
 			var win = window.open("<c:url value='/message/sendMessage?type=self'/>", "_blank",
 			"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=500,height=390");
-
+			return false;
 		});
 	})
 </script>

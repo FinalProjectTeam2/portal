@@ -9,7 +9,6 @@
 <head>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <link rel="stylesheet" href="<c:url value='/resources/css/chat/custom.css'/>">
 <style type="text/css">

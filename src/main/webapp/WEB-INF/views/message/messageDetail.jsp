@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쪽지 쓰기 - 팝업</title>
+<title>쪽지 보기 - 팝업</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -91,48 +91,13 @@ input#savenote {
 <script type="text/javascript">
 	$(function() {
 		$("#sendMessageBtn").click(function() {
-			var officialNo = $("#officialNo").val();
-			var writeNote = $("#writeNote").val();
-			$.ajax({
-				url : '<c:url value="/message/ajax/insert"/>',
-				data : {
-					officialNo : officialNo,
-					writeNote : writeNote
-				},
-				type : 'get',
-				success : function(res) {
-					 window.opener.send12(officialNo); 
-					 self.close();
-				},
-				error : function(e) {
-					alert(e);
-				}
-			});
+			 window.opener.reMessage('${vo.officialNo }');
 		});
 		
-		$("#writeNote").keyup(function() {
-			var len = $("#writeNote").val().length;
-			$("#noteLen").html(len);
-		});
+		var cur = $( "#currentPage", opener.document ).val();
+		window.opener.sendTwo(cur);
+		window.opener.send12('${principal.officialNo}');
 		
-		$("#chk_tome").change(function(){
-	        if($(this).is(":checked")){
-	            $("#officialNo").val('${principal.officialNo}');
-	            $("#officialNo").attr("disabled","disabled");
-	        }else{
-	        	$("#officialNo").val('');
-	            $("#officialNo").attr("disabled",false);
-	        }
-	    });
-		
-		if('${type}' == 'self'){
-			$("#chk_tome").attr("checked","checked");
-			$("#officialNo").val('${principal.officialNo}');
-	        $("#officialNo").attr("disabled","disabled");
-		}else if('${type}' == 're'){
-			$("#officialNo").val('${officialNo}');
-	        $("#officialNo").attr("disabled","disabled");
-		}
 	});
 	
 </script>
@@ -144,27 +109,20 @@ input#savenote {
 			<div class="send_window">
 				<div id="normalMode">
 				<span class="tf_tit">
-					<label for="who" class="recipient">받는사람</label>
-					<input type="checkbox" id="chk_tome" >
-					<label for="chk_tome">내게쓰기</label>
+					<label for="who" class="recipient">보낸사람</label>
 				</span>
 				<span class="tf_cont">	
 					<span class="tx">
-						<input type="text" id="officialNo" value="" style="ime-mode: disabled;">
+						<input type="text" id="officialNo" value="${vo.officialNo }" disabled="disabled" style="ime-mode: disabled;">
 					</span>
 				</span>
 				</div>
 				<div class="writing_area">
-					<textarea id="writeNote" maxlength="1000" style="resize:none;" rows="12" cols="75" title="쪽지 내용을 입력해 주세요."></textarea>
-				</div>
-				<div class="writing_option">
-					<div class="character">
-						<span id="noteLen">0</span> / <span id="noteMaxLen">1,000</span>자
-					</div>					
+					<textarea id="writeNote" maxlength="1000" style="resize:none;" rows="12" cols="75" disabled="disabled">${vo.contents}</textarea>
 				</div>
 			</div>
 			<div class="btns">				
-				<a style="cursor: pointer;" class="btn btn-primary" id="sendMessageBtn">보내기</a>
+				<a style="cursor: pointer;" class="btn btn-primary" id="sendMessageBtn">답장보내기</a>
 				<a href="#" class="btn btn-primary" onclick="window.close();">취소</a>
 			</div>
 		</div>
