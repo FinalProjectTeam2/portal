@@ -175,6 +175,9 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.deleteStudent(stuNo);
 	}
 
-
+	@Override
+	public int updateStudent(StudentVO studentVO) {
+		return studentDao.updateStudent(studentVO);
+	}
 
 }

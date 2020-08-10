@@ -3,6 +3,7 @@ package com.will.portal.posts.model;
 import java.util.List;
 import java.util.Map;
 
+import com.will.portal.board.model.BoardMainVO;
 import com.will.portal.board.model.BoardSearchVO;
 
 public interface PostsService {
@@ -18,4 +19,6 @@ public interface PostsService {
 	int deletePostByPostNo(Map<String, String> map);
 	int updatePost(PostsVO vo);
 	PostsVO selectPostByPostNo(int postNo);
+	public List<PostsVO> selectByBdcode(String bdCode);
+	public List<BoardMainVO> selectMainPosts(String bdCode);
 }

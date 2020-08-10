@@ -23,4 +23,5 @@ public interface StudentService {
 	int multiUpdateStudentState(List<StudentVO> studentList,String state);
 	public int deleteMulti(List<StudentVO> list);
 	int deleteStudent(String stuNo);
+	public int updateStudent(StudentVO studentVO);
 }

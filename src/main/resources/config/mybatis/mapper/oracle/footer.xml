@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.footer">
+	
+	<select id="selectByCompany" parameterType="String" resultType="footerVo">
+		select * from footer
+		where company_name=#{companyName}
+	</select>
+	
+	<update id="updateFooter" parameterType="footerVo">
+		update footer
+		set tel = #{tel},zipcode=#{zipcode},address1=#{address1},address2=#{address2},
+			policy=#{policy},start_year=#{startYear}
+		where company_name=#{companyName}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

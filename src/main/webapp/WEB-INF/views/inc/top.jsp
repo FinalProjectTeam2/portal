@@ -48,6 +48,9 @@
 <!-- ckeditor 사용하기 위함 -->
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 
+<!-- sockJs -->
+
+
 <style type="text/css">
 .logo {
 	height: 35px;
@@ -115,6 +118,17 @@
 	float: left;
 	margin-right: 10px;
 }
+.toast {
+    top: 60px;
+    position: fixed;
+    left: 1200px;
+    width: 260px;
+    text-align: center;
+}
+.toast-body {
+    background: #343a40;
+    color: white;
+}
 </style>
 <sec:authorize access="isAuthenticated()">
 	<script type="text/javascript">
@@ -155,37 +169,19 @@
 			});
 	function clock() {
 		var date = new Date();
-
-		// date Object를 받아오고
 		var month = date.getMonth();
-
-		// 달을 받아옵니다
 		var clockDate = date.getDate();
-
-		// 몇일인지 받아옵니다
 		var day = date.getDay();
-
-		// 요일을 받아옵니다.
 		var week = [ '일', '월', '화', '수', '목', '금', '토' ];
-
-		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다.
 		var hours = date.getHours();
-
-		// 시간을 받아오고
 		var minutes = date.getMinutes();
-
-		// 분도 받아옵니다.
 		var seconds = date.getSeconds();
 
-		// 초까지 받아온후
 		var timer = (month + 1) + '월 ' + clockDate + '일 ' + week[day] + '요일 '
 				+ (hours < 10 ? '0' + hours : hours) + ':'
 				+ (minutes < 10 ? '0' + minutes : minutes) + ':'
 				+ (seconds < 10 ? '0' + seconds : seconds);
 
-		// 월은 0부터 1월이기때문에 +1일을 해주고
-
-		// 시간 분 초는 한자리수이면 시계가 어색해보일까봐 10보다 작으면 앞에0을 붙혀주는 작업을 3항연산으로 했습니다.
 		$("#timer").html(timer)
 	}
 	$(function() {
@@ -218,20 +214,74 @@
 		$("#btLogin").click(function() {
 			location.href = "<c:url value='/login' />";
 		});
-		
+
 		$("#goMessage").click(function() {
 			location.href = "<c:url value='/message/messageBox'/>";
 		});
 	});
 </script>
+<sec:authorize access="isAuthenticated()">
+<script
+	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script type="text/javascript">
+	if (sock12 != null) {
+		disconnect12();
+	}
+	var sock12 = null;
+
+	$(function() {
+		$('.toast').toast({
+		    'autohide': false
+		  });
+		$(".toast-body").click(function() {
+			location.href = "<c:url value='/message/messageBox'/>";
+		});
+		$(window).bind('beforeunload', function() {
+			disconnect12();
+			return;
+		});
+
+		sock12 = new SockJS("<c:url value='/messageSock'/>");
+		sock12.onmessage = onMessage12;
+		sock12.onclose = onClose12;
+		sock12.onopen = onOpen12;
+
+	});
+	function disconnect12() {
+		sock12.close();
+	}
+	function send12(officialNo) {
+		sock12.send(JSON.stringify({
+			writeNote : "조회",
+			officialNo : officialNo
+		}));
+
+	}
+	function onOpen12() {
+
+	}
+	function onClose12() {
+		disconnect12();
+	}
+
+	/* evt 는 websocket이 보내준 데이터 */
+	function onMessage12(evt) {
+		var data = evt.data;
+		$("#messageCount").html(data);
+		if(data != '0'){
+			$('.toast').toast('show');
+		}
+	}
+</script>
+</sec:authorize>
 <meta name="theme-color" content="#563d7c">
 </head>
 <body class="d-flex flex-column h-100">
 	<!-- top 시작 -->
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand" 
-			<sec:authorize access="isAuthenticated()">
+			<a class="navbar-brand"
+				<sec:authorize access="isAuthenticated()">
 			<c:if test="${principal.type == 'ADMIN' }">
 				href="<c:url value='/admin/adminMain'/>"
 			</c:if>
@@ -239,7 +289,7 @@
 				href="<c:url value='/index'/>"
 			</c:if>
 			</sec:authorize>
-			<sec:authorize access="isAnonymous()">
+				<sec:authorize access="isAnonymous()">
 					href="<c:url value='/index'/>"
 				</sec:authorize>
 				style="border-right: 1px solid white; padding: 0 20px 0 0;"> <img
@@ -250,12 +300,13 @@
 				style="max-width: 1400px;">
 
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active" style="color: white;">PORTAL  <span class="sr-only">(current)</span>
+					<li class="nav-item active" style="color: white;">PORTAL <span
+						class="sr-only">(current)</span>
 					</li>
 				</ul>
 				<sec:authorize access="isAuthenticated()">
-					<span style="color: white; margin-right: 10px;">
-						<sec:authentication property="principal.name" />님
+					<span style="color: white; margin-right: 10px;"> <sec:authentication
+							property="principal.name" />님
 					</span>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
@@ -312,13 +363,28 @@
 					</sec:authorize>
 
 					<li><a class="nav-link" href="#" id="goMessage"> 쪽지함 <span
-							class="badge badge-pill bg-light align-text-bottom">27</span>
+							id="messageCount"
+							class="badge badge-pill bg-light align-text-bottom"></span>
 					</a></li>
 				</ul>
 				<span id="timer"
-					style="color: black; font-size: 0.8em; margin: 15px 25px;
-					width: 100%; text-align: right;"></span>
+					style="color: black; font-size: 0.8em; margin: 15px 25px; width: 100%; text-align: right;"></span>
 			</nav>
+			<sec:authorize access="isAuthenticated()">
+			<div class="toast" role="alert" aria-live="assertive"
+				aria-atomic="true">
+				<div class="toast-header">
+					<img src="<c:url value='/resources/images/logoIcon.ico'/>" style="width: 1em;"
+						class="rounded mr-2" alt="로고"> <strong class="mr-auto">척척학사</strong>
+					<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="toast-body" style="cursor: pointer;">쪽지가 도착했습니다.
+				</div>
+			</div>
+			</sec:authorize>
 		</div>
 	</header>
 	<!-- top 끝 -->

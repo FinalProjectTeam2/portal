@@ -1,16 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>쪽지 쓰기 - 팝업</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<!-- sockJs -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="referrer" content="always">
+<sec:authentication var="principal" property="principal" />
 <style type="text/css">
 body {
     margin: 0;
@@ -52,8 +57,10 @@ label {font-size: 1em;}
 
 .character {
     float: right;
-    width: 15%;
+    text-align: right;
+    width: 30%;
     font-size: 0.9em;
+    padding: 0 10px;
 }
 
 div#comment1 {
@@ -81,6 +88,54 @@ input#savenote {
     margin: 0;
 }
 </style>
+<script type="text/javascript">
+	$(function() {
+		$("#sendMessageBtn").click(function() {
+			var officialNo = $("#officialNo").val();
+			var writeNote = $("#writeNote").val();
+			$.ajax({
+				url : '<c:url value="/message/ajax/insert"/>',
+				data : {
+					officialNo : officialNo,
+					writeNote : writeNote
+				},
+				type : 'get',
+				success : function(res) {
+					 window.opener.send12(officialNo); 
+					 self.close();
+				},
+				error : function(e) {
+					alert(e);
+				}
+			});
+		});
+		
+		$("#writeNote").keyup(function() {
+			var len = $("#writeNote").val().length;
+			$("#noteLen").html(len);
+		});
+		
+		$("#chk_tome").change(function(){
+	        if($(this).is(":checked")){
+	            $("#officialNo").val('${principal.officialNo}');
+	            $("#officialNo").attr("disabled","disabled");
+	        }else{
+	        	$("#officialNo").val('');
+	            $("#officialNo").attr("disabled",false);
+	        }
+	    });
+		
+		if('${type}' == 'self'){
+			$("#chk_tome").attr("checked","checked");
+			$("#officialNo").val('${principal.officialNo}');
+	        $("#officialNo").attr("disabled","disabled");
+		}else if('${type}' == 're'){
+			$("#officialNo").val('${officialNo}');
+	        $("#officialNo").attr("disabled","disabled");
+		}
+	});
+	
+</script>
 </head>
 <body>
 <div id="pop_wrap" class="pop_write">
@@ -89,38 +144,27 @@ input#savenote {
 			<div class="send_window">
 				<div id="normalMode">
 				<span class="tf_tit">
-					<a class="recipient" id="recipient" style="display:none;">받는사람</a>
 					<label for="who" class="recipient">받는사람</label>
-					<input type="checkbox" id="chk_tome" onclick="">
+					<input type="checkbox" id="chk_tome" >
 					<label for="chk_tome">내게쓰기</label>
 				</span>
 				<span class="tf_cont">	
 					<span class="tx">
-						<input type="text" id="who" value="" style="ime-mode: disabled;">
+						<input type="text" id="officialNo" value="" style="ime-mode: disabled;">
 					</span>
 				</span>
 				</div>
 				<div class="writing_area">
-					<textarea id="writeNote" maxlength="1000" style="resize:none;" onkeyup="checkContentLength();" rows="12" cols="75" title="쪽지 내용을 입력해 주세요."></textarea>
+					<textarea id="writeNote" maxlength="1000" style="resize:none;" rows="12" cols="75" title="쪽지 내용을 입력해 주세요."></textarea>
 				</div>
 				<div class="writing_option">
 					<div class="character">
 						<span id="noteLen">0</span> / <span id="noteMaxLen">1,000</span>자
 					</div>					
-					<div id="comment1" class="save">
-						<input type="checkbox" id="savenote">
-						<label for="savenote">보낸쪽지함에 저장</label> 
-						<p class="txt_under">(보낸쪽지함에 저장하면 수신확인/발송취소가 가능합니다.)</p>
-					</div>
-					<!-- [D] 내게쓰기 체크시 display:block -->
-					<p id="comment2" style="display:none">
-						내게 쓴 쪽지는 <strong>내게쓴쪽지함</strong>에만 저장되며,<br>
-						삭제하시지 않으시면 영구 보관됩니다.
-					</p>
 				</div>
 			</div>
 			<div class="btns">				
-				<a href="#" class="btn btn-primary">보내기</a>
+				<a style="cursor: pointer;" class="btn btn-primary" id="sendMessageBtn">보내기</a>
 				<a href="#" class="btn btn-primary" onclick="window.close();">취소</a>
 			</div>
 		</div>
