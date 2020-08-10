@@ -19,6 +19,20 @@
 		margin: 10px;
 	}
 	
+	#btE #comapnyName{
+		background-color: #ccc;
+	}
+	
+	#editBt{
+	background-color: #01539d;
+	color: white;
+	}
+
+	#editBt:hover{
+	background-color: #ccc;
+	color: black;
+	}
+	
 </style>
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -50,7 +64,35 @@
 			
 		});
 		
+		
 	});
+	
+	function inputPhoneNumber(obj) {
+	    var number = obj.value.replace(/[^0-9]/g, "");
+	    var phone = "";
+
+	    if(number.length < 4) {
+	        return number;
+	    } else if(number.length < 7) {
+	        phone += number.substr(0, 2);
+	        phone += "-";
+	        phone += number.substr(2);
+	    } else if(number.length < 11) {
+	        phone += number.substr(0, 2);
+	        phone += "-";
+	        phone += number.substr(2, 3);
+	        phone += "-";
+	        phone += number.substr(5);
+	    } else {
+	        phone += number.substr(0, 2);
+	        phone += "-";
+	        phone += number.substr(2, 3);
+	        phone += "-";
+	        phone += number.substr(6);
+	    }
+	    obj.value = phone;
+	}
+	
 </script>
 <meta charset="UTF-8">
 <title>bottomEdit</title>
@@ -58,15 +100,15 @@
 <body>
 	<div id="btE">
 	<fieldset>
-		<legend style="font-size: 1.5em; text-align: center;">회사 정보 수정</legend>
+		<legend style="font-size: 1.5em;">회사 정보 수정</legend>
 		<form id="frm">
 			<div>
 				<label>회사명</label>
-				<input type="text" name="companyName" id="comapnyName" value="${vo.companyName }">
+				<input type="text" name="companyName" id="comapnyName" value="${vo.companyName }" readonly="readonly">
 			</div>	
 			<div>
 				<label>전화번호</label>
-				<input type="text" name="tel" id="tel" value="${vo.tel }">
+				<input type="text" name="tel" id="tel" value="${vo.tel }" onKeyup="inputPhoneNumber(this);">
 			</div>	
 			<div>
 				<label>우편번호</label>
@@ -81,7 +123,7 @@
 				<input type="text" name="address2" id="address2" value="${vo.address2 }">
 			</div>	
 			<div>
-				<label>POLICY</label>
+				<label>처리방침</label>
 				<textarea rows="" cols="" name="policy">${vo.policy }</textarea>
 			</div>	
 			<div>

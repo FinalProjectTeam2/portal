@@ -238,5 +238,20 @@ values(prof_position_seq.nextval,'전임강사');
 insert into PROF_POSITION
 values(PROF_POSITION_SEQ.nextval,'퇴임');
 
+#footer insert 추가
+insert into footer
+values('척척학사','021-7289-1382','07541','서울시 강남구','테헤란로 124','개인정보처리방침','2015');
+
+#DEPARTMENT_VIEW
+CREATE OR REPLACE VIEW DEPARTMENT_VIEW
+AS
+(
+select d.*,F.FACULTY_NAME,b.BUILDING_NAME,b.TEL as "BUILDING_TEL" 
+from department d join building b 
+on d.BUILDING_CODE = b.BUILDING_CODE
+JOIN (SELECT * FROM FACULTY)F
+ON d.FACULTY_NO = F.FACULTY_NO
+);
+
 
 

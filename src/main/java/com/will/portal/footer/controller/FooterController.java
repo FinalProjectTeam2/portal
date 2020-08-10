@@ -44,7 +44,6 @@ public class FooterController {
 	@ResponseBody
 	public FooterVo forFooter() {
 		FooterVo vo =footerService.selectByCompany("척척학사");
-		logger.info("vo={}",vo);
 		return vo;
 	}
 	

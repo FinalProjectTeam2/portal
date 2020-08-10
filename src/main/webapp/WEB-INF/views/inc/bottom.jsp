@@ -21,6 +21,17 @@ a.bottom {
 #scrolling a svg {
 	color: #28a745;
 }
+
+
+#footerEdit{
+	background-color: #01539d;
+	color: white;
+}
+
+#footerEdit:hover{
+	background-color: #ccc;
+	color: black;
+}
 </style>
 <script>
 	$(function() {
@@ -33,7 +44,7 @@ a.bottom {
 			dataType:"json",
 			success:function(res){
 				$('#companyName').html(res.companyName);
-				$('#tel').html(res.tel);
+				$('#tel').html('통합콜센터 : '+res.tel);
 				$('#zipcode').html(res.zipcode);
 				$('#address1').html(res.address1);
 				$('#address2').html(res.address2);
@@ -127,11 +138,13 @@ a.bottom {
 			<div class="foot_copyright">Copyright(c) <span id="companyName"></span> <span id="startYear"></span> BY DANKOOK
 				UNIVERSITY. All rights reserved.</div>
 		</div>
-		<sec:authorize access="isAuthenticated()">
-		<c:if test="${principal.type == 'ADMIN' }">
-			<button type="button" id="footerEdit">수정</button>
-		</c:if>
-		</sec:authorize>
+		<div style="text-align: right;">
+			<sec:authorize access="isAuthenticated()">
+			<c:if test="${principal.type == 'ADMIN' }">
+				<button type="button" id="footerEdit">수정</button>
+			</c:if>
+			</sec:authorize>
+		</div>
 	</div>
 </footer>
 <!-- footer 끝 -->
