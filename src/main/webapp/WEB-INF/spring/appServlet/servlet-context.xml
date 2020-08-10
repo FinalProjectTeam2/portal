@@ -43,6 +43,7 @@
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
 		<websocket:mapping handler="webSocketHandler" path="/chat"/>
+		<websocket:mapping handler="messageHandler" path="/messageSock"/>
 		<websocket:sockjs/>
 	</websocket:handlers>
 	

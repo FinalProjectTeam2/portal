@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.message">
+	<insert id="insertInbox" parameterType="inboxVo">
+		<selectKey keyProperty="no" order="BEFORE" resultType="int">
+			select INBOX_SEQ.nextval from dual
+		</selectKey>
+		insert into inbox (NO,MSG_NO,OFFICIAL_NO)
+		values(#{no},#{msgNo},#{officialNo})
+	</insert>
+	
+	<insert id="insertOutbox" parameterType="outboxVo">
+		<selectKey keyProperty="msgNo" order="BEFORE" resultType="int">
+			select OUTBOX_SEQ.nextval from dual
+		</selectKey>
+		insert into outbox (MSG_NO,OFFICIAL_NO,OFFICIAL_NAME,CONTENTS)
+		values(#{msgNo},#{officialNo},#{officialName},#{contents})
+	</insert>
+	
+	<select id="selectCountMsg" parameterType="String" resultType="int">
+		select count(*) from inbox where official_no = #{officialNo} and read_date is null
+	</select>
+	
+	<select id="selectInMsgByOfficialNo" parameterType="messageSearchVo" resultType="messageAllVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		       select o.*, i.official_no in_Offi, i.no, i.read_date
+				from outbox o join inbox i on o.msg_no = i.msg_no 
+				where o.official_no != i.official_no 
+				and i.keep_flag = 'N' and i.official_no=#{officialNo}
+			    <if test="searchKeyword!=null and searchKeyword !=''">
+		        	and ${searchCondition} like '%' 
+		        			|| #{searchKeyword} || '%'
+		        </if>
+		       order by o.msg_no desc, i.no desc
+		        
+		    )A    
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="selectInMsgCount" parameterType="messageSearchVo" resultType="int">
+       select count(*)
+		from outbox o join inbox i on o.msg_no = i.msg_no 
+		where o.official_no != i.official_no 
+		and i.keep_flag = 'N' and i.official_no=#{officialNo}
+	    <if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>
+	</select>
+	<select id="selectOutMsgByOfficialNo" parameterType="String" resultType="messageAllVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		       select o.*, i.official_no in_Offi, i.no, i.read_date
+				from outbox o join inbox i on o.msg_no = i.msg_no 
+				where o.official_no != i.official_no and i.keep_flag = 'N' 
+				and o.official_no=#{officialNo} and del_flag = 'N'
+			    <if test="searchKeyword!=null and searchKeyword !=''">
+		        	and ${searchCondition} like '%' 
+		        			|| #{searchKeyword} || '%'
+		        </if>
+		       order by o.msg_no desc, i.no desc
+		        
+		    )A    
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="selectOutMsgCount" parameterType="messageSearchVo" resultType="int">
+       select count(*)
+		from outbox o join inbox i on o.msg_no = i.msg_no 
+		where o.official_no != i.official_no and i.keep_flag = 'N' 
+		and o.official_no=#{officialNo} and del_flag = 'N'
+	    <if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>  
+	</select>
+	<select id="selectKeepMsgByOfficialNo" parameterType="String" resultType="messageAllVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		       select o.*, i.official_no in_Offi, i.no, i.read_date
+				from outbox o join inbox i on o.msg_no = i.msg_no 
+				where o.official_no != i.official_no and i.keep_flag = 'Y' 
+				and i.official_no=#{officialNo}
+			    <if test="searchKeyword!=null and searchKeyword !=''">
+		        	and ${searchCondition} like '%' 
+		        			|| #{searchKeyword} || '%'
+		        </if>
+		       order by o.msg_no desc, i.no desc
+		    )A    
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="selectKeepMsgCount" parameterType="messageSearchVo" resultType="int">
+       select count(*)
+		from outbox o join inbox i on o.msg_no = i.msg_no 
+		where o.official_no != i.official_no and i.keep_flag = 'Y' 
+		and i.official_no=#{officialNo}
+	    <if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>  
+	</select>
+	<select id="selectSelfMsgByOfficialNo" parameterType="String" resultType="messageAllVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		       select o.*, i.official_no in_Offi, i.no, i.read_date
+				from outbox o join inbox i on o.msg_no = i.msg_no 
+				where o.official_no = i.official_no and i.keep_flag = 'N' 
+				and i.official_no=#{officialNo} and del_flag = 'N'
+			    <if test="searchKeyword!=null and searchKeyword !=''">
+		        	and ${searchCondition} like '%' 
+		        			|| #{searchKeyword} || '%'
+		        </if>
+		       order by o.msg_no desc, i.no desc
+		    )A    
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="selectSelfMsgCount" parameterType="messageSearchVo" resultType="int">
+       select count(*)
+		from outbox o join inbox i on o.msg_no = i.msg_no 
+		where o.official_no = i.official_no and i.keep_flag = 'N' 
+		and i.official_no=#{officialNo}
+	    <if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>  
+	</select>
+	<select id="selectAllMsgByOfficialNo" parameterType="String" resultType="messageAllVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		       select DISTINCT o.*, i.official_no in_Offi, i.no, i.read_date
+				from outbox o join inbox i on o.msg_no = i.msg_no
+				where i.official_no=#{officialNo} or o.official_no=#{officialNo}
+			    <if test="searchKeyword!=null and searchKeyword !=''">
+		        	and ${searchCondition} like '%' 
+		        			|| #{searchKeyword} || '%'
+		        </if>
+		       order by o.msg_no desc, i.no desc
+		    )A    
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="selectAllMsgCount" parameterType="messageSearchVo" resultType="int">
+       select count(*)
+		from outbox o join inbox i on o.msg_no = i.msg_no
+		where i.official_no=#{officialNo} or o.official_no=#{officialNo}
+	    <if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>  
+	</select>
+	
+	<select id="selectByNo" parameterType="int" resultType="messageAllVo">
+		select  o.*, i.official_no in_Offi, i.no, i.read_date
+		from outbox o join inbox i on o.msg_no = i.msg_no where no = #{no}
+	</select>
+	
+	<update id="updateReadDateByNo" parameterType="int">
+		update inbox
+		set read_date = sysdate
+		where no = #{no}
+	</update>
+	
+	<delete id="deleteInboxByNo" parameterType="int">
+		DELETE from inbox
+		where no = #{no}
+	</delete>
+</mapper>
