@@ -64,7 +64,6 @@ values(bank_seq.nextval, '제주은행');
 CREATE OR REPLACE VIEW
 STUDENT_VIEW
 AS(
-
 SELECT * FROM
 STUDENT S JOIN OFFICIAL_INFO O
 ON S.STU_NO = O.OFFICIAL_NO
@@ -83,7 +82,13 @@ ON O.OFFICIAL_NO = BB.DUPSTUNO
 join
 (select STATE as "DUPSTATE", STATE_NAME from student_state)ss
 on ss.DUPSTATE = S.STATE
-);
+left outer join 
+(
+SELECT Fm.FACULTY_NO as "minor_faculty_no", dm.dep_name as "minor_dep_name", Dm.dep_no as "minor_dep_no",Fm.FACULTY_NAME as "minor_faculty_name" FROM
+DEPARTMENT Dm JOIN FACULTY Fm
+ON Fm.FACULTY_NO = Dm.FACULTY_NO
+)md
+ON S.minor = md."minor_dep_no");
 
 #교수 정보 VIEW
 CREATE OR REPLACE VIEW
