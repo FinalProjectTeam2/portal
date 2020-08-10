@@ -11,7 +11,7 @@
 				<div class="row main">
 					<div id="sel">
 						<div id="header">
-							<h3>홈페이지 하단 정보 수정</h3>
+							<h3>홈페이지 정보 관리</h3>
 						</div>
 						<div class="main-login main-center">
 							<form class="form-horizontal" method="post" action="#">

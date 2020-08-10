@@ -90,17 +90,33 @@
 								</c:forEach>
 							</select> <label for="department"><span>학과</span></label> <select
 								name="major" class="rightEnd" id="department">
-								<option value="0">학부를 선택하세요</option>
+								<c:if test="${empty param.facultyNo }">
+									<option value="0">학부를 선택하세요</option>
+								</c:if>
+								<c:if test="${!empty param.facultyNo }">
+									<option value='0'>선택</option>
+									<c:forEach var="vo" items="${departmentList}">
+										<option value="${vo.depNo}"
+											<c:if test="${param.major==vo.depNo }">
+									 selected="selected" 
+									</c:if>>${vo.depName }</option>
+									</c:forEach>
+								</c:if>
 							</select>
 						</div>
 						<div class="ckState stud">
 							<input type="checkbox" name="stateAll" value="0" id="selectAll"><label
 								for="selectAll">전체</label>
 
-
+							<c:set var="stateCB"
+								value="${studentSearchVo.state1} ${studentSearchVo.state2} ${studentSearchVo.state3} ${studentSearchVo.state4}
+							${studentSearchVo.state5} ${studentSearchVo.state6}" />
 							<c:forEach var="vo" items="${stateList}">
 								<input type="checkbox" name="state" value="${vo.state }"
-									id="${vo.state }">
+									id="${vo.state }"
+									<c:if test="${fn:indexOf(stateCB,vo.state)>-1}">
+										checked="checked"							
+									</c:if>>
 								<label for="${vo.state }"> ${vo.stateName }</label>
 							</c:forEach>
 						</div>
@@ -120,7 +136,7 @@
 									 selected="selected"
 									</c:if>>${year-j }</option>
 							</c:forEach>
-						</select> 이름 <input type="text" name="name">
+						</select> 이름 <input type="text" name="name" value="${studentSearchVo.name}">
 						<button class="btCustom btn btn-primary btn-lg login-button"
 							id="btSearch">검색</button>
 						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
@@ -166,12 +182,12 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-								<!--반복시작-->
-								<c:set var="idx" value="0"/>
+									<!--반복시작-->
+									<c:set var="idx" value="0" />
 									<c:forEach var="map" items="${list }">
 										<tr>
-											  <td><input type="checkbox" name="stuList[${idx }].stuNo"
-                                    value="${map['STU_NO']}"></td>
+											<td><input type="checkbox" name="stuList[${idx }].stuNo"
+												value="${map['STU_NO']}"></td>
 											<td>${map['STU_NO']}</td>
 											<td>${map['NAME']}</td>
 											<td>${map['FACULTY_NAME']}</td>
@@ -183,42 +199,10 @@
 											<td><a
 												href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
 										</tr>
-										  <c:set var="idx" value="${idx+1 }"/>
-									</c:forEach>
-									<!-- 반복 끝 -->
-								</c:if>
-								<%--	<c:if test="${!empty list }">
-									<!-- 반복 시작 -->
-									<c:set var="idx" value="0" />
-									<c:forEach var="vo" items="${list }">
-										<c:if test="${!empty list }">
-											<!-- 반복 시작 -->
-											<c:set var="idx" value="0" />
-											<c:forEach var="vo" items="${list }">
-												<tr class="align_center">
-													<td><input type="checkbox"
-														name="pdItems[${idx }].productNo" value="${vo. }">
-														<input type="hidden" name="pdItems[${idx}].imageURL"
-														value="${vo.imageURL}"></td>
-													<td><a href=""> <img
-															src="<c:url value='/pd_images/${vo.imageURL}'/>"
-															alt="${vo.productName }" width="50"></a></td>
-													<td class="align_left">${vo.productName }</td>
-													<td class="align_right"><fmt:formatNumber
-															value="${vo.sellPrice }" pattern="#,###" />원</td>
-													<td><fmt:formatDate value="${vo.regDate }"
-															pattern="yyyy-MM-dd" /></td>
-													<td><a href="#">수정</a></td>
-													<td><a href="#">삭제</a></td>
-												</tr>
-												<c:set var="idx" value="${idx+1 }" />
-											</c:forEach>
-											<!-- 반복 끝 -->
-										</c:if>
 										<c:set var="idx" value="${idx+1 }" />
 									</c:forEach>
 									<!-- 반복 끝 -->
-								</c:if> --%>
+								</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -258,18 +242,17 @@
 						</c:if>
 						<!--  페이지 번호 끝 -->
 					</div>
-					     <div class="divRight">
-                  <select name="states" id="states">
-                     <option value="0">학적상태 변경</option>
-                     <option value="1">신입생</option>
-                     <option value="2">재학생</option>
-                     <option value="3">휴학생</option>
-                     <option value="4">졸업가능생</option>
-                     <option value="5">졸업생</option>
-                     <option value="6">제적생</option>
-                  </select>
-                  <input type="button" id="btMultiUpdateState" value="변경" >
-               </div>
+					<div class="divRight">
+						<select name="states" id="states">
+							<option value="0">학적상태 변경</option>
+							<option value="1">신입생</option>
+							<option value="2">재학생</option>
+							<option value="3">휴학생</option>
+							<option value="4">졸업가능생</option>
+							<option value="5">졸업생</option>
+							<option value="6">제적생</option>
+						</select> <input type="button" id="btMultiUpdateState" value="변경">
+					</div>
 
 					<div class="btdiv">
 						<input type="button"

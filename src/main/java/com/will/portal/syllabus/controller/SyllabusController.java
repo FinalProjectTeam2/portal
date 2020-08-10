@@ -1,7 +1,5 @@
 package com.will.portal.syllabus.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +22,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.will.portal.common.FileUploadUtil;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.files.model.FilesService;
-import com.will.portal.files.model.FilesVO;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.syllabus.model.SyllabusService;

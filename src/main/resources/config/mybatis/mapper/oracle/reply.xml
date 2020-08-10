@@ -37,7 +37,7 @@
 	
 	<select id="selectReplyByPostNo" parameterType="int" resultMap="replyListResultMap">
 		select r.*, sysdate-reg_date now , (select image_url from official_info where official_no=r.official_no) image_url
-		from reply r where post_no = #{postNo} order by reply_No desc
+		from reply r where post_no = #{postNo} order by reply_No 
 	</select>
 	
 	<select id="selectRereplyByReplyNo" parameterType="int" resultType="rereplyVo">
