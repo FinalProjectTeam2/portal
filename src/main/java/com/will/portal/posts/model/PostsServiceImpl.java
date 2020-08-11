@@ -80,8 +80,8 @@ public class PostsServiceImpl implements PostsService{
 	}
 
 	@Override
-	public List<BoardMainVO> selectBdcodeBycategory(String bdCode) {
-		return postsDao.selectBdcodeBycategory(bdCode);
+	public List<BoardMainVO> selectBdcodeBycategory(String categoryCode) {
+		return postsDao.selectBdcodeBycategory(categoryCode);
 	}
 	
 	

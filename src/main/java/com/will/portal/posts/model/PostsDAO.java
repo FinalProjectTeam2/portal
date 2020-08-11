@@ -20,5 +20,5 @@ public interface PostsDAO {
 	int updatePost(PostsVO vo);
 	PostsVO selectPostByPostNo(int postNo);
 	List<PostsVO> selectByBdcode(String bdCode);
-	List<BoardMainVO> selectBdcodeBycategory(String bdCode);
+	List<BoardMainVO> selectBdcodeBycategory(String categoryCode);
 }

@@ -299,69 +299,7 @@ a:focus {
 						<!--  -->
 						<div class="rowa"></div>
 						<!-- 기본정보 -->
-						<div class="cola s12" id="canEdit">
 							<hr>
-							<!-- style="border: 0.5px solid #01539d -->
-							<table id="editInfo">
-								<tr>
-									<th>이름</th>
-									<td><input placeholder="이름" name="name" id="name"
-										type="text" class="validate" readonly="readonly"></td>
-									<th>학번</th>
-									<td><input placeholder="학번" name="officialNo"
-										id="officialNo" type="text" class="validate"
-										readonly="readonly" value="${officialNo }"></td>
-									<th>주민번호</th>
-									<td><input placeholder="주민번호" name="jumin" id="ssn"
-										type="text" class="validate" readonly="readonly"></td>
-								</tr>
-								<tr>
-									<th>은행명</th>
-									<td><select class="browser-default" name="bankCode"
-										id="bankCode">
-											<c:if test="${!empty bankList }">
-												<c:forEach var="bankVo" items="${bankList }">
-													<option value="${bankVo.bankCode }">${bankVo.bankName }</option>
-												</c:forEach>
-											</c:if>
-									</select></td>
-									<th>계좌번호</th>
-									<td><input placeholder="-없이 입력해주세요" name="accountNo"
-										id="accountNo" type="text" class="validate"></td>
-									<th>예금주</th>
-									<td><input placeholder="예금주명" name="accountName"
-										id="accountName" type="text" class="validate"></td>
-								</tr>
-								<tr>
-									<th>우편번호</th>
-									<td><input placeholder="우편번호" name="zipcode" id="zipcode"
-										type="text" class="validate" value="">
-										<button id="findZipBt" type="button"
-											onclick="sample4_execDaumPostcode()">우편번호 찾기</button></td>
-									<th>주소</th>
-									<td><input placeholder="주소" name="address" id="address"
-										type="text" class="validate" value=""> <span id="dong"></span>
-									</td>
-									<th>상세주소</th>
-									<td><input placeholder="상세주소" name="addrDetail"
-										id="addrDetail" type="text" class="validate" value=""></td>
-								</tr>
-								<tr>
-									<th>이메일</th>
-									<td><input placeholder="이메일" name="email" id="email"
-										type="text" class="validate" value=""></td>
-									<th>전화번호</th>
-									<td><input placeholder="핸드폰번호"
-										onKeyup="inputPhoneNumber(this);" name="hp" id="hp"
-										type="text" class="validate" value=""></td>
-								</tr>
-
-							</table>
-							<div style="text-align: center; margin-top: 10px;">
-								<input type="submit" id="editBt" value="정보수정"
-									style="color: white;">
-							</div>
-						</div>
 					</div>
 					<div>
 			      </div>

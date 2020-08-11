@@ -82,7 +82,7 @@ public class PostsDAOMybatis implements PostsDAO {
 	}
 
 	@Override
-	public List<BoardMainVO> selectBdcodeBycategory(String bdCode) {
-		return sqlSession.selectList(namespace+"selectBdcodeBycategory",bdCode);
+	public List<BoardMainVO> selectBdcodeBycategory(String categoryCode) {
+		return sqlSession.selectList(namespace+"selectBdcodeBycategory",categoryCode);
 	}
 }
