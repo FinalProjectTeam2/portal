@@ -152,4 +152,15 @@
 		set name=#{name}, major=#{major}
 		where stu_no=#{stuNo}
 	</update>
+	<update id="updateMajor" parameterType="studentVO">
+		update student
+		set major=#{major}
+		<if test="minor != 0 and minor!= null and minor != ''">
+		, minor=#{minor}
+		</if>
+		<if test="minor == 0 or minor== null or minor == ''">
+		, minor=null
+		</if>
+		where stu_no=#{stuNo}
+	</update>
 </mapper>

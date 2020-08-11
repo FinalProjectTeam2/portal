@@ -24,4 +24,5 @@ public interface StudentService {
 	public int deleteMulti(List<StudentVO> list);
 	int deleteStudent(String stuNo);
 	public int updateStudent(StudentVO studentVO);
+	int updateMajor(StudentVO studentVo);
 }

@@ -180,4 +180,10 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.updateStudent(studentVO);
 	}
 
+	@Override
+	public int updateMajor(StudentVO studentVo) {
+		return studentDao.updateMajor(studentVo);
+	}
+	
+
 }
