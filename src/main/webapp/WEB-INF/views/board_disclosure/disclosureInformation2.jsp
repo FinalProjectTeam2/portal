@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style type="text/css">
+table {
+	border-collapse: collapse;
+	border: 1px solid gary;
+}
+
 .div {
 	width: 1280px;
 	font-family: 'nanum gothic',맑은 고딕, 한컴돋움, 돋움;
