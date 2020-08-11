@@ -2,6 +2,7 @@ package com.will.portal.student.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,4 +26,8 @@ public class StudentController {
 	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
 
+	@RequestMapping("/studentScore")
+	public void studentScore() {
+		logger.info("studentScore, param");
+	}
 }
