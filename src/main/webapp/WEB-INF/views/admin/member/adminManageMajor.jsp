@@ -33,6 +33,9 @@ h5 {
 	color: #01539d;
 	font-weight: bold;
 }
+#regiMember label {
+    font-size: 1.0em;
+}
 </style>
 <script type="text/javascript">
 	$(function() {
