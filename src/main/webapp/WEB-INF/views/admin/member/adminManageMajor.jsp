@@ -15,7 +15,7 @@
 }
 
 h5 {
-	margin-bottom: 40px;
+	margin-bottom: 35px;
 }
 
 .btDiv {
@@ -39,6 +39,9 @@ h5 {
 .btRegi:hover {
 	background-color: #b7d5fd !important;
 	border-color: #b7d5fd !important;
+}
+.selLine{
+	
 }
 </style>
 <script type="text/javascript">
@@ -130,15 +133,15 @@ h5 {
 			if($('select[name=major]').val() == 0){
 				alert("전공을 선택해 주세요");
 				event.preventDefault();
+			}else if($('select[name=major]').val()==$('select[name=minor]').val()){
+				alert("전공과 부전공이 같을 수 없습니다.");
+				event.preventDefault();
 			}else{
-				
-				if(confirm('전공을 변경하시겠습니까??')){
-					
+				if(confirm('변경하시겠습니까??')){
 				}else{
 					event.preventDefault();
 				}
 			}
-			
 		});
 		$('#cancel1').click(function(){
 			location.href="/portal/admin/member/memberEdit?officialNo="+$('#stuNo').val();
