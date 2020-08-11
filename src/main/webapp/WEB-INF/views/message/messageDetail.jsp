@@ -123,7 +123,7 @@ input#savenote {
 			</div>
 			<div class="btns">				
 				<a style="cursor: pointer;" class="btn btn-primary" id="sendMessageBtn">답장보내기</a>
-				<a href="#" class="btn btn-primary" onclick="window.close();">취소</a>
+				<a href="#" class="btn btn-primary" onclick="window.close();">닫기</a>
 			</div>
 		</div>
 	</div>
