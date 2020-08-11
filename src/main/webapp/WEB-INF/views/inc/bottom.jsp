@@ -40,8 +40,9 @@ a.bottom {
 		});
 		
 		$.ajax({
-			url:"<c:url value='/admin/foot' />",
+			url:"<c:url value='/admin/ajax/foot' />",
 			dataType:"json",
+			type : "get",
 			success:function(res){
 				$('#companyName').html(res.companyName);
 				$('#tel').html('통합콜센터 : '+res.tel);
@@ -49,9 +50,6 @@ a.bottom {
 				$('#address1').html(res.address1);
 				$('#address2').html(res.address2);
 				$('#startYear').html(res.startYear);
-			},
-			error:function(xhr,status,error){
-				alert(status + ", " + error);
 			}
 		});
 		
@@ -122,12 +120,6 @@ a.bottom {
 		<div class="foot_inner text-muted">
 			<div class="footer_menu"
 				style="overflow: hidden; margin: 5px 0 10px 0;">
-				<ul style="float: left;">
-					<li>원격지원 <a href=" http://ezh.kr/dku/" target="_blank"
-						title="원격지원 새 창으로 이동">(죽전</a> | <a href="http://ezh.kr/dku2/"
-						target="_blank" title="원격지원 새 창으로 이동">천안)</a>
-					</li>
-				</ul>
 				<h4 id="tel" style="float: right;">통합콜센터 : 1899-3700</h4>
 			</div>
 			<div class="foot_address">
@@ -135,8 +127,7 @@ a.bottom {
 				<a href="<c:url value='/board_disclosure/privacy1'/>"
 					target="_blank" id="policy">개인정보처리방침</a>
 			</div>
-			<div class="foot_copyright">Copyright(c) <span id="companyName"></span> <span id="startYear"></span> BY DANKOOK
-				UNIVERSITY. All rights reserved.</div>
+			<div class="foot_copyright">Copyright(c) <span id="companyName"></span> <span id="startYear"></span> All rights reserved.</div>
 		</div>
 		<div style="text-align: right;">
 			<sec:authorize access="isAuthenticated()">

@@ -39,7 +39,7 @@ public class FooterController {
 		return bool;
 	}
 	
-	@RequestMapping("/admin/foot")
+	@RequestMapping("/admin/ajax/foot")
 	@ResponseBody
 	public FooterVo forFooter() {
 		FooterVo vo =footerService.selectByCompany("척척학사");

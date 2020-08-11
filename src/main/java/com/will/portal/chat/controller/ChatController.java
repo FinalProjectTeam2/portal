@@ -87,9 +87,9 @@ public class ChatController {
     		Principal principal ){
     	MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
     	log.info("채팅방 만들기 파라미터 form={}",form);
-        chatRoomRepository.createChatRoom(form.getName(),user.getOfficialNo());
+    	ChatRoom room = chatRoomRepository.createChatRoom(form.getName(),user.getOfficialNo());
         
-        return "/chat/";
+        return room.getRoomId();
     }
     @GetMapping(value = "/room/delete", produces = "application/json; charset=utf8")
     @ResponseBody

@@ -19,6 +19,11 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Override
 	public List<Map<String, Object>> subjectByProfNo(String profNo) {
 		return evaluationDao.subjectByProfNo(profNo);
+	}
+
+	@Override
+	public int inputScore(EvaluationVO vo) {
+		return evaluationDao.inputScore(vo);
 	} 
 	
 	

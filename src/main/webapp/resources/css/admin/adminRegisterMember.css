@@ -5,7 +5,7 @@
 }
 
 #header {
-	width: 1000px;
+	width: 1400px;
 	height: 70px;
 	background-color: #cbe0fd;
 	border-radius: 2px 2px 0 0;
@@ -33,12 +33,18 @@
 	color: #fff;
 }
 
+#regiMember input {
+	flex-grow: 0;
+	flex-basis: 300px;
+}
+
 #regiMember .form-group {
-	margin-bottom: 15px;
+	margin: 50px 0px 50px 0px;
 }
 
 #regiMember label {
 	margin-bottom: 15px;
+	font-size: 1.3em;
 }
 
 #regiMember input, #regiMember input::-webkit-input-placeholder {
@@ -58,15 +64,17 @@
 }
 
 #regiMember .main-center {
-	width: 1000px;
-	padding: 60px 100px;
+	width: 1400px;
+	padding: 60px 130px;
 }
 
 #regiMember .login-button {
-	margin-top: 30px;
+	margin: auto;
 	color: #fff;
 	background-color: #01539d;
 	border-color: #01539d;
+	width: 100px;
+	height: 50px;
 }
 
 #regiMember .login-register {
@@ -93,7 +101,7 @@
 	border-color: #01539d;
 }
 
-#selLine {
+.selLine {
 	width: 100% !important;
 	margin: 20px 0 20px 0;
 }
@@ -105,9 +113,19 @@
 input#email3 {
 	margin-left: 20px;
 }
+
 form#form {
-    padding: 0 200px 0 200px;
+	
 }
-.stud select{
+
+.stud select {
 	width: 180px;
+}
+
+.hp input {
+	flex-basis: 100px !important;
+}
+
+#email1 {
+	flex-basis: 155px !important;
 }

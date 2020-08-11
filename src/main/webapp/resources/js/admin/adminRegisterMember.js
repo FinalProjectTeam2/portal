@@ -1,69 +1,64 @@
 $(function() {
-	$(function() {
-		sortCheck();
-		// ajax 학과 검색
-		$('#faculty').change(
-				function() {
-					$('#department').find('option').each(function() {
-						$(this).remove();
-					});
-
-					var faculty = $(this).val();
-					if (faculty != "") {
-						$('#department').append("<option value=''>선택</option>");
-
-						$.ajax({
-							type : 'get',
-							url : "/portal/common/departmentList",
-							data : "facultyNo=" + $('#faculty').val(),
-							dataType : "json",
-							success : function(res) {
-								$(res).each(
-										function(i) {
-											$('#department').append(
-													"<option value=\""
-													+ res[i].depNo + "\">"
-															+ res[i].depName
-															+ "</option>");
-										});
-							},
-							error : function(xhr) {
-								console.log(xhr.responseTest);
-								alert("오류");
-								return;
-							}
-
-						})
-					}else{
-						$('#department').append("<option value=''>학부를 선택하세요</option>");
-					}
+	sortCheck();
+	// ajax 학과 검색
+	$('#faculty').change(
+			function() {
+				$('#department').find('option').each(function() {
+					$(this).remove();
 				});
-	});
-	$('#btRegi')
-			.click(
-					function() {
-						var sort = $('#sort').val();
-						if (sort == 1) {
-							check();
-							$('#form')
-									.prop("action",
-											"/portal/admin/member/adminRegisterEmployee");
-						} else if (sort == 2) {
-							check();
-							$('#form')
-									.prop("action",
-											"/portal/admin/member/adminRegisterProfessor");
-						} else if (sort == 3) {
-							check();
-							$('#form')
-									.prop("action",
-											"/portal/admin/member/adminRegisterStudent");
-						} else if (sort == null) {
-							alert('회원구분을 선택해주세요');
-							$('#sort').focus();
-							event.preventDefault();
+
+				var faculty = $(this).val();
+				if (faculty != "") {
+					$('#department').append("<option value=''>선택</option>");
+
+					$.ajax({
+						type : 'get',
+						url : "/portal/common/departmentList",
+						data : "facultyNo=" + $('#faculty').val(),
+						dataType : "json",
+						success : function(res) {
+							$(res).each(
+									function(i) {
+										$('#department').append(
+												"<option value=\""
+														+ res[i].depNo + "\">"
+														+ res[i].depName
+														+ "</option>");
+									});
+						},
+						error : function(xhr) {
+							console.log(xhr.responseTest);
+							alert("오류");
+							return;
 						}
-					});
+
+					})
+				} else {
+					$('#department').append(
+							"<option value=''>학부를 선택하세요</option>");
+				}
+			});
+	$('#btRegi').click(
+			function() {
+				var sort = $('#sort').val();
+				if (sort == 1) {
+					check();
+					$('#form').prop("action",
+							"/portal/admin/member/adminRegisterEmployee");
+				} else if (sort == 2) {
+					check();
+					$('#form').prop("action",
+							"/portal/admin/member/adminRegisterProfessor");
+				} else if (sort == 3) {
+					check();
+					$('#form').prop("action",
+							"/portal/admin/member/adminRegisterStudent");
+				} else if (sort == null) {
+					alert('회원구분을 선택해주세요');
+					$('#sort').focus();
+					event.preventDefault();
+				}
+			});
 
 	function check() {
 		if ($('#name').val() == "") {
@@ -127,7 +122,7 @@ $(function() {
 		sortCheck();
 	});
 	// 등록 구분 시 입력창
-	function sortCheck(){
+	function sortCheck() {
 		if ($('select[name=sort]').val() == 1) {
 			$('.emp').css('display', 'block');
 			$('.emp select').val("");
