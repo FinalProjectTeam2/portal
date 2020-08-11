@@ -1,7 +1,10 @@
 package com.will.portal.official_info.model;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.student.model.StudentVO;
@@ -81,8 +84,29 @@ public class Official_infoServiceImpl implements Official_infoService{
 	public int updateChangeDate(String profNo) {
 		return infoDao.updateChangeDate(profNo);
 	}
-	
-	
-	
-	
+
+	@Override
+	public int deleteOfficial(String officialNo) {
+		return infoDao.deleteOfficial(officialNo);
+	}
+
+
+	@Override
+	public int deleteMulti(List<Official_infoVO> offiList) {
+		int cnt = 0;
+
+		try {
+			for (Official_infoVO offiVO : offiList) {
+				if(offiVO.getOfficialNo()!=null) {
+					cnt = infoDao.deleteOfficial(offiVO.getOfficialNo());
+				}
+			}
+
+		}catch(RuntimeException e) {
+			cnt = -1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
+	}
 }

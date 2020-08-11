@@ -476,8 +476,17 @@
 
 						</ul></li>
 					</c:if>
+					<c:if test="${principal.type=='ADMIN' }">
+					<li><a class="nav-link" href="#">관리자 메뉴 </a>
+						<ul>
+							<li><a href="<c:url value='/admin/member/adminRegisterMember'/>">회원등록</a></li>
+							<li><a href="<c:url value='/admin/member/adminManageStudent'/>">회원관리</a></li>
+							<li><a href="<c:url value='/admin/lecture/adminRegisterLecture'/>">강의등록</a></li>
+							<li><a href="<c:url value='/admin/lecture/adminManageLecture'/>">강의관리</a></li>
+							<li><a href="<c:url value='/admin/lecture/adminManageDepartment'/>">학부관리</a></li>
+						</ul></li>
+					</c:if>
 					</sec:authorize>
-
 					<li><a class="nav-link" href="#" id="goMessage"> 쪽지함 <span
 							id="messageCount"
 							class="badge badge-pill bg-light align-text-bottom"></span>

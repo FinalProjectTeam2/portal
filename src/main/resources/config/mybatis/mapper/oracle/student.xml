@@ -152,4 +152,5 @@
 		set name=#{name}, major=#{major}
 		where stu_no=#{stuNo}
 	</update>
+	
 </mapper>
