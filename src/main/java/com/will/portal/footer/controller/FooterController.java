@@ -15,7 +15,6 @@ import com.will.portal.footer.model.FooterVo;
 
 @Controller
 public class FooterController {
-	@Autowired
 	private static final Logger logger = LoggerFactory.getLogger(FooterController.class);
 	@Autowired
 	private FooterService footerService;

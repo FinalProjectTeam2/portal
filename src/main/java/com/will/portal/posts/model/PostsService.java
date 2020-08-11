@@ -20,5 +20,5 @@ public interface PostsService {
 	int updatePost(PostsVO vo);
 	PostsVO selectPostByPostNo(int postNo);
 	public List<PostsVO> selectByBdcode(String bdCode);
-	public List<BoardMainVO> selectMainPosts(String bdCode);
+	public List<BoardMainVO> selectBdcodeBycategory(String bdCode);
 }
