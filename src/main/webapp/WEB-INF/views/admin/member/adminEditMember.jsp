@@ -163,7 +163,13 @@
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>소속</th>'
-	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME+'</td>'
+	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME
+	      			+ '<input type="button"'
+					+ 'class="btCustom btn btn-primary btn-lg login-button"'
+					+' onclick="location.href=\'/portal/admin/member/adminManageMajor?stuNo='+res.STU_NO+'\'"'
+					+ "id='editDep'"
+					+ "value='전공관리'" + '>'
+	      			+'</td>'
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>과정</th>'
@@ -267,7 +273,7 @@ a:focus {
 	width: 65px;
 	height: 25px;
 	font-size: 12px;
-	padding: 0 0 1px 0;
+	padding: 0 1px 1px 0;
 	margin: 0 0 5px 10px;
 }
 .toast {
@@ -320,18 +326,6 @@ a:focus {
 
 							</div>
 						</div>
-						<div></div>
-						<div class="cola s9" id="info">
-							<table id="infoTable">
-							</table>
-						</div>
-						<!--  -->
-						<div class="rowa"></div>
-						<!-- 기본정보 -->
-							<hr>
-					</div>
-					<div>
-			      </div>
 			      <div class="cola s9" id="info">
 			      	<table id="infoTable">
 			      	</table>

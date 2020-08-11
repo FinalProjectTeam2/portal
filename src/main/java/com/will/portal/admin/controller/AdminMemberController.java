@@ -1,7 +1,6 @@
 package com.will.portal.admin.controller;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -652,25 +651,35 @@ public class AdminMemberController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/adminManageMajor")
-	public String adminManageMajor(String stuNo, Model model) {
-		logger.info("전공수정 페이지 보여주기, stuNo={}", stuNo);
+	@RequestMapping(value = "/adminManageMajor", method = RequestMethod.GET)
+	public void adminManageMajor_get(String stuNo, Model model) {
+		logger.info("adminManageMajor_get, stuNo={}", stuNo);
 		
 		Map<String, Object> map = studentService.selectViewByStuNo(stuNo);
 		logger.info("{}",map);
 	
 		int facultyNo=Integer.parseInt(map.get("FACULTY_NO").toString());
-		int minorFacultyNo=Integer.parseInt(map.get("minor_faculty_no").toString());
+		List<DepartmentVO> departmentList2 = null; 
+		if(map.get("minor_faculty_no") != null && map.get("minor_faculty_no")!="") {
+			int minorFacultyNo=Integer.parseInt(map.get("minor_faculty_no").toString());
+			departmentList2 = departmentService.selectDepartmentByFaculty(minorFacultyNo);
+		}
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
 		List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(facultyNo);
-		List<DepartmentVO> departmentList2 = departmentService.selectDepartmentByFaculty(minorFacultyNo);
 		
 		model.addAttribute("facultyList",facultyList);
 		model.addAttribute("departmentList",departmentList);
 		model.addAttribute("departmentList2",departmentList2);
 		model.addAttribute("map",map);
-		return "/admin/member/adminManageMajor";
 	}
+	@RequestMapping(value = "/adminManageMajor", method = RequestMethod.POST)
+	public String adminManageMajor_post(@ModelAttribute StudentVO studentVo, Model model) {
+		logger.info("adminManageMajor_post, {}",studentVo);
+		//db작업
+		studentService.updateMajor(studentVo);
+		return edit_get(studentVo.getStuNo(),model);
+	}
+	
 
 	@RequestMapping(value = "/memberEdit", method = RequestMethod.POST)
 	@ResponseBody
