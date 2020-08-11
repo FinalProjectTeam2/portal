@@ -136,7 +136,9 @@
    		where prof_no=#{profNo}
    	</update>
    	
-   	
+   	<delete id="deleteOfficial" parameterType="String">
+   		delete from official_info where official_no=#{officialNo}
+   	</delete>
    	
 </mapper>
 

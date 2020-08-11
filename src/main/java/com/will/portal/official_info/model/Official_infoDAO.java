@@ -22,4 +22,5 @@ public interface Official_infoDAO {
 	int updateIdentStateP(String profNo);
 	int updateOfficialInfo(Official_infoVO offiVo);
 	int updateChangeDate(String profNo);
+	int deleteOfficial(String officialNo);
 }
