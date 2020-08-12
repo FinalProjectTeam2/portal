@@ -31,7 +31,20 @@ public class ScholarshipContrlloer {
 	
 	@RequestMapping(value="/scholarship4", method = RequestMethod.GET) 
 	public String scholarship4_get() {
-		logger.info("장학금 관리 페이지");
+		logger.info("장학금 관리 페이지 - 목록");
 		return "scholarship/scholarship4";
+	}
+	
+	@RequestMapping(value="/scholarship6", method = RequestMethod.GET) 
+	public String scholarship6_get() {
+		logger.info("장학금 관리 페이지 - 학생정보(팝업)");
+		return "scholarship/scholarship6";
+	}
+	
+	
+	@RequestMapping(value="/scholarship5", method = RequestMethod.GET) 
+	public String scholarship5_get() {
+		logger.info("장학금 관리 페이지 - 글쓰기");
+		return "scholarship/scholarship5";
 	}
 }
