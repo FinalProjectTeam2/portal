@@ -21,4 +21,6 @@ public interface PostsService {
 	PostsVO selectPostByPostNo(int postNo);
 	public List<PostsVO> selectByBdcode(String bdCode);
 	public List<BoardMainVO> selectBdcodeBycategory(String categoryCode);
+	List<PostsVO> selectPostsPrev(PostsVO vo);
+	List<PostsVO> selectPostsNext(PostsVO vo);
 }
