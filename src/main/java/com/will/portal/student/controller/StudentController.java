@@ -51,4 +51,8 @@ public class StudentController {
 		model.addAttribute("slist", slist2);
 		model.addAttribute("list", list);
 	}
+	@RequestMapping("/subjEval")
+	public void subjEval() {
+		logger.info("강의평가 화면 보여주기");
+	}
 }

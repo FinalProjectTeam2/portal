@@ -1,6 +1,9 @@
 package com.will.portal.admin.controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import java.util.List;
 import java.util.Map;
 
@@ -529,9 +532,14 @@ public class AdminMemberController {
    public String multiDeleteStudent(@ModelAttribute StudentListVO studentList, Model model,
          HttpServletRequest request) {
       List<StudentVO> list = studentList.getStuList();
+      List<Official_infoVO> offiList= new ArrayList<Official_infoVO>();
+      List<Account_infoVO> accList = new ArrayList<Account_infoVO>();
       boolean bool = false;
       for (StudentVO studentVO : list) {
          Official_infoVO offiVo = offiService.selectByNo(studentVO.getOfficialNo());
+         offiList.add(offiVo);
+         Account_infoVO accVo = bankService.selectAccByofficialNo(studentVO.getOfficialNo());
+         accList.add(accVo);
          if(!offiVo.getImageUrl().equals("default.jpg")) {
             bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
          }
@@ -539,7 +547,11 @@ public class AdminMemberController {
       
       logger.info("파일 다중 삭제여부 = {}", bool);
       int cnt = studentService.deleteMulti(list);
-
+      int offiCnt = offiService.deleteMulti(offiList);
+      int offiBank =bankService.deleteMulti(accList);
+      logger.info("offiCnt = {}",offiCnt);
+      logger.info("offiBank = {}",offiBank);
+      
       String msg = "학생 삭제 실패", url = "/admin/member/adminManageStudent";
       if (cnt > 0) {
          msg = "학생 삭제 성공";
@@ -554,9 +566,14 @@ public class AdminMemberController {
    public String multiDeleteProfessor(@ModelAttribute ProfessorListVO profList, Model model,
          HttpServletRequest request) {
       List<ProfessorVO> list = profList.getProfList();
+      List<Official_infoVO> offiList= new ArrayList<Official_infoVO>();
+      List<Account_infoVO> accList = new ArrayList<Account_infoVO>();
       boolean bool = false;
       for (ProfessorVO profVo : list) {
          Official_infoVO offiVo = offiService.selectByNo(profVo.getOfficialNo());
+         offiList.add(offiVo);
+         Account_infoVO accVo = bankService.selectAccByofficialNo(profVo.getOfficialNo());
+         accList.add(accVo);
          if(!offiVo.getImageUrl().equals("default.jpg")) {
             bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
          }
@@ -565,6 +582,10 @@ public class AdminMemberController {
       
       
       int cnt = professorService.multiDelete(list);
+      int offiCnt = offiService.deleteMulti(offiList);
+      int offiBank =bankService.deleteMulti(accList);
+      logger.info("offiCnt = {}",offiCnt);
+      logger.info("offiBank = {}",offiBank);
       
       String msg = "교수 삭제 실패", url = "/admin/member/adminManageProfessor";
       if (cnt > 0) {
