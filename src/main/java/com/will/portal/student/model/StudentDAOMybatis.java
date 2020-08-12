@@ -69,5 +69,11 @@ public class StudentDAOMybatis implements StudentDAO{
 	public int updateStudent(StudentVO studentVO) {
 		return sqlSession.update(namespace + "updateStudent", studentVO);
 	}
+
+	@Override
+	public int updateMajor(StudentVO studentVo) {
+		return sqlSession.update(namespace+"updateMajor",studentVo);
+	}
+	
 	
 }

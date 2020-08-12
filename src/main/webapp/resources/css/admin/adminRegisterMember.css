@@ -29,7 +29,7 @@
 }
 
 #regiMember hr {
-	width: 10%;
+	width: 100%;
 	color: #fff;
 }
 
@@ -48,7 +48,7 @@
 }
 
 #regiMember input, #regiMember input::-webkit-input-placeholder {
-	font-size: 11px;
+	font-size: 15px;
 	padding-top: 3px;
 }
 

@@ -18,4 +18,5 @@ public interface StudentDAO {
 	int updateStudentState(StudentVO studentVO);
 	int deleteStudent(String stuNo);
 	int updateStudent(StudentVO studentVO);
+	int updateMajor(StudentVO studentVo);
 }

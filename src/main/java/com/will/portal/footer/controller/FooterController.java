@@ -47,8 +47,4 @@ public class FooterController {
 	}
 	
 	
-	
-	
-	
-	
 }

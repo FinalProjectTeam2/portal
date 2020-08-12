@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.will.portal.board.model.BoardMainVO;
 import com.will.portal.board.model.BoardSearchVO;
 import com.will.portal.board.model.BoardService;
 import com.will.portal.board.model.BoardVO;
@@ -61,9 +62,8 @@ public class BoardController {
 	@RequestMapping("/main")
 	public void boardMain(@RequestParam(defaultValue = "B") String categoryCode) {
 		logger.info("게시판 메인 페이지, 파라미터 categoryCode={}", categoryCode);
-
 	}
-
+	
 	@RequestMapping("/list")
 	public void board(@RequestParam(defaultValue = "F") String bdCode, Model model) {
 		logger.info("게시판 목록 페이지, 파라미터 bdCode={}", bdCode);
@@ -485,6 +485,15 @@ public class BoardController {
 		logger.info("댓글 조회 결과, list.size=",list.size());
 		logger.info("댓글 조회 결과, list=",list);
 		
+		return list;
+	}
+	
+	@RequestMapping("/ajax/main")
+	@ResponseBody
+	public List<BoardMainVO> ajaxMain(@RequestParam(defaultValue = "B") String categoryCode) {
+		logger.info("ajax categoryCode = {}", categoryCode);
+		List<BoardMainVO> list = postsService.selectBdcodeBycategory(categoryCode);
+		logger.info("list ={}" ,list);
 		return list;
 	}
 	
