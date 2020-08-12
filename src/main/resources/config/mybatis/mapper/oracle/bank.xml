@@ -17,6 +17,10 @@
    		delete from account_info
 		where official_no = #{officialNo}
    	</delete>
+   	
+   	<select id="selectAccByofficialNo" parameterType="String" resultType="account_infoVo">
+   		select * from account_info where official_no = #{officialNo}
+   	</select>
 </mapper>
 
 

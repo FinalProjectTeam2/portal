@@ -9,6 +9,11 @@
 
 <script>
 $(function() {
+	   $('#deleteBt').click(function() {
+			if(!confirm('정말로 삭제하시겠습니까?')){
+				event.preventDefault();
+			}
+		});
     $('#btMultiUpdateposition').click(function() {
        var len=$('tbody input[type=checkbox]:checked').length;
        if(len==0){
@@ -187,7 +192,7 @@ $(function() {
 													pattern="yyyy-MM-dd" /></td>
 											<td><a
 												href="<c:url value='/admin/member/memberEdit?officialNo=${map["EMP_NO"] }'/>">수정</a></td>
-											<td><a
+											<td><a id="deleteBt"
 												href="<c:url value='/admin/member/deleteEmployee?empNo=${map["EMP_NO"] }'/>">삭제</a></td>
 										</tr>
 										<c:set var="idx" value="${idx+1 }"></c:set>

@@ -1,6 +1,5 @@
 package com.will.portal.lecture.controller;
 
-import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.security.Principal;
@@ -76,13 +75,6 @@ public class LectureController {
 		List<Map<String, Object>> classList = profService.classroomByDepNo(depNo);
 		
 		logger.info("list.size={}, classList.size={}", list.size(), classList.size());
-		
-		
-		
-		
-		
-		
-		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("cList", classList);
@@ -508,6 +500,10 @@ public class LectureController {
 		return list;
 	}
 	
-	
+	@RequestMapping("/lecture/studentTT")
+	public String studentTT() {
+		logger.info("studentTT 화면");
+		return "lecture/studentTT";
+	}
 	
 }

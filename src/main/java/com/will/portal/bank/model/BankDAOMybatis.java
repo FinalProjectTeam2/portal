@@ -26,5 +26,8 @@ public class BankDAOMybatis implements BankDAO {
 		return sqlSession.delete(namespace +"deleteAccountInfo", officialNo);
 	}
 	
-	
+	@Override
+	public Account_infoVO selectAccByofficialNo(String officialNo) {
+		return sqlSession.selectOne(namespace + "selectAccByofficialNo",officialNo);
+	}
 }

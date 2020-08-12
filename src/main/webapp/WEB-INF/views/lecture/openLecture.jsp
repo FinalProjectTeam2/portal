@@ -213,13 +213,6 @@ function timeTable(){
 
 
 
-
-
-
-
-
-
-
 <main role="main" class="flex-shrink-0">
 <div class="container">
 	<h2>강의시간 설정</h2><a id="syllabus" href="#" style="float: right; margin-right: 500px;">강의 계획서 업로드<img style="width: 20px; height: auto;" src="<c:url value='/resources/images/uploadIcon.png'/>"></a></label>
