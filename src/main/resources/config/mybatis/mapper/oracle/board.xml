@@ -14,7 +14,7 @@
 	</select>
 
 	<select id="selectBoardByCtCode" parameterType="string" resultType="boardVO">
-		select * from board where category_code = #{categoryCode}
+		select * from board where category_code = #{categoryCode} order by BD_ORDER
 	</select>
 
 	<resultMap type="categoryListVO" id="categoryListResultMap">
@@ -40,4 +40,13 @@
 		select * from board
 		where category_code = (select category_code from board where bd_code=#{bdCode})
 	</select>
+	
+	<select id="countByCateCode" parameterType="String" resultType="int">
+		select count(*) from category where category_code = #{code}
+	</select>
+	
+	<insert id="insertCate" parameterType="categoryVo">
+		insert into category(category_code, category_name)
+		values(#{categoryCode},#{categoryName})
+	</insert>
 </mapper>

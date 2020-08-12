@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.will.portal.category.model.CategoryListVO;
+import com.will.portal.category.model.CategoryVO;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -24,5 +25,20 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> selectBoardByCategoryInline(String bdCode) {
 		return boardDao.selectBoardByCategoryInline(bdCode);
+	}
+
+	@Override
+	public List<BoardVO> selectBoardByCtCode(String ctCode) {
+		return boardDao.selectBoardByCtCode(ctCode);
+	}
+
+	@Override
+	public int countByCateCode(String code) {
+		return boardDao.countByCateCode(code);
+	}
+
+	@Override
+	public int insertCate(CategoryVO vo) {
+		return boardDao.insertCate(vo);
 	}
 }

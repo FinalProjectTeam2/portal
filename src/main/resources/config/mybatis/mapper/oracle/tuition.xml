@@ -5,6 +5,7 @@
 <mapper namespace="config.mybatis.mapper.oracle.tuition">
 	<select id="selectStu" parameterType="string" resultType="TuitionStuVO">
 		select * from student_view2
+		official_no=#{officicalNo}
 	</select>
    
    	<select id="tuition" parameterType="string" resultType="TuitionStuVO">

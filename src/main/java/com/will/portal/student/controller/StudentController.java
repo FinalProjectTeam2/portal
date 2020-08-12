@@ -23,7 +23,13 @@ import com.will.portal.student.model.StudentService;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
-	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
+	
+	@RequestMapping(value="/gradeCheck", method = RequestMethod.GET) 
+	public String gradeCheck_get() {
+		logger.info("학생 성적조회");
+		return "student/gradeCheck";
+	}
 
 
 	@RequestMapping("/studentScore")
