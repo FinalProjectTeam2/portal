@@ -27,7 +27,10 @@ table.box2 td {
 				<div class="divRight">
 				<select name="" id="searchSelect">
 						<option value="">전체학기</option>
-						<option value="">2019 1학기</option>
+						<c:forEach var="semester" items="${slist }">
+						<option value="">${semester }</option>
+						
+						</c:forEach>
 						<option value="">2019 2학기</option>
 					</select> 
 					<button class="btCustom btn btn-primary btn-lg login-button"
@@ -55,8 +58,7 @@ table.box2 td {
 									<th scope="col">성적</th>
 								</tr>
 							</thead>
-							<tbody>
-															
+							<tbody>					
 								<c:set var="cre" value="0"/>
 								<c:set var="avg" value="0"/>
 								<c:forEach var="map" items="${list}">
