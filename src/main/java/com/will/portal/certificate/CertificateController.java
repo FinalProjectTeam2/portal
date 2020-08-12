@@ -26,4 +26,9 @@ public class CertificateController {
 	public String certificate3_get() {
 		return "portal/certificate/certificate3";
 	}
+	
+	@RequestMapping(value="/certificate4",method = RequestMethod.GET) 
+	public String certificate4_get() {
+		return "portal/certificate/certificate3";
+	}
 }
