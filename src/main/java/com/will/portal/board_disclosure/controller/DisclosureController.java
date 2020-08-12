@@ -19,6 +19,24 @@ public class DisclosureController {
 		return "board_disclosure/disclosureInformation2";
 	}
 	
+	@RequestMapping(value="/disclosureInformation3", method = RequestMethod.GET) public String
+	disclosureInformation3_get() {
+		
+		return "board_disclosure/disclosureInformation3";
+	}
+	
+	@RequestMapping(value="/disclosureInformation4", method = RequestMethod.GET) public String
+	disclosureInformation4_get() {
+		
+		return "board_disclosure/disclosureInformation4";
+	}
+	
+	@RequestMapping(value="/disclosureInformation5", method = RequestMethod.GET) public String
+	disclosureInformation5_get() {
+		
+		return "board_disclosure/disclosureInformation5";
+	}
+	
 	
 	@RequestMapping(value="/privacy1", method = RequestMethod.GET) public String
 	privacy1_get() {

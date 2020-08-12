@@ -3,7 +3,6 @@
 <%@ include file="../inc/portalSidebar.jsp"%>
 <sec:authentication var="principal" property="principal" />
 <main role="main" class="flex-shrink-0">
-
 <style type="text/css">
 body {
 	margin: 2%; 50%;

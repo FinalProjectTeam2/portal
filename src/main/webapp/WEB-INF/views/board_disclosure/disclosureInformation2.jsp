@@ -1,24 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<head>
-<title>대학 공시 정보</title>
 <style type="text/css">
+table {
+	border-collapse: collapse;
+	border: 1px solid gary;
+}
+
 .div {
 	width: 1280px;
+	font-family: 'nanum gothic',맑은 고딕, 한컴돋움, 돋움;
+	font-size: 12px;
+	margin-left: 3%;
 
 }
 .div1, .div2, .div3, .div4, .div5, .div6  {
 	border: 1px solid silver;
-	width: 420px;
-	height: 180px;
+	width: 540px;
+	height: 230px;
+	padding: 2%;
 }
 
 .list {
 	list-style: none;
 	
 }
+
 .count {
 	text-align: right;
 }
@@ -59,21 +65,24 @@ hr {
 .div6 {
 	float: left;
 	margin: 2% 1.70% ;
-
 }
 
 .noti-value {
 	font-size: 0.7em;
-	text-align: right;
+	padding: 2%;
+}
+
+.title {
+	padding: 2%;
 }
 </style>
-</head>
-<body>
+
 <div class="div">
 <div class = "div1">
-	<div>
+	<div class="title">
 		<strong>재학생 충원율</strong><br>
-		<span>(정원내 재학생수/(학생정원-학생모집정지인원)×100%)</span><hr><br>
+		<span>(정원내 재학생수/(학생정원-학생모집정지인원)×100%)</span>
+		<hr align="left">
 	</div>
 	<div class="list-group">
 	   	<ul class="list">	                                                                                                      
@@ -83,12 +92,16 @@ hr {
 	        <li><span class="stitle">충원율 (정원내)</span><span class="count"> 109.0 %</span></li>                                                          
 	    </ul>
 	</div>
+	<div class="info-noti">
+    	 <span class="noti-value">자료기준일: 2019. 4. 1.</span>
+    </div>
 </div>
 
 <div class = "div2">
-	<div>  
+	<div class="title">
 		<strong class="title">취업률</strong>
-		<span class="desc">(취업자수/(졸업자수-제외자수)×100%)<hr></span>                                                       
+		<span class="desc">(취업자수/(졸업자수-제외자수)×100%)</span> 
+		<hr align="left">                                        
 	</div>
     <div class="list-group">
     	<ul class="list">	       
@@ -104,9 +117,10 @@ hr {
 </div>
 
 <div class = "div3">
-	<div>                  		
+	<div class="title">                 		
 		<strong class="title">신입생 충원율</strong>
-        <span class="desc">(정원내 입학자수/모집인원×100%)<hr></span>                                                        
+        <span class="desc">(정원내 입학자수/모집인원×100%)</span>  
+        <hr align="left">                                                      
     </div>
     <div class="list-group">
     	<ul class="list">
@@ -130,9 +144,10 @@ hr {
 </div>
                     
 <div class="div4">
-	<div>            
+	<div class="title">        
 		<strong class="title">학생 1인당 교육비</strong>
-		<span class="desc">(총교육비/재학생수)<hr></span>                                                       
+		<span class="desc">(총교육비/재학생수)</span>    
+		<hr align="left">                                            
     </div>
     <div class="list-group">
     	<ul class="list">    
@@ -153,9 +168,10 @@ hr {
 </div>
           
 <div class="div5">
-	<div>           
+	<div class="title">         
     	<strong class="title">전임교원 확보율</strong>
-    	<span class="desc">(전임교원수/교원 법정정원×100%)<hr></span>                                         
+    	<span class="desc">(전임교원수/교원 법정정원×100%)</span>
+    	<hr align="left">                                         
     </div>
     <div class="list-group">
     	<ul class="list">   
@@ -183,9 +199,10 @@ hr {
 </div>
      
 <div class="div6">
-	<div>         
+	<div class="title">         
 		<strong class="title">학생 1인당 장학금</strong>
-		<span class="desc">(장학금총액/재학생수)<hr></span>                                                        
+		<span class="desc">(장학금총액/재학생수)</span>
+		<hr align="left">                                                        
     </div>
     <div class="list-group">
     	<ul class="list">                     
@@ -212,5 +229,3 @@ hr {
     </div>
 </div>
 </div>
-</body>
-</html>

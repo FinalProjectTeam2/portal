@@ -3,58 +3,67 @@
 <%@ include file="../inc/portalSidebar.jsp"%>
 <style type="text/css">
 .scholarship {
-	margin-left: 20%;
-	margin-top: -20%;
+	margin-left: 5%;
+	margin-top: 2%;
 	min-height: 500px;
+	min-width: 500px;
+	font-family: 'nanum gothic',맑은 고딕, 한컴돋움, 돋움;
 }
 
 hr {
 	width: 45%;
 }
+
+.tablePayments {
+	width: 1400px;
+	min-width: 500px;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+   	border-top: 1px solid #ccc;
+    margin: 20px 10px;
+}
+
+th {
+	border-bottom: 1px solid #ccc;
+	padding: 10px;
+}
+
+td {
+	padding: 6px;
+}
 </style>
 
 <div class="scholarship">
 <h1>장학금 확인 페이지</h1>
-<!-- 학생정보 검색? 상태? -->
-학번/ 학과/ 학년/ 이름/ 학적상태(재학/휴학/입학)/ 
-
+<hr align="left" width="55%">
+<br>
 <!-- 장학금 신청 -->
-장학금명/ 신청지급구분(미지급/ 지급완료)/ 신청일자/ 신청상태(신청/ 최종승인)/ 승인일자
-년도
-학기
-장학금명
-장학금액
-지급일자 
-기준평점
+	<div class="divPayments">
+		<table class="tablePayments">
+			<thead>
+				<tr>
+					<th>장학금분류</th>
+					<th>장학금명</th>
+					<th>신청지급구분</th>
+					<th>신청일자</th>
+					<th>신청상태</th>
+					<th>승인일자</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>교내장학금</td>				
+					<td>성적우수</td>
+					<td>미지급</td>
+					<td>2020.7.10</td>
+					<td>신청</td>
+					<td>&nbsp;</td>
 
-
- 학점/ 출석률
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				</tr>	
+			</tbody>	
+		</table>
+	</div>
 </div>
 <%@ include file="../inc/bottom.jsp"%>
