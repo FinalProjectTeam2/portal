@@ -16,6 +16,14 @@
 	color: black;
 	text-align: center;
 }
+
+
+
+
+
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -53,12 +61,6 @@
 									"<col width='6%'>"+
 									"<col width='8%'>"+
 									"<col width='8%'>"+
-									"<col width='5%'>"+
-									"<col width='8%'>"+
-									"<col width='6%'>"+
-									"<col width='6%'>"+
-									"<col width='8%'>"+
-									"<col width='8%'>"+
 									"</colgroup>"+
 									"<tr>"+
 										"<th><input type='checkbox' class='chkAll'></th>"+
@@ -66,12 +68,6 @@
 										"<th>이름</th>"+
 										"<th>학년</th>"+
 										"<th>학과</th>"+
-										"<th>연락처</th>"+
-										"<th><input type='checkbox' class='chkAll'></th>"+
-										"<th>학번</th>"+
-										"<th>이름</th>"+
-										"<th>학년</th>"+
-										"<th>학과</th>"+						
 										"<th>연락처</th>"+
 									"</tr>";
 						$.each(res, function(index, item){
@@ -127,8 +123,9 @@
 	<hr style="border: solid 2px lightgreen">
 	<h4 id="listTitle"></h4>
 	
-	<div id="tableDiv">
+	<div id="tableDiv" style="width: 50%">
 	
 	</div>
+	
 	
 <%@ include file="../inc/bottom.jsp"%>

@@ -7,4 +7,5 @@ public interface EvaluationService {
 	List<EvaluationAllVO> selectAllListforEval(String subCode);
 	List<Map<String, Object>> subjectByProfNo(String profNo);
 	int inputScore(EvaluationVO vo);
+	int updateAllScore(List<EvaluationVO> list);
 }
