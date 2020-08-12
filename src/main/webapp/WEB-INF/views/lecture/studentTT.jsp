@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-
-
+<!-- top -->
+<%@ include file="../inc/top.jsp"%>
+<!-- sidebar -->
+<%@ include file="../inc/mainSidebar.jsp"%>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <style>
    #timeTableDiv {
     margin-top:20px;
@@ -78,14 +81,55 @@
 	color: black;
 }
 
-#timeTableDiv #lectureInLink:hover > .lectureIn {
+#timeTableDiv .lectureInLink:hover > .lectureIn {
 	background-color: #a900ff2b;/* #ffbf00c7 */
 }
+#timeTableDiv #pop{
+	background-color : #fff6e6;
+	position:absolute; 
+	left:100px; 
+	top:100px; 
+	width: 400px;
+	height: 450px;
+	z-index:1;
+	text-align: left;
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin: 10px;
+	border-radius: 5px;
+	/* display:none; */
+/* 	
+	background: #ccc;
+	color: black;
+	top: 10px;
+	left: 100px;
+	text-align: center;
+	border: 2px solid #000; */
+}
+
+#pop .lab{
+	width: 35%;
+	float: left;
+}
+#timeTableDiv .hidden{
+	display: none;
+}
+
 </style>
-<!-- top -->
-<%@ include file="../inc/top.jsp"%>
-<!-- sidebar -->
-<%@ include file="../inc/mainSidebar.jsp"%>
+<script>
+	//$('html').click(function(e) { if(!$(e.target).hasClass("area")) { alert('영역 밖입니다.'); } });
+	$(function() {
+		$('#pop').addClass("hidden");
+		$('.lectureInLink').click(function() {
+			$('#pop').toggleClass("hidden");
+		});
+		
+		$('#evalBt').click(function() {
+			location.href = "<c:url value=''/>";/* 강의평가 페이지로 이동 */
+		});
+		
+	});
+</script>
 <!-- main 시작 -->
 <main role="main" class="flex-shrink-0">
    <div class="container">
@@ -119,7 +163,7 @@
                             <tr>
                                 <td class="time">1교시<br><span style="font-size: 0.85rem;">09:00 - 09:50</span></td>
                                 <td class="input" id="MO1">
-                                	<a href="#" id="lectureInLink">
+                                	<a href="#" class="lectureInLink">
 	                                	<div class="lectureIn">
 		                                    <span class="lectureName">생산관리</span><br>
 		                                    <span class="profName">김교수</span>
@@ -168,7 +212,7 @@
                                 <td class="input" id="MO1"></td>
                                 <td class="input"></td>
                                 <td class="input">
-                                	<a href="#" id="lectureInLink">
+                                	<a href="#" class="lectureInLink">
 	                                	<div class="lectureIn">
 		                                    <span class="lectureName">생산관리</span><br>
 		                                    <span class="profName">김교수</span>
@@ -198,6 +242,47 @@
                         </tbody>
                     </table>
             </div>
-      </div>   
+			<div id="pop">
+					<fieldset style="border: 2px solid #01539d; padding: 15px;">
+					<legend style="width: 32%; font-weight: bold;">강의 정보</legend>
+					<div>
+						<label class="lab">강의명 : </label>
+						<span>생산관리</span>
+					</div>
+					<br>
+					<div>
+						<label class="lab">학점 : </label>
+						<span>3학점</span>
+					</div>
+					<br>
+					<div>
+						<label class="lab">담당교수명 : </label>
+						<span>김교수</span>
+					</div>
+					<br>
+					<div>
+						<label class="lab">강의실 : </label>
+						<span>A012</span>
+					</div>
+					<br>
+					<div>
+						<label class="lab">시간 : </label>
+						<span>09:00 ~ 09:50</span>
+					</div>
+					<br>
+					<div>
+						<label class="lab">강의설명 : </label>
+						<span>경영학과를 위한 생산관리를 통해 어쩌고</span>
+					</div>
+					</fieldset>
+					<div style="text-align: center; margin-top: 13px;">
+						<button type="button" id="evalBt" class="btn btn-success">강의평가</button>
+					</div>
+				
+			</div>
+
+
+
+      </div>
    
 <%@ include file="../inc/bottom.jsp"%>
