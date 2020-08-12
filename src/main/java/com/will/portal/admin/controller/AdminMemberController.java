@@ -587,6 +587,9 @@ public class AdminMemberController {
       logger.info("파일삭제여부 bool={}",bool);
       
       int cnt = studentService.deleteStudent(stuNo);
+      cnt = offiService.deleteOfficial(stuNo);
+      cnt = bankService.deleteAccountInfo(stuNo);
+      
       String msg = "삭제 실패", url = "/admin/member/adminManageStudent";
       if (cnt > 0) {
          msg = "삭제 성공";
@@ -605,7 +608,8 @@ public class AdminMemberController {
       }
 
       int cnt = professorService.deleteProfessor(profNo);
-      
+      cnt = offiService.deleteOfficial(profNo);
+      cnt = bankService.deleteAccountInfo(profNo);
       String msg = "삭제 실패", url = "/admin/member/adminManageProfessor";
       if (cnt > 0) {
          msg
@@ -619,7 +623,8 @@ public class AdminMemberController {
 	@RequestMapping("/deleteEmployee")
 	public String deleteEmployee(String empNo, Model model) {
 		int cnt = employeeService.deleteEmployee(empNo);
-		
+	    cnt = offiService.deleteOfficial(empNo);
+	    cnt = bankService.deleteAccountInfo(empNo);
 		String msg = "삭제 실패", url = "/admin/member/adminManageEmployee";
 		if (cnt > 0) {
 			msg = "삭제 성공";

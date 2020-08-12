@@ -99,6 +99,11 @@ public class Official_infoDAOMybatis implements Official_infoDAO{
 	public int updateChangeDate(String profNo) {
 		return sqlSession.update(namespace+"updateChangeDate", profNo);
 	}
+
+	@Override
+	public int deleteOfficial(String officialNo) {
+		return sqlSession.delete(namespace + "deleteOfficial", officialNo);
+	}
 	
 	
 	

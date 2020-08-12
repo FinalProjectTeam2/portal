@@ -181,8 +181,14 @@ public class IdentifyController {
 				@RequestParam String ssn2, @RequestParam(defaultValue = "N") String identSsn) {
 		Official_infoVO vo = infoService.selectByNo(officialNo);
 		String ssn = vo.getSsn();
-		String [] sArr = ssn.split("-");
-		String dbSsn = sArr[0] + sArr[1].substring(0, 1);
+		String dbSsn = "";
+		if(ssn.indexOf('-') != -1) {
+			String [] sArr = ssn.split("-");
+			dbSsn = sArr[0] + sArr[1].substring(0, 1);
+		}else {
+			dbSsn = ssn.substring(0,7);
+		}
+		
 		String inputSsn = ssn1 + ssn2;
 		logger.info("db와 입력한 주민번호 확인 dbSsn={}, inputSsn={}", dbSsn, inputSsn);
 		String message = "";

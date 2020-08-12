@@ -146,7 +146,7 @@
 		delete from student
 		where stu_no=#{stuNo}
 	</delete>
-	
+
 	<update id="updateStudent" parameterType="studentVO">
 		update student
 		set name=#{name}, major=#{major}

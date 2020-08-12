@@ -10,4 +10,19 @@
 		insert into bookmark(NO,OFFICIAL_NO,NAME,URL)
 		values(#{no},#{officialNo},#{name},#{url})
 	</insert>
+	
+	<select id="selectByOffiNo" parameterType="String" resultType="bookmarkVo">
+		select * from bookmark where official_no = #{officialNo} order by no desc
+	</select>
+	
+	<update id="updateBookmark" parameterType="bookmarkVo">
+		update bookmark
+		set name = #{name}, url = #{url}
+		where no = #{no} and official_no = #{officialNo}
+	</update>
+	
+	<delete id="deleteBookmark" parameterType="int">
+		delete bookmark
+		where no = #{no}
+	</delete>
 </mapper>

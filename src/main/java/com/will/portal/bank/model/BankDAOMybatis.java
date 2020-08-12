@@ -21,6 +21,10 @@ public class BankDAOMybatis implements BankDAO {
 	public int updateAccount(Account_infoVO accInfoVo)  {
 		return sqlSession.update(namespace +"updateAccount",accInfoVo);
 	}
+	@Override
+	public int deleteAccountInfo(String officialNo) {
+		return sqlSession.delete(namespace +"deleteAccountInfo", officialNo);
+	}
 	
 	
 }

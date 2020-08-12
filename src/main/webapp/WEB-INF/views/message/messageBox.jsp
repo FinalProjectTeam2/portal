@@ -5,15 +5,15 @@
 <!-- sidebar -->
 <%@ include file="../inc/messageSidebar.jsp"%>
 <style type="text/css">
-.form-control {
+#messgaeInfo .form-control {
 	display: inline;
 	width: 10%;
 }
-.input-group.mb-2.mr-sm-2 {
+#messgaeInfo .input-group.mb-2.mr-sm-2 {
     width: 20%;
     display: inline-flex;
 }
-.input-group-text {
+#messgaeInfo .input-group-text {
     padding: 3px;
 }
 input#inlineFormInputGroupUsername2 {
@@ -21,7 +21,7 @@ input#inlineFormInputGroupUsername2 {
     padding: 0 10px;
     height: 32px;
 }
-.input-group-text {
+#messgaeInfo .input-group-text {
 	width: 35px;
     padding: 0px 8px;
 }

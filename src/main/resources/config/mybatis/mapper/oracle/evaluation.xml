@@ -40,7 +40,25 @@
 		where stu_no=#{stuNo} and sub_code=#{subCode}
 	
 	</update>
-   
+	
+	<update id="updateAllScore" parameterType="evaluationVo">
+		update evaluation
+		<set>
+			<if test="midterm!=0">midterm=#{midterm},</if>
+			<if test="midterm==0">midterm=0,</if>
+			<if test="finals!=0">finals=#{finals},</if>
+			<if test="finals==0">finals=0,</if>
+			<if test="assignment!=0">assignment=#{assignment},</if>
+			<if test="assignment==0">assignment=0,</if>
+			<if test="attendance!=0">attendance=#{attendance},</if>
+			<if test="attendance==0">attendance=0,</if>
+			<if test="etc!=0">etc=#{etc},</if>
+			<if test="etc==0">etc=0,</if>
+			<if test="totalGrade!=0">total_grade=#{totalGrade},</if>
+			<if test="totalGrade==0">total_grade=0,</if>
+		</set>
+		where stu_no=#{stuNo} and sub_code=#{subCode}
+	</update>
 </mapper>
 
 
