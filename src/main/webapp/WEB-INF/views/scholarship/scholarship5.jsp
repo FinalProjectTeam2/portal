@@ -27,7 +27,7 @@
 }
 
 .td {
-	background-color: skyblue;
+	background-color: #e6f3ff;
 }
 
 </style>

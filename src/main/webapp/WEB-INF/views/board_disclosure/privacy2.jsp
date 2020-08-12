@@ -32,14 +32,6 @@ select, input, label {
     color: #666
 }
 
-img {
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    border: 0;
-    vertical-align: top;
-    -ms-interpolation-mode: bicubic
-}
 .email {
 	text-align: center;
 }
