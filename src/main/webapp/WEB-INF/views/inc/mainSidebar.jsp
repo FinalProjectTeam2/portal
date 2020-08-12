@@ -55,17 +55,7 @@
 				<a href="<c:url value='/bookmark/manager'/>">관리</a>
 			</span>
 		</div>
-		<ul class="nav flex-column" id="bookmarkList">
-			<%-- <li class="nav-item"><a class="nav-link" href="<c:url value='/portal/board/list?bdCode=F'/>"> <span
-					class="bullets"></span> 자유게시판
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="<c:url value='/portal/board/list?bdCode=F'/>"> <span
-					class="bullets"></span> 수강신청 내역
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#"> <span
-					class="bullets"></span> 포털공지
-			</a></li> --%>
-		</ul>
+		<ul class="nav flex-column" id="bookmarkList"></ul>
 	</div>
 </nav>
 <!-- sidebar 끝 -->
