@@ -278,3 +278,11 @@ insert into subj_type
 values('GRC','교양필수');
 insert into subj_type
 values('BRC','기초필수');
+
+
+--증명서 발급 시퀀스
+CREATE SEQUENCE cert_seq
+INCREMENT BY 1
+START WITH 1
+NOCACHE;      
+
