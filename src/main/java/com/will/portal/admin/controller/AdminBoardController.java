@@ -70,6 +70,7 @@ public class AdminBoardController {
 	@RequestMapping("/insertCate")
 	@ResponseBody
 	public String insertCate(@ModelAttribute CategoryVO vo) {
+		log.info("ajax - 카테고리 등록, 파라미터 vo={}",vo);
 		vo.setCategoryCode(vo.getCategoryCode().toUpperCase());
 		log.info("ajax - 카테고리 등록, 파라미터 vo={}",vo);
 		
