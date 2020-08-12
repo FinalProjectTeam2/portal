@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-<!-- top -->
-<%@ include file="../inc/top.jsp"%>
-<!-- sidebar -->
-<%@ include file="../inc/mainSidebar.jsp"%>
+
 
 <style>
    #timeTableDiv {
@@ -82,23 +79,24 @@
 }
 
 #timeTableDiv #lectureInLink:hover > .lectureIn {
-	background-color: #ffbf00c7;
+	background-color: #a900ff2b;/* #ffbf00c7 */
 }
 </style>
-
+<!-- top -->
+<%@ include file="../inc/top.jsp"%>
+<!-- sidebar -->
+<%@ include file="../inc/mainSidebar.jsp"%>
 <!-- main 시작 -->
 <main role="main" class="flex-shrink-0">
    <div class="container">
       <div id="timeTableDiv">
-      	<div style="margin: 30px; font-size: 25px;">
-      		<div style="text-align: center; margin: 0 auto;">
-      			<img src="<c:url value='/resources/images/timetableIcon.png'/>" id="tticon"><span id="userName"> 홍길동</span>님의 강의시간표
-      		</div>
-      	</div>
-         <div class="timetable-img text-center">
-                </div>
+	      	<div style="margin: 30px; font-size: 25px;">
+	      		<div style="text-align: center; margin: 0 auto;">
+	      			<img src="<c:url value='/resources/images/timetableIcon.png'/>" id="tticon"><span id="userName"> 홍길동</span>님의 강의시간표
+	      		</div>
+	      	</div>
                 <div class="table-responsive">
-                    <table class="table table-bordered text-center">
+                    <table class="table table-bordered text-center" >
                        <colgroup>
                           <col width="10%">
                           <col width="18%">
@@ -199,7 +197,7 @@
 
                         </tbody>
                     </table>
-                </div>
+            </div>
       </div>   
    
 <%@ include file="../inc/bottom.jsp"%>

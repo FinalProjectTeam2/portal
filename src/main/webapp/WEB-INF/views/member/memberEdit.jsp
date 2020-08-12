@@ -67,7 +67,9 @@ function inputPhoneNumber(obj) {
 }
 
 	$(function () {
+		
 		$.select();
+
 		$('#editFrm').submit(function () {
 			var formData = new FormData(); 
 			formData.append("bankCode", $("#bankCode").val()); 
@@ -104,6 +106,11 @@ function inputPhoneNumber(obj) {
 			});
 			return false;
 		});	
+		
+		$(document).on("click","#curSemesterInfo",function(e){
+			location.href="<c:url value='/lecture/studentTT' />";
+		});
+		
 	});
 	$.select = function () {
 		$.ajax({
@@ -147,7 +154,7 @@ function inputPhoneNumber(obj) {
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>과정</th>'
-	      			+ '<td>학사: '+res.STATE_NAME+'/ '+res.SEMESTER+'학기 </td>'
+	      			+ '<td>학사: '+res.STATE_NAME+'/ '+res.SEMESTER+'학기 <button type="button" id="curSemesterInfo">현재 학기정보</button> </td>'
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>기타</th>'
@@ -256,7 +263,6 @@ a:focus {
 					   <div class="rowa" style=" margin-top: 20px;">
 					   		<label for="upfile">사진수정</label>
 					      	<input type="file" name="upfile" id="upfile" >
-					      	
 						</div>			      	
 					</div>
 					<div>
