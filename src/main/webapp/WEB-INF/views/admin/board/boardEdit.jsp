@@ -1,25 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../../inc/top.jsp"%>
-<%@ include file="../../inc/portalSidebar.jsp"%>
+<%@ include file="../../inc/mainSidebar.jsp"%>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/board/write.css'/>" />
-<style>
-#fileDetail{
-	float: right;
-    width: 85%;
-    background: white;
-    border: 1px solid #cccccc;
-    padding: 12px;
-    border-radius: 4px;
-}
-.files{
-    background: #cccccc54;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin: 5px 0;
+<style type="text/css">
+argin: 5px 0;
 }
 .title_box { 
     border: #3c5a86 1px dotted; 
@@ -34,214 +22,252 @@
     font-weight: bold;
     text-shadow: 0px 0px 4px #f2f2f2;
 }
+
+#boardFrm .col-75 {
+    float: left;
+    width: 80%;
+}
+#boardFrm .col-25 {
+    width: 20%;
+}
+#chDup{
+	height: 50px;
+	margin-left: 10px;
+}
 </style>
 <script type="text/javascript">
-	var count = 1+${fn:length(postVo.fileList) };
-	console.log(count);
-	var maxCount = ${vo.maxUpfile};
+	var pattern_eng = /[a-zA-Z]/;
+	var pattern_num = /[0-9]/;
 	$(function () {
-		if(count > maxCount){
-			$("#fileList .firstFile").hide();
+		if("${type}"=='in'){
+			$("#btSubmit").val("등록");
 		}else{
-			$("#fileList .firstFile").show();
+			$("#chDup").attr("disabled","disabled");
+			$("#bdCode").attr("readonly","readonly");
+			$("#isDup").val('Y');
+			$("#isReply").val('${vo.isReply}');
+			$("#isComment").val('${vo.isComment}');
+			$("#isPrivate").val('${vo.isPrivate}');
+			$("#isUpload").val('${vo.isUpload}');
+			$("#maxFilesize").val('${vo.maxFilesize}');
+			$("#maxUpfile").val('${vo.maxUpfile}');
+			$("#cateCode").val('${vo.categoryCode}');
+			$("#authCode").val('${vo.authCode}');
+			$("#usage").val('${vo.usage}');
 		}
-		$("#delFile").click(function() {
-			var fileName = $(this).find(".fileName").val();
-			var no = $(this).find(".no").val();
-			var parent = $(this).parent();
-			$.ajax({
-				url : "<c:url value='/portal/board/ajax/delFile'/>",
-				data : {fileName : fileName, no : no },
-				success : function(res) {
-					if(res == 'true'){
-						parent.remove();
-						count = count - 1;
-						if(count > maxCount){
-							$("#fileList .firstFile").hide();
+		$("#list").click(function() {
+			location.href = "<c:url value='/admin/board/manager'/>";
+		});
+		$("#isUpload").change(function() {
+			if($(this).val() == 'Y'){
+				$("#maxUpfile").attr("disabled", false);
+				$("#maxFilesize").attr("disabled", false);
+			}else{
+				$("#maxUpfile").attr("disabled", true);
+				$("#maxFilesize").attr("disabled", true);
+			}
+		});
+		$("#boardFrm").submit(function() {
+			if($("#isDup").val() != 'Y'){
+				alert("중복확인을 해야 합니다.");
+				return false;
+			}
+			var formData = $("#boardFrm").serialize();
+			if('${type}' == 'in'){
+				$.ajax({
+					url : "<c:url value='/admin/board/insertBd'/>",
+					data : formData,
+					type : "get",
+					success : function(res) {
+						if(res == 'Y'){
+							alert("등록 성공!");
+							location.href = "<c:url value='/admin/board/manager'/>";
 						}else{
-							$("#fileList .firstFile").show();
+							alert("등록 실패!");
 						}
 					}
-				}
-			});
-			//$(this).parent().remove();
-		});
-		
-		$("#list").click(function() {
-			location.href = "<c:url value='/portal/board/list?bdCode="+$("#bdCode").val()+"'/>";
-		});
-		if(${vo.isUpload == 'N'}){
-			$("#fileList").hide();
-		}
-		
-		$("#boardFrm").submit(function() {
-			if($("#title").val().length < 1){
-				alert("제목을 작성하셔야 합니다.");
-				return false;
-			}
-			if($("#bdCode").val().length < 1){
-				alert("분류를 선택하셔야 합니다.");
-				return false;
-			}
-			
-			$("#contents").val(CKEDITOR.instances.subject.getData());
-			$("#subject").remove();
-		});
-		
-		$("input[type=file]").change(function(){
-			var fileName = $(this).val().substr( $(this).val().lastIndexOf( "\\" ) + 1);
-			$(this).next().html(fileName);
-		});
-		
-		$("#addFile").click(function() {
-			if(count >= maxCount){
-				alert("파일 업로드는 " + maxCount + "개 까지만 가능합니다.");
-				return false;
-			}
-			count = count + 1;
-			var fileTag = '<div class="input-group mb-3 col-75">'
-				+'<div class="input-group-prepend">'
-				+ '<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>'
-				+'</div>'
-				+'<div class="custom-file">'
-				+ '<input type="file" class="custom-file-input" name="files'+count+'" id="inputGroupFile0'+count+'" '
-				+' aria-describedby="inputGroupFileAddon01"> <label '
-				+'class="custom-file-label" for="inputGroupFile0'+count+'">파일을 선택하세요</label>'
-				+'</div>'
-				+ '<button type="button" onclick="$.delFile(this)" name="delFile">'
-				+ '<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">'
-				+ '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'
-				+ '<path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>'
-				+ '</svg>' + '</button>'
-				+'</div>';
-			$("#fileList .input-group").last().after(fileTag);
-			$("input[type=file]").change(function(){
-				var fileName = $(this).val().substr( $(this).val().lastIndexOf( "\\" ) + 1);
-				$(this).next().html(fileName);
-			});
-			return false;
-		});
-		
-		$("#bdCode").change(function() {
-			if($(this).val() != ''){
+				});
+			}else{
 				$.ajax({
-					url: "<c:url value='/portal/board/ajax/findBoard'/>",
-					data: {bdCode: $(this).val()},
-					dataType: "json",
-					type: "get",
-					success: function(res) {
-						maxCount = res.maxUpfile;
-						$("button[name=delFile]").each(function() {
-							$(this).parent().remove();
-						});
-						if(res.isUpload == 'N'){
-							$("#fileList").hide();
+					url : "<c:url value='/admin/board/editBd'/>",
+					data : formData,
+					type : "get",
+					success : function(res) {
+						if(res == 'Y'){
+							alert("수정 성공!");
+							location.href = "<c:url value='/admin/board/manager'/>";
 						}else{
-							$("#fileList").show();
+							alert("수정 실패!");
 						}
-						count = 1;
 					}
 				});
 			}
-			
 			return false;
 		});
+		
+		$("#chDup").click(function() {
+			var code = $("#bdCode").val();
+			if(code.length <1){
+				alert("게시판 코드를 입력해주세요");
+				$("#bdCode").focus();
+				return false;
+			}
+			if(!pattern_eng.test(code)){
+				alert("영문만 가능합니다.");
+				$("#bdCode").focus();
+				$("#bdCode").val('');
+				return false;
+			}
+			$.ajax({
+				url : "<c:url value='/admin/board/checkBdCode'/>",
+				data : {
+					code : code
+				},
+				type : "get",
+				success : function(res) {
+					if(res == 'Y'){
+						alert("사용 가능한 코드입니다.");
+						$("#isDup").val('Y');
+						$("#bdCode").attr("readonly","readonly");
+						$("#chDup").attr("disabled","disabled");
+					}else{
+						alert("이미 사용 중인 코드입니다.");
+					}
+				}
+			});
+		});
 	});
-	$.delFile = function(self) {
-		$(self).parent().remove();
-		count = count - 1;
-		return false;
-	}
+	
 </script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div style="margin: 10px 20px;">
-			<form action="<c:url value='/portal/board/edit'/>" id="boardFrm" method="post"
-				enctype="multipart/form-data">
+			<form action="" id="boardFrm" method="post">
 			<input type="hidden" value="${principal.officialNo }" name="officialNo">
-			<input type="hidden" value="${postVo.postsVo.postNo }" name="postNo">
-			<input type="hidden" id="contents" name="contents">
+			<input type="hidden" value="N" id="isDup">
 			<div class="row1">
 				<div class="col-25">
-					<label for="l_title" class="formTitle">제목</label>
+					<label for="l_title" class="formTitle">게시판 코드</label>
 				</div>
 				<div class="col-75">
-					<input type="text" id="title" name="title" value="${postVo.postsVo.title }">
+					<input type="text" style="width: 80%;" id="bdCode" name="bdCode" 
+						value="${vo.bdCode }" required="required">
+					<button type="button" class="btn btn-primary" id="chDup">중복확인</button>
 				</div>
 			</div>
 			<div class="row1">
 				<div class="col-25">
-					<label for="l_category"  class="formTitle">분류</label>
+					<label for="l_category"  class="formTitle">카테고리 코드</label>
 				</div>
 				<div class="col-75">
-					<select id="bdCode" name="bdCode">
-						<option value="">선택하세요</option>
-						<c:forEach var="voc" items="${list }">
-							<c:if test="${voc.usage == 'Y' }">
-								<option value="${voc.bdCode }" 
-								<c:if test="${postVo.postsVo.bdCode == voc.bdCode }">
-									selected="selected"
-								</c:if>
-								>${voc.bdName }</option>
-							</c:if>
+					<input type="text" readonly="readonly" id="cateCode" name="categoryCode" 
+						value="${cateCode }" required="required">
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">게시판 명</label>
+				</div>
+				<div class="col-75">
+					<input type="text" value="${vo.bdName }" id="bdName" name="bdName" required="required">
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">정렬 순서</label>
+				</div>
+				<div class="col-75">
+					<input type="text" placeholder="숫자만 입력하세요" id="bdOrder"
+						 name="bdOrder" value="${vo.bdOrder }" required="required">
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">사용 여부</label>
+				</div>
+				<div class="col-75">
+					<select id="usage" name="usage">
+						<option value="Y">YES</option>
+						<option value="N">NO</option>
+					</select>
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">댓글 여부</label>
+				</div>
+				<div class="col-75">
+					<select id="isReply" name="isReply">
+						<option value="Y">YES</option>
+						<option value="N">NO</option>
+					</select>
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">답글 여부</label>
+				</div>
+				<div class="col-75">
+					<select id="isComment" name="isComment">
+						<option value="Y">YES</option>
+						<option value="N">NO</option>
+					</select>
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">비밀글 여부</label>
+				</div>
+				<div class="col-75">
+					<select id="isPrivate" name="isPrivate">
+						<option value="Y">YES</option>
+						<option value="N">NO</option>
+					</select>
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">업로드 여부</label>
+				</div>
+				<div class="col-75">
+					<select id="isUpload" name="isUpload">
+						<option value="Y">YES</option>
+						<option value="N">NO</option>
+					</select>
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">최대 업로드 수</label>
+				</div>
+				<div class="col-75">
+					<input type="text" placeholder="숫자만 입력하세요" id="maxUpfile"
+						 name="maxUpfile" value="0" >
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">최대 파일 크기</label>
+				</div>
+				<div class="col-75">
+					<input type="text" placeholder="숫자만 입력하세요(MB)" id="maxFilesize"
+						 name="maxFilesize" value="0">
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">관리자 등급</label>
+				</div>
+				<div class="col-75">
+					<select id="authCode" name="authCode">
+						<c:forEach items="${list }" var="auth">
+							<option value="${auth.authCode }">${auth.authName }</option>
 						</c:forEach>
 					</select>
 				</div>
 			</div>
-			<div class="row1" id="fileList">
-				<div class="col-25 firstFile">
-					<label for="l_date"  class="formTitle">파일</label>
-					<button type="button" id="addFile" class="btn btn-info">파일 추가</button>
-				</div>
-				<div class="input-group mb-3 col-75 firstFile">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-					</div>
-					<div class="custom-file">
-						<input type="file" class="custom-file-input" name="files" id="inputGroupFile01"
-							aria-describedby="inputGroupFileAddon01"> <label
-							class="custom-file-label" for="inputGroupFile01">파일을 선택하세요</label>
-					</div>
-				</div>
-				<c:if test="${!empty postVo.fileList}">
-					<div id="fileDetail" class="title_box">
-						<div id="title">첨부파일 목록</div>
-						<div id="content">
-						<c:forEach var="file" items="${postVo.fileList}">
-							<div class="files">
-								<a style="cursor: pointer;" id="delFile">
-								<input type="hidden" class="fileName" value="${file.fileName }">
-								<input type="hidden" class="no" value="${file.no }">
-								${file.originalFileName }
-								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-backspace-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-								  <path fill-rule="evenodd" d="M15.683 3a2 2 0 0 0-2-2h-7.08a2 2 0 0 0-1.519.698L.241 7.35a1 1 0 0 0 0 1.302l4.843 5.65A2 2 0 0 0 6.603 15h7.08a2 2 0 0 0 2-2V3zM5.829 5.854a.5.5 0 1 1 .707-.708l2.147 2.147 2.146-2.147a.5.5 0 1 1 .707.708L9.39 8l2.146 2.146a.5.5 0 0 1-.707.708L8.683 8.707l-2.147 2.147a.5.5 0 0 1-.707-.708L7.976 8 5.829 5.854z"/>
-								</svg>
-								</a>
-							</div>
-						</c:forEach>
-						</div>
-					</div>
-				</c:if>
-			</div>
-			<div class="row1" style="padding-left: 2%;">
-				<textarea id="subject" name="subject" placeholder="내용을 입력하세요."
-					style="height: 600px">${postVo.postsVo.contents }</textarea>
-			</div>
-			<script type="text/javascript">
-				//CKEDITOR.replace("description"); //태그의 id
-				//이미지 업로드를 할 경우
-				CKEDITOR
-						.replace(
-								"subject",
-								{
-									//CKEDITOR.replace와 id("description")를 잘 적어주면 그 태그가 smart editor 스타일로 바뀌게 된다. 
-									filebrowserUploadUrl : "${pageContext.request.contextPath}/imageUpload",
-									//파일을 업로드 해야하기 때문에 filebrowserUploadUrl을 사용하고, 서버쪽에 코드를 완성해주어야 한다.
-									height : "500px"
-								});
-			</script>
 				<div class="bts">
-					<input type="submit" value="수정" > <input type="button"
+					<input type="submit" id="btSubmit" value="수정" > <input type="button"
 						value="목록" id="list">
 				</div>
 			</form>
