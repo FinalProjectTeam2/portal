@@ -264,3 +264,17 @@ create sequence subject_seq
 INCREMENT BY 1
 START WITH 1
 NOCACHE;
+
+/*과목 타입*/
+insert into subj_type
+values('GEC','교양선택');
+insert into subj_type
+values('MEC','전공선택');
+insert into subj_type
+values('NEC','일반선택');
+insert into subj_type
+values('MRC','전공필수');
+insert into subj_type
+values('GRC','교양필수');
+insert into subj_type
+values('BRC','기초필수');

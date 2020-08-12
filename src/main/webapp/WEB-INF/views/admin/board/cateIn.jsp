@@ -155,7 +155,7 @@ $(function() {
 			</div>
 			<div class="row1">
 				<div class="">
-					<input type="text" id="title" name="categoryName" required="required">
+					<input type="text" name="categoryName" required="required">
 				</div>
 			</div>
 			<div class="bts">

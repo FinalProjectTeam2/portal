@@ -33,7 +33,7 @@ a.bottom {
 	color: black;
 }
 
-ul li {
+footer ul li {
 	display:inline;
 	border-left:1px solid #999;
 	padding:0 10px; 
