@@ -125,7 +125,7 @@
 		});
 		
 		$('#evalBt').click(function() {
-			location.href = "<c:url value=''/>";/* 강의평가 페이지로 이동 */
+			location.href = "<c:url value='/student/subjEval'/>";/* 강의평가 페이지로 이동 */
 		});
 		
 	});

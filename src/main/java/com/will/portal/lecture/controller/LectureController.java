@@ -78,7 +78,6 @@ public class LectureController {
 		
 		List<SubjectAllVO> list = profService.loadByProfNo(profNo);
 		
-		
 		List<Map<String, Object>> classList = profService.classroomByDepNo(depNo);
 		
 		logger.info("list.size={}, classList.size={}", list.size(), classList.size());

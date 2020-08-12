@@ -36,4 +36,8 @@ public class StudentController {
 	public void studentScore() {
 		logger.info("studentScore, param");
 	}
+	@RequestMapping("/subjEval")
+	public void subjEval() {
+		logger.info("강의평가 화면 보여주기");
+	}
 }

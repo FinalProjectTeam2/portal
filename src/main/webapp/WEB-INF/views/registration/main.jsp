@@ -15,7 +15,7 @@
 				url:"<c:url value='/registration/main'/>",
 				type:"post",
 				data:{"facultyNo":facultyNo},
-				success(res){
+				success:function(res){
 					var str="<select name='p_major' id='p_major' style='width: 100%'>";
 					str+="<option value='All'>---All---</option>";
 					
