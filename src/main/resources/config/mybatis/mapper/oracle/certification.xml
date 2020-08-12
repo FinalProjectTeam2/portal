@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.certification">
+	<select id="getSeq" resultType="int">
+		select cert_seq.nextval from dual
+	</select>
+	
+	<insert id="insertCert" parameterType="certificationVo">
+		insert into certification(no, cert_code, qty, stu_no, cert_name)
+		values(#{no}, #{certCode}, #{qty}, #{stuNo}, #{certName})
+	</insert>
+	
+	<select id="selectByStuNo" parameterType="string" resultType="certificationVo">
+		select * from certification where stu_no=#{stuNo}	
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

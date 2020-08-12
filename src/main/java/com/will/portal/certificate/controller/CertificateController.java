@@ -1,4 +1,4 @@
-package com.will.portal.certificate;
+package com.will.portal.certificate.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +29,6 @@ public class CertificateController {
 	
 	@RequestMapping(value="/certificate4",method = RequestMethod.GET) 
 	public String certificate4_get() {
-		return "portal/certificate/certificate3";
+		return "portal/certificate/certificate4";
 	}
 }
