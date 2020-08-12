@@ -1,155 +1,122 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
-<link href="<c:url value='/resources/css/admin/adminManageMember.css'/>" rel="stylesheet">
-<style>
-#searchSelect{
-	margin: 0 5px 0 3px;
+<style type="text/css">
+.menu {
+   margin-top: 3%;
+   margin-left:15%;
+   text-align: right;
+}
+
+table {
+   border: 1px solid gray;
+   border-collapse: collapse;
+   width: 1200px;
+}
+
+th {
+   background: #e6f3ff;
+   text-align: center;
+   font-weight: bold;
+   border-top-color: #003566;
+}
+
+th, td {
+   border: 1px solid gray;
+}
+
+.table1 {
+   height: 50px;
+   padding: 15%;
+}
+
+.table2 th{
+   line-height: 35px;
+}
+.table3 th{
+   line-height: 35px;
+}
+
+.table2 #t2_td {
+   text-align: center;
+   font-weight: bold;
+   font-size: 16px;
+   color: blue;
+   line-height: 26px;   
 }
 </style>
 
-<main role="main" class="flex-shrink-0">
-	<div class="container">
+<div class="gradeCheck">
+   <div>
+      <h1>성적조회</h1>
+   </div>
+   <div class="menu">
+      <span><a href="#">내 정보</a></span>
+      <span> > </span>
+      <span><a href="#">성적조회</a></span>
+   </div>
 
+<hr> 
 
-		<div id="adminMngMem">
-			<h2>성적 조회</h2>
-			<form name="frmList" method="post" action="<c:url value='/admin'/>">
-				<div class="divRight">
-					과목 <select name="">
-						<option disabled selected>&nbsp;--</option>
-						<option value="">전공</option>
-						<option value="">교양</option>
-					</select>
-					학부 <select name="">
-						<option disabled selected>&nbsp;--</option>
-						<option value="">공대</option>
-						<option value="">미대</option>
-					</select>
-					학과 <select name="">
-						<option disabled selected>&nbsp;--</option>
-						<option value="">경제</option>
-						<option value="">컴공</option>
-					</select>
-					<select name="" id="searchSelect">
-						<option value="">과목명</option>
-						<option value="">교수명</option>
-						<option value="">강의번호</option>
-					</select>
-					<input type="text" size="8" name="searchKeyword">
-					<button class="btCustom btn btn-primary btn-lg login-button" id="btSearch">검색</button>
-				<div class="divList">
-					<table class="box2"
-						summary="강의 목록">
-						<caption>강의 목록</caption>
-						<colgroup>
-							<col style="width: 5%" />	
-							<col style="width: 10%" />
-							<col style="width: 23%" />
-							<col style="width: 16%" />
-							<col style="width: 15%" />
-							<col style="width: 15%" />
-							<col style="width: 8%" />
-							<col style="width: 8%" />
-						</colgroup>
-						<thead>
-							<tr>
-								<th><input type="checkbox" name="chkAll"></th>
-								<th scope="col">강의 번호</th>
-								<th scope="col">과목명</th>
-								<th scope="col">교수명</th>
-								<th scope="col">학부</th>
-								<th scope="col">학과</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%-- <c:if test="${empty list }">
-								<tr>
-									<td colspan="8">결과가 없습니다.</td>
-								</tr>
-							</c:if> --%>
-							<%-- <c:if test="${!empty list }">
-								<!-- 반복 시작 -->
-								<c:set var="idx" value="0" />
-								<c:forEach var="vo" items="${list }"> --%>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>1010123</td>
-										<td>손쉬운 프론트엔드 디자인</td>
-										<td>양명숙</td>
-										<td>컴퓨터 공학부</td>
-										<td>게임학과</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>1010113</td>
-										<td>어려운 프론트엔드 디자인</td>
-										<td>양명숙</td>
-										<td>컴퓨터 공학부</td>
-										<td>폰게임학과</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-									<tr class="align_center">
-										<td><input type="checkbox"
-											name="" value="vo.no">
-										<td>1014423</td>
-										<td>적당한 프론트엔드 디자인</td>
-										<td>양명숙</td>
-										<td>컴퓨터 공학부</td>
-										<td>보드게임학과</td>
-										<td><a href="#">수정</a></td>
-										<td><a href="#">삭제</a></td>
-									</tr>
-									
+<!--  -->
+   <div class="">
+      <table class="table1">
+         <tr>
+            <th>신청학점</th>
+            <td>24</td>
+            <th>취득학점</th>
+            <td>24</td>
+            <th>평균평점</th>
+            <td>4.20</td>
+         </tr>
+      </table>
+   </div>
+<br><br>
 
-							<%-- 		<c:set var="idx" value="${idx+1 }" />
-								</c:forEach>
-								<!-- 반복 끝 -->
-							</c:if> --%>
-						</tbody>
-					</table>
-				</div>
-				<div class="divPage">
-					<!-- 페이지 번호 추가 -->
-					<c:if test="${pagingInfo.firstPage>1 }">
-						<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"> <img
-							src='<c:url value="/resources/images/first.JPG" />' border="0">
-						</a>
-					</c:if>
+<!-- 전체 성적 -->
+   <div>
+      <p>전체성적조회</p>
+   </div>
+   
+   <div>
+      <select>
+         <option>2020</option>
+         <option>2019</option>
+         <option>2018</option>
+         <option>2017</option>
+      </select>
 
-					<!-- [1][2][3][4][5][6][7][8][9][10] -->
-					<c:forEach var="i" begin="${pagingInfo.firstPage }"
-						end="${pagingInfo.lastPage }">
-						<c:if test="${i==pagingInfo.currentPage }">
-							<span style="color: blue; font-weight: bold">${i }</span>
-						</c:if>
-						<c:if test="${i!=pagingInfo.currentPage }">
-							<a href="#" onclick="boardList(${i})"> [${i }] </a>
-						</c:if>
-					</c:forEach>
+      <label>1학기</label><input type="radio" value="1학기">
+      <label>2학기</label><input type="radio" value="1학기">
 
-					<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-						<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"> <img
-							src="<c:url value="/resources/images/last.JPG" />" border="0">
-						</a>
-					</c:if>
-					<!--  페이지 번호 끝 -->
-				</div>
+      <input type="button" value="검색">
+   </div>
+   
+   <div class="divTable">
+      <table class="table2">
+         <tr>
+            <th>년도</th>
+            <th>학기</th>
+            <th>이수구분</th>
+            <th>교과목명</th>
+            <th>교수명</th>
+            <th>학점</th>
+            <th>성적등급</th>
+         </tr>
+         <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            
+         </tr>
+         <tr>
+            <td colspan="7" id="t2_td">총평점 : 평균평점 :</td>      
+      </table>
+   </div>
 
-				<div class="btdiv">
-					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="강의 추가"><br>
-				</div>
-				<div class="btdiv">
-					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 강의 삭제"><br>
-				</div>
-			</form>
-		</div>
-		<%@ include file="../inc/bottom.jsp"%>
+</div>
+<%@ include file="../inc/bottom.jsp"%>
