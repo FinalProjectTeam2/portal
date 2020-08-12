@@ -626,7 +626,7 @@ public class LectureController {
 		for(int i = 0; i < arrList.size(); i++) {
 			
 			EvaluationVO vo = new EvaluationVO();
-			logger.info("\narrList.get({})={}",i,arrList.get(i));
+			logger.info("arrList.get({})={}",i,arrList.get(i));
 			String[] arr= arrList.get(i).split(",");
 			
 			vo.setSubCode(arr[0]);

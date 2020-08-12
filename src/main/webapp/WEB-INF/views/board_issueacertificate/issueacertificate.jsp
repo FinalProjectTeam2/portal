@@ -3,6 +3,7 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/certificate.css'/>">
 <style>
 	 
@@ -85,16 +86,6 @@ function tui2(){
 			
 			
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -490,7 +481,7 @@ function payment(){
 					<h3 class="tit_line mt0">증명서 발급</h3>
 					<div id="selection">
 						<h5>증명서 종류</h5>
-						<select class='form-control' style='width: 30%;'>
+						<select class='form-control' style='width: 80%;'>
 							<option value='none' style='text-align: center;'>----증명서를 선택해 주세요----</option>
 							<option value='certEnroll'>재학증명서</option>
 							<option value='certGradu'>졸업증명서</option>
@@ -503,7 +494,7 @@ function payment(){
 						<img class='plus' style="width: 35px; height: auto;" src="<c:url value='/resources/images/plusIcon.png'/>">
 						
 					</div><br>
-					<button id="confirm" style="width: 30%">선택 완료</button>
+					<button id="confirm" style="width: 80%">선택 완료</button>
 					<div id="summery">
 						<hr style="border: solid 2px #CCC;width: 40%;float: left;">
 						<p style="clear: both;">증명서 종류 : <span id='certType'></span></p>
@@ -512,10 +503,10 @@ function payment(){
 						<hr style="border: dashed 0.5px black;width: 40%;float: left;">
 						<p style="clear: both;">총 비용 : <span id='totalPrice'></span>원</p>
 						<br>
-						<button id="pay" style="width: 30%">결제하기</button>
+						<button id="pay" style="width: 80%">결제하기</button>
 					</div>
 				</div>
-				<div class="certTable" style="float: left;width: 45%; margin-left: 5%">
+				<div class="table table-striped" id="tableDiv" style="float: left;width: 45%; margin-left: 5%">
 					<h4 class="tit_blue">발급 증명서 현황</h4>
 					<c:set var='no' value="1"/>
 					<table border='1'>
@@ -533,7 +524,7 @@ function payment(){
 						</tr>
 						<c:if test="${empty list}">
 							<tr>
-								<td colspan="4">발급된 증명서가 없습니다.</td>
+								<td colspan="4" style="text-align: center">발급된 증명서가 없습니다.</td>
 							</tr>
 						</c:if>
 						<c:if test="${!empty list}">
