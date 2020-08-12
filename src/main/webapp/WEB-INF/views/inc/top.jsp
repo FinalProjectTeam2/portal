@@ -181,6 +181,11 @@
 				+ (seconds < 10 ? '0' + seconds : seconds);
 
 		$("#timer").html(timer);
+		var locTime = (hours < 10 ? '0' + hours : hours) + ':'
+		+ (minutes < 10 ? '0' + minutes : minutes) + ':'
+		+ (seconds < 10 ? '0' + seconds : seconds);
+		
+		$("#locTime").html(locTime);
 	}
 	$(function() {
 		clock();

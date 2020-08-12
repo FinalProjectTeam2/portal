@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/board_issueacertificate")
 public class IssueacertificateController {
 
-	@RequestMapping(value="/issueacertificate", method = RequestMethod.GET) public String
-	issueacertificate_get() {
+	@RequestMapping(value="/issueacertificate", method = RequestMethod.GET) 
+	public String issueacertificate_get() {
 		
 		return "board_issueacertificate/issueacertificate";
 	}
