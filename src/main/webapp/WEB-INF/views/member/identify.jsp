@@ -26,6 +26,10 @@ h1{
 #countdown{
 	margin-top: 50px;
 }
+h3 {
+    margin: 11px 0;
+    letter-spacing: 0.2em;
+}
 </style>
 <!--Bootsrap 4 CDN-->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">

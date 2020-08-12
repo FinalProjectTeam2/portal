@@ -1,8 +1,11 @@
 package com.will.portal.lecture.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +18,6 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +30,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.google.api.client.http.HttpResponse;
+import com.will.portal.common.ExcelRead;
+import com.will.portal.common.ExcelReadOption;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.evaluation.model.EvaluationAllVO;
 import com.will.portal.evaluation.model.EvaluationService;
@@ -160,11 +164,16 @@ public class LectureController {
 		String profNo = user.getOfficialNo();
 		//select option에 들어갈 list
 		List<Map<String, Object>> sList = evaluationServ.subjectByProfNo(profNo);
+		Map<String, Object> map = sList.get(0);
+		String openSubCode = (String)map.get("OPEN_SUB_CODE");
+		
+		logger.info("openSubCode={}", openSubCode);
 		//학생list
-		List<EvaluationAllVO> list = evaluationServ.selectAllListforEval(subCode);
+		List<EvaluationAllVO> list = evaluationServ.selectAllListforEval(openSubCode);
 		logger.info("학생평가 페이지 list.size()={}, selectList.size={}", list.size(), sList.size());
 		model.addAttribute("list", list);
 		model.addAttribute("sList", sList);
+		model.addAttribute("openSubCode", openSubCode);
 		
 		
 		return "lecture/professorView";
@@ -471,6 +480,7 @@ public class LectureController {
 	}
 	
 	@RequestMapping(value = "/lecture/phoneBook", method = RequestMethod.GET)
+	@ResponseBody
 	public String phoneBook(Principal principal,  @RequestParam(required = false) String subCode, Model model) {
 		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
 		String profNo = user.getOfficialNo();
@@ -504,6 +514,143 @@ public class LectureController {
 	public String studentTT() {
 		logger.info("studentTT 화면");
 		return "lecture/studentTT";
+	}
+	
+	@RequestMapping(value = "/lecture/inputScoreByExcel", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<Map<String, Object>> inputScoreByExcel(MultipartHttpServletRequest request)throws Exception{
+		
+		MultipartFile excelFile  = request.getFile("excelFile");
+		logger.info("엑셀로 성적 일괄입력");
+		
+		if(excelFile == null || excelFile.isEmpty()) {
+			throw new RuntimeException("엑셀파일을 선택해주세요");
+		}
+		
+		File destFile = new File(excelFile.getOriginalFilename());
+		
+		try{
+			excelFile.transferTo(destFile);
+		}catch(IllegalStateException | IOException e){
+			throw new RuntimeException(e.getMessage(),e);
+		}
+		
+		
+		List<Map<String, Object>> list = excelUpload(destFile);
+		
+		boolean bool = destFile.delete();
+		
+		logger.info("file삭제 결과 bool={}", bool);
+		return list;
+		
+	}
+	
+	public List<Map<String, Object>> excelUpload(File destFile) throws Exception{
+		ExcelReadOption excelReadOption = new ExcelReadOption();
+		excelReadOption.setFilePath(destFile.getAbsolutePath());
+		excelReadOption.setOutputColumns("A","B","C","D","E","F","G","H","I","J");
+		excelReadOption.setStartRow(2);
+		
+		
+		List<Map<String, Object>> excelContent = ExcelRead.read(excelReadOption);
+		
+		/**
+		 * 원래는 vo로 받아서 처리하려고 했으나 도저히 안되서 그대로 list에 map을 담아서 처리했습니다.
+		 * 추후 excel로 한번에 입력할때 참고하세여
+		 * 
+		 */
+		
+		
+		/*
+		List<EvaluationAllVO> list = new ArrayList<EvaluationAllVO>();
+		EvaluationAllVO vo = new EvaluationAllVO();
+		for(Map<String, Object> map : excelContent) {
+			if(map.get("A")!=null) {
+				logger.info("A={}, B={}", map.get("A"), map.get("B"));
+				logger.info("C={}, D={}", map.get("C"), map.get("D"));
+				logger.info("E={}, F={}", map.get("E"), map.get("F"));
+				logger.info("G={}, H={}", map.get("G"), map.get("H"));
+				logger.info("I={}, J={}", map.get("I"), map.get("J"));
+				vo.setSubCode((String)map.get("A"));
+				vo.setStuNo((String)map.get("B"));
+				vo.setName((String)map.get("C"));
+				vo.setClassification((String)map.get("D"));
+				if(map.get("E")==null) {
+					vo.setMidterm(0);
+				}else {
+					vo.setMidterm(Integer.valueOf((String)map.get("E")));
+				}
+				if(map.get("F")==null) {
+					vo.setFinals(0);
+				}else {
+					vo.setFinals(Integer.valueOf((String)map.get("F")));
+				}
+				if(map.get("G")==null) {
+					vo.setAssignment(0);
+				}else {
+					vo.setAssignment(Integer.valueOf((String)map.get("G")));
+				}
+				if(map.get("H")==null) {
+					vo.setAttendance(0);
+				}else {
+					vo.setAttendance(Integer.valueOf((String)map.get("H")));
+				}
+				if(map.get("I")==null) {
+					vo.setEtc(0);
+				}else {
+					vo.setEtc(Integer.valueOf((String)map.get("I")));
+				}
+				if(map.get("J")==null) {
+					vo.setTotalGrade(0);
+				}else {
+					vo.setTotalGrade(Integer.valueOf((String)map.get("J")));
+				}
+			
+				list.add(vo);
+			
+		}
+		
+		logger.info("list.size()={}", list.size());}*/
+		
+		
+		return excelContent;
+	}
+	
+	@RequestMapping(value = "/lecture/updateAllScore", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String updateAllScore(@RequestParam(value = "tdArr[]") List<String> arrList, Model model) {
+		logger.info("list.size()={}", arrList.size());
+		List<EvaluationVO> list = new ArrayList<EvaluationVO>();
+		String result = "성적입력 실패";
+		for(int i = 0; i < arrList.size(); i++) {
+			
+			EvaluationVO vo = new EvaluationVO();
+			logger.info("\narrList.get({})={}",i,arrList.get(i));
+			String[] arr= arrList.get(i).split(",");
+			
+			vo.setSubCode(arr[0]);
+			vo.setStuNo(arr[1]);
+			vo.setClassification(arr[2]);
+			vo.setMidterm(Integer.parseInt(arr[3]));
+			vo.setFinals(Integer.parseInt(arr[4]));
+			vo.setAssignment(Integer.parseInt(arr[5]));
+			vo.setAttendance(Integer.parseInt(arr[6]));
+			vo.setEtc(Integer.parseInt(arr[7]));
+			vo.setTotalGrade(Integer.parseInt(arr[8]));
+			
+			list.add(vo);
+			
+		}
+		
+		int cnt = evaluationServ.updateAllScore(list);
+		
+		if(cnt > 0) {
+			result="성적입력 성공";
+		}
+		
+		
+		return result;
+		
 	}
 	
 }

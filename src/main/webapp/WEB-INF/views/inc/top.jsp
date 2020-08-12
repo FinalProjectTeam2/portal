@@ -228,12 +228,23 @@
 		var sock12 = null;
 
 		$(function() {
-			$('.toast').toast({
+			$('#myToast').toast({
 				'autohide' : false
 			});
-			$(".toast-body").click(function() {
-				location.href = "<c:url value='/message/messageBox'/>";
+			$('#myToast').hide();
+			
+			$('#myToast').on('hidden.bs.toast', function () {
+				$(".toast-body").off('click');
+				$(".toast-body").css('cursor', 'default');
 			});
+			
+			$('#myToast').on('shown.bs.toast', function () {
+				$(".toast-body").on('click', function() {
+					location.href = "<c:url value='/message/messageBox'/>";
+				});
+				$(".toast-body").css('cursor', 'pointer');
+			});
+			
 			$(window).bind('beforeunload', function() {
 				disconnect12();
 				return;
@@ -243,9 +254,10 @@
 			sock12.onmessage = onMessage12;
 			sock12.onclose = onClose12;
 			sock12.onopen = onOpen12;
-
-			$("#bookmarkUrl").val($(location).attr('pathname')
-					+ $(location).attr('search'));
+			$("#bookmark").click(function() {
+				$("#bookmarkUrl").val($(location).attr('pathname')
+						+ $(location).attr('search'));
+			});
 
 			$("#saveBookmark").submit(function() {
 				$.ajax({
@@ -258,6 +270,12 @@
 					success : function() {
 						alert("저장완료!");
 						$('#exampleModal').modal('toggle');
+						if( typeof(getList) == 'function' ) {
+							getList();
+						}
+						if( typeof(sideBookmark) == 'function' ) {
+							sideBookmark();
+						}
 					}
 				});
 				return false;
@@ -270,29 +288,34 @@
 		});
 		function disconnect12() {
 			sock12.close();
-		}
+		};
 		function send12(officialNo) {
 			sock12.send(JSON.stringify({
 				writeNote : "조회",
 				officialNo : officialNo
 			}));
 
-		}
+		};
 		function onOpen12() {
 
-		}
+		};
 		function onClose12() {
 			disconnect12();
-		}
+		};
 
 		/* evt 는 websocket이 보내준 데이터 */
 		function onMessage12(evt) {
 			var data = evt.data;
 			$("#messageCount").html(data);
 			if (data != '0') {
-				$('.toast').toast('show');
+				$('#myToast').toast('show');
+				$('#myToast').show();
+			}else{
+				$('#myToast').toast('hide');
+				$('#myToast').hide();
 			}
-		}
+		};
+		
 	</script>
 </sec:authorize>
 <meta name="theme-color" content="#563d7c">
@@ -311,18 +334,50 @@
 								<form id="saveBookmark" action="" method="post" name="saveBookmark">
 								<div class="modal-body">
 										<div class="form-group">
-											<label for="recipient-name" class="col-form-label">URL:</label>
-											<input type="text" class="form-control" id="bookmarkUrl" value="">
+											<label for="bookmarkUrl" class="col-form-label">URL:</label>
+											<input type="text" class="form-control" placeholder="URL" id="bookmarkUrl" value="" required>
 										</div>
 										<div class="form-group">
-											<label for="message-text" class="col-form-label">Name:</label>
-											<input type="text" class="form-control" id="bookmarkName">
+											<label for="bookmarkName" class="col-form-label">Name:</label>
+											<input type="text" class="form-control" placeholder="Name" id="bookmarkName" required>
 										</div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
 										data-dismiss="modal">닫기</button>
 									<button type="submit" class="btn btn-primary">북마크 저장</button>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="editModal" tabindex="-1"
+						aria-labelledby="editModalLabel" aria-hidden="flase">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="editModalLabel">북마크 수정</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<form id="editBookmark" action="" method="post" name="editBookmark">
+								<input type="hidden" name="no" id="editBookmarkNo">
+								<div class="modal-body">
+										<div class="form-group">
+											<label for="editUrl" class="col-form-label">URL:</label>
+											<input type="text" class="form-control" placeholder="URL" id="editUrl" value="" required>
+										</div>
+										<div class="form-group">
+											<label for="editName" class="col-form-label">Name:</label>
+											<input type="text" class="form-control" placeholder="Name" id="editName" required>
+										</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">닫기</button>
+									<button type="submit" class="btn btn-primary">북마크 수정</button>
 								</div>
 								</form>
 							</div>
@@ -441,7 +496,7 @@
 					style="color: black; font-size: 0.8em; margin: 15px 25px; width: 100%; text-align: right;"></span>
 			</nav>
 			<sec:authorize access="isAuthenticated()">
-				<div class="toast" role="alert" aria-live="assertive"
+				<div class="toast" role="alert" aria-live="assertive" id="myToast"
 					aria-atomic="true">
 					<div class="toast-header">
 						<img src="<c:url value='/resources/images/logoIcon.ico'/>"
@@ -452,7 +507,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="toast-body" style="cursor: pointer;">쪽지가 도착했습니다.
+					<div class="toast-body">쪽지가 도착했습니다.
 					</div>
 				</div>
 

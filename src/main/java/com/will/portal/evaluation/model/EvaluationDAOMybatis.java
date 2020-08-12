@@ -24,6 +24,10 @@ public class EvaluationDAOMybatis implements EvaluationDAO{
 	public int inputScore(EvaluationVO vo) {
 		return sqlSession.update(namespace+"inputScore", vo);
 	}
+	@Override
+	public int updateAllScore(EvaluationVO vo) {
+		return sqlSession.update(namespace+"updateAllScore", vo);
+	}
 	
 	
 	

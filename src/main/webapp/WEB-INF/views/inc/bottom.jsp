@@ -124,8 +124,7 @@ a.bottom {
 			</div>
 			<div class="foot_address">
 				<span id="address1"></span><span id="address2"></span><span id="zipcode"></span> 
-				<a href="<c:url value='/board_disclosure/privacy1'/>"
-					target="_blank" id="policy">개인정보처리방침</a>
+				<a href="<c:url value='/board_disclosure/privacy1'/>" id="policy">개인정보처리방침</a>
 			</div>
 			<div class="foot_copyright">Copyright(c) <span id="companyName"></span> <span id="startYear"></span> All rights reserved.</div>
 		</div>
