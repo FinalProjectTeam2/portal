@@ -78,20 +78,37 @@ $(function() {
 			return false;
 		}
 		var formData = $("#boardFrm").serialize();
-		$.ajax({
-			url : "<c:url value='/admin/board/insertCate'/>",
-			data : formData,
-			type : "get",
-			success : function(res) {
-				if(res == 'Y'){
-					alert("등록 성공!");
-					self.close();
-					opener.location.reload();
-				}else{
-					alert("등록 실패!");
+		if('${type}' == 'in'){
+			$.ajax({
+				url : "<c:url value='/admin/board/insertCate'/>",
+				data : formData,
+				type : "get",
+				success : function(res) {
+					if(res == 'Y'){
+						alert("등록 성공!");
+						self.close();
+						opener.location.reload();
+					}else{
+						alert("등록 실패!");
+					}
 				}
-			}
-		});
+			});
+		}else{
+			$.ajax({
+				url : "<c:url value='/admin/board/editCate'/>",
+				data : formData,
+				type : "get",
+				success : function(res) {
+					if(res == 'Y'){
+						alert("수정 성공!");
+						self.close();
+						opener.location.reload();
+					}else{
+						alert("수정 실패!");
+					}
+				}
+			});
+		}
 		return false;
 	});
 	
@@ -118,7 +135,7 @@ $(function() {
 				if(res == 'Y'){
 					alert("사용 가능한 코드입니다.");
 					$("#isDup").val('Y');
-					$("#title").attr("disabled","disabled");
+					$("#title").attr("readonly","readonly");
 					$("#chDup").attr("disabled","disabled");
 				}else{
 					alert("이미 사용 중인 코드입니다.");
@@ -126,6 +143,14 @@ $(function() {
 			}
 		});
 	});
+	
+	if('${type}' == 'edit'){
+		$("#title").attr("readonly","readonly").val('${vo.categoryCode}');
+		$("#chDup").attr("disabled","disabled");
+		$("#categoryName").val('${vo.categoryName}');
+		$("#isDup").val('Y');
+		$("#usage").val('${vo.usage}');
+	}
 });
 
 </script>
@@ -155,11 +180,29 @@ $(function() {
 			</div>
 			<div class="row1">
 				<div class="">
-					<input type="text" name="categoryName" required="required">
+					<input type="text" id="categoryName" name="categoryName" required="required">
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-25">
+					<label for="l_category"  class="formTitle">사용 여부</label>
+				</div>
+				<div class="col-75">
+					<select id="usage" name="usage">
+						<option value="Y">YES</option>
+						<option value="N">NO</option>
+					</select>
 				</div>
 			</div>
 			<div class="bts">
-				<button type="submit" class="btn btn-primary" id="write">등록</button>
+				<button type="submit" class="btn btn-primary" id="write">
+					<c:if test="${type == 'in' }">
+					등록
+					</c:if>
+					<c:if test="${type == 'edit' }">
+					수정
+					</c:if>
+				</button>
 				<button type="button" class="btn btn-primary" id="list">닫기</button>
 			</div>
 		</form>

@@ -42,7 +42,14 @@
 <script>
 	$(function() {
 		getList();
-		
+		$("#boardIn").click(function() {
+			var code =$("#cateSelect").val();
+			if(code.length == 0){
+				alert('카테고리를 선택해 주세요');
+				return false;
+			}
+			location.href = "<c:url value='/admin/board/boardEdit?type=in&cateCode='/>"+code;
+		});
 		$("#boardDel").click(function() {
 			var confirm_val = confirm("정말 삭제하시겠습니까?");
 			  
@@ -57,25 +64,53 @@
 					alert('체크하셔야 합니다.');
 					return false;
 				}
-				/* $.ajax({
-					url : "<c:url value='/bookmark/delete'/>",
-					data : { chbox : checkArr },
+				$.ajax({
+					url : "<c:url value='/admin/board/boardDelete'/>",
+					data : { 
+						chbox : checkArr,
+						cateCode : $("#cateSelect").val()
+					},
 					type : "get",
 					success : function(res) {
-						if( typeof(getList) == 'function' ) {
-							getList();
-						}
-						if( typeof(sideBookmark) == 'function' ) {
-							sideBookmark();
-						}
-						
+						alert("삭제되었습니다.");
+						getBoardList(res);
 					}
-				}); */
+				});
 			}
 		});
 		
 		$("#cateIn").click(function() {
-			var win = window.open("<c:url value='/admin/board/cateIn'/>", "_blank",
+			var win = window.open("<c:url value='/admin/board/cateIn?type=in'/>", "_blank",
+			"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=560,height=390");
+			return false;
+		});
+		$("#cateDel").click(function() {
+			var code =$("#cateSelect").val();
+			if(code.length == 0){
+				alert('카테고리를 선택해 주세요');
+				return false;
+			}
+			var confirm_val = confirm("이하 게시판도 함께 삭제됩니다. 정말 삭제하시겠습니까?");
+			if(confirm_val) {
+				$.ajax({
+					url : "<c:url value='/admin/board/cateDelete'/>",
+					data : { code : code },
+					type : "get",
+					success : function(res) {
+						alert("삭제되었습니다.");
+						location.reload();	
+					}
+				});
+			}
+			return false;
+		});
+		$("#cateEdit").click(function() {
+			var code =$("#cateSelect").val();
+			if(code.length == 0){
+				alert('카테고리를 선택해 주세요');
+				return false;
+			}
+			var win = window.open("<c:url value='/admin/board/cateIn?type=edit&code='/>"+code, "_blank",
 			"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=560,height=390");
 			return false;
 		});
@@ -92,7 +127,7 @@
 						+ '<label class="input-group-text" for="cateSelect">카테고리</label>'
 						+ '</div>'
 						+ '<select class="custom-select" id="cateSelect">'
-						+'<option selected>Choose...</option>';
+						+'<option value="" selected>Choose...</option>';
 						
 				$.each(res, function(idx, item) {
 					data += '<option value="'+item.categoryVo.categoryCode+'">'
@@ -162,8 +197,9 @@
 				
 				$("#boardTable tbody .listData").click(function() {
 					var bdCode = $(this).find("input").val();
-					location.href = "<c:url value='/admin/board/boardEdit?bdCode='/>" + bdCode;
+					location.href = "<c:url value='/admin/board/boardEdit?type=edit&bdCode='/>" + bdCode;
 				});
+				
 			}
 		});
 	}

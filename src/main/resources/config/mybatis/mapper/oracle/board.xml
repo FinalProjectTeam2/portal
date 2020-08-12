@@ -44,9 +44,48 @@
 	<select id="countByCateCode" parameterType="String" resultType="int">
 		select count(*) from category where category_code = #{code}
 	</select>
+	<select id="countByBdCode" parameterType="String" resultType="int">
+		select count(*) from board where bd_code = #{code}
+	</select>
 	
 	<insert id="insertCate" parameterType="categoryVo">
-		insert into category(category_code, category_name)
-		values(#{categoryCode},#{categoryName})
+		insert into category(category_code, category_name, usage)
+		values(#{categoryCode},#{categoryName},#{usage})
 	</insert>
+	
+	<select id="selectCateByCode" parameterType="String" resultType="categoryVo">
+		select * from category where category_code = #{code}
+	</select>
+	
+	<update id="updateCate" parameterType="categoryVo">
+		update category
+		set category_name = #{categoryName}
+		where category_code = #{categoryCode}
+	</update>
+	
+	<delete id="deleteCate" parameterType="String">
+		delete from category
+		where category_code = #{categoryCode}
+	</delete>
+	
+	<insert id="insertBoard" parameterType="boardVo">
+		insert into board(BD_CODE,OFFICIAL_NO,BD_NAME,BD_ORDER,IS_REPLY,IS_COMMENT,IS_PRIVATE
+		    ,IS_UPLOAD,MAX_UPFILE,MAX_FILESIZE,CATEGORY_CODE,AUTH_CODE)
+		values(#{bdCode},#{officialNo},#{bdName},#{bdOrder},#{isReply},#{isComment},#{isPrivate}
+			,#{isUpload},#{maxUpfile},#{maxFilesize},#{categoryCode},#{authCode})
+	</insert>
+	
+	<update id="updateBoard" parameterType="boardVo">
+		update board
+		set BD_NAME = #{bdName},BD_ORDER = #{bdOrder},IS_REPLY = #{isReply},IS_COMMENT = #{isComment}
+			,IS_PRIVATE = #{isPrivate},IS_UPLOAD = #{isUpload},MAX_UPFILE = #{maxUpfile}
+			,MAX_FILESIZE = #{maxFilesize},CATEGORY_CODE = #{categoryCode},AUTH_CODE = #{authCode}
+			,edit_date = sysdate
+		where bd_code = #{bdCode}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="String">
+		delete from board
+		where bd_code = #{bdCode}
+	</delete>
 </mapper>
