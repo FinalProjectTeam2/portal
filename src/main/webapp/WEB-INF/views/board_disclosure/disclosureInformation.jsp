@@ -38,7 +38,7 @@
 
 .divBox3 {
 	margin-left: 20%;
-	margin-top: 10%;
+	margin-top: 8%;
 }
 
 .divBox2 ul li{   
@@ -99,15 +99,30 @@
 <script type="text/javascript">
 	$(function() {
 		$('.divBox4').show();
+		$('#menu1').click(function(){
+			$('.divBox4').show();
+			$('.divBox5').hide();
+			$('.divBox6').hide();
+		});
 	});
 
 	
 	$(function() {
 		$('.divBox5').hide();
+		$('#menu2').click(function(){
+			$('.divBox5').show();
+			$('.divBox4').hide();
+			$('.divBox6').hide();
+		});
 	});
 
 	$(function() {
 		$('.divBox6').hide();
+		$('#menu3').click(function(){
+			$('.divBox6').show();
+			$('.divBox4').hide();
+			$('.divBox5').hide();
+		});
 	});
 </script>
 <div class="disclosureInformation">
@@ -119,7 +134,7 @@
 			<span style="font-size: 22px"><strong>척척학사</strong></span>
 			<span>
 				<a href="<c:url value='../index'/>"><input type="button" value="메인으로"></a>
-				<a href="<c:url value='../index'/>"><input type="button" value="지도보기"></a>
+				<a href="<c:url value='../campusMap'/>"><input type="button" value="지도보기"></a>
 			</span><br>
 			<span>주소 : 서울특별시 강남구 테헤란로 124 4층 (역삼동, 삼원타워)</span><br>
 			<span>대표전화 : 02-6255-8002 | 대표팩스 : 02-569-8069</span><br>

@@ -32,6 +32,12 @@ a.bottom {
 	background-color: #ccc;
 	color: black;
 }
+
+ul li {
+	display:inline;
+	border-left:1px solid #999;
+	padding:0 10px; 
+}
 </style>
 <script>
 	$(function() {
@@ -95,7 +101,15 @@ a.bottom {
 			}, 500);
 			return false;
 		});
-	}); /*  $('html, body').scrollTop( $(document).height() ); */
+	}); /*  $('html, body').scrollTop( $(document).height() ); */	
+</script>
+
+<script type="text/javascript">
+$(function () {
+    $('.email').on('click',function(){
+        window.open("http://localhost:9090/portal/board_disclosure/privacy2","이메일무단수집거부","width=400, height=500");
+    })
+})
 </script>
 <div id="scrolling">
 	<a href="#" class="top"> <svg width="2em" height="2em"
@@ -125,6 +139,11 @@ a.bottom {
 			<div class="foot_address">
 				<span id="address1"></span><span id="address2"></span><span id="zipcode"></span> 
 				<a href="<c:url value='/board_disclosure/privacy1'/>" id="policy">개인정보처리방침</a>
+			
+				<ul>
+					<li><a href="#" class="email">이메일무단수집거부</a></li>
+					<li><a href="<c:url value='/board_disclosure/disclosureInformation' />">척척학사공시정보</a></li>
+				</ul>
 			</div>
 			<div class="foot_copyright">Copyright(c) <span id="companyName"></span> <span id="startYear"></span> All rights reserved.</div>
 		</div>
