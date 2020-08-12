@@ -41,7 +41,8 @@ th, td {
 	text-align: center;
 	font-weight: bold;
 	font-size: 16px;
-	color: blue;	
+	color: blue;
+	line-height: 26px;	
 }
 </style>
 
