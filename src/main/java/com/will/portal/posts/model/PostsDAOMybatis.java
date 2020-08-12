@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.portal.board.model.BoardMainVO;
 import com.will.portal.board.model.BoardSearchVO;
 
 @Repository
@@ -73,5 +74,15 @@ public class PostsDAOMybatis implements PostsDAO {
 	@Override
 	public PostsVO selectPostByPostNo(int postNo) {
 		return sqlSession.selectOne(namespace+"selectPostByPostNo", postNo);
+	}
+
+	@Override
+	public List<PostsVO> selectByBdcode(String bdCode) {
+		return sqlSession.selectList(namespace + "selectByBdcode",bdCode);
+	}
+
+	@Override
+	public List<BoardMainVO> selectBdcodeBycategory(String categoryCode) {
+		return sqlSession.selectList(namespace+"selectBdcodeBycategory",categoryCode);
 	}
 }

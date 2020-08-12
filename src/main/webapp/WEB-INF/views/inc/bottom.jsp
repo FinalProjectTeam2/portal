@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<sec:authentication var="principal" property="principal" />
 <!-- main 끝 -->
 <style type="text/css">
 a.top {
@@ -17,7 +21,42 @@ a.bottom {
 #scrolling a svg {
 	color: #28a745;
 }
+
+
+#footerEdit{
+	background-color: #01539d;
+	color: white;
+}
+
+#footerEdit:hover{
+	background-color: #ccc;
+	color: black;
+}
 </style>
+<script>
+	$(function() {
+		$('#footerEdit').click(function () {
+			window.open("/portal/admin/bottomEdit","footer","width=500,height=500, left=0,location=yes,resizable=yes");
+		});
+		
+		$.ajax({
+			url:"<c:url value='/admin/ajax/foot' />",
+			dataType:"json",
+			type : "get",
+			success:function(res){
+				$('#companyName').html(res.companyName);
+				$('#tel').html('통합콜센터 : '+res.tel);
+				$('#zipcode').html(res.zipcode);
+				$('#address1').html(res.address1);
+				$('#address2').html(res.address2);
+				$('#startYear').html(res.startYear);
+			}
+		});
+		
+	});
+
+</script>
+
 
 <script type="text/javascript">
 	$(function() {
@@ -81,21 +120,20 @@ a.bottom {
 		<div class="foot_inner text-muted">
 			<div class="footer_menu"
 				style="overflow: hidden; margin: 5px 0 10px 0;">
-				<ul style="float: left;">
-					<li>원격지원 <a href=" http://ezh.kr/dku/" target="_blank"
-						title="원격지원 새 창으로 이동">(죽전</a> | <a href="http://ezh.kr/dku2/"
-						target="_blank" title="원격지원 새 창으로 이동">천안)</a>
-					</li>
-				</ul>
-				<h4 style="float: right;">통합콜센터 : 1899-3700</h4>
+				<h4 id="tel" style="float: right;">통합콜센터 : 1899-3700</h4>
 			</div>
 			<div class="foot_address">
-				죽전캠퍼스 경기도 용인시 수지구 죽전로 152 (우)16890 / 천안캠퍼스 충남 천안시 동남구 단대로 119
-				(우)31116 / <a href="<c:url value='/board_disclosure/privacy1'/>"
-					target="_blank">개인정보처리방침</a>
+				<span id="address1"></span><span id="address2"></span><span id="zipcode"></span> 
+				<a href="<c:url value='/board_disclosure/privacy1'/>" id="policy">개인정보처리방침</a>
 			</div>
-			<div class="foot_copyright">Copyright(c) 2015 BY DANKOOK
-				UNIVERSITY. All rights reserved.</div>
+			<div class="foot_copyright">Copyright(c) <span id="companyName"></span> <span id="startYear"></span> All rights reserved.</div>
+		</div>
+		<div style="text-align: right;">
+			<sec:authorize access="isAuthenticated()">
+			<c:if test="${principal.type == 'ADMIN' }">
+				<button type="button" id="footerEdit">수정</button>
+			</c:if>
+			</sec:authorize>
 		</div>
 	</div>
 </footer>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.will.portal.regi_timetable.model.Regi_timetableVO;
 import com.will.portal.common.ProfSearchVO;
+import com.will.portal.phoneBook.model.PhoneBookVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 
@@ -111,7 +112,13 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 		return sqlsession.delete(namespace + "deleteProfessor", profNo);
 	}
 
+	@Override
+	public List<PhoneBookVO> phoneBook(String subCode) {
+		return sqlsession.selectList(namespace+"phoneBook", subCode);
+	}
 
+
+	
 
 
 }

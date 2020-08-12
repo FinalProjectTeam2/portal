@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+
+#searchTel table {
+	width: 1450px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+#searchTel table td {
+	padding: 15px;
+	border-top: solid;
+	border-bottom: solid;
+	border-width: 1px;
+	border-color: #e5e5e5;
+	vertical-align: middle;
+}
+
+#searchTel th {
+	text-align: inherit;
+	padding: 10px 0 10px 0;
+	font-weight: bold;
+}
+
+main>.container {
+	padding: 6% 0%;
+	margin: auto;
+}
+
+.box2 thead {
+	background-color: #f2f5fc;
+	border-top: 1px solid #70bded;
+}
+
+#searchTel #btSearch {
+	width: 50px;
+	height: 31px;
+	font-size: 1em;
+	padding: 0;
+	margin: -6px 0 0 18px;
+	color: white;
+	background: #01539d;
+	border-radius: 5px;
+}
+#searchTel #btSearch:hover {
+	background: #0069d9;
+}
+
+#searchTel .pageA {
+	border-color: #e4e4e4 !important;
+	color: #333;
+	border-radius: 2px;
+	border: 1px solid;
+	display: inline-block;
+	height: 26px;
+	padding: 0 8px;
+	box-sizing: border-box;
+	text-align: center;
+	font-weight: bold;
+}
+
+#searchTel .divPage {
+	text-align: center;
+	padding: 10px 0;
+}

@@ -48,6 +48,9 @@
 <!-- ckeditor 사용하기 위함 -->
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 
+<!-- sockJs -->
+
+
 <style type="text/css">
 .logo {
 	height: 35px;
@@ -115,15 +118,24 @@
 	float: left;
 	margin-right: 10px;
 }
+
+.toast {
+	top: 60px;
+	position: fixed;
+	left: 1200px;
+	width: 260px;
+	text-align: center;
+}
+
+.toast-body {
+	background: #343a40;
+	color: white;
+}
+
+#bookmark {
+	margin-left: 20px;
+}
 </style>
-<sec:authorize access="isAuthenticated()">
-	<script type="text/javascript">
-		//$\{sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.(vo에해당하는 멤버변수명)}
-		/* if('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.type}' == 'STUDENT'){
-		 console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.officialNo}');
-		 } */
-	</script>
-</sec:authorize>
 <script type="text/javascript">
 	$
 			.ajaxSetup({
@@ -155,38 +167,20 @@
 			});
 	function clock() {
 		var date = new Date();
-
-		// date Object를 받아오고
 		var month = date.getMonth();
-
-		// 달을 받아옵니다
 		var clockDate = date.getDate();
-
-		// 몇일인지 받아옵니다
 		var day = date.getDay();
-
-		// 요일을 받아옵니다.
 		var week = [ '일', '월', '화', '수', '목', '금', '토' ];
-
-		// 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다.
 		var hours = date.getHours();
-
-		// 시간을 받아오고
 		var minutes = date.getMinutes();
-
-		// 분도 받아옵니다.
 		var seconds = date.getSeconds();
 
-		// 초까지 받아온후
 		var timer = (month + 1) + '월 ' + clockDate + '일 ' + week[day] + '요일 '
 				+ (hours < 10 ? '0' + hours : hours) + ':'
 				+ (minutes < 10 ? '0' + minutes : minutes) + ':'
 				+ (seconds < 10 ? '0' + seconds : seconds);
 
-		// 월은 0부터 1월이기때문에 +1일을 해주고
-
-		// 시간 분 초는 한자리수이면 시계가 어색해보일까봐 10보다 작으면 앞에0을 붙혀주는 작업을 3항연산으로 했습니다.
-		$("#timer").html(timer)
+		$("#timer").html(timer);
 	}
 	$(function() {
 		clock();
@@ -218,20 +212,183 @@
 		$("#btLogin").click(function() {
 			location.href = "<c:url value='/login' />";
 		});
-		
+
 		$("#goMessage").click(function() {
 			location.href = "<c:url value='/message/messageBox'/>";
 		});
 	});
 </script>
+<sec:authorize access="isAuthenticated()">
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script type="text/javascript">
+		if (sock12 != null) {
+			disconnect12();
+		}
+		var sock12 = null;
+
+		$(function() {
+			$('#myToast').toast({
+				'autohide' : false
+			});
+			$('#myToast').hide();
+			
+			$('#myToast').on('hidden.bs.toast', function () {
+				$(".toast-body").off('click');
+				$(".toast-body").css('cursor', 'default');
+			});
+			
+			$('#myToast').on('shown.bs.toast', function () {
+				$(".toast-body").on('click', function() {
+					location.href = "<c:url value='/message/messageBox'/>";
+				});
+				$(".toast-body").css('cursor', 'pointer');
+			});
+			
+			$(window).bind('beforeunload', function() {
+				disconnect12();
+				return;
+			});
+
+			sock12 = new SockJS("<c:url value='/messageSock'/>");
+			sock12.onmessage = onMessage12;
+			sock12.onclose = onClose12;
+			sock12.onopen = onOpen12;
+			$("#bookmark").click(function() {
+				$("#bookmarkUrl").val($(location).attr('pathname')
+						+ $(location).attr('search'));
+			});
+
+			$("#saveBookmark").submit(function() {
+				$.ajax({
+					url : "<c:url value='/bookmark/insert'/>",
+					data : {
+						url : $("#bookmarkUrl").val(),
+						name : $("#bookmarkName").val()
+					},
+					type : "post",
+					success : function() {
+						alert("저장완료!");
+						$('#exampleModal').modal('toggle');
+						if( typeof(getList) == 'function' ) {
+							getList();
+						}
+						if( typeof(sideBookmark) == 'function' ) {
+							sideBookmark();
+						}
+					}
+				});
+				return false;
+			});
+			/* $("#bookmark").click(
+					function() {
+						alert($(location).attr('pathname')
+								+ $(location).attr('search'));
+					}); */
+		});
+		function disconnect12() {
+			sock12.close();
+		};
+		function send12(officialNo) {
+			sock12.send(JSON.stringify({
+				writeNote : "조회",
+				officialNo : officialNo
+			}));
+
+		};
+		function onOpen12() {
+
+		};
+		function onClose12() {
+			disconnect12();
+		};
+
+		/* evt 는 websocket이 보내준 데이터 */
+		function onMessage12(evt) {
+			var data = evt.data;
+			$("#messageCount").html(data);
+			if (data != '0') {
+				$('#myToast').toast('show');
+				$('#myToast').show();
+			}else{
+				$('#myToast').toast('hide');
+				$('#myToast').hide();
+			}
+		};
+		
+	</script>
+</sec:authorize>
 <meta name="theme-color" content="#563d7c">
 </head>
+<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="flase">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">북마크 저장</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<form id="saveBookmark" action="" method="post" name="saveBookmark">
+								<div class="modal-body">
+										<div class="form-group">
+											<label for="bookmarkUrl" class="col-form-label">URL:</label>
+											<input type="text" class="form-control" placeholder="URL" id="bookmarkUrl" value="" required>
+										</div>
+										<div class="form-group">
+											<label for="bookmarkName" class="col-form-label">Name:</label>
+											<input type="text" class="form-control" placeholder="Name" id="bookmarkName" required>
+										</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">닫기</button>
+									<button type="submit" class="btn btn-primary">북마크 저장</button>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="editModal" tabindex="-1"
+						aria-labelledby="editModalLabel" aria-hidden="flase">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="editModalLabel">북마크 수정</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<form id="editBookmark" action="" method="post" name="editBookmark">
+								<input type="hidden" name="no" id="editBookmarkNo">
+								<div class="modal-body">
+										<div class="form-group">
+											<label for="editUrl" class="col-form-label">URL:</label>
+											<input type="text" class="form-control" placeholder="URL" id="editUrl" value="" required>
+										</div>
+										<div class="form-group">
+											<label for="editName" class="col-form-label">Name:</label>
+											<input type="text" class="form-control" placeholder="Name" id="editName" required>
+										</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">닫기</button>
+									<button type="submit" class="btn btn-primary">북마크 수정</button>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
 <body class="d-flex flex-column h-100">
 	<!-- top 시작 -->
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand" 
-			<sec:authorize access="isAuthenticated()">
+			<a class="navbar-brand"
+				<sec:authorize access="isAuthenticated()">
 			<c:if test="${principal.type == 'ADMIN' }">
 				href="<c:url value='/admin/adminMain'/>"
 			</c:if>
@@ -239,7 +396,7 @@
 				href="<c:url value='/index'/>"
 			</c:if>
 			</sec:authorize>
-			<sec:authorize access="isAnonymous()">
+				<sec:authorize access="isAnonymous()">
 					href="<c:url value='/index'/>"
 				</sec:authorize>
 				style="border-right: 1px solid white; padding: 0 20px 0 0;"> <img
@@ -250,12 +407,13 @@
 				style="max-width: 1400px;">
 
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active" style="color: white;">PORTAL  <span class="sr-only">(current)</span>
+					<li class="nav-item active" style="color: white;">PORTAL <span
+						class="sr-only">(current)</span>
 					</li>
 				</ul>
 				<sec:authorize access="isAuthenticated()">
-					<span style="color: white; margin-right: 10px;">
-						<sec:authentication property="principal.name" />님
+					<span style="color: white; margin-right: 10px;"> <sec:authentication
+							property="principal.name" />님
 					</span>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
@@ -269,12 +427,21 @@
 						<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
 							id="logoutBtn">로그아웃</button>
 					</form>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="button" data-toggle="modal"
+						id="bookmark" data-target="#exampleModal" data-whatever="@getbootstrap">
+						<svg width="1.2em" height="1.2em" viewBox="0 0 16 16"
+							class="bi bi-tags" fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg">
+						  <path fill-rule="evenodd"
+								d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z" />
+						  <path fill-rule="evenodd"
+								d="M5.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+						  <path
+								d="M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" />
+						</svg>
+					</button>
+
 				</sec:authorize>
-				<select class="custom-select"
-					style="margin: 0 0 0 15px; font-size: 0.7em; width: 100px;">
-					<option>한국어</option>
-					<option>영어</option>
-				</select>
 			</div>
 		</nav>
 		<div class="nav-scroller bg-white shadow-sm">
@@ -303,21 +470,48 @@
 					<li><a class="nav-link" href="#"> 강의 관리 </a>
 						<ul>
 							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
-							<li><a href="#">강의 개설 신청</a></li>
+							<li><a href="<c:url value='/lecture/createLecture'/>">강의 개설</a></li>
 							<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
-							
+							<li><a href="<c:url value='/lecture/phoneBook'/>">수강생 연락처</a></li>
+
+						</ul></li>
+					</c:if>
+					<c:if test="${principal.type=='ADMIN' }">
+					<li><a class="nav-link" href="#">관리자 메뉴 </a>
+						<ul>
+							<li><a href="<c:url value='/admin/member/adminRegisterMember'/>">회원등록</a></li>
+							<li><a href="<c:url value='/admin/member/adminManageStudent'/>">회원관리</a></li>
+							<li><a href="<c:url value='/admin/lecture/adminRegisterLecture'/>">강의등록</a></li>
+							<li><a href="<c:url value='/admin/lecture/adminManageLecture'/>">강의관리</a></li>
+							<li><a href="<c:url value='/admin/lecture/adminManageDepartment'/>">학부관리</a></li>
 						</ul></li>
 					</c:if>
 					</sec:authorize>
-
 					<li><a class="nav-link" href="#" id="goMessage"> 쪽지함 <span
-							class="badge badge-pill bg-light align-text-bottom">27</span>
+							id="messageCount"
+							class="badge badge-pill bg-light align-text-bottom"></span>
 					</a></li>
 				</ul>
 				<span id="timer"
-					style="color: black; font-size: 0.8em; margin: 15px 25px;
-					width: 100%; text-align: right;"></span>
+					style="color: black; font-size: 0.8em; margin: 15px 25px; width: 100%; text-align: right;"></span>
 			</nav>
+			<sec:authorize access="isAuthenticated()">
+				<div class="toast" role="alert" aria-live="assertive" id="myToast"
+					aria-atomic="true">
+					<div class="toast-header">
+						<img src="<c:url value='/resources/images/logoIcon.ico'/>"
+							style="width: 1em;" class="rounded mr-2" alt="로고"> <strong
+							class="mr-auto">척척학사</strong>
+						<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="toast-body">쪽지가 도착했습니다.
+					</div>
+				</div>
+
+			</sec:authorize>
 		</div>
 	</header>
 	<!-- top 끝 -->

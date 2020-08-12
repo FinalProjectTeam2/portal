@@ -9,6 +9,38 @@
 	<select id="selectDepartmentByFaculty" parameterType="int" resultType="departmentVO">
 		select * from department where faculty_no=#{facultyNo}
 	</select>
+	
+	<select id="selectDepartmentView" parameterType="SearchVO" resultType="map">
+		select *
+		from
+		(
+		select rownum as RNUM, A.*
+		from(
+		
+			select * from department_View 
+				where 
+				dep_name like '%' || #{searchKeyword} || '%' or
+				substr(tel,-4) like '%' || #{searchKeyword} || '%' or
+				faculty_name like '%' || #{searchKeyword} || '%' or
+				substr(building_tel,-4) like '%' || #{searchKeyword} || '%'
+			order by dep_no
+		
+			)A
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="selectTotalRecord" parameterType="SearchVO" resultType="int">
+			select count(*) from department_View 
+				where 
+				dep_name like '%' || #{searchKeyword} || '%' or
+				substr(tel,-4) like '%' || #{searchKeyword} || '%' or
+				faculty_name like '%' || #{searchKeyword} || '%' or
+				substr(building_tel,-4) like '%' || #{searchKeyword} || '%'
+			order by dep_no
+	</select>
 </mapper>
 
 

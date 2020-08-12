@@ -40,6 +40,6 @@ public class BuildingController {
 		model.addAttribute("mainList",mainList);
 		model.addAttribute("buildingName",buildingName);
 		
-		return "test/campusMap";
+		return "/campusMap";
 	}
 }

@@ -137,4 +137,9 @@ public class CommonController {
 
 
 	   }
+	   
+	   @RequestMapping("/chart")
+	   public void chart() {
+		logger.info("차트 테스트 페이지");
+	}
 }

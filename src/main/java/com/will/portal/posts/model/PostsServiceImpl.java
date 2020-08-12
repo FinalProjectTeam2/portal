@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.will.portal.board.model.BoardMainVO;
 import com.will.portal.board.model.BoardSearchVO;
 
 @Service
@@ -71,6 +72,16 @@ public class PostsServiceImpl implements PostsService{
 	@Override
 	public PostsVO selectPostByPostNo(int postNo) {
 		return postsDao.selectPostByPostNo(postNo);
+	}
+
+	@Override
+	public List<PostsVO> selectByBdcode(String bdCode) {
+		return postsDao.selectByBdcode(bdCode);
+	}
+
+	@Override
+	public List<BoardMainVO> selectBdcodeBycategory(String categoryCode) {
+		return postsDao.selectBdcodeBycategory(categoryCode);
 	}
 	
 	

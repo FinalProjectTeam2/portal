@@ -29,6 +29,35 @@
 			showList();	
 		});
 		
+		$('#btXls').click(function(){
+			$.ajax({
+				url:"<c:url value='/lecture/downloadScore'/>",
+				type:"post",
+				data:{
+					"subjCode":$('#subjCode option:selected').val(),
+					"subjName":$('#subjCode option:selected').text()
+				},
+				success:function(res){
+					alert(res+'로 저장 되었습니다.');
+				}
+				
+			});
+		});
+		
+		
+		
+		
+		$('.score').on("change keyup paste", function() {
+		    var currentVal = $(this).val();
+		    if(currentVal == oldVal) {
+		        return;
+		    }
+		 
+		    oldVal = currentVal;
+		    alert("changed!");
+		});
+		
+		
 		
 		
 		
@@ -38,9 +67,9 @@
 	function showList(){
 		$.ajax({
 			url:"<c:url value='/lecture/evaluation'/>",
-			type:"post",
 			data:{"subCode":$('#subjCode').val()},
 			dataType:"json",
+			type:"post",
 			success:function(res){
 				$('#listTitle').text($("#subjCode option:selected").text()+" 수강생 목록");
 				var table = "<table border='1'>"+
@@ -77,12 +106,12 @@
 									"<td>"+ item.stuNo +"</td>"+
 									"<td>"+ item.name +"</td>"+
 									"<td>"+ item.classification +"</td>"+
-									"<td><input type='text' size='3' value='"+ item.midterm +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.finals +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.assignment +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.attendance +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.etc +"'></td>"+
-									"<td><input type='text' size='3' value='"+ item.totalGrade +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.midterm +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.finals +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.assignment +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.attendance +"'></td>"+
+									"<td class='score'><input type='text' size='3' value='"+ item.etc +"'></td>"+
+									"<td class='total'><input type='text' size='3' value='"+ item.totalGrade +"'></td>"+
 									"<td><button type='button' class='btn btn-primary btOk'>입력</button></td>"+
 								"</tr>";
 					});
@@ -102,16 +131,36 @@
 						var stuNo=td.eq(1).text();
 						var name=td.eq(2).text();
 						var classification=td.eq(3).text();
-						var midTerm=td.eq(4).children().val();
+						var midterm=td.eq(4).children().val();
 						var finals=td.eq(5).children().val();
 						var assignment=td.eq(6).children().val();
 						var attendance=td.eq(7).children().val();
 						var etc=td.eq(8).children().val();
 						var totalGrade=td.eq(9).children().val();
 						
-						alert('subCode='+subCode+', stuNo='+stuNo+', name='+name+', classification'+classification+', midTerm='+midTerm
-								+', finals='+finals+', assignment='+assignment+', attendance='+attendance+', etc='+etc+', totalGrade='+totalGrade);
+						$.ajax({
+							url:"<c:url value='/lecture/inputScore'/>",
+							data:{
+								"subCode":subCode,
+								"stuNo":stuNo,
+								"midterm":midterm,
+								"finals":finals,
+								"assignment":assignment,
+								"attendance":attendance,
+								"etc":etc
+							},
+							type:"post",
+							success:function(res){
+								alert(res);
+								showList();
+							}
+							
+						});
+						
 					});
+					
+					
+					
 					
 			}, 
 			error:function(xhr, status, error){
@@ -119,13 +168,16 @@
 			}
 		});
 		
+		
+		
+		
 	
 }
 
 </script>
 <main role="main" class="flex-shrink-0">
 <div class="container">
-	<h2>과목을 선택하세요</h2>
+	<div><h2>과목을 선택하세요</h2><input type="button" id="btXls" value="excel로 다운받기" style="float: right; margin-right: 100px;"></div>
 	<select class="form-control" id="subjCode" style="width: 72%;">
 		<c:if test="${!empty sList }">
 			<c:forEach var="map" items="${sList }">

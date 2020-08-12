@@ -11,9 +11,9 @@
 		    from(
 		        select p.post_no, official_no, title, reg_date, group_No, sort_no, step,
 			    read_count, contents, del_flag, bd_code,
-			    (sysdate-reg_date)*24 as newImgTerm,
-			    (select count(*) from files f where f.post_no = p.post_no) file_count,
-			    (
+			   	 (sysdate-reg_date)*24 as newImgTerm,
+			   	 (select count(*) from files f where f.post_no = p.post_no) file_count,
+			   	 (
 				    select count(*)+ sum(rere_count) re_count 
 				    from (
 				    	select r.*, (select count(*) from rereply rr where rr.reply_no = r.reply_No
@@ -21,7 +21,7 @@
 				   		 from reply r
 				   	)B
                     where B.post_no = p.post_no
-			    ) re_count 
+			   	 ) re_count 
 			    from posts p where bd_code=#{bdCode}
 			    <if test="searchKeyword!=null and searchKeyword !=''">
 		        	and ${searchCondition} like '%' 
@@ -167,5 +167,28 @@
 		set title = #{title}, contents = #{contents}, edit_date = sysdate
 		where post_no = #{postNo}
 	</update>
+	
+	<select id="selectByBdcode" parameterType="String" resultType="postsVO">
+		select A.* from
+			(select rownum, p.* from posts p where bd_code = #{bdCode} order by post_no desc)A
+		<![CDATA[ where rownum <= 6]]>	
+	</select>
+	
+	<resultMap type="boardMainVO" id="selectByBdcodeResultMap">
+		<association property="bdCode" javaType="string" column="bd_code">
+			<result column="bd_code" jdbcType="VARCHAR" property="bdCode" />
+		</association>
+		<association property="bdName" javaType="string" column="bd_code">
+			<result column="bd_name" jdbcType="VARCHAR" property="bdName" />
+		</association>
+		<collection property="postsList" column="bd_code"
+			javaType="ArrayList" ofType="PostsVO" select="selectByBdcode">
+		</collection>
+	</resultMap>
+	
+	<select id="selectBdcodeBycategory" resultMap="selectByBdcodeResultMap" parameterType="String">
+		select bd_code, bd_name from board where category_code = #{categoryCode}
+	</select>
+	
 </mapper>
 

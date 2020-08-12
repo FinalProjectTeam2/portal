@@ -1,5 +1,7 @@
 package com.will.portal.official_info.model;
 
+import java.util.List;
+
 import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.student.model.StudentVO;
 import com.will.portal.test.model.ForPwdVO;
@@ -19,4 +21,6 @@ public interface Official_infoService {
 	int updateIdentStateP(String profNo);
 	int updateOfficialInfo(Official_infoVO offiVo);
 	int updateChangeDate(String profNo);
+	public int deleteOfficial(String officialNo);
+	public int deleteMulti(List<Official_infoVO> offiList);
 }

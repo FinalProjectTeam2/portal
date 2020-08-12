@@ -22,6 +22,7 @@
 		<intercept-url pattern="/login/**" access="permitAll" />
 		<intercept-url pattern="/index" access="permitAll" />
 		<intercept-url pattern="/**/ajax/**" access="permitAll" />
+		<intercept-url pattern="/board_disclosure/privacy1" access="permitAll" />
 
 		<intercept-url pattern="/resources/**"
 			access="permitAll" />

@@ -75,12 +75,12 @@
 	font-weight: bold;
 	
 }
-#editBt:hover{
+#editBt:hover, #back:hover{
 	font-weight: bold;
 	
 }
 
-#editBt{
+#editBt, #back{
 	background-color: #01539d;
 	color: white;
 	height: 40px;;

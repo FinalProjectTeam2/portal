@@ -525,81 +525,106 @@ public class AdminMemberController {
 		
 	}
 
-	@RequestMapping(value = "/multiDelete")
-	public String multiDeleteStudent(@ModelAttribute StudentListVO studentList, Model model) {
-		List<StudentVO> list = studentList.getStuList();
-		int cnt = studentService.deleteMulti(list);
+   @RequestMapping(value = "/multiDelete")
+   public String multiDeleteStudent(@ModelAttribute StudentListVO studentList, Model model,
+         HttpServletRequest request) {
+      List<StudentVO> list = studentList.getStuList();
+      boolean bool = false;
+      for (StudentVO studentVO : list) {
+         Official_infoVO offiVo = offiService.selectByNo(studentVO.getOfficialNo());
+         if(!offiVo.getImageUrl().equals("default.jpg")) {
+            bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
+         }
+      }
+      
+      logger.info("파일 다중 삭제여부 = {}", bool);
+      int cnt = studentService.deleteMulti(list);
 
-		String msg = "학생 삭제 실패", url = "/admin/member/adminManageStudent";
-		if (cnt > 0) {
-			msg = "학생 삭제 성공";
-		}
+      String msg = "학생 삭제 실패", url = "/admin/member/adminManageStudent";
+      if (cnt > 0) {
+         msg = "학생 삭제 성공";
+      }
 
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		return "common/message";
-	}
+      model.addAttribute("msg", msg);
+      model.addAttribute("url", url);
+      return "common/message";
+   }
+   
+   @RequestMapping(value = "/multiDeleteProfessor")
+   public String multiDeleteProfessor(@ModelAttribute ProfessorListVO profList, Model model,
+         HttpServletRequest request) {
+      List<ProfessorVO> list = profList.getProfList();
+      boolean bool = false;
+      for (ProfessorVO profVo : list) {
+         Official_infoVO offiVo = offiService.selectByNo(profVo.getOfficialNo());
+         if(!offiVo.getImageUrl().equals("default.jpg")) {
+            bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
+         }
+      }
+      logger.info("파일 다중 삭제여부 = {}", bool);
+      
+      
+      int cnt = professorService.multiDelete(list);
+      
+      String msg = "교수 삭제 실패", url = "/admin/member/adminManageProfessor";
+      if (cnt > 0) {
+         msg = "교수 삭제 성공";
+      }
+      
+      model.addAttribute("msg", msg);
+      model.addAttribute("url", url);
+      return "common/message";
+   }
+   
+   @RequestMapping("/deleteStudent")
+   public String deleteStudent(String stuNo, Model model, HttpServletRequest request) {
+      Official_infoVO offiVo = offiService.selectByNo(stuNo);
+      boolean bool = false;
+      if(!offiVo.getImageUrl().equals("default.jpg")) {
+         bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
+      }
+      
+      logger.info("파일삭제여부 bool={}",bool);
+      
+      int cnt = studentService.deleteStudent(stuNo);
+      cnt = offiService.deleteOfficial(stuNo);
+      cnt = bankService.deleteAccountInfo(stuNo);
+      
+      String msg = "삭제 실패", url = "/admin/member/adminManageStudent";
+      if (cnt > 0) {
+         msg = "삭제 성공";
+      }
+      model.addAttribute("msg", msg);
+      model.addAttribute("url", url);
+      return "common/message";
+   }
+   
+   @RequestMapping("/deleteProfessor")
+   public String deleteProfessor(String profNo, Model model, HttpServletRequest request) {
+      Official_infoVO offiVo = offiService.selectByNo(profNo);
+      boolean bool = false;
+      if(!offiVo.getImageUrl().equals("default.jpg")) {
+         bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
+      }
 
-	@RequestMapping(value = "/multiDeleteProfessor")
-	public String multiDeleteProfessor(@ModelAttribute ProfessorListVO profList, Model model) {
-		List<ProfessorVO> list = profList.getProfList();
-		int cnt = professorService.multiDelete(list);
+      int cnt = professorService.deleteProfessor(profNo);
+      cnt = offiService.deleteOfficial(profNo);
+      cnt = bankService.deleteAccountInfo(profNo);
+      String msg = "삭제 실패", url = "/admin/member/adminManageProfessor";
+      if (cnt > 0) {
+         msg
+       = "삭제 성공";
+      }
 
-		String msg = "교수 삭제 실패", url = "/admin/member/adminManageProfessor";
-		if (cnt > 0) {
-			msg = "교수 삭제 성공";
-		}
-
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		return "common/message";
-	}
-	@RequestMapping(value = "/multiDeleteEmployee")
-	public String multiDeleteEmployee(@ModelAttribute EmployeeListVO empList, Model model) {
-		List<EmployeeVO> list = empList.getEmpList();
-		int cnt = employeeService.multiDelete(list);
-		
-		String msg = "직원 삭제 실패", url = "/admin/member/adminManageEmployee";
-		if (cnt > 0) {
-			msg = "직원 삭제 성공";
-		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		return "common/message";
-	}
-
-	@RequestMapping("/deleteStudent")
-	public String deleteStudent(String stuNo, Model model) {
-		int cnt = studentService.deleteStudent(stuNo);
-
-		String msg = "삭제 실패", url = "/admin/member/adminManageStudent";
-		if (cnt > 0) {
-			msg = "삭제 성공";
-		}
-
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		return "common/message";
-	}
-
-	@RequestMapping("/deleteProfessor")
-	public String deleteProfessor(String profNo, Model model) {
-		int cnt = professorService.deleteProfessor(profNo);
-
-		String msg = "삭제 실패", url = "/admin/member/adminManageProfessor";
-		if (cnt > 0) {
-			msg = "삭제 성공";
-		}
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		return "common/message";
-
-	}
+      model.addAttribute("msg", msg);
+      model.addAttribute("url", url);
+      return "common/message";
+   }
 	@RequestMapping("/deleteEmployee")
 	public String deleteEmployee(String empNo, Model model) {
 		int cnt = employeeService.deleteEmployee(empNo);
-		
+	    cnt = offiService.deleteOfficial(empNo);
+	    cnt = bankService.deleteAccountInfo(empNo);
 		String msg = "삭제 실패", url = "/admin/member/adminManageEmployee";
 		if (cnt > 0) {
 			msg = "삭제 성공";
@@ -619,13 +644,49 @@ public class AdminMemberController {
 
 		return "/admin/member/adminEditMember";
 	}
+	
+	/**
+	 * 학생 수정 - 전공 변경
+	 * @param stuNo
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/adminManageMajor", method = RequestMethod.GET)
+	public void adminManageMajor_get(String stuNo, Model model) {
+		logger.info("adminManageMajor_get, stuNo={}", stuNo);
+		
+		Map<String, Object> map = studentService.selectViewByStuNo(stuNo);
+		logger.info("{}",map);
+	
+		int facultyNo=Integer.parseInt(map.get("FACULTY_NO").toString());
+		List<DepartmentVO> departmentList2 = null; 
+		if(map.get("minor_faculty_no") != null && map.get("minor_faculty_no")!="") {
+			int minorFacultyNo=Integer.parseInt(map.get("minor_faculty_no").toString());
+			departmentList2 = departmentService.selectDepartmentByFaculty(minorFacultyNo);
+		}
+		List<FacultyVO> facultyList = facultyService.selectFaculty();
+		List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(facultyNo);
+		
+		model.addAttribute("facultyList",facultyList);
+		model.addAttribute("departmentList",departmentList);
+		model.addAttribute("departmentList2",departmentList2);
+		model.addAttribute("map",map);
+	}
+	@RequestMapping(value = "/adminManageMajor", method = RequestMethod.POST)
+	public String adminManageMajor_post(@ModelAttribute StudentVO studentVo, Model model) {
+		logger.info("adminManageMajor_post, {}",studentVo);
+		//db작업
+		studentService.updateMajor(studentVo);
+		return edit_get(studentVo.getStuNo(),model);
+	}
+	
 
 	@RequestMapping(value = "/memberEdit", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean edit_post(@RequestParam String officialNo, Model model, @ModelAttribute Account_infoVO accInfoVo,
 			@ModelAttribute Official_infoVO offiVo, @RequestParam String hp, @RequestParam String email,
 			@RequestParam(required = false) String oldFileName, HttpServletRequest request) {
-
+		logger.info("member 수정 처리 파라미터 officialNo={},offiVo={}",officialNo,offiVo);
 		boolean bool = false;
 
 		accInfoVo.setOfficialNo(officialNo);

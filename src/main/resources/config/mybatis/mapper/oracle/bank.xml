@@ -12,7 +12,11 @@
 		set bank_code=#{bankCode}, account_no=#{accountNo},account_name=#{accountName}
 		where official_no=#{officialNo}
 	</update>
-   
+   	
+   	<delete id="deleteAccountInfo" parameterType="String">
+   		delete from account_info
+		where official_no = #{officialNo}
+   	</delete>
 </mapper>
 
 

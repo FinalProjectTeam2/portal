@@ -15,9 +15,8 @@ $(function() {
 			url : "<c:url value='/chat/room/new'/>",
 			data : {name: $("#title").val()},
 			type : 'post',
-			dataType : "text",
 			success: function(res) {
-				acyncMovePage('<c:url value="/chat/"/>', 'get');
+				acyncMovePage('<c:url value="/chat/rooms?roomId="/>'+res, 'get');
 			}
 		});
 		return false;
