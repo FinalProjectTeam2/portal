@@ -1,5 +1,6 @@
 package com.will.portal.student.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +20,6 @@ public interface StudentDAO {
 	int deleteStudent(String stuNo);
 	int updateStudent(StudentVO studentVO);
 	int updateMajor(StudentVO studentVo);
+	List<Map<String, Object>> selectScore();
+	List<String> selectSemester();
 }

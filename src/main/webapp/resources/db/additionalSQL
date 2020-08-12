@@ -278,3 +278,12 @@ insert into subj_type
 values('GRC','교양필수');
 insert into subj_type
 values('BRC','기초필수');
+
+/*성적확인 뷰*/
+create or replace view score_view
+as
+(select ev.sub_code, ev.stu_no,ev.total_grade,op.open_date,op.prof_no,su.subj_name,pr.prof_name,su.credit,ty.type from 
+evaluation ev join open_subj op on ev.sub_code=op.open_sub_code 
+join subject su on su.subj_code=op.subj_code 
+join subj_type ty on ty.type_code=su.type_code
+join professor pr on op.prof_no=pr.PROF_NO);
