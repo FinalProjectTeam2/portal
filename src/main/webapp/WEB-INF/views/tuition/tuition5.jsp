@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
-<h1>등록금 관리 </h1><br>
-
+<style type="text/css">
+.tuition {
+	margin-left: 3%;
+	margin-top: 2%;
+}
+</style>
 <div class="tuition">
-
+	<h1>등록금 관리 </h1>
+	<hr width="70%" align="left"><br>
 <!-- 등록,수정, 삭제 버튼 -->
 	<div class="divBtn">
 		<input type="button" value="등록">
@@ -48,29 +53,30 @@
 <!-- 조회 내역 -->	
 	<div class="divtable">
 		<table>
-			<th><input id="chkbox" type="checkbox"></th>
-			<th>학부</th>
-			<th>학과</th>
-			<th>이름</th>
-			<th>은행명</th>
-			<th>계좌명</th>
-			<th>예금주</th>
-			<th>등록금</th>
-			<th>학생명</th>
-			<th>계좌명</th>
-			<th>계좌명</th>
-			<th>계좌명</th>
-			
+			<tr>
+				<th><input id="chkbox" type="checkbox"></th>
+				<th>학부</th>
+				<th>학과</th>
+				<th>이름</th>
+				<th>은행명</th>
+				<th>계좌명</th>
+				<th>예금주</th>
+				<th>등록금</th>
+				<th>학생명</th>
+				<th>계좌명</th>
+				<th>계좌명</th>
+				<th>계좌명</th>
+			</tr>
 			<tr>
 				<td></td>
 			</tr>
 		</table>
 
 </div>
+
 <!-- 페이징처리 -->
-
+<div>
 </div>
-
 </div>
 
 

@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AssignmentController {
 	private static final Logger logger = LoggerFactory.getLogger(AssignmentController.class);
 	
-	@RequestMapping(value="/assignment",method = RequestMethod.GET) 
-	public String assignment_get() {
-		return "assignment/assignment";
+	@RequestMapping(value="/assignment1",method = RequestMethod.GET) 
+	public String assignment1_get() {
+		return "assignment/assignment1";
+	}
+	
+	@RequestMapping(value="/assignment2",method = RequestMethod.GET) 
+	public String assignment2_get() {
+		return "assignment/assignment2";
 	}
 }
