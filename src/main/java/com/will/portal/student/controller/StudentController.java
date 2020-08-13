@@ -2,6 +2,7 @@ package com.will.portal.student.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -11,22 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.portal.common.MemberDetails;
-import com.will.portal.files.model.FilesService;
-import com.will.portal.official_info.model.Official_infoService;
-import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.common.ScoreSearchVO;
 import com.will.portal.registration.model.RegistrationVO;
+import com.will.portal.student.model.GradeListVO;
+import com.will.portal.student.model.GradeVO;
 import com.will.portal.student.model.StudentService;
 import com.will.portal.subj_eval.model.Subj_evalService;
 import com.will.portal.subj_eval.model.Subj_evalVO;
-import com.will.portal.common.ScoreSearchVO;
-import com.will.portal.student.model.StudentService;
 
 @Controller
 @RequestMapping("/student")
@@ -45,12 +44,10 @@ public class StudentController {
 
 	/**
 	 * 학생 성적 조회
-	 *
 	 * @param principal
 	 * @param semester
 	 * @param model
 	 */
-
 	@RequestMapping("/studentScore")
 	public void studentScore(Principal principal, @RequestParam(required = false) String semester, Model model) {
 		MemberDetails user = (MemberDetails) ((Authentication) principal).getPrincipal();
@@ -81,9 +78,9 @@ public class StudentController {
 		String sort = "";
 		for (String sem : slist) {
 			if (sem.substring(sem.length() - 1).equals("2")) {
-				sort = "/1";
+				sort = "/1학기";
 			} else if (sem.substring(sem.length() - 1).equals("8")) {
-				sort = "/2";
+				sort = "/2학기";
 			}
 			slist2.add(sem.substring(0, 4) + sort);
 		}
@@ -106,7 +103,62 @@ public class StudentController {
 		model.addAttribute("slistCh", slistCh);
 		model.addAttribute("tlist", tlist);
 	}
+	
+	/**
+	 * 학생 성적 조회 - 차트
+	 * @param principal
+	 * @param semester
+	 * @param model
+	 */
+	@RequestMapping("/studentScoreChart")
+	public void studentScoreChart(Principal principal,@ModelAttribute GradeListVO gradeList,
+			@RequestParam(required = false) String stuName, Model model) {
+		MemberDetails user = (MemberDetails) ((Authentication) principal).getPrincipal();
+		String officialNo = user.getOfficialNo();
+		
+		logger.info("stuName={}",stuName);
+		logger.info("studentScore, param: gradeList={}, officialNo={}",gradeList, officialNo);
+		List<String> slist = studentService.selectSemester(officialNo);
+		logger.info("slist={}", slist);
+		
+		List<GradeVO> glist= gradeList.getGradeList();
+		logger.info("{}",glist);
+		
+		List<Double> dlist= new ArrayList<Double>();
+		
+		for(int i=0;i<glist.size();i++) {
+			dlist.add(glist.get(i).getGrade());
+			logger.info("dlist[{}]={}",i,glist.get(i).getGrade());
+		}
+		
+		List<String> slistCh = new ArrayList<String>();
+		String sortCh = "";
+		for (String sem : slist) {
+			if (sem.substring(sem.length() - 1).equals("2")) {
+				sortCh = "01";
+			} else if (sem.substring(sem.length() - 1).equals("8")) {
+				sortCh = "02";
+			}
+			slistCh.add(sem.substring(0, 4) + sortCh);
+		}
+		logger.info("slistCh={}", slistCh);
+		
+		double min=Collections.min(dlist);
+		
+		model.addAttribute("slistCh", slistCh);
+		model.addAttribute("dlist",dlist);
+		model.addAttribute("stuName",stuName);
+		model.addAttribute("min",min);
+	}
 
+	@RequestMapping(value = "/gradeChart")
+	@ResponseBody
+	public int[] gradeChart(@ModelAttribute GradeListVO gradeList) {
+		logger.info("{}",gradeList);
+		int[] intarr = new int[1];
+		return intarr;
+	}
+	
 	@RequestMapping(value = "/subjEval", method = RequestMethod.GET)
 	public String subjEval(@RequestParam String subjCode, Model model) {
 		logger.info("강의평가 화면 보여주기");

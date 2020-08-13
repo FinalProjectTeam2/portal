@@ -205,7 +205,7 @@
 											<td><a id="deleteBt"
 												href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
 										</tr>
-										<c:set var="idx" value="${idx+1 }" />
+										<c:set var="idx" value="${idx+1 }"/>
 									</c:forEach>
 									<!-- 반복 끝 -->
 								</c:if>

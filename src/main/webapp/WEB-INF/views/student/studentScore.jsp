@@ -4,7 +4,6 @@
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link href="<c:url value='/resources/css/admin/adminManageMember.css'/>"
 	rel="stylesheet">
-<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> -->
 <style>
 #searchSelect {
 	margin: 5px 5px 0 3px;
@@ -60,48 +59,30 @@ span.fontLar {
 	color: #2f353e;
 }
 </style>
-<!-- <script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
-	google.charts.load("current", {
-		packages : [ "corechart" ]
-	});
-	google.charts.setOnLoadCallback(drawChart);
-	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-				[ 'X', '1', '2', '3', '4', '5', '6' ], [ 1, 2, 3, 4, 5, 6, 7 ],
-				[ 2, 3, 4, 5, 6, 7, 8 ], [ 3, 4, 5, 6, 7, 8, 9 ],
-				[ 4, 5, 6, 7, 8, 9, 10 ], [ 5, 6, 7, 8, 9, 10, 11 ],
-				[ 6, 7, 8, 9, 10, 11, 12 ] ]);
+	$(function() {
 
-		var options = {
-			legend : 'none',
-			hAxis : {
-				maxValue : 7
-			},
-			vAxis : {
-				maxValue : 13
-			},
-			lineWidth : 10,
-			colors : [ '#e2431e', '#d3362d', '#e7711b', '#e49307', '#e49307',
-					'#b9c246' ]
-		};
+		$("#btSearch").click(function() {
+			$("form").attr("action");
+		});
 
-		var chart = new google.visualization.LineChart(document
-				.getElementById('chart_div'));
-		chart.draw(data, options);
-	}
-</script> -->
+		$("#btChart").click(function() {
+			$("form").attr("action","<c:url value='/student/studentScoreChart'/>");
+		});
+	})
+</script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="adminMngMem">
 			<h2>성적 조회</h2>
-			<form name="frmList" method="post">
-				<input type="hidden" value="${principal.name }" id="name">
-				<div class="divRight">
-					<c:if test="${param.semester ==null || param.semester==''}">
+			<div class="divRight">
+				<form name="frmList" method="post">
+					<input type="hidden" value="${principal.name }" id="name"
+						name="stuName">
+					<c:if test="${!empty slist and (param.semester ==null || param.semester=='')}">
 						<div class="divLeft">
-							<button type="button"
+							<button type="submit"
 								class="btCustom btn btn-primary btn-lg login-button"
 								id="btChart">성적그래프</button>
 						</div>
@@ -117,14 +98,13 @@ span.fontLar {
 							</c:forEach>
 						</c:if>
 					</select>
-					<button class="btCustom btn btn-primary btn-lg login-button"
-						id="btSearch">조회</button>
+					<button type="submit"
+						class="btCustom btn btn-primary btn-lg login-button" id="btSearch">조회</button>
 					<c:if test="${param.semester ==null || param.semester==''}">
 
 					</c:if>
 					<div class="divList">
-						<!-- <div id="chart_div" style="width: 900px; height: 500px;"></div> -->
-						<c:set var="chart" value="<%=new int[] {}%>" />
+						<c:set var="chart" value="<%=new int[]{}%>" />
 						<table class="box2" summary="강의 목록">
 							<caption>성적 조회</caption>
 							<colgroup>
@@ -150,6 +130,7 @@ span.fontLar {
 							<tbody>
 								<c:set var="ttotal" value="0" />
 								<c:set var="tcre" value="0" />
+								<c:set var="idx" value="0" />
 								<c:forEach var="list" items="${tlist}">
 									<c:set var="cre" value="0" />
 									<c:set var="total" value="0" />
@@ -163,12 +144,10 @@ span.fontLar {
 									2학기
 									</c:if></span></td>
 									</tr>
-									<c:set var="idx" value="${idx+1}"/>
 									<c:forEach var="map" items="${list}">
 										<tr class="align_center">
 											<td style="border-left: none;"><fmt:formatDate
-													value="${map['OPEN_DATE']}" pattern="yyyy" /> <%-- ${map['OPEN_DATE'] } --%>
-											</td>
+													value="${map['OPEN_DATE']}" pattern="yyyy" />
 											<td><fmt:formatDate value="${map['OPEN_DATE'] }"
 													var="semester" pattern="MM" /> <c:if
 													test="${semester==2 }">
@@ -225,11 +204,13 @@ span.fontLar {
 										<c:set var="total" value="${total+(map['CREDIT']*grade) }" />
 									</c:forEach>
 									<tr>
-									
+
 										<c:if test="${!empty list }">
 											<td colspan="7" class="colspan"><span>취득학점&nbsp;:&nbsp;
-													${cre}&nbsp;&nbsp;&nbsp; 평점&nbsp; : &nbsp;${total/cre}</span></td>
-											<%-- <c:set var="chart" value="${chart+(total/cre)}"></c:set> --%>
+													${cre}&nbsp;&nbsp;&nbsp; 평점&nbsp; : &nbsp;${total/cre}</span> <input
+												type="hidden" name="gradeList[${idx}].grade"
+												value="${total/cre}"></td>
+											<c:set var="idx" value="${idx+1 }" />
 											<c:set var="tcre" value="${tcre+cre}" />
 											<c:set var="ttotal" value="${ttotal+total}" />
 										</c:if>
@@ -250,6 +231,6 @@ span.fontLar {
 							</tbody>
 						</table>
 					</div>
-			</form>
-		</div>
-		<%@ include file="../inc/bottom.jsp"%>
+				</form>
+			</div>
+			<%@ include file="../inc/bottom.jsp"%>
