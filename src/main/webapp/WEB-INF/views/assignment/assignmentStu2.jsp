@@ -16,7 +16,7 @@ const countDownTimer = function (id, date) {
 		var distDt = _vDate - now; 
 		
 		if (distDt < 0) { clearInterval(timer); 
-			document.getElementById(id).textContent = '해당 이벤트가 종료 되었습니다!'; 
+			document.getElementById(id).textContent = '마감이 종료 되었습니다!'; 
 		
 			return; 
 		} 
@@ -73,16 +73,23 @@ hr {
 
 .divpage {
 	text-align: center;
-}
+}	
+
 </style>
 <div class="attendance">
-<h1>과제관리 페이지</h1>
+<h1>과제제출상황</h1>
 <hr align="left">
 <br>
 	<div>
-		마감까지 <div id="countDown">  </div> 남았습니다.
+		<p>기한 : 2020. 08. 19(기간후 제출 불가)  </p>
+		<p>양식 : 자유</p>
+		<p>분량 : A4 한 장 분량 이상</p>
+		<div id="countDown">
 	</div>
-
+	
+	<div>
+		<input type="button" value="글쓰기">
+	</div>
 	<div class="divTable">
 		<div class="btn">
 			<select>

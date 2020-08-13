@@ -2,7 +2,9 @@ package com.will.portal.tuition;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.will.portal.board.controller.BoardController;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.tuition.model.TuitionService;
 import com.will.portal.tuition.model.TuitionStuVO;
+import com.will.portal.tuition.model.TuitionVO;
 
 @Controller
 @RequestMapping("/tuition")
@@ -57,13 +60,15 @@ public class TuitionController {
 	}
 	
 	@RequestMapping("/tuition2") 
-	public void tuition2(Principal principal,  Model model) {
+	public Map<String, Object> tuition2(Principal principal,  Model model) {
 		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
-		String officialNo = user.getOfficialNo();
+		String stuNo = user.getOfficialNo();
 		
-		List<TuitionStuVO> list= tuitionService.selectStu(officialNo);
+		Map<String, Object> map = new HashedMap<>();
+		List<TuitionVO> list= tuitionService.selectTuition(stuNo);
 		model.addAttribute("list", list);
 		
+		return map;
 	}
 
 }

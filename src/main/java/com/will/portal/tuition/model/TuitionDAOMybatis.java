@@ -23,12 +23,12 @@ public class TuitionDAOMybatis implements TuitionDAO {
 		return sqlSession.selectList(namespace+"selectStu");
 	}
 
+
 	@Override
-	public List<TuitionVO> tuitionD() {
+	public List<TuitionVO> selectTuition(String officialNo) {
 		
-		return null;
+		return sqlSession.selectList(namespace+"selectTuition");
 	}
 
-	
-	
+
 }
