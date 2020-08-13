@@ -1,4 +1,4 @@
-package com.will.portal.certificate;
+package com.will.portal.certificate.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
