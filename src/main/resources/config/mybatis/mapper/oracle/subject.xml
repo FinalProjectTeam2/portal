@@ -75,6 +75,10 @@
 		on s.PROF_NO=p.PROF_NO and subj_code =#{subjCode}
 	</select>
 	
+	<select id="selectEvalBysubCode" parameterType="String" resultType="Subj_evalVO">
+		select * from subj_eval where sub_code =#{subCode}
+	</select>
+	
 </mapper>
 
 

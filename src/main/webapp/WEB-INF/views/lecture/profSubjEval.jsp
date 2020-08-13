@@ -49,7 +49,14 @@
 					<c:if test="${!empty evalList }">
 					<c:forEach var="AllSubjAvgVO" items="${evalList }">
 						<tr>
-							<td style="text-align: left;">${AllSubjAvgVO.subjName }</td>
+							<td style="text-align: left;">
+								<c:if test="${!empty AllSubjAvgVO.subjAvgVO }">
+									<a href="<c:url value='/lecture/evalContent?subCode=${AllSubjAvgVO.subCode } ' />" id="evalDetail">${AllSubjAvgVO.subjName }</a>
+								</c:if>
+								<c:if test="${empty AllSubjAvgVO.subjAvgVO }">
+									<a>${AllSubjAvgVO.subjName }</a>
+								</c:if>
+							</td>
 							<td>${AllSubjAvgVO.subCode }</td>
 							<c:set var="vo" value="${AllSubjAvgVO.subjAvgVO }"></c:set>
 							<td><fmt:formatNumber value="${vo.avgQ1 }" pattern=".0"/></td>
@@ -70,7 +77,6 @@
 					</c:forEach>
 					</c:if>
 			</table>
-			
 			<div>
 				<ul>
 					

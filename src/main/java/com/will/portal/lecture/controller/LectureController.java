@@ -53,6 +53,7 @@ import com.will.portal.student.model.StudentTimeTableVO;
 import com.will.portal.student.model.StudentVO;
 import com.will.portal.subj_eval.model.AllSubjAvgVO;
 import com.will.portal.subj_eval.model.Subj_evalService;
+import com.will.portal.subj_eval.model.Subj_evalVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subj_type.model.Subj_typeVO;
 import com.will.portal.subject.model.SubjectAllVO;
@@ -791,5 +792,22 @@ public class LectureController {
 		logger.info("교수 강의평가 evalList={}", evalList);
 		model.addAttribute("evalList", evalList);
 		return "lecture/profSubjEval";
+	}
+	
+	@RequestMapping("/lecture/evalContent")
+	@ResponseBody
+	public String evalContent(@RequestParam String subCode, Model model) {
+		List<Subj_evalVO> list = subEvalService.selectEvalBysubCode(subCode);
+		List<String> contentsList = new ArrayList<String>();
+		String contents="";
+		logger.info("list={}",list);
+		for (int i = 0; i < list.size(); i++) {
+			contents = list.get(i).getContent();
+			contentsList.add(contents);
+		}
+		
+		logger.info("contentList= {}",contentsList);
+		model.addAttribute("contentsList", contentsList);
+		return "";//팝업창 새로만들기
 	}
 }

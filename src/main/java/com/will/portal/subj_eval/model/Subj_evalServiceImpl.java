@@ -43,5 +43,9 @@ public class Subj_evalServiceImpl implements Subj_evalService{
 	public Map<String, Object> selectProfNameBySubj(String subjCode) {
 		return subjEvalDao.selectProfNameBySubj(subjCode);
 	}
+	@Override
+	public List<Subj_evalVO> selectEvalBysubCode(String subCode) {
+		return subjEvalDao.selectEvalBysubCode(subCode);
+	}
 	
 }

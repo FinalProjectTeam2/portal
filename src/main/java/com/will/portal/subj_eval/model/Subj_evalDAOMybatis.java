@@ -46,5 +46,9 @@ public class Subj_evalDAOMybatis implements Subj_evalDAO{
 	public Map<String, Object> selectProfNameBySubj(String subjCode) {
 		return sqlsession.selectOne(namespace + "selectProfNameBySubj", subjCode);
 	}
-
+	
+	@Override
+	public List<Subj_evalVO> selectEvalBysubCode(String subCode) {
+		return sqlsession.selectList(namespace + "selectEvalBysubCode",subCode);
+	}
 }
