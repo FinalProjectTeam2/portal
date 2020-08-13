@@ -15,6 +15,11 @@ public class AssignmentServiceImpl implements AssignmentService{
 	public List<Map<String, Object>> subjByStuNo(String stuNo) {
 		return assignDao.subjByStuNo(stuNo);
 	}
+
+	@Override
+	public List<Distribute_assignVO> getDistAssign(String openSubCode) {
+		return assignDao.getDistAssign(openSubCode);
+	}
 	
 	
 

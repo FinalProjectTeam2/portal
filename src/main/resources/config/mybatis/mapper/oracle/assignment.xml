@@ -9,6 +9,9 @@
 		on r.sub_code=substr(s.subj_code, 5)
 		where r.stu_no=#{stuNo}
 	</select>
+	<select id="getDistAssign" parameterType="string" resultType="distribute_assignVo">
+			select * from distribute_assign where open_sub_code=#{openSubCode}
+	</select>
 </mapper>
 
 

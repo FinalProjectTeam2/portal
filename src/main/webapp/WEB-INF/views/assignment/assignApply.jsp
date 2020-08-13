@@ -8,12 +8,9 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style type="text/css">
 #uploadForm{
-  position: relative;
   top: 50%;
-  left: 50%;
-  margin-left: -265px;
-  width: 445px;
-  height: 200px;
+  width: 72%;
+  height: 230px;
   border: 4px dashed gray;
 }
 form p{
@@ -34,14 +31,13 @@ form input{
   opacity: 0;
 }
 #btUpload{
-  position: relative;
-  margin: 0;
+  clear:both;
+  margin-top: -50px;
   color: #fff;
   background: #16a085;
   border: none;
-  width: 445px;
+  width: 100%;
   height: 35px;
-  margin-left: -4px;
   border-radius: 4px;
   border-bottom: 4px solid #117A60;
   transition: all .2s ease;
@@ -58,9 +54,7 @@ form input{
 #info{
 	position: relative;
 	top: 26%;
-	left: 28%;
-	width: 500px;
-	padding-right: 20%;
+	width: 100%;
 }
 div#assign {
     border-bottom: 1px solid gray;
@@ -73,11 +67,49 @@ div#assign {
 <script type="text/javascript">
 	$(function(){
 		$('#assign').hide();
+		$('#info').hide();
 		$('#subjCode').change(function(){
 			if($('#subjCode option:selected').val()!='all'){
 				$('#assign').show();
+				
+				$.ajax({
+					url:"<c:url value='/assignment/getAssignment'/>",
+					type:"post",
+					data:{
+						openSubCode:$('#subjCode option:selected').val()
+					},
+					dataType:"json",
+					success:function(res){
+						var str = "";
+						var len = res.length;
+						if(len>0){
+							str+="<option value='all'>과목을 선택해 주세요</option>";
+							$.each(res, function(idx, item){
+								str+="<option value='"+item.assignNo+"'>"+item.assignName+"</option>";
+								$('#assign').show();
+							});
+						}else{
+							str+="<option value='all'>등록된 과제가 없습니다.</option>";
+							$('#info').hide();
+							$('#assign').show();
+							
+						}
+						$('#assignment').html(str);
+						
+						$('#assignment').change(function(){
+							if($('#assignment option:selected').val()!='all'){
+								$('#info').show();
+							}else{
+								$('#info').hide();
+							}
+						});
+					}
+					
+				});
+				
 			}else{
 				$('#assign').hide();
+				$('#info').hide();
 			}
 		});
 		
@@ -305,11 +337,11 @@ div#assign {
 <div id="assign">
 	<h4>과제를 선택하세요</h4>
 	<select class="form-control" id="assignment" style="width: 72%;">
-		<c:if test="${!empty list }">
+		<%-- <c:if test="${!empty list }">
 			<c:forEach var="map" items="${list }">
 				<option value="${map['SUB_CODE']}">${map['SUBJ_NAME']}</option>
 			</c:forEach>
-		</c:if>
+		</c:if> --%>
 	</select>
 </div>
 
@@ -324,7 +356,7 @@ div#assign {
             <tbody id="fileTableTbody">
                
             </tbody>
-        </table>
+        </table><br>
         <button onclick="uploadFile(); return false;" class="btn bg_01" id="btUpload">파일 업로드</button>
     </form>
 </div>

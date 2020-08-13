@@ -12,8 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.portal.assignment.model.AssignmentService;
+import com.will.portal.assignment.model.Distribute_assignVO;
 import com.will.portal.common.MemberDetails;
 
 
@@ -60,4 +63,22 @@ public class AssignmentController {
 		
 		return "assignment/assignApply";
 	}
+	
+	@RequestMapping(value = "/getAssignment", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<Distribute_assignVO> getAssign(@RequestParam String openSubCode) {
+		logger.info("opensubcode로 입력한 과제 읽어가는 페이지 파라미터 openSubCode={}", openSubCode);
+		
+		List<Distribute_assignVO> list = assignServ.getDistAssign(openSubCode);
+		logger.info("읽어온 입력한과제 list.size={}", list.size());
+		
+		return list;
+		
+	}
+	
+	
+	
+	
+	
+	
 }

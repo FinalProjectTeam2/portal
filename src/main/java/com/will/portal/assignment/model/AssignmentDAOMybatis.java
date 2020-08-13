@@ -12,10 +12,17 @@ public class AssignmentDAOMybatis implements AssignmentDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private String namespace="config.mybatis.mapper.oracle.assignment.";
+	
 	@Override
 	public List<Map<String, Object>> subjByStuNo(String stuNo) {
 		return sqlSession.selectList(namespace+"subjByStuNo", stuNo);
 	}
+
+	@Override
+	public List<Distribute_assignVO> getDistAssign(String openSubCode) {
+		return sqlSession.selectList(namespace+"getDistAssign", openSubCode);
+	}
+	
 	
 	
 }
