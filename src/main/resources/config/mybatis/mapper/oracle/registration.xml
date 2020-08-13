@@ -105,7 +105,7 @@
 	<delete id="deleteEval" parameterType="hashMap">
 		delete from evaluation where stu_no=#{stuNo} and sub_code=#{openSubCode}
 	</delete>
-
+	
 </mapper>
 
 

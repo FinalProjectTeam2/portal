@@ -21,6 +21,46 @@
 		values(#{openSubCode}, #{subjCode}, #{profNo})
 		
 	</insert>
+	
+	<insert id="insertSubjEval" parameterType="subj_EvalVO">
+		insert into subj_eval(sub_code, stu_no, classification, q1,q2,q3,q4,q5,q6,q7,q8,content) 
+		values(#{subCode},#{stuNo},#{classification},#{q1},#{q2},#{q3},#{q4},#{q5},#{q6},#{q7},#{q8},#{content})
+	</insert>
+	
+	<update id="updateEvalFlag" parameterType="RegistrationVO">
+		update registration 
+		set lecture_eval_flag = 'Y'
+		where sub_code = #{subCode} and stu_no = #{stuNo}
+	</update>
+	
+	<select id="selectAvgEval" parameterType="String" resultType="SubjAvgVO">
+		select sub_code,avg(q1) "avgQ1" ,avg(q2) "avgQ2",avg(q3) "avgQ3",
+		avg(q4) "avgQ4",avg(q5) "avgQ5",avg(q6) "avgQ6",avg(q7) "avgQ7",avg(q8) "avgQ8"
+		from subj_eval 
+		group by sub_code
+		having sub_code=#{subCode};
+	</select>
+	
+	<resultMap type="AllSubjAvgVO" id="selectBySubCodeResultMap">
+		<association property="subCode" javaType="String" column="SUB_CODE">
+			<result column="SUB_CODE" jdbcType="VARCHAR" property="subCode"/>
+		</association>
+		<association property="subjAvgVO" column="SUB_CODE" javaType="SubjAvgVO" select="selectAvgEval">
+			<id column="SUB_CODE" property="subCode" jdbcType="VARCHAR" />
+			<result column="avgQ1" jdbcType="NUMERIC" property="avgQ1" />
+			<result column="avgQ2" jdbcType="NUMERIC" property="avgQ2" />
+			<result column="avgQ3" jdbcType="NUMERIC" property="avgQ3" />
+			<result column="avgQ4" jdbcType="NUMERIC" property="avgQ4" />
+			<result column="avgQ5" jdbcType="NUMERIC" property="avgQ5" />
+			<result column="avgQ6" jdbcType="NUMERIC" property="avgQ6" />
+			<result column="avgQ7" jdbcType="NUMERIC" property="avgQ7" />
+			<result column="avgQ8" jdbcType="NUMERIC" property="avgQ8" />
+		</association>
+	</resultMap>
+	
+	<select id="selectsubCodeByProfNo" parameterType="String" resultMap="selectBySubCodeResultMap">
+		select substr(subj_code,5) "SUB_CODE" from subject where prof_no =#{profNo}
+	</select>
 </mapper>
 
 
