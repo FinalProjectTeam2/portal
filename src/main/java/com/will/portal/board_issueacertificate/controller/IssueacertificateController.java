@@ -4,13 +4,16 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,18 +34,12 @@ public class IssueacertificateController {
 		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
 		String stuNo = user.getOfficialNo();
 		
-		List<CertificationVO> list = certService.selectByStuNo(stuNo);
-		
-		model.addAttribute("list", list);
-		
-		
-		
 		return "board_issueacertificate/issueacertificate";
 	}
 	
 	@RequestMapping(value = "/payments/complete", method = RequestMethod.POST)
 	@ResponseBody
-	public String paymentsComplete(Principal principal, @RequestParam String certCode, 
+	public Map<String, Object> paymentsComplete(Principal principal, @RequestParam String certCode, 
 			@RequestParam(defaultValue = "1") int qty, @RequestParam String certName, Model model) {
 		
 		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
@@ -81,19 +78,29 @@ public class IssueacertificateController {
 		
 		int cnt = certService.insertCert(vo);
 		
-		String result="결제 실패";
+		Map<String, Object> map = new HashedMap<String, Object>();
+		map.put("cnt", cnt);
+		map.put("no", no);
 		
-		if(cnt > 0) {
-			result="결제완료 증명서 현황에서 출력하세요";
-		}
+		return map;
 		
-		List<CertificationVO> list = certService.selectByStuNo(stuNo);
+	}
+	
+	@RequestMapping("/payments/getSeccess")
+	@ResponseBody
+	public List<CertificationVO> getSeccess(Authentication authentication){
+		MemberDetails user = (MemberDetails) authentication.getPrincipal();
+		List<CertificationVO> list = certService.selectByStuNo(user.getOfficialNo());
 		
-		model.addAttribute("list", list);
+		return list;
+	}
+	
+	@GetMapping("/payments/complete")
+	public String coplet_get(@RequestParam String no, Model model) {
+		logger.info("결제완료창 보여주기, 파라미터 no={}",no);
+		CertificationVO vo = certService.selectByNo(no);
+		model.addAttribute("vo", vo);
 		
-		
-		
-		return result;
-		
+		return "board_issueacertificate/complete";
 	}
 }

@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style type="text/css">
 .certificate {
 	border: 2px solid gray;
@@ -6,8 +9,7 @@
 	height: 1000px;
 	min-width: 500px;
 	min-height: 400px;
-	margin-left: 26%;
-	margin-top: 3%;
+	margin: 0 auto;
 }
 
 .num {
@@ -44,18 +46,19 @@
 
 .div1 {
 	font-size: 24px;
-	margin-left: 35%;
+	margin-top: 12%;
+	text-align: center;
 }
 
 .div2 {
 	font-size: 20px;
 	margin-left: 45%;
+	text-align: center;
 }
 
 .div3 {
-	font-size: 30px;
-	margin-left: 22%;
-	margin-top: 20%;
+	margin-top: 7%;
+    text-align: center;
 }
 
 img {
@@ -76,12 +79,20 @@ img {
 	<div class="table">
 		<div class="row">
 			<div class="cell">성 명</div>
-			<div class="cell2">홍길동</div>		
+			<div class="cell2">${map['NAME']}</div>		
 		</div>
 		
 		<div class="row">
 			<div class="cell">생 년 월 일</div>
-			<div class="cell2">1999년 1월 1일</div>
+			<div class="cell2">
+			<c:set value="${fn:substring(map['SSN'],6,7)}" var="type"></c:set>
+			<p>
+			<c:if test="${type == 1 or type == 2}">19</c:if><!--
+			--><c:if test="${type == 3 or type == 4}">20</c:if><!--
+			-->${fn:substring(map['SSN'],0,2) }년 ${fn:substring(map['SSN'],2,4) }월 
+			${fn:substring(map['SSN'],4,6) }일
+			<p>
+			</div>
 		</div>
 		
 		<div class="row">
@@ -91,17 +102,17 @@ img {
 		
 		<div class="row">
 			<div class="cell">학 과</div>
-			<div class="cell2">법학과</div>
+			<div class="cell2">${map['DEP_NAME'] }</div>
 		</div>
 		
 		<div class="row">
 			<div class="cell">학 년</div>
-			<div class="cell2">1학년 재학중</div>
+			<div class="cell2">${(map['SEMESTER'] / 2)}</div>
 		</div>
 		
 		<div class="row">
 			<div class="cell">입 학 년 월 일</div>
-			<div class="cell2">2020년 3월 2일</div>
+			<div class="cell2"><fmt:formatDate value="${map['ADMISSION_DATE'] }" pattern="yyyy년 MM월 dd일"/></div>
 		</div>
 	</div>	
 
@@ -109,9 +120,9 @@ img {
 		<h4>위의 사실을 증명합니다.</h4>
 	</div>
 	<div class="div2">
-		<h5>2020년 8월 11일</h5>
+		<h5><fmt:formatDate value='${vo.regDate}' pattern='yyyy년 MM월 dd일'/></h5>
 	</div>
 	<div class="div3">
-		<h1>척 척 학 사 총 장</h1>
+		<img alt="직인" src="<c:url value='/resources/images/stamp1.png'/>">
 	</div>
 </div>

@@ -1,10 +1,19 @@
 package com.will.portal.certificate.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.will.portal.certification.model.CertificationService;
+import com.will.portal.certification.model.CertificationVO;
+import com.will.portal.student.model.StudentService;
 
 
 @Controller
@@ -12,8 +21,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class CertificateController {
 	private static final Logger logger = LoggerFactory.getLogger(CertificateController.class);
 
+	@Autowired
+	private StudentService stuServ;
+	
+	@Autowired
+	private CertificationService certiServ;
+	
 	@RequestMapping(value="/certificate1",method = RequestMethod.GET) 
-	public String certificate1_get() {
+	public String certificate1_get(@RequestParam String stuNo, @RequestParam String no, Model model) {
+		logger.info("재학증명서 페이지");
+		Map<String,Object> map = stuServ.selectViewByStuNo(stuNo);
+		CertificationVO vo = certiServ.selectByNo(no);
+		model.addAttribute("map", map);
+		model.addAttribute("vo", vo);
 		return "portal/certificate/certificate1";
 	}
 
