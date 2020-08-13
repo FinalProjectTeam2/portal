@@ -18,8 +18,8 @@ public class Subj_evalServiceImpl implements Subj_evalService{
 	public int insertSubjEval(Subj_evalVO evalVo) {
 		return subjEvalDao.insertSubjEval(evalVo);
 	}
-
 	@Override
+	
 	public int updateEvalFlag(RegistrationVO regiVo) {
 		return subjEvalDao.updateEvalFlag(regiVo);
 	}

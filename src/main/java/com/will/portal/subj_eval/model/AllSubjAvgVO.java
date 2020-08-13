@@ -9,5 +9,6 @@ import lombok.ToString;
 @Setter
 public class AllSubjAvgVO {
 	private String subCode;
+	private String subjName;
 	private SubjAvgVO subjAvgVO;
 }

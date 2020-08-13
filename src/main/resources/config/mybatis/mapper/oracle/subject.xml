@@ -45,6 +45,9 @@
 		<association property="subCode" javaType="String" column="SUB_CODE">
 			<result column="SUB_CODE" jdbcType="VARCHAR" property="subCode"/>
 		</association>
+		<association property="subjName" javaType="String" column="SUB_CODE">
+			<result column="SUBJ_NAME" jdbcType="VARCHAR" property="subjName"/>
+		</association>
 		<association property="subjAvgVO" column="SUB_CODE" javaType="SubjAvgVO" select="selectAvgEval">
 			<id column="SUB_CODE" property="subCode" jdbcType="VARCHAR" />
 			<result column="avgQ1" jdbcType="NUMERIC" property="avgQ1" />
@@ -59,7 +62,7 @@
 	</resultMap>
 	
 	<select id="selectsubCodeByProfNo" parameterType="String" resultMap="selectBySubCodeResultMap">
-		select substr(subj_code,5) "SUB_CODE" from subject where prof_no =#{profNo}
+		select substr(subj_code,5) "SUB_CODE", SUBJ_NAME from subject where prof_no =#{profNo}
 	</select>
 	
 	<select id="selectEvalFlag" parameterType="RegistrationVO" resultType="String">
