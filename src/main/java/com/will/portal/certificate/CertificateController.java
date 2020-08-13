@@ -30,10 +30,12 @@ public class CertificateController {
 	@RequestMapping(value="/certificate4",method = RequestMethod.GET) 
 	public String certificate4_get() {
 		return "portal/certificate/certificate4";
+
 	}
 	
 	@RequestMapping(value="/certificate5",method = RequestMethod.GET) 
 	public String certificate5_get() {
 		return "portal/certificate/certificate5";
+
 	}
 }
