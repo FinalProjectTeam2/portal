@@ -8,6 +8,12 @@
 	src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
 <script>
    $(function() {
+	   $('#deleteBt').click(function() {
+			if(!confirm('정말로 삭제하시겠습니까?')){
+				event.preventDefault();
+			}
+		});
+	   
       $('#btMultiUpdateState').click(function() {
          var len=$('tbody input[type=checkbox]:checked').length;
          if(len==0){
@@ -196,7 +202,7 @@
 											<td>${map['STATE_NAME']}</td>
 											<td><a
 												href="<c:url value='/admin/member/memberEdit?officialNo=${map["STU_NO"] }'/>">수정</a></td>
-											<td><a
+											<td><a id="deleteBt"
 												href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
 										</tr>
 										<c:set var="idx" value="${idx+1 }" />

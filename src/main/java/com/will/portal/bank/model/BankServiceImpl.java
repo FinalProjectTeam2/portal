@@ -47,4 +47,10 @@ public class BankServiceImpl implements BankService{
 		}
 		return cnt;
 	}
+
+
+	@Override
+	public Account_infoVO selectAccByofficialNo(String officialNo) {
+		return bankDao.selectAccByofficialNo(officialNo);
+	}
 }

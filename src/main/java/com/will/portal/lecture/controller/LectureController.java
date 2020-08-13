@@ -78,17 +78,9 @@ public class LectureController {
 		
 		List<SubjectAllVO> list = profService.loadByProfNo(profNo);
 		
-		
 		List<Map<String, Object>> classList = profService.classroomByDepNo(depNo);
 		
 		logger.info("list.size={}, classList.size={}", list.size(), classList.size());
-		
-		
-		
-		
-		
-		
-		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("cList", classList);
@@ -519,7 +511,11 @@ public class LectureController {
 		return list;
 	}
 	
-	
+	@RequestMapping("/lecture/studentTT")
+	public String studentTT() {
+		logger.info("studentTT 화면");
+		return "lecture/studentTT";
+	}
 	
 	@RequestMapping(value = "/lecture/inputScoreByExcel", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -630,7 +626,7 @@ public class LectureController {
 		for(int i = 0; i < arrList.size(); i++) {
 			
 			EvaluationVO vo = new EvaluationVO();
-			logger.info("\narrList.get({})={}",i,arrList.get(i));
+			logger.info("arrList.get({})={}",i,arrList.get(i));
 			String[] arr= arrList.get(i).split(",");
 			
 			vo.setSubCode(arr[0]);

@@ -17,7 +17,6 @@
 				alert('삭제하려는 강의를 먼저 체크하세요');
 				return;
 			}
-			
 			$('form[name=frmList]')
 	.prop("action","<c:url value='/admin/product/deleteMulti.do'/>");
 			$('form[name=frmList]').submit();

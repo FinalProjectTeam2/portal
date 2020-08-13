@@ -10,4 +10,5 @@ public interface BankService {
 	int updateAccount(Account_infoVO accInfoV);
 	public int deleteAccountInfo(String officialNo);
 	public int deleteMulti(List<Account_infoVO> accInfoVoList);
+	public Account_infoVO selectAccByofficialNo(String officialNo);
 }
