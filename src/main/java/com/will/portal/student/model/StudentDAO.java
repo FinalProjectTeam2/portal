@@ -1,8 +1,10 @@
 package com.will.portal.student.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.will.portal.common.ScoreSearchVO;
 import com.will.portal.common.StudentSearchVO;
 
 public interface StudentDAO {
@@ -19,4 +21,8 @@ public interface StudentDAO {
 	int deleteStudent(String stuNo);
 	int updateStudent(StudentVO studentVO);
 	int updateMajor(StudentVO studentVo);
+	List<StudentTimeTableVO> selectTimetable(String stuNo);
+	List<Map<String, Object>> selectScore(ScoreSearchVO scoreSearchVo);
+	List<String> selectSemester(String stuNo);
+
 }

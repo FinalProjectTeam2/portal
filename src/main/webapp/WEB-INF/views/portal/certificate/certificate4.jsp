@@ -76,23 +76,16 @@ img {
 	
 	<div class="table">
 		<div class="row">
+			<div class="cell">학 과</div>
+			<div class="cell2"></div>
+		</div>
+		<div class="row">
+			<div class="cell">학 번</div>
+			<div class="cell2"></div>
+		</div>
+		<div class="row">
 			<div class="cell">성 명</div>
 			<div class="cell2">홍길동</div>		
-		</div>
-		
-		<div class="row">
-			<div class="cell">생 년 월 일</div>
-			<div class="cell2">1999년 1월 1일</div>
-		</div>
-		
-		<div class="row">
-			<div class="cell">입 학 일 자</div>
-			<div class="cell2">&nbsp;</div>
-		</div>
-		
-		<div class="row">
-			<div class="cell">재 적 일 자</div>
-			<div class="cell2">&nbsp;</div>
 		</div>
 	</div>	
 	

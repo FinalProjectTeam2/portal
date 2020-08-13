@@ -4,7 +4,7 @@
 <style type="text/css">
 .attendance {
 	margin-left: 20%;
-	margin-top: -20%;
+	margin-top: -18%;
 	width: 80%;
 	min-width: 500px;
 }
@@ -25,6 +25,9 @@ hr {
     margin: 20px 10px;
 }
 
+.table th {
+	background: #e6f3ff;
+}
 .divpage {
 	text-align: center;
 }
@@ -48,7 +51,7 @@ hr {
 					<th>제출자</th>
 					<th>제출여부</th>
 					<th>채점</th>
-					<th>비고</th>
+					<th>&nbsp;</th>
 			</thead>
 			<tbody>
 				<tr>
@@ -66,7 +69,10 @@ hr {
 					
 					</td>
 					<td><input type="text"></td>	
-					<td><input type="button" value="수정"></td>
+					<td>
+						<input type="button" value="수정">
+						<input type="button" value="확인">
+					</td>
 				</tr>
 			</tbody>
 		</table>

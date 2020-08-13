@@ -21,4 +21,14 @@ public class AssignmentController {
 	public String assignment2_get() {
 		return "assignment/assignment2";
 	}
+
+	@RequestMapping(value="/assignmentStu1",method = RequestMethod.GET) 
+	public String assignmentStu1_get() {
+		return "assignment/assignmentStu1";
+	}
+	
+	@RequestMapping(value="/assignmentStu2",method = RequestMethod.GET) 
+	public String assignmentStu2_get() {
+		return "assignment/assignmentStu2";
+	}
 }

@@ -17,8 +17,10 @@ public class TuitionServiceImpl implements TuitionService {
 	}
 
 	@Override
-	public List<TuitionVO> tuitionD() {
-
-		return null;
+	public List<TuitionVO> selectTuition(String officialNo) {
+		
+		return tuitionDao.selectTuition(officialNo);
 	}
+
+
 }

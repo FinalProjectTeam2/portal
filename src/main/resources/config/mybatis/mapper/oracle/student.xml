@@ -99,7 +99,8 @@
 		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1!=null and state1 !='')
 		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select count(*) from STUDENT_VIEW
-			where substr(stu_no,1,4) between #{startNo} and #{endNo}
+			where substr(stu_no,1,4) between
+			#{startNo} and #{endNo}
 			<if test="stuNo!=null and stuNo !=''">
 				and stu_no=#{stuNo}
 			</if>
@@ -134,7 +135,8 @@
 		</if>
 	</select>
 	<select id="selectStudentState" resultType="student_stateVO">
-		select * from student_state
+		select * from
+		student_state
 	</select>
 	<update id="updateStudentState" parameterType="studentVO">
 		update student
@@ -149,18 +151,53 @@
 
 	<update id="updateStudent" parameterType="studentVO">
 		update student
-		set name=#{name}, major=#{major}
+		set
+		name=#{name}, major=#{major}
 		where stu_no=#{stuNo}
 	</update>
 	<update id="updateMajor" parameterType="studentVO">
 		update student
 		set major=#{major}
 		<if test="minor != 0 and minor!= null and minor != ''">
-		, minor=#{minor}
+			, minor=#{minor}
 		</if>
 		<if test="minor == 0 or minor== null or minor == ''">
-		, minor=null
+			, minor=null
 		</if>
 		where stu_no=#{stuNo}
 	</update>
+
+	<select id="selectScore" resultType="map"
+		parameterType="scoreSearchVO">
+		select * from score_view
+		where stu_no=#{stuNo} and total_grade is not null
+		<if test="semester == null or semester == ''">
+			order by open_date
+		</if>
+		<if test="semester != null and semester != ''">
+			and extract(year from open_date) || extract(month from
+			open_date)=#{semester}
+		</if>
+		<!--where -->
+	</select>
+	<select id="selectSemester" resultType="string"
+		parameterType="string">
+		select distinct extract(year from open_date) || extract(month from
+		open_date) from (select open_date from score_view where
+		stu_no=#{stuNo})
+		<!--where -->
+	</select>
+	
+	<select id="selectTimetable" parameterType="string" resultType="studenttimetableVo">
+		select s.subj_code, s.subj_name, s.explanation, s.credit, p.prof_name, c.classroom_name, st.timetable_code, r.lecture_eval_flag
+		from subject s join registration r
+		on substr(s.subj_code, 5)=r.sub_code
+		join professor p 
+		on p.prof_no=s.prof_no
+		join subj_time st
+		on st.open_sub_code=r.sub_code
+		join classroom c
+		on c.classroom_code=st.classroom_code
+		where r.stu_no=#{stuNo}
+	</select>
 </mapper>

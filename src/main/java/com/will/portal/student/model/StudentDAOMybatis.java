@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.portal.common.ScoreSearchVO;
 import com.will.portal.common.StudentSearchVO;
 
 @Repository
@@ -74,6 +75,23 @@ public class StudentDAOMybatis implements StudentDAO{
 	public int updateMajor(StudentVO studentVo) {
 		return sqlSession.update(namespace+"updateMajor",studentVo);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectScore(ScoreSearchVO scoreSearchVo) {
+		return sqlSession.selectList(namespace+"selectScore",scoreSearchVo);
+	}
+
+	@Override
+	public List<String> selectSemester(String stuNo) {
+		return sqlSession.selectList(namespace+"selectSemester",stuNo);
+	}
+
+	@Override
+	public List<StudentTimeTableVO> selectTimetable(String stuNo) {
+		return sqlSession.selectList(namespace+"selectTimetable", stuNo);
+	}
 	
+	
+
 	
 }

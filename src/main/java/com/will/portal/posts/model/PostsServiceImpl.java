@@ -83,6 +83,15 @@ public class PostsServiceImpl implements PostsService{
 	public List<BoardMainVO> selectBdcodeBycategory(String categoryCode) {
 		return postsDao.selectBdcodeBycategory(categoryCode);
 	}
+
+	@Override
+	public List<PostsVO> selectPostsPrev(PostsVO vo) {
+		return postsDao.selectPostsPrev(vo);
+	}
+	@Override
+	public List<PostsVO> selectPostsNext(PostsVO vo) {
+		return postsDao.selectPostsNext(vo);
+	}
 	
 	
 }

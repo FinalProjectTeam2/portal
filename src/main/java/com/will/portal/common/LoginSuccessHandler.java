@@ -45,7 +45,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		if (user.getType().equals("ADMIN")) {
 			
-			response.sendRedirect(request.getContextPath() + "/admin/adminMain");
+			response.sendRedirect(request.getContextPath() + "/index");
 			return;
 			
 		}else if(user.getType().equals("PROFESSOR")) {

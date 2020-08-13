@@ -78,17 +78,17 @@ body {
 		<div class="divTableBody"> 
 			<div class="divTableRow"> 
 				<c:if test="${!empty list }"> 
-					<c:forEach var="TuitionStuVO" items="${list }">
+					<c:forEach var="TuitionVO" items="${list }">
 						<div class="cellColor">학부</div> 
-						<div class="divTableCell">${faculty_name}</div> 			
+						<div class="divTableCell">${map['FACULTY_NAME']}</div> 			
 						<div class="cellColor">학과</div>
-						<div class="divTableCell">${dep_name} </div> 
+						<div class="divTableCell">${map['DEP_NAME']} </div> 
 			</div> 
 			<div class="divTableRow"> 
 				<div class="cellColor">학번</div> 
-				<div class="divTableCell">${stu_no}</div> 						
+				<div class="divTableCell">${map['STU_NO']}</div> 						
 				<div class="cellColor">이름</div>
-				<div class="divTableCell">${name }</div> 
+				<div class="divTableCell">${map['NAME']}</div> 
 				
 					</c:forEach>
 				</c:if>
@@ -141,7 +141,7 @@ body {
 				<td><input type="radio"></td>
 				<td>등록금 수납</td>
 				<td>2020-03-10 ~ 2020-03-20</td>
-				<td>국민은행111-1111</td>
+				<td>${map['BANK_NAME']} ${map['ACCOUNT_NO']}</td>
 				<td>1,000,000</td>
 				<td>납부</td>
 			</tr>

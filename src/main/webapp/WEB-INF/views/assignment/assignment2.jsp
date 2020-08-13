@@ -46,7 +46,7 @@ const countDownTimer = function (id, date) {
 <style type="text/css">
 .attendance {
 	margin-left: 20%;
-	margin-top: -20%;
+	margin-top: -18%;
 	width: 80%;
 	min-width: 500px;
 }
@@ -65,6 +65,10 @@ hr {
     line-height: 1.5;
     border-top: 1px solid #ccc;
     margin: 20px 10px;
+}
+
+.table th {
+	background: #e6f3ff;
 }
 
 .divpage {
@@ -99,7 +103,6 @@ hr {
 					<th>제출자</th>
 					<th>제출여부</th>
 					<th>채점</th>
-					<th>비고</th>
 			</thead>
 			<tbody>
 				<tr>
@@ -110,7 +113,6 @@ hr {
 					<td>홍길동</td>	
 					<td>미제출</td>
 					<td>F</td>	
-					<td><input type="button" value="수정"></td>
 				</tr>
 			</tbody>
 		</table>

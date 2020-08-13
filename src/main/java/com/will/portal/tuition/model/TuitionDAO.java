@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface TuitionDAO {
 	List<TuitionStuVO> selectStu(String officialNo);
-	List<TuitionVO> tuitionD();
+	List<TuitionVO> selectTuition(String officialNo);
 }

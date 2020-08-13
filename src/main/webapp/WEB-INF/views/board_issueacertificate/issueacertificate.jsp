@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/certificate.css'/>">
 <style>
 	 
@@ -10,12 +12,13 @@
 </style>
 
 <script type="text/javascript">
-	
+var totalAmount=0;
 function tui1(){
 	$('#tuition1').show();	
 	$('#issue').attr('class', 'off');
 	$('#tuition2').hide();
 	$('#info').attr('class', 'on');
+	$('#summery').hide();
 }
 
 function tui2(){
@@ -24,11 +27,19 @@ function tui2(){
 	$('#tuition2').show();
 	$('#issue').attr('class', 'on');
 }
-
+	var selectStr = "<select class='form-control' style='width: 72%;'>"+
+					"<option value='none'>----증명서를 선택해 주세요----</option>"+
+					"<option value='certEnroll'>재학증명서</option>"+
+					"<option value='certGradu'>졸업증명서</option>"+
+					"<option value='certEnroll2'>재적증명서</option>"+
+					"<option value='certAward'>장학증명서</option>"+
+				"</select>";
+	
 	
 	$(function(){
-		$('#tuition2').hide();
 		
+		$('#tuition2').hide();
+		$('#summery').hide();
 		$('.on').click(function(){
 			tui1();
 		});
@@ -37,7 +48,121 @@ function tui2(){
 			tui2();
 		});
 		
+		
+		$('.minus').click(function(){
+			if($('.qty').val() <= 1){
+				alert('수량은 1매이상 선택하셔야 합니다.');
+				event.preventDefault();
+			}else{
+				$('.qty').val($('.qty').val()-1);
+			}
+		});
+		
+		
+		$('.plus').click(function(){
+				$('.qty').val(($('.qty').val()*1)+1);
+		});
+		
+		$('#confirm').click(function(){
+			if($('.form-control option:selected').val()=='none'){
+				alert('증명서 종류를 선택해야 합니다.');
+				event.preventDefault();
+			}else{
+				totalAmount=$('.qty').val()*1000;
+				$('#certType').text($('.form-control option:selected').text());
+				$('#certPrice').text(1000);
+				$('#certQty').text($('.qty').val());
+				$('#totalPrice').text($('.qty').val()*1000);
+				$('#summery').show();
+			}
+		
+		});
+		
+		$('#pay').click(function(){
+			payment();
+		});
+		getSuccess();
 	});
+
+function getSuccess() {
+	$.ajax({
+		url : "<c:url value='/payments/getSeccess'/>",
+		type : "get",
+		dataType : "json",
+		success : function(res) {
+			var data = "";
+			if(res.length > 0){
+				$.each(res, function(idx, item) {
+					data += '<tr class="'+item.no+'">'
+						+ '<td>'+(idx+1)+'</td>'
+						+'<td>' + item.certName + '</td>'
+						+'<td>'+ moment(item.regDate).format('YYYY-MM-DD')+'</td>';
+					if(item.isPrint == 'N'){
+						data += '<td><button type="button" class="btn btn-primary btn-sm print">발급</button></td>';
+					}else{
+						data += '<td><button type="button" disabled="disabled" class="btn btn-secondary btn-sm print">발급</button></td>';
+					}
+					data +='</tr>';
+				});
+			}else{
+				data += '<tr><td colspan="4" style="text-align: center">발급된 증명서가 없습니다.</td></tr>';
+			}
+			$("#tableDiv table tbody").html(data);
+		}
+	});
+}
+	
+function payment(){
+	IMP.init('imp78464192'); // 아임포트 관리자 페이지의 "시스템 설정" > "내 정보" 에서 확인 가능
+	
+	IMP.request_pay({
+	    pg : 'html5_inicis', //ActiveX 결제창은 inicis를 사용
+	    pay_method : 'card', //card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
+	    merchant_uid : 'merchant_' + new Date().getTime(), //상점에서 관리하시는 고유 주문번호를 전달
+	    name : $('.form-control option:selected').text(),
+	    amount : totalAmount,
+	    buyer_email : 'iamport@siot.do',
+	    buyer_name : '구매자이름',
+	    buyer_tel : '010-1234-5678', //누락되면 이니시스 결제창에서 오류
+	    buyer_addr : '서울특별시 강남구 삼성동',
+	    buyer_postcode : '123-456'
+	}, function(rsp) {
+	    if ( rsp.success ) {
+	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+	    	$.ajax({
+	    		url: "<c:url value='/payments/complete'/>", //cross-domain error가 발생하지 않도록 주의해주세요
+	    		type: 'post',
+	    		dataType : "json",
+	    		data: {
+		    		imp_uid : rsp.imp_uid,
+		    		//기타 필요한 데이터가 있으면 추가 전달
+		    		"certName":$('.form-control option:selected').text(),
+		    		"qty":$('.qty').val(),
+		    		"stuNo":'${principal.officialNo}',
+		    		"certCode":$('.form-control option:selected').val()
+	    		},
+	    		success : function(data) {
+	    			//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+	    			if ( data.cnt > 0 ) {
+		    			alert('결제가 완료되었습니다.');
+		    			window.open("<c:url value='/payments/complete?no='/>"+data.no, "결제완료",
+		    					"width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		    			getSuccess();
+		    		} else {
+		    			alert('결제에 실패하였습니다.');
+		    			//[3] 아직 제대로 결제가 되지 않았습니다.
+		    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+		    		}
+				}
+	    	});
+	    } else {
+	        var msg = '결제에 실패하였습니다.';
+	        msg += '에러내용 : ' + rsp.error_msg;
+	        
+	        alert(msg);
+	    }
+	});
+}
 </script>
 
 
@@ -370,12 +495,56 @@ function tui2(){
 		</div>
 		<div id="tuition2">
 			<article class="ct_area">
-				<h3 class="tit_line mt0">증명서 발급</h3>
-				<select class="form-control" id="subjCode" style="width: 72%;">
-					<option></option>
-				</select>
-				
-				<h4 class="tit_blue">발급 증명서 현황</h4>
+				<div class="apply" style="float: left;width: 45%">
+					<h3 class="tit_line mt0">증명서 발급</h3>
+					<div id="selection">
+						<h5>증명서 종류</h5>
+						<select class='form-control' style='width: 80%;'>
+							<option value='none' style='text-align: center;'>----증명서를 선택해 주세요----</option>
+							<option value='certEnroll'>재학증명서</option>
+							<option value='certGradu'>졸업증명서</option>
+							<option value='certEnroll2'>재적증명서</option>
+							<option value='certAward'>장학증명서</option>
+						</select><br>
+						<h5>수량</h5>
+						<img class='minus' style="width: 30px; height: auto;margin-top: -3px" src="<c:url value='/resources/images/minusIcon.png'/>">
+						<input type='text' value='1' class='qty' size='2'> 매
+						<img class='plus' style="width: 35px; height: auto;" src="<c:url value='/resources/images/plusIcon.png'/>">
+						
+					</div><br>
+					<button id="confirm" style="width: 80%">선택 완료</button>
+					<div id="summery">
+						<hr style="border: solid 2px #CCC;width: 40%;float: left;">
+						<p style="clear: both;">증명서 종류 : <span id='certType'></span></p>
+						<p>발급 비용 : <span id='certPrice'></span>원</p>
+						<p>증명서 매수 : <span id='certQty'></span>매</p>
+						<hr style="border: dashed 0.5px black;width: 40%;float: left;">
+						<p style="clear: both;">총 비용 : <span id='totalPrice'></span>원</p>
+						<br>
+						<button id="pay" style="width: 80%">결제하기</button>
+					</div>
+				</div>
+				<div class="table table-striped" id="tableDiv" style="float: left;width: 45%; margin-left: 5%">
+					<h4 class="tit_blue">발급 증명서 현황</h4>
+					<c:set var='no' value="1"/>
+					<table border='1'>
+						<colgroup>
+							<col width="20%">
+							<col width="20%">
+							<col width="20%">
+							<col width="20%">
+						</colgroup>
+						<thead>
+						<tr>
+							<th>순번</th>
+							<th>증명서 종류</th>
+							<th>발급일자</th>
+							<th>발급</th>
+						</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
 			</article>
 		</div>
 		<%@ include file="../inc/bottom.jsp"%>

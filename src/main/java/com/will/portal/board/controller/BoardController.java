@@ -26,6 +26,7 @@ import com.will.portal.board.model.BoardSearchVO;
 import com.will.portal.board.model.BoardService;
 import com.will.portal.board.model.BoardVO;
 import com.will.portal.category.model.CategoryListVO;
+import com.will.portal.category.model.CategoryVO;
 import com.will.portal.common.FileUploadUtil;
 import com.will.portal.common.PaginationInfo;
 import com.will.portal.common.Utility;
@@ -49,7 +50,7 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-
+	
 	@Autowired
 	private FileUploadUtil fileUploadUtil;
 
@@ -243,10 +244,17 @@ public class BoardController {
 				vo = postsService.SelectByCodeP(postNo);
 			}
 		}
-
 		logger.info("게시판 상세보기 조회 결과 vo={}", vo);
+		
+		List<PostsVO> prev = postsService.selectPostsPrev(vo.getPostsVo());
+		List<PostsVO> next = postsService.selectPostsNext(vo.getPostsVo());
 
+		CategoryVO cateVo = boardService.selectCateByCode(vo.getBoardVo().getCategoryCode());
+		
 		model.addAttribute("vo", vo);
+		model.addAttribute("next", next);
+		model.addAttribute("prev", prev);
+		model.addAttribute("cateVo", cateVo);
 	}
 
 	@RequestMapping("/download")

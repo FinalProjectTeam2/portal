@@ -114,9 +114,9 @@
 					var syllabus=td.eq(9).text();
 					if(count>=personnel){
 						
-					 	alert('정원초과 다른 강의를 선택하세요.');
-					 	return;
-					}else{
+					 /* 	alert('정원초과 다른 강의를 선택하세요.');
+					 	return; 
+					}else{*/
 						$.ajax({
 							url:"<c:url value='/registration/insertReg'/>",
 							data:{

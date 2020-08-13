@@ -25,7 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,12 +47,15 @@ import com.will.portal.phoneBook.model.PhoneBookVO;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.regi_timetable.model.Regi_timetableVO;
+import com.will.portal.student.model.StudentService;
+import com.will.portal.student.model.StudentTimeTableVO;
 import com.will.portal.student.model.StudentVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subj_type.model.Subj_typeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.subject.model.SubjectService;
 import com.will.portal.subject.model.SubjectVO;
+import com.will.portal.timetable.model.TimetableVO;
 
 @Controller
 public class LectureController {
@@ -61,6 +66,8 @@ public class LectureController {
 	private EvaluationService evaluationServ;
 	@Autowired
 	private SubjectService subjectServ;
+	@Autowired
+	private StudentService stuService;
 	
 	@RequestMapping("/lecture/openLecture_bak")
 	public void openLecture_bak() {
@@ -511,11 +518,6 @@ public class LectureController {
 		return list;
 	}
 	
-	@RequestMapping("/lecture/studentTT")
-	public String studentTT() {
-		logger.info("studentTT 화면");
-		return "lecture/studentTT";
-	}
 	
 	@RequestMapping(value = "/lecture/inputScoreByExcel", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -626,7 +628,7 @@ public class LectureController {
 		for(int i = 0; i < arrList.size(); i++) {
 			
 			EvaluationVO vo = new EvaluationVO();
-			logger.info("\narrList.get({})={}",i,arrList.get(i));
+			logger.info("arrList.get({})={}",i,arrList.get(i));
 			String[] arr= arrList.get(i).split(",");
 			
 			vo.setSubCode(arr[0]);
@@ -732,6 +734,27 @@ public class LectureController {
 		
 		return result;
 		
+	}
+	
+	
+	
+	@RequestMapping(value = "/lecture/studentTT", method = RequestMethod.GET)
+	public String studentTT() {
+		logger.info("studentTT 화면");
+		
+		
+		return "lecture/studentTT";
+	}
+	
+	@RequestMapping(value = "/lecture/studentTT", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<StudentTimeTableVO> studentTT(Principal principal){
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String stuNo=user.getOfficialNo();
+		
+		List<StudentTimeTableVO> list=stuService.selectTimetable(stuNo);
+		logger.info("list.size={}", list.size());
+		return list;
 	}
 	
 }

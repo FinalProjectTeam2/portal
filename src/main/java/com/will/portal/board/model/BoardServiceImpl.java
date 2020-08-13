@@ -36,9 +36,42 @@ public class BoardServiceImpl implements BoardService{
 	public int countByCateCode(String code) {
 		return boardDao.countByCateCode(code);
 	}
+	@Override
+	public int countByBdCode(String code) {
+		return boardDao.countByBdCode(code);
+	}
 
 	@Override
 	public int insertCate(CategoryVO vo) {
 		return boardDao.insertCate(vo);
+	}
+	@Override
+	public int updateCate(CategoryVO vo) {
+		return boardDao.updateCate(vo);
+	}
+
+	@Override
+	public CategoryVO selectCateByCode(String code) {
+		return boardDao.selectCateByCode(code);
+	}
+
+	@Override
+	public int deleteCate(String ctCode) {
+		return boardDao.deleteCate(ctCode);
+	}
+	
+	@Override
+	public int insertBoard(BoardVO vo) {
+		return boardDao.insertBoard(vo);
+	}
+	
+	@Override
+	public int updateBoard(BoardVO vo) {
+		return boardDao.updateBoard(vo);
+	}
+
+	@Override
+	public int deleteBoard(String bdCode) {
+		return boardDao.deleteBoard(bdCode);
 	}
 }
