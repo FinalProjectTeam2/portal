@@ -108,6 +108,13 @@ function getSuccess() {
 				data += '<tr><td colspan="4" style="text-align: center">발급된 증명서가 없습니다.</td></tr>';
 			}
 			$("#tableDiv table tbody").html(data);
+			
+			$(".print").click(function() {
+				var no = $(this).parent().parent().attr( 'class' );
+				window.open("<c:url value='/certificate/test?no='/>"+no, "결제완료",
+				"width=490, height=340, left=300, top=300, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+				getSuccess();
+			});
 		}
 	});
 }
@@ -146,7 +153,7 @@ function payment(){
 	    			if ( data.cnt > 0 ) {
 		    			alert('결제가 완료되었습니다.');
 		    			window.open("<c:url value='/payments/complete?no='/>"+data.no, "결제완료",
-		    					"width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		    					"width=490, height=340, left=300, top=300, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
 		    			getSuccess();
 		    		} else {
 		    			alert('결제에 실패하였습니다.');

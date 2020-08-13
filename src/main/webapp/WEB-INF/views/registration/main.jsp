@@ -74,10 +74,10 @@
 							$.each(res.list, function(idx, item){
 						
 							str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
-							str+="<td role='gridcell' style='height: 0px; width: 7%;'><button class='applyBt'>신청</button></td>";
+							str+="<td role='gridcell' style='height: 0px; width: 7%;'><button type='button' class='applyBt'>신청</button></td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 18%; text-align: center'>"+item.subjName+"</td>";
-							str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+item.count/item.credit + "/" +item.personnel+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+(item.count/item.credit)+ "/" +item.personnel+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.profName+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 5%;'>"+item.credit+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
@@ -114,9 +114,9 @@
 					var syllabus=td.eq(9).text();
 					if(count>=personnel){
 						
-					 /* 	alert('정원초과 다른 강의를 선택하세요.');
+					alert('정원초과 다른 강의를 선택하세요.');
 					 	return; 
-					}else{*/
+					}else{
 						$.ajax({
 							url:"<c:url value='/registration/insertReg'/>",
 							data:{
