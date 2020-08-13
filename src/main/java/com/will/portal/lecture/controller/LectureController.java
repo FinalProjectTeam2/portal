@@ -805,9 +805,8 @@ public class LectureController {
 			contents = list.get(i).getContent();
 			contentsList.add(contents);
 		}
-		
 		logger.info("contentList= {}",contentsList);
 		model.addAttribute("contentsList", contentsList);
-		return "";//팝업창 새로만들기
+		return "lecture/evalContents";//팝업창 새로만들기
 	}
 }
