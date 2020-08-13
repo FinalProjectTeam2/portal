@@ -19,4 +19,5 @@ public interface RegistrationDAO {
 	int deleteReg(Map<String, Object> map);
 	int insertEval(Map<String, Object> map);
 	int deleteEval(Map<String, Object> map);
+	int openSubjCount(RegistrationSearchVO vo);
 }

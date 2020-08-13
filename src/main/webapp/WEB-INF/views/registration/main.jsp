@@ -3,10 +3,16 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/regi_lec.css'/>">
+<style type="text/css">
+#divPage{
+	margin: 0 auto;
+    display: table;
+}
+</style>
 <script type="text/javascript">
 	$(function(){
 		getDate();
-		subjList();
+		subjList(1);
 		getRegistList()
 		//학부 선택시 해당되는 학과만 나오도록 함
 		$('#p_daehak').change(function(){
@@ -33,12 +39,52 @@
 
 		//검색 버튼 눌렀을때
 		$('#selectBt').click(function(){
-			subjList();
+			subjList(1);
 		});
 	});
 
+	function pageMake(obj) {
+		var pagingInfo = obj.pagingInfo;
+
+		var str = "";
+
+		str += '<nav aria-label="Page navigation example">'
+				+ '<ul class="pagination">';
+		//이전블록
+		if (pagingInfo.firstPage > 1) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="subjList('
+					+ (pagingInfo.firstPage - 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
+		}
+
+		//페이지 처리
+		for (var i = pagingInfo.firstPage; i <= pagingInfo.lastPage; i++) {
+			if (i == pagingInfo.currentPage) {
+				str += '<li class="page-item"><a class="page-link" '
+						+ 'style="background: skyblue; color: white;">'
+						+ i + '</a></li>';
+			} else {
+				str += '<li class="page-item"><a class="page-link" onclick="subjList('
+						+ i + ')"' + ' href="#">' + i + '</a></li>';
+			}
+		}
+
+		//다음 블록
+		if (pagingInfo.lastPage < pagingInfo.totalPage) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="subjList('
+					+ (pagingInfo.lastPage + 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
+		}
+
+		str += '</ul></nav>';
+
+		$("#divPage").html(str);
+	}
+	
 	//수강신청 모든 리스트(검색기능 사용시 검색할 내용만 sort)
-	function subjList(){
+	function subjList(currentPage){
 		var faculty=$('#p_daehak').val();
 		var department=$('#p_major').val();
 		var subjName=$('#p_subjt').val();
@@ -56,7 +102,8 @@
 				"time1":time1,
 				"time2":time2,
 				"profName":profName,
-				"openSubCode":openSubCode
+				"openSubCode":openSubCode,
+				currentPage : currentPage
 			},
 			dataType:"json",
 			type:"post",
@@ -65,6 +112,7 @@
 				var count=res.count;
 				var checkNull=res.checkNull;
 				console.log(checkNull);
+				pageMake(res);
 				$('#meta_1 em').text(count);
 					if(checkNull=='Y'){
 						str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
@@ -522,11 +570,15 @@
 								<tbody>
 
 								</tbody>
+								<tfoot>
+								</tfoot>
 							</table>
 						</div>
 					</div>
 				</div>
-				<div class="ui-jqgrid-resize-mark" id="rs_mgridLecture">&nbsp;</div>
+				<div class="ui-jqgrid-resize-mark" id="rs_mgridLecture">&nbsp;
+				 <div id="divPage"></div>
+				 </div>
 			</div>
 
 			<div style="margin: 20px; margin-left: 0;">

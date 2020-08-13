@@ -104,7 +104,7 @@ $(function(){
 					    		 dialog.dialog( "close" );
 					    		 timeTable();
 					    		 updateTable();
-					    		
+					    		location.reload();
 					    	 },
 					    	 error:function(xhr, status, error){
 					    		 alert(error);
@@ -133,14 +133,15 @@ $(function(){
 	        }
 	      },
 	      close: function() {
-	        form[ 0 ].reset();
+	    	  form[ 0 ].reset();
 	        allFields.removeClass( "ui-state-error" );
 	      }
 	    });
 	 
 	    form = dialog.find( "form" ).on( "submit", function( event ) {
-	      event.preventDefault();
+	      
 	      addSubjet();
+	      return false;
 	    });
 	 
 	    $( ".input" ).on( "click", function() {

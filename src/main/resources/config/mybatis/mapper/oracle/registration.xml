@@ -4,108 +4,192 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.registration">
 	<select id="selectFaculty" resultType="facultyVo">
-		select * from faculty order by faculty_name
+		select * from faculty
+		order by faculty_name
 	</select>
-	
-	<select id="selectDepartment" resultType="departmentVo" parameterType="int">
-		select * from department 
-			<if test="value!=0">
-				where faculty_no=#{facultyNo}
-			</if>
+
+	<select id="selectDepartment" resultType="departmentVo"
+		parameterType="int">
+		select * from department
+		<if test="value!=0">
+			where faculty_no=#{facultyNo}
+		</if>
 		order by dep_name
 	</select>
-	
-	<select id="openSubjList" resultType="openSubjListVo" parameterType="registrationSearchVo">
-		select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus, count(r.stu_no) as count
+
+	<select id="openSubjList" resultType="openSubjListVo"
+		parameterType="registrationSearchVo">
+		select * from
+		(select C.* from 
+		(select rownum as RNUM,B.* from
+		(select A.*, length(short_names) - length(replace(short_names, ',', ''))
+		CHAR_COUNT
+		from
+		(select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit,
+		rt.short_names, cr.classroom_name, st.type, sy.syllabus,
+		count(r.stu_no) as count
 		from open_subj o join subject s
-		on o.subj_code=s.subj_code
+		on
+		o.subj_code=s.subj_code
 		join professor p
 		on s.prof_no=p.prof_no
-		join subj_time stime
+		join
+		subj_time stime
 		on stime.open_sub_code=o.open_sub_code
-		join regi_timetable rt
+		join
+		regi_timetable rt
 		on rt.open_sub_code=o.open_sub_code
 		join classroom cr
 		on cr.classroom_code=stime.classroom_code
 		join subj_type st
-		on st.type_code=s.type_code
+		on
+		st.type_code=s.type_code
 		join syllabus sy
-		on sy.open_sub_code=o.open_sub_code
+		on
+		sy.open_sub_code=o.open_sub_code
 		left join registration r
-        on r.sub_code=o.open_sub_code
-        join department d
-        on d.dep_no=substr(o.open_sub_code, 1, 3)
-        <where>
-        	<if test="facultyNo!=0">and d.faculty_no=#{facultyNo}</if>
-        	<if test="depNo!=0">and d.dep_no=#{depNo}</if>
-        	<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
-        	<if test="time1!='all' and time2=='all'">and rt.short_names like '%' || #{time1} || '%'</if>
-        	<if test="time2!='all' and time1=='all'">and rt.short_names like '%' || #{time2} || '%'</if>
-        	<if test="time1!='all' and time2!='all'">and rt.short_names like '%' || #{time} || '%'</if>
-        	<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
-        	<if test="openSubCode!=null">and o.open_sub_code like '%' || #{openSubCode} || '%'</if>
-        </where>
-		group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus
+		on r.sub_code=o.open_sub_code
+		join department d
+		on d.dep_no=substr(o.open_sub_code, 1, 3)
+		<where>
+			<if test="facultyNo!=0">and d.faculty_no=#{facultyNo}</if>
+			<if test="depNo!=0">and d.dep_no=#{depNo}</if>
+			<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
+			<if test="time1!='all' and time2=='all'">and rt.short_names like '%' || #{time1} || '%'</if>
+			<if test="time2!='all' and time1=='all'">and rt.short_names like '%' || #{time2} || '%'</if>
+			<if test="time1!='all' and time2!='all'">and rt.short_names like '%' || #{time} || '%'</if>
+			<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
+			<if test="openSubCode!=null">and o.open_sub_code like '%' || #{openSubCode} || '%'
+			</if>
+		</where>
+		group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name,
+		s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus)A)B
+		where credit = char_count + 1)C)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
-	
-	
-	
-	<select id="selectRegisted" parameterType="string" resultType="string">
+	<select id="openSubjCount" resultType="int"
+		parameterType="registrationSearchVo">
+		select count(*) from
+		(select C.* from 
+		(select rownum as RNUM,B.* from
+		(select A.*, length(short_names) - length(replace(short_names, ',', ''))
+		CHAR_COUNT
+		from
+		(select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit,
+		rt.short_names, cr.classroom_name, st.type, sy.syllabus,
+		count(r.stu_no) as count
+		from open_subj o join subject s
+		on
+		o.subj_code=s.subj_code
+		join professor p
+		on s.prof_no=p.prof_no
+		join
+		subj_time stime
+		on stime.open_sub_code=o.open_sub_code
+		join
+		regi_timetable rt
+		on rt.open_sub_code=o.open_sub_code
+		join classroom cr
+		on cr.classroom_code=stime.classroom_code
+		join subj_type st
+		on
+		st.type_code=s.type_code
+		join syllabus sy
+		on
+		sy.open_sub_code=o.open_sub_code
+		left join registration r
+		on r.sub_code=o.open_sub_code
+		join department d
+		on d.dep_no=substr(o.open_sub_code, 1, 3)
+		<where>
+			<if test="facultyNo!=0">and d.faculty_no=#{facultyNo}</if>
+			<if test="depNo!=0">and d.dep_no=#{depNo}</if>
+			<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
+			<if test="time1!='all' and time2=='all'">and rt.short_names like '%' || #{time1} || '%'</if>
+			<if test="time2!='all' and time1=='all'">and rt.short_names like '%' || #{time2} || '%'</if>
+			<if test="time1!='all' and time2!='all'">and rt.short_names like '%' || #{time} || '%'</if>
+			<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
+			<if test="openSubCode!=null">and o.open_sub_code like '%' || #{openSubCode} || '%'
+			</if>
+		</where>
+		group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name,
+		s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus)A)B
+		where credit = char_count + 1)C)
+	</select>
+
+
+
+	<select id="selectRegisted" parameterType="string"
+		resultType="string">
 		select * from registration where stu_no=#{value}
 	</select>
-	
-	
-	
-	<select id="registedList" parameterType="list" resultType="openSubjListVo">
-        <if test="list!=null">
-		select o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus, count(r.stu_no) as count
-		from open_subj o join subject s
-		on o.subj_code=s.subj_code
-		join professor p
-		on s.prof_no=p.prof_no
-		join subj_time stime
-		on stime.open_sub_code=o.open_sub_code
-		join regi_timetable rt
-		on rt.open_sub_code=o.open_sub_code
-		join classroom cr
-		on cr.classroom_code=stime.classroom_code
-		join subj_type st
-		on st.type_code=s.type_code
-		join syllabus sy
-		on sy.open_sub_code=o.open_sub_code
-		left join registration r
-        on r.sub_code=o.open_sub_code
-        	where r.sub_code in
-        	<foreach collection="list" item="item" index="index"
-	   			open="(" separator="," close=")">
-	   			#{item}
-	   		</foreach>
-		group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name, s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus
-        </if>
-		
+
+
+
+	<select id="registedList" parameterType="list"
+		resultType="openSubjListVo">
+		<if test="list!=null">
+			select o.open_sub_code, s.subj_name, s.personnel, p.prof_name,
+			s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus,
+			count(r.stu_no) as count
+			from open_subj o join subject s
+			on o.subj_code=s.subj_code
+			join professor p
+			on s.prof_no=p.prof_no
+			join subj_time stime
+			on stime.open_sub_code=o.open_sub_code
+			join regi_timetable rt
+			on rt.open_sub_code=o.open_sub_code
+			join classroom cr
+			on cr.classroom_code=stime.classroom_code
+			join subj_type st
+			on st.type_code=s.type_code
+			join syllabus sy
+			on sy.open_sub_code=o.open_sub_code
+			left join registration r
+			on r.sub_code=o.open_sub_code
+			where r.sub_code in
+			<foreach collection="list" item="item" index="index" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+			group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name,
+			s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus
+		</if>
+
 	</select>
-	
+
 	<insert id="insertReg" parameterType="hashMap">
-		insert into registration(sub_code, stu_no, classification)
-		values(#{openSubCode}, #{stuNo}, (select type_code from subj_type where type=#{type}))
+		insert into
+		registration(sub_code, stu_no, classification)
+		values(#{openSubCode},
+		#{stuNo}, (select type_code from subj_type where type=#{type}))
 	</insert>
 	<insert id="insertEval" parameterType="hashMap">
-		insert into evaluation(sub_code, stu_no, classification)
-		values(#{openSubCode}, #{stuNo}, (select type_code from subj_type where type=#{type}))
+		insert into
+		evaluation(sub_code, stu_no, classification)
+		values(#{openSubCode},
+		#{stuNo}, (select type_code from subj_type where type=#{type}))
 	</insert>
-	
-	<select id="countForDup" parameterType="hashMap" resultType="int">
-		select count(*) from registration where sub_code=#{openSubCode} and stu_no=#{stuNo}
+
+	<select id="countForDup" parameterType="hashMap"
+		resultType="int">
+		select count(*) from registration where
+		sub_code=#{openSubCode} and stu_no=#{stuNo}
 	</select>
-	
+
 	<delete id="deleteReg" parameterType="hashMap">
-		delete from registration where stu_no=#{stuNo} and sub_code=#{openSubCode}
+		delete from registration
+		where stu_no=#{stuNo} and sub_code=#{openSubCode}
 	</delete>
-	
+
 	<delete id="deleteEval" parameterType="hashMap">
-		delete from evaluation where stu_no=#{stuNo} and sub_code=#{openSubCode}
+		delete from evaluation
+		where stu_no=#{stuNo} and sub_code=#{openSubCode}
 	</delete>
-	
+
 </mapper>
 
 
