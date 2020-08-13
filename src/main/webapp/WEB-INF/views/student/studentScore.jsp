@@ -15,7 +15,7 @@ table.box2 td {
 .colspan{
 	border: none !important;
 	font-weight: bold;
-	padding: 25px !important;
+	padding: 50px !important;
 }
 </style>
 
@@ -23,15 +23,15 @@ table.box2 td {
 	<div class="container">
 		<div id="adminMngMem">
 			<h2>성적 조회</h2>
-			<form name="frmList" method="post" action="<c:url value='/admin'/>">
+			<form name="frmList" method="post">
 				<div class="divRight">
-				<select name="" id="searchSelect">
+				<select name="semester" id="searchSelect">
 						<option value="">전체학기</option>
-						<c:forEach var="semester" items="${slist }">
-						<option value="">${semester }</option>
-						
+						<c:if test="${!empty list }">
+						<c:forEach var="i" begin="0" step="1" end="${fn:length(slist)-1}">
+						<option value="${slist[i] }">${slist2[i]}</option>
 						</c:forEach>
-						<option value="">2019 2학기</option>
+						</c:if>
 					</select> 
 					<button class="btCustom btn btn-primary btn-lg login-button"
 						id="btSearch">조회</button>
@@ -61,6 +61,7 @@ table.box2 td {
 							<tbody>					
 								<c:set var="cre" value="0"/>
 								<c:set var="avg" value="0"/>
+								<c:set var="total" value="0"/>
 								<c:forEach var="map" items="${list}">
 								<tr class="align_center">
 									<td style="border-left: none;">
@@ -87,69 +88,53 @@ table.box2 td {
 									<c:choose>
 									<c:when test="${score>=95}">
 									A+
+									<c:set var="grade" value="4.50"/>
 									</c:when>
 									<c:when test="${score>=90}">
 									A
+									<c:set var="grade" value="4.00"/>
 									</c:when>
 									<c:when test="${score>=85}">
 									B+
+									<c:set var="grade" value="3.50"/>
 									</c:when>
 									<c:when test="${score>=80}">
 									B
+									<c:set var="grade" value="3.00"/>
 									</c:when>
 									<c:when test="${score>=75}">
 									C+
+									<c:set var="grade" value="2.50"/>
 									</c:when>
 									<c:when test="${score>=70}">
 									C
+									<c:set var="grade" value="2.00"/>
 									</c:when>
-									<%-- <c:when test="${score=='P' }">
-									P
-									</c:when> --%>
+									<c:when test="${score>=65}">
+									D+
+									<c:set var="grade" value="1.50"/>
+									</c:when>
+									<c:when test="${score>=60}">
+									D
+									<c:set var="grade" value="1.00"/>
+									</c:when>
 									<c:otherwise>
 									F
+									<c:set var="score" value="0"/>
 									</c:otherwise>
 									</c:choose>
 									</td>
 								</tr>
+								<c:set var="total" value="${total+(map['CREDIT']*grade) }"/>
 								</c:forEach>
 								<tr>
-									<td colspan="7" class="colspan"><p>취득학점 : ${cre} 평점 : 4.5</p></td>
+									<c:if test="${!empty list }">
+									<td colspan="7" class="colspan"><span>취득학점&nbsp;:&nbsp; ${cre}&nbsp;&nbsp;&nbsp; 평점&nbsp; : &nbsp;${total/cre}</span></td>
+									</c:if>
+									<c:if test="${empty list }">
+									<td colspan="7" class="colspan"><span>수강내역이 없습니다.</span></td>
+									</c:if>
 								</tr>
-								<tr class="align_center">
-									<td style="border-left: none;">2019</td>
-									<td>1학기</td>
-									<td>전공필수</td>
-									<td>인류가 멸망한 이유에 대한 연구 세미나</td>
-									<td>타노스</td>
-									<td>3</td>
-									<td style="border-right: none;">A+</td>
-								</tr>
-								<tr class="align_center">
-									<td style="border-left: none;">2019</td>
-									<td>1학기</td>
-									<td>전공선택</td>
-									<td>인공지능 임베디드 프로그램 제작</td>
-									<td>토니 스타크</td>
-									<td>3</td>
-									<td style="border-right: none;">A+</td>
-								</tr>
-								<tr class="align_center">
-									<td style="border-left: none;">2019</td>
-									<td>1학기</td>
-									<td>일반교양</td>
-									<td>재미있는 곤충 채집</td>
-									<td>피터 파커</td>
-									<td>2</td>
-									<td style="border-right: none;">A+</td>
-								</tr>
-								<tr>
-									<td colspan="7" class="colspan">취득학점 : 8 &nbsp; 평점 : 4.5</td>
-								</tr>
-								<%-- 		<c:set var="idx" value="${idx+1 }" />
-								</c:forEach>
-								<!-- 반복 끝 -->
-							</c:if> --%>
 							</tbody>
 						</table>
 					</div>

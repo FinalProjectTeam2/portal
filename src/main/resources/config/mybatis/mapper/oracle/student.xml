@@ -167,13 +167,24 @@
 		where stu_no=#{stuNo}
 	</update>
 
-	<select id="selectScore" resultType="map">
+	<select id="selectScore" resultType="map"
+		parameterType="scoreSearchVO">
 		select * from score_view
+		where stu_no=#{stuNo} and total_grade is not null
+		<if test="semester == null or semester == ''">
+			order by open_date
+		</if>
+		<if test="semester != null and semester != ''">
+			and extract(year from open_date) || extract(month from
+			open_date)=#{semester}
+		</if>
 		<!--where -->
 	</select>
-	<select id="selectSemester" resultType="string">
+	<select id="selectSemester" resultType="string"
+		parameterType="string">
 		select distinct extract(year from open_date) || extract(month from
-		open_date) from score_view
+		open_date) from (select open_date from score_view where
+		stu_no=#{stuNo})
 		<!--where -->
 	</select>
 </mapper>
