@@ -38,7 +38,7 @@
 		avg(q4) "avgQ4",avg(q5) "avgQ5",avg(q6) "avgQ6",avg(q7) "avgQ7",avg(q8) "avgQ8"
 		from subj_eval 
 		group by sub_code
-		having sub_code=#{subCode};
+		having sub_code=#{subCode}
 	</select>
 	
 	<resultMap type="AllSubjAvgVO" id="selectBySubCodeResultMap">
