@@ -35,13 +35,13 @@
 		</div>
 		<div style="margin-bottom: 10px;">
 			<label class="lecLab">강의명 : </label>
-			<span>dd</span>
+			<span>${map['SUBJ_NAME'] }</span>
 			<br>
 			<label class="lecLab">담당교수 : </label>
-			<span>dd</span>
+			<span>${map['PROF_NAME'] }</span>
 		</div>
 		<form id="evalForm" name="evalForm" method="post" action="<c:url value='/student/subjEval' />"><!-- studentController -->
-			<input type="hidden" name="subjCode" value="MRC-111-101">
+			<input type="hidden" name="subjCode" value="${param.subjCode }">
 	   	<ul>
 	   		<li>
 				<label>Q1. 나는 수업에 적극적으로 참여하였다</label>

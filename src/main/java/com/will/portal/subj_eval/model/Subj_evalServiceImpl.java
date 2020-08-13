@@ -1,6 +1,7 @@
 package com.will.portal.subj_eval.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,16 @@ public class Subj_evalServiceImpl implements Subj_evalService{
 	@Override
 	public List<AllSubjAvgVO> selectsubCodeByProfNo(String profNo) {
 		return subjEvalDao.selectsubCodeByProfNo(profNo);
+	}
+
+	@Override
+	public String selectEvalFlag(RegistrationVO regiVo) {
+		return subjEvalDao.selectEvalFlag(regiVo);
+	}
+
+	@Override
+	public Map<String, Object> selectProfNameBySubj(String subjCode) {
+		return subjEvalDao.selectProfNameBySubj(subjCode);
 	}
 	
 }

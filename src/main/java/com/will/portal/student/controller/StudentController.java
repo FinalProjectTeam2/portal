@@ -84,8 +84,11 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value = "/subjEval", method = RequestMethod.GET)
-	public void subjEval() {
+	public String subjEval(@RequestParam String subjCode, Model model) {
 		logger.info("강의평가 화면 보여주기");
+		Map<String, Object> map = subjService.selectProfNameBySubj(subjCode);
+		model.addAttribute("map", map);
+		return "/student/subjEval";
 	}
 	
 	@RequestMapping(value = "/subjEval", method = RequestMethod.POST)

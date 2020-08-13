@@ -2,6 +2,7 @@ package com.will.portal.subj_eval.model;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,16 @@ public class Subj_evalDAOMybatis implements Subj_evalDAO{
 	@Override
 	public List<AllSubjAvgVO> selectsubCodeByProfNo(String profNo) {
 		return sqlsession.selectList(namespace + "selectsubCodeByProfNo",profNo);
+	}
+
+	@Override
+	public String selectEvalFlag(RegistrationVO regiVo) {
+		return sqlsession.selectOne(namespace + "selectEvalFlag", regiVo);
+	}
+
+	@Override
+	public Map<String, Object> selectProfNameBySubj(String subjCode) {
+		return sqlsession.selectOne(namespace + "selectProfNameBySubj", subjCode);
 	}
 
 }

@@ -61,6 +61,17 @@
 	<select id="selectsubCodeByProfNo" parameterType="String" resultMap="selectBySubCodeResultMap">
 		select substr(subj_code,5) "SUB_CODE" from subject where prof_no =#{profNo}
 	</select>
+	
+	<select id="selectEvalFlag" parameterType="RegistrationVO" resultType="String">
+		select lecture_eval_flag from registration 
+		where sub_code = #{subCode} and stu_no =#{stuNo}
+	</select>
+	
+	<select id="selectProfNameBySubj" parameterType="String" resultType="map">
+		select subj_code,subj_name,prof_name from subject s join  professor p 
+		on s.PROF_NO=p.PROF_NO and subj_code =#{subjCode}
+	</select>
+	
 </mapper>
 
 

@@ -164,7 +164,24 @@
 				
 				$('#evalBt').click(function() {
 					var sendSubCode = $(this).parent().children('input').val();
-					location.href = "<c:url value='/student/subjEval?projCode="+sendSubCode+"'/>";/* 강의평가 페이지로 이동 */
+					$.ajax({
+						url : "<c:url value='/lecture/ajax/evalCheck'/>",
+						type : "get",
+						data : "subjCode=" + sendSubCode,
+						success : function(res) {
+							console.log(res);
+							if (res) {//Y이면
+								alert('해당 강의평가를 이미 완료하였습니다.');
+								event.preventDefault();
+							}else{
+								location.href = "<c:url value='/student/subjEval?subjCode="+sendSubCode+"'/>";/* 강의평가 페이지로 이동 */
+							}
+						},error : function(xhr,status,error){
+							alert(status + ", "+ error);
+						}
+						
+					});
+					
 				});
 				
 				/* $('html').click(function(e) {
