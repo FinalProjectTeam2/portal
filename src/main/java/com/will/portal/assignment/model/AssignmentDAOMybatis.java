@@ -22,6 +22,11 @@ public class AssignmentDAOMybatis implements AssignmentDAO{
 	public List<Distribute_assignVO> getDistAssign(String openSubCode) {
 		return sqlSession.selectList(namespace+"getDistAssign", openSubCode);
 	}
+
+	@Override
+	public int assignUpload(AssignmentVO vo) {
+		return sqlSession.insert(namespace+"assignUpload", vo);
+	}
 	
 	
 	
