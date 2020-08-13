@@ -3,6 +3,7 @@ package com.will.portal.student.model;
 import java.util.List;
 import java.util.Map;
 
+import com.will.portal.common.ScoreSearchVO;
 import com.will.portal.common.StudentSearchVO;
 import com.will.portal.official_info.model.Official_infoVO;
 
@@ -25,7 +26,9 @@ public interface StudentService {
 	int deleteStudent(String stuNo);
 	public int updateStudent(StudentVO studentVO);
 	int updateMajor(StudentVO studentVo);
-	List<Map<String, Object>> selectScore();
-	List<String> selectSemester();
+
 	List<StudentTimeTableVO> selectTimetable(String stuNo);
+	List<Map<String, Object>> selectScore(ScoreSearchVO scoreSearchVo);
+	List<String> selectSemester(String stuNo);
+
 }

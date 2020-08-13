@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.will.portal.account_info.model.Account_InfoDAO;
+import com.will.portal.common.ScoreSearchVO;
 import com.will.portal.common.StudentSearchVO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
@@ -186,13 +187,13 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectScore() {
-		return studentDao.selectScore();
+	public List<Map<String, Object>> selectScore(ScoreSearchVO scoreSearchVo) {
+		return studentDao.selectScore(scoreSearchVo);
 	}
 
 	@Override
-	public List<String> selectSemester() {
-		return studentDao.selectSemester();
+	public List<String> selectSemester(String stuNo) {
+		return studentDao.selectSemester(stuNo);
 	}
 
 	@Override
