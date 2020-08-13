@@ -1,9 +1,7 @@
 package com.will.portal.tuition.model;
 
+import java.util.Map;
 
-import java.util.List;
-
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,19 +14,14 @@ public class TuitionDAOMybatis implements TuitionDAO {
 	
 	private String namespace="config.mybatis.mapper.oracle.tuition.";
 
-
 	@Override
-	public List<TuitionStuVO> selectStu(String officialNo) {
+	public Map<String, Object> selectStuView(String officicalNo) {
 		
-		return sqlSession.selectList(namespace+"selectStu");
+		return sqlSession.selectOne(namespace+"selectStuView", officicalNo);
 	}
 
 
-	@Override
-	public List<TuitionVO> selectTuition(String officialNo) {
-		
-		return sqlSession.selectList(namespace+"selectTuition");
-	}
+
 
 
 }

@@ -2,6 +2,9 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
 <style type="text/css">
+.disclosureInformation {
+	margin-top: 2%;
+}
 #img {
 	background: #ccc;
 	width: 160px;
