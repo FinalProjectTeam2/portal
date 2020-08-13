@@ -80,7 +80,7 @@ span.fontLar {
 				<form name="frmList" method="post">
 					<input type="hidden" value="${principal.name }" id="name"
 						name="stuName">
-					<c:if test="${param.semester ==null || param.semester==''}">
+					<c:if test="${!empty slist and (param.semester ==null || param.semester=='')}">
 						<div class="divLeft">
 							<button type="submit"
 								class="btCustom btn btn-primary btn-lg login-button"
