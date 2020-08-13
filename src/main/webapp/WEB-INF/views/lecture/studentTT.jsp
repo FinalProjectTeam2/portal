@@ -4,7 +4,6 @@
 <%@ include file="../inc/top.jsp"%>
 <!-- sidebar -->
 <%@ include file="../inc/mainSidebar.jsp"%>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 <style>
    #timeTableDiv {
     margin-top:20px;
@@ -117,16 +116,78 @@
 
 </style>
 <script>
-	//$('html').click(function(e) { if(!$(e.target).hasClass("area")) { alert('영역 밖입니다.'); } });
+	
+	function getTimetable(){
+		$.ajax({
+			url:"<c:url value='/lecture/studentTT'/>",
+			type:"post",
+			dataType:"json",
+			success:function(res){
+				$.each(res, function(idx, item){
+					var subjName=item.subjName;
+					var subjCode=item.subjCode;
+					var profName=item.profName;
+					var explanation=item.explanation;
+					var classroomName=item.classroomName;
+					var credit=item.credit;
+					var tdId=item.timetableCode;
+					tdId = '#'+tdId;
+					var lectureEvalFlag=item.lectureEvalFlag;
+					console.log(item.timetableCode);
+					console.log(tdId);
+					var content= "<a class='lectureInLink'>"+
+                				"<div class='lectureIn'>"+
+                        		"<span class='lectureName'>"+subjName+"</span><br>"+
+                        		"<span class='profName'>"+profName+"</span>"+
+                        		"<input type='hidden' class='credit' value='"+credit+"'/>"+
+                        		"<input type='hidden' class='classroom' value='"+classroomName +"'/>"+
+                        		"<input type='hidden' class='explanation' value='"+explanation +"'/>"+
+                        		"<input type='hidden' class='subjCode' value='"+subjCode +"'/>"+
+                				"</div>"+
+                				"</a>";
+					
+					
+					$(tdId).html(content);
+					
+				});
+				/* <td class="input" id="WE3"></td> */
+				$('.lectureInLink').click(function() {
+					$('#pop div:eq(0) .popSubjName').html($(this).children().children('span:eq(0)').html());
+					$('#pop div:eq(1) .popCredit').html($(this).children().children('input:eq(0)').val()+'학점');
+					$('#pop div:eq(2) .popProfName').html($(this).children().children('span:eq(1)').html());
+					$('#pop div:eq(3) .popClassroom').html($(this).children().children('input:eq(1)').val());
+					$('#pop div:eq(4) .popTime').html($(this).parent().parent().children('.time').children('span').html());
+					$('#pop div:eq(5) .popExplanation').html($(this).children().children('input:eq(2)').val());
+					$('#pop div:eq(6) .subjectCode').val($(this).children().children('input:eq(3)').val());
+					$('#pop').toggleClass("hidden");
+				});
+				
+				$('#evalBt').click(function() {
+					var sendSubCode = $(this).parent().children('input').val();
+					location.href = "<c:url value='/student/subjEval?projCode="+sendSubCode+"'/>";/* 강의평가 페이지로 이동 */
+				});
+				
+				/* $('html').click(function(e) {
+					if(!$(e.target).hasClass("pop")) { 
+						if($('#pop').hasClass("hidden")){
+							$('#pop').toggleClass("hidden");
+						}						
+						
+					} 
+				}); */
+			}
+		});
+	}
+	
 	$(function() {
+		getTimetable();
 		$('#pop').addClass("hidden");
-		$('.lectureInLink').click(function() {
-			$('#pop').toggleClass("hidden");
-		});
 		
-		$('#evalBt').click(function() {
-			location.href = "<c:url value='/student/subjEval'/>";/* 강의평가 페이지로 이동 */
-		});
+		
+		/* $('.lectureInLink').click(function() {
+			$('#pop').toggleClass("hidden");
+		}); */
+		
 		
 	});
 </script>
@@ -136,7 +197,7 @@
       <div id="timeTableDiv">
 	      	<div style="margin: 30px; font-size: 25px;">
 	      		<div style="text-align: center; margin: 0 auto;">
-	      			<img src="<c:url value='/resources/images/timetableIcon.png'/>" id="tticon"><span id="userName"> #{principal }</span>님의 강의시간표
+	      			<img src="<c:url value='/resources/images/timetableIcon.png'/>" id="tticon"><span id="userName"> ${principal.name }</span>님의 강의시간표
 	      		</div>
 	      	</div>
                 <div class="table-responsive">
@@ -163,12 +224,12 @@
                             <tr>
                                 <td class="time">1교시<br><span style="font-size: 0.85rem;">09:00 - 09:50</span></td>
                                 <td class="input" id="MO1">
-                                	<a class="lectureInLink">
+                                	<!-- <a class="lectureInLink">
 	                                	<div class="lectureIn">
 		                                    <span class="lectureName">생산관리</span><br>
 		                                    <span class="profName">김교수</span>
 	                                	</div>
-	                                </a>
+	                                </a> -->
                                 </td>
                                 <td class="input" id="TU1"></td>
                                 <td class="input" id="WE1"></td>
@@ -212,12 +273,12 @@
                                 <td class="input" id="MO6"></td>
                                 <td class="input" id="TU6"></td>
                                 <td class="input" id="WE6">
-                                	<a class="lectureInLink">
+                                	<!-- <a class="lectureInLink">
 	                                	<div class="lectureIn">
 		                                    <span class="lectureName">생산관리</span><br>
 		                                    <span class="profName">김교수</span>
 	                                	</div>
-	                                </a>
+	                                </a> -->
                                 </td>
                         		<td class="input" id="TH6"></td>
                                 <td class="input" id="FR6"></td>
@@ -242,41 +303,42 @@
                         </tbody>
                     </table>
             </div>
-			<div id="pop">
+			<div id="pop" class="pop">
 					<fieldset style="border: 2px solid #01539d; padding: 15px;">
 					<legend style="width: 32%; font-weight: bold;">강의 정보</legend>
 					<div>
 						<label class="lab">강의명 : </label>
-						<span>생산관리</span>
+						<span class="popSubjName"></span>
 					</div>
 					<br>
 					<div>
 						<label class="lab">학점 : </label>
-						<span>3학점</span>
+						<span class="popCredit"></span>
 					</div>
 					<br>
 					<div>
 						<label class="lab">담당교수명 : </label>
-						<span>김교수</span>
+						<span class="popProfName"></span>
 					</div>
 					<br>
 					<div>
 						<label class="lab">강의실 : </label>
-						<span>A012</span>
+						<span class="popClassroom"></span>
 					</div>
 					<br>
 					<div>
 						<label class="lab">시간 : </label>
-						<span>09:00 ~ 09:50</span>
+						<span class="popTime"></span>
 					</div>
 					<br>
 					<div>
 						<label class="lab">강의설명 : </label>
-						<span>경영학과를 위한 생산관리를 통해 어쩌고</span>
+						<span class="popExplanation"></span>
 					</div>
 					</fieldset>
 					<div style="text-align: center; margin-top: 13px;">
 						<button type="button" id="evalBt" class="btn btn-success">강의평가</button>
+						<input type="hidden" class="subjectCode" value="">
 					</div>
 				
 			</div>
