@@ -2,7 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
-
+<style>
+#btBack {
+	float: right;
+	margin: 50px 0 50px 0;
+}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
 	$(function() {
@@ -48,5 +53,8 @@
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<canvas id="myChart"></canvas>
+		<button type="button" onclick="location.href='/portal/student/studentScore'"
+								class="btCustom btn btn-primary btn-lg login-button"
+								id="btBack">돌아가기</button>
 
 		<%@ include file="../inc/bottom.jsp"%>

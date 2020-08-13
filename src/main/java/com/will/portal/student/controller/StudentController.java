@@ -78,9 +78,9 @@ public class StudentController {
 		String sort = "";
 		for (String sem : slist) {
 			if (sem.substring(sem.length() - 1).equals("2")) {
-				sort = "/1";
+				sort = "/1학기";
 			} else if (sem.substring(sem.length() - 1).equals("8")) {
-				sort = "/2";
+				sort = "/2학기";
 			}
 			slist2.add(sem.substring(0, 4) + sort);
 		}
