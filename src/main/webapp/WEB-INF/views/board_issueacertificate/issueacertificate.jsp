@@ -37,9 +37,7 @@ function tui2(){
 	
 	
 	$(function(){
-		if(${reload == 'Y'}){
-			tui2();
-		}
+		
 		$('#tuition2').hide();
 		$('#summery').hide();
 		$('.on').click(function(){
@@ -80,17 +78,39 @@ function tui2(){
 		
 		});
 		
-		
 		$('#pay').click(function(){
 			payment();
-			
-			
 		});
-		
-		
-		
+		getSuccess();
 	});
-	
+
+function getSuccess() {
+	$.ajax({
+		url : "<c:url value='/payments/getSeccess'/>",
+		type : "get",
+		dataType : "json",
+		success : function(res) {
+			var data = "";
+			if(res.length > 0){
+				$.each(res, function(idx, item) {
+					data += '<tr class="'+item.no+'">'
+						+ '<td>'+(idx+1)+'</td>'
+						+'<td>' + item.certName + '</td>'
+						+'<td>'+ moment(item.regDate).format('YYYY-MM-DD')+'</td>';
+					if(item.isPrint == 'N'){
+						data += '<td><button type="button" class="btn btn-primary btn-sm print">발급</button></td>';
+					}else{
+						data += '<td><button type="button" disabled="disabled" class="btn btn-secondary btn-sm print">발급</button></td>';
+					}
+					data +='</tr>';
+				});
+			}else{
+				data += '<tr><td colspan="4" style="text-align: center">발급된 증명서가 없습니다.</td></tr>';
+			}
+			$("#tableDiv table tbody").html(data);
+		}
+	});
+}
 	
 function payment(){
 	IMP.init('imp78464192'); // 아임포트 관리자 페이지의 "시스템 설정" > "내 정보" 에서 확인 가능
@@ -109,31 +129,31 @@ function payment(){
 	}, function(rsp) {
 	    if ( rsp.success ) {
 	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-	    	jQuery.ajax({
+	    	$.ajax({
 	    		url: "<c:url value='/payments/complete'/>", //cross-domain error가 발생하지 않도록 주의해주세요
 	    		type: 'post',
+	    		dataType : "json",
 	    		data: {
 		    		imp_uid : rsp.imp_uid,
 		    		//기타 필요한 데이터가 있으면 추가 전달
 		    		"certName":$('.form-control option:selected').text(),
 		    		"qty":$('.qty').val(),
-		    		"stuNo":${principal.officialNo},
+		    		"stuNo":'${principal.officialNo}',
 		    		"certCode":$('.form-control option:selected').val()
-	    		}
-	    	}).done(function(data) {
-	    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-	    		if ( everythings_fine ) {
-	    			var msg = '결제가 완료되었습니다.';
-	    			msg += '\n고유ID : ' + rsp.imp_uid;
-	    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-	    			msg += '카드 승인번호 : ' + rsp.apply_num;
-	    			
-	    			alert(msg);
-	    		} else {
-	    			//[3] 아직 제대로 결제가 되지 않았습니다.
-	    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-	    		}
+	    		},
+	    		success : function(data) {
+	    			//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+	    			if ( data.cnt > 0 ) {
+		    			alert('결제가 완료되었습니다.');
+		    			window.open("<c:url value='/payments/complete?no='/>"+data.no, "결제완료",
+		    					"width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		    			getSuccess();
+		    		} else {
+		    			alert('결제에 실패하였습니다.');
+		    			//[3] 아직 제대로 결제가 되지 않았습니다.
+		    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+		    		}
+				}
 	    	});
 	    } else {
 	        var msg = '결제에 실패하였습니다.';
@@ -142,8 +162,6 @@ function payment(){
 	        alert(msg);
 	    }
 	});
-	
-	
 }
 </script>
 
@@ -516,28 +534,15 @@ function payment(){
 							<col width="20%">
 							<col width="20%">
 						</colgroup>
+						<thead>
 						<tr>
 							<th>순번</th>
 							<th>증명서 종류</th>
 							<th>발급일자</th>
 							<th>발급</th>
 						</tr>
-						<c:if test="${empty list}">
-							<tr>
-								<td colspan="4" style="text-align: center">발급된 증명서가 없습니다.</td>
-							</tr>
-						</c:if>
-						<c:if test="${!empty list}">
-							<c:forEach var="vo" items="${list }">
-								<tr>
-									<td>no</td>
-									<td>${vo.certName }</td>
-									<td>${vo.regDate }</td>
-									<td>버튼</td>
-								</tr>
-								<c:set var='no' value='no+1'/>
-							</c:forEach>
-						</c:if>
+						</thead>
+						<tbody></tbody>
 					</table>
 				</div>
 			</article>

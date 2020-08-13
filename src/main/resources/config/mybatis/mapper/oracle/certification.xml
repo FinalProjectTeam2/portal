@@ -15,6 +15,10 @@
 	<select id="selectByStuNo" parameterType="string" resultType="certificationVo">
 		select * from certification where stu_no=#{stuNo}	
 	</select>
+	
+	<select id="selectByNo" parameterType="String" resultType="certificationVo">
+		select * from certification where no = #{no}
+	</select>
 </mapper>
 
 
