@@ -47,9 +47,13 @@ import com.will.portal.phoneBook.model.PhoneBookVO;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.regi_timetable.model.Regi_timetableVO;
+import com.will.portal.registration.model.RegistrationVO;
 import com.will.portal.student.model.StudentService;
 import com.will.portal.student.model.StudentTimeTableVO;
 import com.will.portal.student.model.StudentVO;
+import com.will.portal.subj_eval.model.AllSubjAvgVO;
+import com.will.portal.subj_eval.model.Subj_evalService;
+import com.will.portal.subj_eval.model.Subj_evalVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subj_type.model.Subj_typeVO;
 import com.will.portal.subject.model.SubjectAllVO;
@@ -68,6 +72,8 @@ public class LectureController {
 	private SubjectService subjectServ;
 	@Autowired
 	private StudentService stuService;
+	@Autowired
+	private Subj_evalService subEvalService;
 	
 	@RequestMapping("/lecture/openLecture_bak")
 	public void openLecture_bak() {
@@ -757,4 +763,50 @@ public class LectureController {
 		return list;
 	}
 	
+	@RequestMapping("/lecture/ajax/evalCheck")
+	@ResponseBody
+	public boolean evalCheck(Principal pincipal, @RequestParam String subjCode) {
+		MemberDetails user = (MemberDetails)((Authentication)pincipal).getPrincipal();
+		String stuNo=user.getOfficialNo();
+		boolean bool = false;
+		String subCode = subjCode.substring(4);
+		logger.info("subjCode={}",subjCode);
+		logger.info("subCode={} stuNo={}", subCode,stuNo);
+		RegistrationVO regiVo = new RegistrationVO();
+		regiVo.setStuNo(stuNo);
+		regiVo.setSubCode(subCode);
+		String flag = subEvalService.selectEvalFlag(regiVo);
+		logger.info("강의평가 완료 여부 flag = {}", flag);
+		if("Y".equals(flag)) {
+			bool = true;
+		}
+		
+		return bool;
+	}
+	
+	@RequestMapping("/lecture/profSubjEval")
+	public String profSubEval(Principal pincipal,Model model) {
+		MemberDetails user = (MemberDetails)((Authentication)pincipal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		List<AllSubjAvgVO> evalList = subEvalService.selectsubCodeByProfNo(profNo);
+		logger.info("교수 강의평가 evalList={}", evalList);
+		model.addAttribute("evalList", evalList);
+		return "lecture/profSubjEval";
+	}
+	
+	@RequestMapping("/lecture/evalContent")
+	@ResponseBody
+	public String evalContent(@RequestParam String subCode, Model model) {
+		List<Subj_evalVO> list = subEvalService.selectEvalBysubCode(subCode);
+		List<String> contentsList = new ArrayList<String>();
+		String contents="";
+		logger.info("list={}",list);
+		for (int i = 0; i < list.size(); i++) {
+			contents = list.get(i).getContent();
+			contentsList.add(contents);
+		}
+		logger.info("contentList= {}",contentsList);
+		model.addAttribute("contentsList", contentsList);
+		return "lecture/evalContents";//팝업창 새로만들기
+	}
 }

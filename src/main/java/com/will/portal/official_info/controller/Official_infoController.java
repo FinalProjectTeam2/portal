@@ -63,6 +63,7 @@ public class Official_infoController {
 			 @RequestParam (required = false )String oldFileName,
 			HttpServletRequest request) {
 		boolean bool = false;
+		
 		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
 		String officialNo = user.getOfficialNo();
 		accInfoVo.setOfficialNo(officialNo);
