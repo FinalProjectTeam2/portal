@@ -22,4 +22,5 @@ public interface StudentDAO {
 	int updateMajor(StudentVO studentVo);
 	List<Map<String, Object>> selectScore();
 	List<String> selectSemester();
+	List<StudentTimeTableVO> selectTimetable(String stuNo);
 }

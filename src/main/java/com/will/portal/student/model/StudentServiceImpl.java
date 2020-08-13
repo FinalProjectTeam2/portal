@@ -194,4 +194,11 @@ public class StudentServiceImpl implements StudentService {
 	public List<String> selectSemester() {
 		return studentDao.selectSemester();
 	}
+
+	@Override
+	public List<StudentTimeTableVO> selectTimetable(String stuNo) {
+		return studentDao.selectTimetable(stuNo);
+	}
+	
+	
 }
