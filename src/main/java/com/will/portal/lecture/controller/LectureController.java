@@ -794,9 +794,10 @@ public class LectureController {
 		return "lecture/profSubjEval";
 	}
 	
-	@RequestMapping("/lecture/evalContent")
-	@ResponseBody
-	public String evalContent(@RequestParam String subCode, Model model) {
+	@RequestMapping("/lecture/evalContents")
+	public String evalContent(@RequestParam String subCode, @RequestParam String subjName,
+			Model model) {
+		logger.info("subCode={}",subCode);
 		List<Subj_evalVO> list = subEvalService.selectEvalBysubCode(subCode);
 		List<String> contentsList = new ArrayList<String>();
 		String contents="";
