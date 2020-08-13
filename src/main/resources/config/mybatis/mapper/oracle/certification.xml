@@ -19,6 +19,12 @@
 	<select id="selectByNo" parameterType="String" resultType="certificationVo">
 		select * from certification where no = #{no}
 	</select>
+	
+	<update id="updateIsPrint" parameterType="String">
+		update certification
+		set is_print = 'Y'
+		where no = #{no}
+	</update>
 </mapper>
 
 

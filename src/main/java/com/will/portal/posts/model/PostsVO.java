@@ -20,6 +20,7 @@ public class PostsVO {
 	private int sortNo;
 	private int step;
 	private Timestamp editDate;
+	private String isPrivate;
 
 	private int newImgTerm;
 	private int fileCount;

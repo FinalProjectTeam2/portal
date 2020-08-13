@@ -9,9 +9,9 @@
 <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
-	 
-
- 
+#tableDiv button.btn {
+    width: 80px;
+}
 </style>
 
 <script type="text/javascript">
@@ -103,7 +103,7 @@ function getSuccess() {
 					if(item.isPrint == 'N'){
 						data += '<td><button type="button" class="btn btn-primary btn-sm print">발급</button></td>';
 					}else{
-						data += '<td><button type="button" disabled="disabled" class="btn btn-secondary btn-sm print">발급</button></td>';
+						data += '<td><button type="button" disabled="disabled" class="btn btn-secondary btn-sm print">발급 완료</button></td>';
 					}
 					data +='</tr>';
 				});
@@ -113,16 +113,16 @@ function getSuccess() {
 			$("#tableDiv table tbody").html(data);
 			
 			$(".print").click(function() {
-				getPrint();
-				getSuccess();
+				var no = $(this).parent().parent().attr("class");
+				getPrint(no);
 			});
 		}
 	});
 }
-function getPrint() {
+function getPrint(no) {
 	$.ajax( {
 		url : "<c:url value='/certificate/certificate1'/>",
-		data : {no: '${no}'},
+		data : {no: no},
 		type :"get",
 		async : true,
 		dataType : "html",
@@ -137,7 +137,7 @@ function getPrint() {
 				  doc.save('${vo.certName }.pdf'); //pdf저장
 					
 				});
-			self.close();
+			getSuccess();
 		}
 	});
 }
