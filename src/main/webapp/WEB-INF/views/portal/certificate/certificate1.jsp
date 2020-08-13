@@ -16,17 +16,17 @@
 	margin: 5px;
 }
 
-.num {
+.certificate .num {
 	margin-left: 2%;
 }
 
-.title {
+.certificate .title {
 	text-align: center;
 	margin-top: 60px;
 	letter-spacing: 1em;
 }
 
-.table {
+.certificate .table {
 	font-size:18px;
 	margin-left: 20%;
 	margin-top:10%;
@@ -34,40 +34,40 @@
 	display: table;
 }
 
-.row {
+.certificate .row {
 	display: table-row;
 }
 
-.cell, .cell2 {
+.certificate .cell, .certificate .cell2 {
 	display: table-cell;
 }
 
-.cell {
+.certificate .cell {
 	width: 180px;
 }
 
-.cell2{
+.certificate .cell2{
 	width: 400px;
 }
 
-.div1 {
+.certificate .div1 {
 	font-size: 24px;
 	margin-top: 13%;
 	text-align: center;
 }
 
-.div2 {
+.certificate .div2 {
 	font-size: 20px;
 	margin-left: 45%;
 	text-align: center;
 }
 
-.div3 {
+.certificate .div3 {
 	margin-top: 10%;
     text-align: center;
 }
 
-img {
+.certificate img {
 	width: 500px;
 }
 </style>

@@ -5,6 +5,9 @@
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/certificate.css'/>">
+
+<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
 	 
 
@@ -110,15 +113,34 @@ function getSuccess() {
 			$("#tableDiv table tbody").html(data);
 			
 			$(".print").click(function() {
-				var no = $(this).parent().parent().attr( 'class' );
-				window.open("<c:url value='/certificate/test?no='/>"+no, "결제완료",
-				"width=490, height=340, left=300, top=300, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+				getPrint();
 				getSuccess();
 			});
 		}
 	});
 }
-	
+function getPrint() {
+	$.ajax( {
+		url : "<c:url value='/certificate/certificate1'/>",
+		data : {no: '${no}'},
+		type :"get",
+		async : true,
+		dataType : "html",
+		cache : false,
+		success : function(res) {
+			//pdf_wrap을 canvas객체로 변환
+			$('#data').html(res);
+			html2canvas($('#data').find(".certificate")[0]).then(function(canvas) {
+				  var doc = new jsPDF('p', 'mm', 'a4'); //jspdf객체 생성
+				  var imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
+				  doc.addImage(imgData, 'PNG', 0, 0); //이미지를 기반으로 pdf생성
+				  doc.save('${vo.certName }.pdf'); //pdf저장
+					
+				});
+			self.close();
+		}
+	});
+}
 function payment(){
 	IMP.init('imp78464192'); // 아임포트 관리자 페이지의 "시스템 설정" > "내 정보" 에서 확인 가능
 	
@@ -551,6 +573,7 @@ function payment(){
 						</thead>
 						<tbody></tbody>
 					</table>
+					<div id="data" style="overflow: hidden; height: 0px;"></div>
 				</div>
 			</article>
 		</div>
