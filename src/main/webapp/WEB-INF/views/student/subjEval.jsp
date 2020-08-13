@@ -17,15 +17,19 @@
 });
 </script>
 <style>
+	#subjEval{
+		width: 90%;
+		margin: 0 auto;
+	}
 	#subjEval #title{
-		font-size: 20px;
+		font-size: 25px;
 		font-weight: bold;
 	}
 	
-/* 	#subjEval .lecLab{
-		width: 20%;
+ 	#subjEval .lecLab{
+		width: 90%;
 		float: left;
-	} */
+	} 
 </style>
 <main role="main" class="flex-shrink-0" id="mainmain">
 <div class="container">
@@ -33,12 +37,15 @@
 		<div>
 			<p id="title">강의평가</p>
 		</div>
-		<div style="margin-bottom: 10px;">
-			<label class="lecLab">강의명 : </label>
-			<span>${map['SUBJ_NAME'] }</span>
-			<br>
-			<label class="lecLab">담당교수 : </label>
-			<span>${map['PROF_NAME'] }</span>
+		<div style="margin-bottom: 10px; text-align: right; margin-right: 10px; font-weight: bold;" >
+			<div>
+				<label class="lecLab">강의명 : </label>
+				<label>${map['SUBJ_NAME'] }</label>
+			</div>
+			<div>
+				<label class="lecLab">담당교수 : </label>
+				<label>${map['PROF_NAME'] }</label>
+			</div>
 		</div>
 		<form id="evalForm" name="evalForm" method="post" action="<c:url value='/student/subjEval' />"><!-- studentController -->
 			<input type="hidden" name="subjCode" value="${param.subjCode }">
@@ -106,7 +113,7 @@
 		   		</div>
 	   		</li>
 	   		<li>
-	   			<div style="text-align: center; margin-top: 10px;">
+	   			<div style="text-align: center; margin-top: 20px;">
 	   				<input type="submit" value="강의평가 등록" class="btn btn-success">
 	   			</div>
 	   		</li>
