@@ -53,14 +53,14 @@ table.box2 td {
 	color: #626d80;
 	text-align: left;
 	font-weight: 500;
-	
 }
+
 span.fontLar {
-    font-size: 1.2em;
-    color: #2f353e;
+	font-size: 1.2em;
+	color: #2f353e;
 }
 </style>
-<script type="text/javascript"
+<!-- <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 	google.charts.load("current", {
@@ -91,7 +91,7 @@ span.fontLar {
 				.getElementById('chart_div'));
 		chart.draw(data, options);
 	}
-</script>
+</script> -->
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="adminMngMem">
@@ -151,20 +151,20 @@ span.fontLar {
 								<c:set var="ttotal" value="0" />
 								<c:set var="tcre" value="0" />
 								<c:forEach var="list" items="${tlist}">
-
 									<c:set var="cre" value="0" />
 									<c:set var="total" value="0" />
-									<c:forEach var="map" items="${list}">
-										<tr>
-											<td colspan="7" class="colLeft"><span><fmt:formatDate
-														value="${map['OPEN_DATE']}" pattern="yyyy" />년 <fmt:formatDate
-														value="${map['OPEN_DATE'] }" var="semester" pattern="MM" />
-													<c:if test="${semester==2 }">
+									<tr>
+										<td colspan="7" class="colLeft"><span><fmt:formatDate
+													value="${list[0]['OPEN_DATE']}" pattern="yyyy" />년 <fmt:formatDate
+													value="${list[0]['OPEN_DATE']}" var="semester" pattern="MM" />
+												<c:if test="${semester==2 }">
 									1학기
 									</c:if> <c:if test="${semester==8 }">
 									2학기
-									</c:if> </span></td>
-										</tr>
+									</c:if></span></td>
+									</tr>
+									<c:set var="idx" value="${idx+1}"/>
+									<c:forEach var="map" items="${list}">
 										<tr class="align_center">
 											<td style="border-left: none;"><fmt:formatDate
 													value="${map['OPEN_DATE']}" pattern="yyyy" /> <%-- ${map['OPEN_DATE'] } --%>
@@ -225,6 +225,7 @@ span.fontLar {
 										<c:set var="total" value="${total+(map['CREDIT']*grade) }" />
 									</c:forEach>
 									<tr>
+									
 										<c:if test="${!empty list }">
 											<td colspan="7" class="colspan"><span>취득학점&nbsp;:&nbsp;
 													${cre}&nbsp;&nbsp;&nbsp; 평점&nbsp; : &nbsp;${total/cre}</span></td>
