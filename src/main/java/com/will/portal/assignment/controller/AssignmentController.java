@@ -1,16 +1,29 @@
 package com.will.portal.assignment.controller;
 
+import java.security.Principal;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.will.portal.assignment.model.AssignmentService;
+import com.will.portal.common.MemberDetails;
 
 
 @Controller
 @RequestMapping("/assignment")
 public class AssignmentController {
 	private static final Logger logger = LoggerFactory.getLogger(AssignmentController.class);
+	@Autowired
+	private AssignmentService assignServ;
+	
 	
 	@RequestMapping(value="/assignment1",method = RequestMethod.GET) 
 	public String assignment1_get() {
@@ -30,5 +43,21 @@ public class AssignmentController {
 	@RequestMapping(value="/assignmentStu2",method = RequestMethod.GET) 
 	public String assignmentStu2_get() {
 		return "assignment/assignmentStu2";
+	}
+	
+	@RequestMapping(value = "/assignApply")
+	public String assignApply(Principal principal, Model model) {
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();		
+		String stuNo = user.getOfficialNo();
+		logger.info("과제 등록 페이지 stuNo={}", stuNo);
+		
+		List<Map<String, Object>> list = assignServ.subjByStuNo(stuNo);
+		logger.info("수강신청한 과목 list={}", list.size());
+		
+		model.addAttribute("list", list);
+		
+		
+		
+		return "assignment/assignApply";
 	}
 }

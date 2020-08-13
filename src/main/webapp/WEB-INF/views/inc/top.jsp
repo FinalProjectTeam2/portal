@@ -470,11 +470,9 @@
 							<li><a href="#">학사정보</a></li>
 							<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
 							<li><a href="<c:url value='/member/memberEdit'/>">정보조회</a></li>
-
 							<li><a href="<c:url value='/lecture/studentTT'/>">시간표 조회</a></li>
-
 							<li><a href="<c:url value='/student/studentScore'/>">성적조회</a></li>
-
+							<li><a href="<c:url value='/assignment/assignApply'/>">과제 제출</a></li>
 						</ul></li>
 					</c:if>
 					<c:if test="${principal.type=='PROFESSOR' }">

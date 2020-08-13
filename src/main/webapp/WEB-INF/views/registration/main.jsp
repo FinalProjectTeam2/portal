@@ -114,9 +114,9 @@
 					var syllabus=td.eq(9).text();
 					if(count>=personnel){
 						
-					 /* 	alert('정원초과 다른 강의를 선택하세요.');
+					 alert('정원초과 다른 강의를 선택하세요.');
 					 	return; 
-					}else{*/
+					}else{
 						$.ajax({
 							url:"<c:url value='/registration/insertReg'/>",
 							data:{
@@ -682,18 +682,7 @@
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
-									<tr class="jqgfirstrow" role="row" id="applyContent">
-										<td role="gridcell" style="height: 0px; width: 7%;"><button id="cancelBt">삭제</button></td>
-										<td role="gridcell" style="height: 0px; width: 9%;">dsad</td>
-										<td role="gridcell" style="height: 0px; width: 18%; text-align: center">sd</td>
-										<td role="gridcell" style="height: 0px; width: 7%;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 14%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 6%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-									</tr>
+									
 								</tbody>
 							</table>
 						</div>
