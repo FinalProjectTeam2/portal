@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.assignment">
+	<select id="subjByStuNo" parameterType="string" resultType="map">
+		select r.sub_code, s.subj_name, s.subj_code
+		from registration r join subject s
+		on r.sub_code=substr(s.subj_code, 5)
+		where r.stu_no=#{stuNo}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
