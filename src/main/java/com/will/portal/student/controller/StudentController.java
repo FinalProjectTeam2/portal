@@ -33,7 +33,7 @@ import com.will.portal.student.model.StudentService;
 public class StudentController {
 	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 	@Autowired private Subj_evalService subjService;
-	
+
 	@Autowired
 	StudentService studentService;
 
@@ -43,9 +43,9 @@ public class StudentController {
 		return "student/gradeCheck";
 	}
 
-
 	/**
 	 * 학생 성적 조회
+	 *
 	 * @param principal
 	 * @param semester
 	 * @param model
@@ -53,36 +53,60 @@ public class StudentController {
 
 	@RequestMapping("/studentScore")
 	public void studentScore(Principal principal, @RequestParam(required = false) String semester, Model model) {
-		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
-	    String officialNo = user.getOfficialNo();
-		
-		logger.info("studentScore, param: semester={}, officialNo={}",semester,officialNo);
+		MemberDetails user = (MemberDetails) ((Authentication) principal).getPrincipal();
+		String officialNo = user.getOfficialNo();
+
+		logger.info("studentScore, param: semester={}, officialNo={}", semester, officialNo);
 		List<String> slist = studentService.selectSemester(officialNo);
 		logger.info("slist={}", slist);
-		
-		ScoreSearchVO scoreSearchVo=new ScoreSearchVO();
+
+		List<List<Map<String, Object>>> tlist = new ArrayList<List<Map<String, Object>>>();
+		ScoreSearchVO scoreSearchVo = new ScoreSearchVO();
 		scoreSearchVo.setStuNo(officialNo);
-		scoreSearchVo.setSemester(semester);
-		List<Map<String, Object>> list = studentService.selectScore(scoreSearchVo);
-		logger.info("list={}", list);
+		if (semester == null || semester.isEmpty()) {
+			for (int i = 0; i < slist.size(); i++) {
+				scoreSearchVo.setSemester(slist.get(i));
+				List<Map<String, Object>> list = studentService.selectScore(scoreSearchVo);
+				tlist.add(list);
+			}
+		} else {
+
+			scoreSearchVo.setSemester(semester);
+			List<Map<String, Object>> list = studentService.selectScore(scoreSearchVo);
+			tlist.add(list);
+		}
+		logger.info("tlist={}", tlist);
 
 		List<String> slist2 = new ArrayList<String>();
 		String sort = "";
 		for (String sem : slist) {
 			if (sem.substring(sem.length() - 1).equals("2")) {
-				sort = "/1학기";
+				sort = "/1";
 			} else if (sem.substring(sem.length() - 1).equals("8")) {
-				sort = "/2학기";
+				sort = "/2";
 			}
 			slist2.add(sem.substring(0, 4) + sort);
 		}
 		logger.info("slist2={}", slist2);
 
-		model.addAttribute("slist",slist);
+		List<String> slistCh = new ArrayList<String>();
+		String sortCh = "";
+		for (String sem : slist) {
+			if (sem.substring(sem.length() - 1).equals("2")) {
+				sortCh = "01";
+			} else if (sem.substring(sem.length() - 1).equals("8")) {
+				sortCh = "02";
+			}
+			slistCh.add(sem.substring(0, 4) + sortCh);
+		}
+		logger.info("slistCh={}", slistCh);
+
+		model.addAttribute("slist", slist);
 		model.addAttribute("slist2", slist2);
-		model.addAttribute("list", list);
+		model.addAttribute("slistCh", slistCh);
+		model.addAttribute("tlist", tlist);
 	}
-	
+
 	@RequestMapping(value = "/subjEval", method = RequestMethod.GET)
 	public String subjEval(@RequestParam String subjCode, Model model) {
 		logger.info("강의평가 화면 보여주기");
@@ -90,7 +114,7 @@ public class StudentController {
 		model.addAttribute("map", map);
 		return "/student/subjEval";
 	}
-	
+
 	@RequestMapping(value = "/subjEval", method = RequestMethod.POST)
 	public String subjEval_post(@ModelAttribute Subj_evalVO vo, Principal principal,
 			@RequestParam String subjCode,
@@ -104,9 +128,9 @@ public class StudentController {
 	    vo.setSubCode(subCode);
 	    vo.setClassification(classification);
 	    vo.setStuNo(stuNo);
-	    
+
 	    int cnt = subjService.insertSubjEval(vo);
-	    
+
 	    RegistrationVO regiVo = new RegistrationVO();
 	    regiVo.setStuNo(stuNo);
 	    regiVo.setSubCode(subCode);
@@ -116,14 +140,14 @@ public class StudentController {
 	    	msg = "강의평가 등록을 완료하였습니다";
 	    	url = "/lecture/studentTT";
 	    }
-	    
+
 	    logger.info("강의평가 결과 cnt={}",cnt);
-	    
+
 	    model.addAttribute("msg", msg);
 	    model.addAttribute("url", url);
-	    
+
 	    return "/common/message";
 	}
 
-	
+
 }
