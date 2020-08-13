@@ -42,6 +42,7 @@ form input{
   border-bottom: 4px solid #117A60;
   transition: all .2s ease;
   outline: none;
+  margin-bottom: 500px;
 }
 #btUpload:hover{
   background: #149174;
@@ -53,7 +54,6 @@ form input{
 
 #info{
 	position: relative;
-	top: 26%;
 	width: 100%;
 }
 div#assign {
@@ -63,7 +63,7 @@ div#assign {
 }
 
 </style>
-
+<script src="<c:url value='/resources/js/jquery.MultiFile.min.js'/>" type="text/javascript"> </script>
 <script type="text/javascript">
 	$(function(){
 		$('#assign').hide();
@@ -189,9 +189,9 @@ div#assign {
                 // 파일 사이즈(단위 :MB)
                 var fileSize = files[i].size/1024/1024;
                 
-                if($.inArray(ext, ['pdf']) != 0){
+                if($.inArray(ext, ['docx','doc']) != 0){
                     // 확장자 체크
-                    alert("pdf만 등록 가능합니다.");
+                    alert("워드파일(doc, docx)만 등록 가능합니다.");
                     break;
                 }else if(fileSize > uploadSize){
                     // 파일 사이즈 체크
@@ -223,7 +223,7 @@ div#assign {
     function addFileList(fIndex, fileName, fileSize){
         var html = "";
         html += "<tr id='fileTr_" + fIndex + "'>";
-        html += "    <td class='left' >";
+        html += "    <td class='left1' >";
         html +=         fileName + " / " + fileSize + "KB "  + "<a href='#' onclick='deleteFile(" + fIndex + "); return false;' class='btn small bg_02'><img style='width:17px; height:auto;' src='<c:url value='/resources/images/deleteIcon.png'/>'></a>"
         html += "    </td>"
         html += "</tr>"
@@ -250,19 +250,7 @@ div#assign {
     function uploadFile(){
         // 등록할 파일 리스트
         var uploadFileList = Object.keys(fileList);
-		
-        // 이론시간 등록되었는지 체크
-		if($('#theoryTime').val().length < 1){
-        	alert('이론시간을 입력해야 합니다.');
-        	return;
-        }
-
-        // 실기시간 등록되었는지 체크
-		if($('#trainingTime').val().length < 1){
-        	alert('실기시간을 입력해야 합니다.');
-        	return;
-        }
-        
+	        
         // 파일이 있는지 체크
         if(uploadFileList.length == 0){
             // 파일등록 경고창
@@ -285,12 +273,10 @@ div#assign {
             for(var i = 0; i < uploadFileList.length; i++){
                 formData.append('files', fileList[uploadFileList[i]]);
             }
-            formData.append('openSubCode', $('#openSubj').val());
-            formData.append('theoryTime', $('#theoryTime').val());
-            formData.append('trainingTime', $('#trainingTime').val());
-            
+            console.log(formData);
+            formData.append('assignNo', $('#assignment option:selected').val());
             $.ajax({
-                url:"<c:url value='/syllabus/upload'/>",
+                url:"<c:url value='/assignment/assignUpload'/>",
                 data:formData,
                 type:'POST',
                 enctype:'multipart/form-data',
@@ -302,8 +288,6 @@ div#assign {
                         location.reload();
                         
                 
-                },error(xhr, status, error){
-                	alert(error);
                 }
             });
         }
@@ -352,7 +336,7 @@ div#assign {
   			
     	
     	
-        <table class="table" width="100%" border="1px">
+        <table class="table" width="100%" border="1px" style="!important">
             <tbody id="fileTableTbody">
                
             </tbody>

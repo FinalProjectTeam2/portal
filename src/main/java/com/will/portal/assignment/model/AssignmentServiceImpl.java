@@ -20,6 +20,11 @@ public class AssignmentServiceImpl implements AssignmentService{
 	public List<Distribute_assignVO> getDistAssign(String openSubCode) {
 		return assignDao.getDistAssign(openSubCode);
 	}
+
+	@Override
+	public int assignUpload(AssignmentVO vo) {
+		return assignDao.assignUpload(vo);
+	}
 	
 	
 

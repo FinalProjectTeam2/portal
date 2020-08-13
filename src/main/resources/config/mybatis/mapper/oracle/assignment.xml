@@ -12,6 +12,11 @@
 	<select id="getDistAssign" parameterType="string" resultType="distribute_assignVo">
 			select * from distribute_assign where open_sub_code=#{openSubCode}
 	</select>
+	<insert id="assignUpload" parameterType="assignmentVo">
+		insert into assignment(assign_no, stu_no, file_name, file_size, original_file_name)
+		values(#{assignNo}, #{stuNo}, #{fileName}, #{fileSize}, #{originalFileName})
+	</insert>
+	
 </mapper>
 
 
