@@ -511,11 +511,6 @@ public class LectureController {
 		return list;
 	}
 	
-	@RequestMapping("/lecture/studentTT")
-	public String studentTT() {
-		logger.info("studentTT 화면");
-		return "lecture/studentTT";
-	}
 	
 	@RequestMapping(value = "/lecture/inputScoreByExcel", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -733,5 +728,19 @@ public class LectureController {
 		return result;
 		
 	}
+	
+	
+	
+	@RequestMapping("/lecture/studentTT")
+	public String studentTT(Principal principal, Model model) {
+		logger.info("studentTT 화면");
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String stuNo=user.getOfficialNo();
+		
+		
+		
+		return "lecture/studentTT";
+	}
+	
 	
 }
