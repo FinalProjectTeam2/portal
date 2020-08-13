@@ -29,7 +29,6 @@
 	</select>
 
 
-
    	<select id="timeByCode" resultType="subj_timetableVo" parameterType="list">
    		select t.*, s.subj_name
    		from subj_time t join subject s

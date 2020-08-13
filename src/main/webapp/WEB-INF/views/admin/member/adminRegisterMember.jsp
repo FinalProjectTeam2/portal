@@ -8,6 +8,55 @@
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin/adminRegisterMember.js'/>"></script>
 
+
+
+<script type="text/javascript">
+	function checkFileType(filePath) {
+	    var fileFormat = filePath.split(".");
+	    if (fileFormat.indexOf("xls") > -1) {
+	        return true;
+	    } else if(fileFormat.indexOf("xlsx") > -1){
+	    	return true;
+	    }else{
+	    	return false;
+	    }
+	
+	}
+	
+	$(function(){
+		$('#inputExcel').click(function(){
+			var file=$("#excelFile").val();
+			if (file == "" || file == null) {
+			    alert("파일을 선택해주세요.");
+			    return false;
+			} else if (!checkFileType(file)) {
+			    alert("엑셀 파일만 업로드 가능합니다.");
+			    return false;
+			}
+			var form = $('#excelUploadForm')[0];
+			var data = new FormData(form);
+			
+			if (confirm("학생정보를 입력 하시겠습니까?")) {
+			
+			    $.ajax({
+			    	url:"<c:url value='/admin/member/insertByExcel'/>",
+			    	type:"post",
+			    	data:data,
+			    	enctype:'multipart/form-data',
+			    	processData: false,
+			        contentType: false,
+			        success:function(res){
+			        	alert(res);
+			        }
+		    	});
+		    }
+		    
+			
+			
+		});
+	});
+</script>
+
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="regiMember">
@@ -167,5 +216,11 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div>
+		<form id="excelUploadForm" name="excelUploadForm" enctype="multipart/form-data" method="post" action= "">
+			<input id="excelFile" type="file" name="excelFile" />
+		</form>
+			<button id="inputExcel">일괄 등록</button>
 		</div>
 		<%@ include file="../../inc/bottom.jsp"%>

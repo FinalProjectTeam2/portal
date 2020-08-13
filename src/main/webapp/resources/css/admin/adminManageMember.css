@@ -6,7 +6,7 @@
 }
 
 #adminMngMem .divList, .divRight, .divPage, .divList table {
-	width: 1400px;
+	
 }
 
 #adminMngMem .divList {
@@ -20,14 +20,13 @@
 
 #adminMngMem .divRight {
 	text-align: right;
-	width: 1450px;
 	margin: auto;
 }
 
 #adminMngMem table {
-	width: 1450px;
 	text-align: center;
 	margin-top: 20px;
+	width: 100%;
 }
 
 #adminMngMem table td {
@@ -126,7 +125,6 @@ main>.container {
 }
 
 .divTop {
-	width: 1450px;
 	margin: auto;
 }
 

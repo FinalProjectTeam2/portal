@@ -25,4 +25,6 @@ public interface StudentService {
 	int deleteStudent(String stuNo);
 	public int updateStudent(StudentVO studentVO);
 	int updateMajor(StudentVO studentVo);
+	List<Map<String, Object>> selectScore();
+	List<String> selectSemester();
 }

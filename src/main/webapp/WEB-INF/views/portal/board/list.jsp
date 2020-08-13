@@ -138,9 +138,11 @@ ul.pagination {
 											+ item.postNo
 											+ "\" title=\""
 											+ item.title + "\">";
-									if (item.fileCount > 0) {
-										str += "<img alt=\"file\" src=\"<c:url value='/resources/images/file.gif'/>\">";
+									var offiType = item.officialNo.substring(4, 5);
+									if(offiType == '1'){
+										str += "<img alt=\"file\" src=\"<c:url value='/resources/images/lbl_bbs_notice.png'/>\">";
 									}
+									
 									str += '<span style="margin-right: 5px;">'
 									if (item.title.length >= 60) {
 										str += item.title.substring(0, 60)
@@ -149,6 +151,9 @@ ul.pagination {
 										str += item.title
 									}
 									str += '</span>';
+									if (item.fileCount > 0) {
+										str += "<img alt=\"file\" src=\"<c:url value='/resources/images/file.gif'/>\">";
+									}
 									if (item.newImgTerm < 24) {
 										str += "<img alt=\"newPost\" src=\"<c:url value='/resources/images/new.gif'/>\">";
 									}

@@ -469,6 +469,7 @@
 						<ul>
 							<li><a href="#">학사정보</a></li>
 							<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
+							<li><a href="<c:url value='/member/memberEdit'/>">정보조회</a></li>
 						</ul></li>
 					</c:if>
 					<c:if test="${principal.type=='PROFESSOR' }">
@@ -490,6 +491,7 @@
 							<li><a href="<c:url value='/admin/lecture/adminManageLecture'/>">강의관리</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminManageDepartment'/>">학부관리</a></li>
 							<li><a href="<c:url value='/admin/board/manager'/>">게시판 관리</a></li>
+							<li><a href="<c:url value='/portal/board/write?bdCode=P'/>">공지 등록</a></li>
 						</ul></li>
 					</c:if>
 					</sec:authorize>

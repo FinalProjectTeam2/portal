@@ -184,6 +184,14 @@ public class StudentServiceImpl implements StudentService {
 	public int updateMajor(StudentVO studentVo) {
 		return studentDao.updateMajor(studentVo);
 	}
-	
 
+	@Override
+	public List<Map<String, Object>> selectScore() {
+		return studentDao.selectScore();
+	}
+
+	@Override
+	public List<String> selectSemester() {
+		return studentDao.selectSemester();
+	}
 }

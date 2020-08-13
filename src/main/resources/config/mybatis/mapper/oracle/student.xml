@@ -99,7 +99,8 @@
 		(facultyNo!=0 and facultyNo !='') or (major!=0 and major !='') or (state1!=null and state1 !='')
 		 or (startNo!=null and startNo!='') or (endNo!=null and endNo!='')">
 			select count(*) from STUDENT_VIEW
-			where substr(stu_no,1,4) between #{startNo} and #{endNo}
+			where substr(stu_no,1,4) between
+			#{startNo} and #{endNo}
 			<if test="stuNo!=null and stuNo !=''">
 				and stu_no=#{stuNo}
 			</if>
@@ -134,7 +135,8 @@
 		</if>
 	</select>
 	<select id="selectStudentState" resultType="student_stateVO">
-		select * from student_state
+		select * from
+		student_state
 	</select>
 	<update id="updateStudentState" parameterType="studentVO">
 		update student
@@ -149,18 +151,29 @@
 
 	<update id="updateStudent" parameterType="studentVO">
 		update student
-		set name=#{name}, major=#{major}
+		set
+		name=#{name}, major=#{major}
 		where stu_no=#{stuNo}
 	</update>
 	<update id="updateMajor" parameterType="studentVO">
 		update student
 		set major=#{major}
 		<if test="minor != 0 and minor!= null and minor != ''">
-		, minor=#{minor}
+			, minor=#{minor}
 		</if>
 		<if test="minor == 0 or minor== null or minor == ''">
-		, minor=null
+			, minor=null
 		</if>
 		where stu_no=#{stuNo}
 	</update>
+
+	<select id="selectScore" resultType="map">
+		select * from score_view
+		<!--where -->
+	</select>
+	<select id="selectSemester" resultType="string">
+		select distinct extract(year from open_date) || extract(month from
+		open_date) from score_view
+		<!--where -->
+	</select>
 </mapper>

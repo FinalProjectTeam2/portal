@@ -1,6 +1,8 @@
 package com.will.portal.admin.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.will.portal.account_info.model.Account_infoVO;
 import com.will.portal.authority.model.AuthorityService;
@@ -23,6 +27,8 @@ import com.will.portal.authority.model.AuthorityVO;
 import com.will.portal.bank.model.BankService;
 import com.will.portal.bank.model.BankVO;
 import com.will.portal.common.EmployeeSearchVO;
+import com.will.portal.common.ExcelRead;
+import com.will.portal.common.ExcelReadOption;
 import com.will.portal.common.FileUploadUtil;
 import com.will.portal.common.PaginationInfo;
 import com.will.portal.common.ProfSearchVO;
@@ -529,9 +535,14 @@ public class AdminMemberController {
    public String multiDeleteStudent(@ModelAttribute StudentListVO studentList, Model model,
          HttpServletRequest request) {
       List<StudentVO> list = studentList.getStuList();
+      List<Official_infoVO> offiList= new ArrayList<Official_infoVO>();
+      List<Account_infoVO> accList = new ArrayList<Account_infoVO>();
       boolean bool = false;
       for (StudentVO studentVO : list) {
          Official_infoVO offiVo = offiService.selectByNo(studentVO.getOfficialNo());
+         offiList.add(offiVo);
+         Account_infoVO accVo = bankService.selectAccByofficialNo(studentVO.getOfficialNo());
+         accList.add(accVo);
          if(!offiVo.getImageUrl().equals("default.jpg")) {
             bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
          }
@@ -539,7 +550,11 @@ public class AdminMemberController {
       
       logger.info("파일 다중 삭제여부 = {}", bool);
       int cnt = studentService.deleteMulti(list);
-
+      int offiCnt = offiService.deleteMulti(offiList);
+      int offiBank =bankService.deleteMulti(accList);
+      logger.info("offiCnt = {}",offiCnt);
+      logger.info("offiBank = {}",offiBank);
+      
       String msg = "학생 삭제 실패", url = "/admin/member/adminManageStudent";
       if (cnt > 0) {
          msg = "학생 삭제 성공";
@@ -554,9 +569,14 @@ public class AdminMemberController {
    public String multiDeleteProfessor(@ModelAttribute ProfessorListVO profList, Model model,
          HttpServletRequest request) {
       List<ProfessorVO> list = profList.getProfList();
+      List<Official_infoVO> offiList= new ArrayList<Official_infoVO>();
+      List<Account_infoVO> accList = new ArrayList<Account_infoVO>();
       boolean bool = false;
       for (ProfessorVO profVo : list) {
          Official_infoVO offiVo = offiService.selectByNo(profVo.getOfficialNo());
+         offiList.add(offiVo);
+         Account_infoVO accVo = bankService.selectAccByofficialNo(profVo.getOfficialNo());
+         accList.add(accVo);
          if(!offiVo.getImageUrl().equals("default.jpg")) {
             bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
          }
@@ -565,6 +585,10 @@ public class AdminMemberController {
       
       
       int cnt = professorService.multiDelete(list);
+      int offiCnt = offiService.deleteMulti(offiList);
+      int offiBank =bankService.deleteMulti(accList);
+      logger.info("offiCnt = {}",offiCnt);
+      logger.info("offiBank = {}",offiBank);
       
       String msg = "교수 삭제 실패", url = "/admin/member/adminManageProfessor";
       if (cnt > 0) {
@@ -790,5 +814,67 @@ public class AdminMemberController {
 		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images
 		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png
 	}
-
+	
+	@RequestMapping(value = "/insertByExcel", produces = "application/text; charset=utf8", method = RequestMethod.POST)
+	@ResponseBody
+	public String insertByExcel(MultipartHttpServletRequest request)throws Exception{
+		MultipartFile excelFile  = request.getFile("excelFile");
+		logger.info("excel로 학생 일괄 등록 페이지");
+		
+		String result = "입력실패";
+		if(excelFile == null || excelFile.isEmpty()) {
+			throw new RuntimeException("엑셀파일을 선택해주세요");
+		}
+		
+		File destFile = new File(excelFile.getOriginalFilename());
+		
+		try{
+			excelFile.transferTo(destFile);
+		}catch(IllegalStateException | IOException e){
+			throw new RuntimeException(e.getMessage(),e);
+		}
+		
+		
+		List<Map<String, Object>> list = excelUpload(destFile);
+		logger.info("읽어들인 excel file, list,size={}", list.size());
+		
+		boolean bool = destFile.delete();
+		
+		logger.info("file삭제 결과 bool={}", bool);
+		int cnt = 0;
+		for(Map<String, Object> map : list) {
+			StudentVO sVo = new StudentVO();
+			Official_infoVO oVo = new Official_infoVO();
+			
+			sVo.setName((String)map.get("A"));
+			sVo.setMajor(Integer.parseInt((String)map.get("B")));
+			oVo.setHp1((String)map.get("C"));
+			oVo.setHp2((String)map.get("D"));
+			oVo.setHp3((String)map.get("E"));
+			oVo.setEmail1((String)map.get("F"));
+			oVo.setEmail2((String)map.get("G"));
+			oVo.setSsn((String)map.get("H"));
+			
+			cnt = studentService.insertStudent(sVo, oVo, 3);
+		}
+		
+		if(cnt > 0) {
+			result = "입력성공!";
+		}
+		
+		return result;
+	}
+	
+	public List<Map<String, Object>> excelUpload(File destFile) throws Exception{
+		ExcelReadOption excelReadOption = new ExcelReadOption();
+		excelReadOption.setFilePath(destFile.getAbsolutePath());
+		excelReadOption.setOutputColumns("A","B","C","D","E","F","G","H");
+		excelReadOption.setStartRow(2);
+		
+		
+		List<Map<String, Object>> excelContent = ExcelRead.read(excelReadOption);
+	
+		return excelContent;
+	}
+		
 }

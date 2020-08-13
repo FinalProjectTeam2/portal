@@ -190,5 +190,60 @@
 		select bd_code, bd_name from board where category_code = #{categoryCode}
 	</select>
 	
+	<select id="selectPostsPrev" parameterType="postsVo" resultType="postsVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		        select p.post_no, official_no, title, reg_date, group_No, sort_no, step,
+			    read_count, contents, del_flag, bd_code,
+			   	 (sysdate-reg_date)*24 as newImgTerm,
+			   	 (select count(*) from files f where f.post_no = p.post_no) file_count,
+			   	 (
+				    select count(*)+ sum(rere_count) re_count 
+				    from (
+				    	select r.*, (select count(*) from rereply rr where rr.reply_no = r.reply_No
+				    	) rere_count
+				   		 from reply r
+				   	)B
+                    where B.post_no = p.post_no
+			   	 ) re_count 
+			   	 <![CDATA[ 
+			    from posts p where bd_code=(select bd_code from posts where post_no =#{postNo} )  
+                and (( group_no = #{groupNo} AND sort_no < #{sortNo}) OR ( group_no > #{groupNo} )) 
+                ORDER BY group_no ASC, sort_no DESC
+                ]]>
+		    )A    
+		)<!--  where rnum = 1 -->
+	</select>
+	
+	<select id="selectPostsNext" parameterType="postsVo" resultType="postsVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		        select p.post_no, official_no, title, reg_date, group_No, sort_no, step,
+			    read_count, contents, del_flag, bd_code,
+			   	 (sysdate-reg_date)*24 as newImgTerm,
+			   	 (select count(*) from files f where f.post_no = p.post_no) file_count,
+			   	 (
+				    select count(*)+ sum(rere_count) re_count 
+				    from (
+				    	select r.*, (select count(*) from rereply rr where rr.reply_no = r.reply_No
+				    	) rere_count
+				   		 from reply r
+				   	)B
+                    where B.post_no = p.post_no
+			   	 ) re_count 
+			   	 <![CDATA[ 
+			    from posts p where bd_code=(select bd_code from posts where post_no =#{postNo} )  
+                and (( group_no = #{groupNo} AND sort_no > #{sortNo}) OR ( group_no < #{groupNo} )) 
+                ORDER BY group_no DESC, sort_no ASC
+                ]]>
+		    )A    
+		)
+	</select>
 </mapper>
 
