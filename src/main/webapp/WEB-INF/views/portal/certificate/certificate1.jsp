@@ -10,14 +10,15 @@
 
 <style type="text/css">
 .certificate {
-	border: 2px solid gray;
 	width: 793.7007874px;
-	height: 1122.519685px;
-	margin: 5px;
+	height: 1122px;
+	margin: 10px 0;
 }
 
 .certificate .num {
 	margin-left: 2%;
+	margin: 5% 0 0 2%;
+	padding: 20px 0 0 0;
 }
 
 .certificate .title {
@@ -72,7 +73,7 @@
 }
 </style>
 
-<body>
+<body style="margin: 0">
 <div class="certificate" >
 	<div class="num">
 		<h6>제2020 - 10101010호</h6>

@@ -208,8 +208,13 @@ public class BoardController {
 		PostsVO vo = new PostsVO();
 		vo.setBdCode(bdCode);
 		vo.setContents(contents);
-		vo.setTitle(contents.substring(0, 10) + "...");
+		if(contents.length() > 10) {
+			vo.setTitle(contents.substring(0, 10) + "...");
+		}else {
+			vo.setTitle(contents);
+		}
 		vo.setOfficialNo(officialNo);
+		vo.setIsPrivate("N");
 		logger.info("게시글 작성 처리, 파라미터 vo={}", vo);
 
 		int cnt = postsService.insertPosts(vo);

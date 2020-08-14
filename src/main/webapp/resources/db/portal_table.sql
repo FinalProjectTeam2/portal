@@ -21,119 +21,67 @@ grant connect,resource to portal;
 
 --뷰 생성 권한 부여하기
 grant create view to portal;
-/* 강의계획 */
-CREATE TABLE syllabus (
-	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
-	syllabus VARCHAR2(100) NOT NULL, /* 강의계획서 */
-	theory_time NUMBER, /* 이론시간 */
-	training_time NUMBER /* 실습시간 */
+
+/* 계좌정보 */
+CREATE TABLE account_info (
+	official_no VARCHAR2(100), /* 관계자 번호 */
+	bank_code VARCHAR2(20), /* 은행코드 */
+	account_no VARCHAR2(30), /* 계좌번호 */
+	account_name VARCHAR2(50) /* 예금주명 */
 );
 
-/* 강의시간표 */
-CREATE TABLE subj_time (
-	lecture_time_no NUMBER NOT NULL, /* 강의시간표코드 */
-	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
-	timetable_code VARCHAR2(10) NOT NULL, /* 시간기준코드 */
-	classroom_code VARCHAR2(10) /* 강의실코드 */
+/* 과제 */
+CREATE TABLE assignment (
+	assign_no NUMBER NOT NULL, /* 과제번호 */
+	stu_no VARCHAR2(100), /* 학번 */
+	file_name VARCHAR2(100), /* 파일이름 */
+	file_size NUMBER, /* 파일사이즈 */
+	original_file_name VARCHAR2(100), /* 원본파일이름 */
+	apply_date DATE DEFAULT sysdate /* 제출일 */
 );
 
-ALTER TABLE subj_time
+/* 권한 */
+CREATE TABLE authority (
+	auth_code VARCHAR2(50) NOT NULL, /* 권한코드 */
+	auth_name VARCHAR2(30) NOT NULL, /* 권한명 */
+	auth_desc VARCHAR2(30), /* 설명 */
+	auth_level NUMBER NOT NULL, /* 레벨 */
+	reg_date DATE DEFAULT sysdate /* 등록일 */
+);
+
+ALTER TABLE authority
 	ADD
-		CONSTRAINT PK_subj_time
+		CONSTRAINT PK_authority
 		PRIMARY KEY (
-			lecture_time_no
+			auth_code
 		);
 
-/* 강의실 */
-CREATE TABLE classroom (
-	classroom_code VARCHAR2(10) NOT NULL, /* 강의실코드 */
-	classroom_name VARCHAR2(30) NOT NULL, /* 강의실명 */
-	building_code VARCHAR2(30) NOT NULL /* 건물코드 */
-);
-
-ALTER TABLE classroom
-	ADD
-		CONSTRAINT PK_classroom
-		PRIMARY KEY (
-			classroom_code
-		);
-
-/* 강의평가 */
-CREATE TABLE subj_eval (
-	sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
+/* 장학금 수여 */
+CREATE TABLE award (
+	no NUMBER NOT NULL, /* 번호 */
 	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
-	classification VARCHAR2(30) NOT NULL, /* 수강구분 */
-	q1 NUMBER, /* 문항1 */
-	q2 NUMBER, /* 문항2 */
-	q3 NUMBER, /* 문항3 */
-	q4 NUMBER, /* 문항4 */
-	q5 NUMBER, /* 문항5 */
-	q6 NUMBER, /* 문항6 */
-	q7 NUMBER, /* 문항7 */
-	q8 NUMBER, /* 문항8 */
-	content CLOB /* 평가내용 */
+	scholarship_no NUMBER NOT NULL, /* 장학금 번호 */
+	awarding_date DATE DEFAULT sysdate /* 수여일 */
 );
 
-ALTER TABLE subj_eval
+ALTER TABLE award
 	ADD
-		CONSTRAINT PK_subj_eval
+		CONSTRAINT PK_award
 		PRIMARY KEY (
-			sub_code,
-			stu_no,
-			classification
+			no
 		);
 
-/* 개설교과과정 */
-CREATE TABLE open_subj (
-	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
-	subj_code VARCHAR2(30) NOT NULL, /* 과목코드 */
-	open_date DATE DEFAULT sysdate, /* 개설일자 */
-	close_date DATE, /* 폐지일자 */
-	prof_no VARCHAR2(100) NOT NULL /* 교수번호 */
+/* 은행 */
+CREATE TABLE bank (
+	bank_code VARCHAR2(20) NOT NULL, /* 은행코드 */
+	bank_name VARCHAR2(50) NOT NULL /* 은행명 */
 );
 
-ALTER TABLE open_subj
+ALTER TABLE bank
 	ADD
-		CONSTRAINT PK_open_subj
+		CONSTRAINT PK_bank
 		PRIMARY KEY (
-			open_sub_code
-		);
-
-/* 건물 */
-CREATE TABLE building (
-	building_code VARCHAR2(30) NOT NULL, /* 건물코드 */
-	building_name VARCHAR2(100) NOT NULL, /* 건물명 */
-	detail VARCHAR2(150), /* 상세위치 */
-	tel VARCHAR2(20) /* 전화번호 */
-);
-
-ALTER TABLE building
-	ADD
-		CONSTRAINT PK_building
-		PRIMARY KEY (
-			building_code
-		);
-
-/* 게시글 */
-CREATE TABLE posts (
-	post_no NUMBER NOT NULL, /* 게시글번호 */
-	official_no VARCHAR2(150), /* 관계자번호 */
-	title VARCHAR2(150), /* 제목 */
-	contents CLOB, /* 내용 */
-	reg_date DATE DEFAULT sysdate, /* 등록일 */
-	read_count NUMBER DEFAULT 0, /* 조회수 */
-	del_flag CHAR(1) DEFAULT 'N', /* 삭제여부 */
-	group_no NUMBER, /* 원본글번호 */
-	sort_no NUMBER, /* 정렬번호 */
-	step NUMBER, /* 차수 */
-	bd_code VARCHAR2(10) /* 게시판코드 */
-);
-
-ALTER TABLE posts
-	ADD
-		CONSTRAINT posts
-		PRIMARY KEY (
-			post_no
+			bank_code
 		);
 
 /* 게시판 */
@@ -162,177 +110,146 @@ ALTER TABLE board
 			bd_code
 		);
 
-/* 계좌정보 */
-CREATE TABLE account_info (
-	official_no VARCHAR2(100), /* 관계자 번호 */
-	bank_code VARCHAR2(20), /* 은행코드 */
-	account_no VARCHAR2(30), /* 계좌번호 */
-	account_name VARCHAR2(50) /* 예금주명 */
+/* 즐겨찾기 */
+CREATE TABLE bookmark (
+	no <지정 되지 않음> NOT NULL, /* 번호 */
+	official_no <지정 되지 않음>, /* 관계자번호 */
+	name <지정 되지 않음>, /* 북마크명 */
+	url <지정 되지 않음> /* 북마크주소 */
 );
 
-/* 과목 */
-CREATE TABLE subject (
-	subj_code VARCHAR2(30) NOT NULL, /* 과목코드 */
-	subj_name VARCHAR2(100) NOT NULL, /* 과목명 */
-	explanation CLOB, /* 과목설명 */
-	type_code VARCHAR2(30), /* 구분코드 */
-	credit NUMBER, /* 이수학점 */
-	prof_no VARCHAR2(100) /* 교수번호 */
-);
-
-ALTER TABLE subject
+ALTER TABLE bookmark
 	ADD
-		CONSTRAINT PK_subject
+		CONSTRAINT PK_bookmark
 		PRIMARY KEY (
-			subj_code
+			no
 		);
 
-/* 과제 */
-CREATE TABLE assignment (
-	sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
-	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
-	classification VARCHAR2(30) NOT NULL, /* 수강구분 */
-	file_name VARCHAR2(100), /* 파일이름 */
-	file_size NUMBER, /* 파일사이즈 */
-	original_file_name VARCHAR2(100) /* 원본파일이름 */
+/* 건물 */
+CREATE TABLE building (
+	building_code VARCHAR2(30) NOT NULL, /* 건물코드 */
+	building_name VARCHAR2(100) NOT NULL, /* 건물명 */
+	detail VARCHAR2(150), /* 상세위치 */
+	tel VARCHAR2(20) /* 전화번호 */
 );
 
-ALTER TABLE assignment
+ALTER TABLE building
 	ADD
-		CONSTRAINT PK_assignment
+		CONSTRAINT PK_building
 		PRIMARY KEY (
-			sub_code,
-			stu_no,
-			classification
+			building_code
 		);
 
-/* 관계자 상세정보 */
-CREATE TABLE official_info (
-	official_no VARCHAR2(100) NOT NULL, /* 관계자 번호 */
-	hp1 VARCHAR2(10), /* 핸드폰1 */
-	hp2 VARCHAR2(10), /* 핸드폰2 */
-	hp3 VARCHAR2(10), /* 핸드폰3 */
-	email1 VARCHAR2(50), /* 이메일1 */
-	email2 VARCHAR2(50), /* 이메일2 */
-	zipcode VARCHAR2(50), /* 우편번호 */
-	address VARCHAR2(100), /* 주소 */
-	addr_detail VARCHAR2(100), /* 주소상세 */
-	ssn VARCHAR2(100), /* 주민번호 */
-	gender VARCHAR2(20), /* 성별 */
-	image_url VARCHAR2(150) DEFAULT 'default.jpg' /* 사진 */
-);
-
-ALTER TABLE official_info
-	ADD
-		CONSTRAINT PK_official_info
-		PRIMARY KEY (
-			official_no
-		);
-
-/* 교수 */
-CREATE TABLE professor (
-	prof_no VARCHAR2(100) NOT NULL, /* 교수번호 */
-	pwd VARCHAR2(150) NOT NULL, /* 비밀번호 */
-	prof_name VARCHAR2(50) NOT NULL, /* 교수명 */
-	dep_no NUMBER, /* 학과번호 */
-	position_no NUMBER NOT NULL, /* 직책번호 */
-	start_date DATE DEFAULT sysdate, /* 임용일 */
-	resignation_date DATE, /* 퇴직일 */
-	identity_state CHAR(1) DEFAULT 'N', /* 본인인증상태 */
-	identify_code VARCHAR2(20), /* 본인인증코드 */
-	change_date DATE /* 비밀번호변경일 */
-);
-
-ALTER TABLE professor
-	ADD
-		CONSTRAINT professor
-		PRIMARY KEY (
-			prof_no
-		);
-
-/* 교수 직책 */
-CREATE TABLE prof_position (
-	position_no NUMBER NOT NULL, /* 직책번호 */
-	position_name VARCHAR2(50) NOT NULL /* 직책명 */
-);
-
-ALTER TABLE prof_position
-	ADD
-		CONSTRAINT PK_prof_position
-		PRIMARY KEY (
-			position_no
-		);
-
-/* 권한 */
-CREATE TABLE authority (
-	auth_code VARCHAR2(50) NOT NULL, /* 권한코드 */
-	auth_name VARCHAR2(30) NOT NULL, /* 권한명 */
-	auth_desc VARCHAR2(30), /* 설명 */
-	auth_level NUMBER NOT NULL, /* 레벨 */
+/* 카테고리 */
+CREATE TABLE category (
+	category_code VARCHAR2(10) NOT NULL, /* 카테고리코드 */
+	category_name VARCHAR2(100) NOT NULL, /* 카테고리명 */
+	usage CHAR(1) DEFAULT 'N', /* 사용여부 */
 	reg_date DATE DEFAULT sysdate /* 등록일 */
 );
 
-ALTER TABLE authority
+ALTER TABLE category
 	ADD
-		CONSTRAINT PK_authority
+		CONSTRAINT PK_category
 		PRIMARY KEY (
-			auth_code
+			category_code
 		);
 
-/* 기본 시간표 */
-CREATE TABLE timetable (
-	timetable_code VARCHAR2(10) NOT NULL, /* 시간기준코드 */
-	timetable_name VARCHAR2(50) NOT NULL, /* 표시교시명 */
-	day VARCHAR2(10) NOT NULL, /* 요일 */
-	period NUMBER NOT NULL /* 교시 */
+/* 증명서발급 */
+CREATE TABLE certification (
+	no VARCHAR2(20) NOT NULL, /* 발급번호 */
+	cert_code VARCHAR2(20), /* 증명서코드 */
+	qty NUMBER, /* 매수 */
+	stu_no VARCHAR2(100), /* 학번 */
+	reg_date DATE DEFAULT sysdate, /* 발급일 */
+	is_print CHAR(1) DEFAULT 'N', /* 출력여부 */
+	cert_name VARCHAR2(20) /* 증명서이름 */
 );
 
-ALTER TABLE timetable
+ALTER TABLE certification
 	ADD
-		CONSTRAINT PK_timetable
-		PRIMARY KEY (
-			timetable_code
-		);
-
-/* 댓글 */
-CREATE TABLE reply (
-	reply_no NUMBER NOT NULL, /* 댓글번호 */
-	official_no VARCHAR2(100) NOT NULL, /* 관계자번호 */
-	reg_date DATE DEFAULT sysdate, /* 등록일 */
-	contents CLOB, /* 내용 */
-	group_no NUMBER, /* 원본글번호 */
-	sort_no NUMBER, /* 정렬번호 */
-	step NUMBER, /* 차수 */
-	del_flag CHAR(1) DEFAULT 'N', /* 삭제여부 */
-	post_no NUMBER /* 게시글번호 */
-);
-
-ALTER TABLE reply
-	ADD
-		CONSTRAINT PK_reply
-		PRIMARY KEY (
-			reply_no
-		);
-
-/* 등록금 */
-CREATE TABLE tuition (
-	no NUMBER NOT NULL, /* 번호 */
-	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
-	semester NUMBER, /* 학기 */
-	admission_fee NUMBER, /* 입학금 */
-	tuition NUMBER, /* 수강료 */
-	practice_cost NUMBER, /* 실습비 */
-	student_fee NUMBER, /* 학생회비 */
-	total_tuition NUMBER, /* 총등록금액 */
-	deposit_state CHAR(1) DEFAULT 'N', /* 납부여부 */
-	deposit_date DATE /* 납부일 */
-);
-
-ALTER TABLE tuition
-	ADD
-		CONSTRAINT PK_tuition
+		CONSTRAINT PK_certification
 		PRIMARY KEY (
 			no
+		);
+
+/* 채팅메시지 */
+CREATE TABLE chatmessage (
+	NO NUMBER NOT NULL, /* 번호 */
+	ROOM_ID VARCHAR2(100), /* 채팅방아이디 */
+	WRITER_ID VARCHAR2(100), /* 관계자번호 */
+	WRITER_NAME VARCHAR2(30), /* 작성자이름 */
+	MESSAGE VARCHAR2(2000), /* 메세지 */
+	REG_DATE DATE, /* 등록일 */
+	TYPE VARCHAR(20) /* 타입 */
+);
+
+ALTER TABLE chatmessage
+	ADD
+		CONSTRAINT PK_chatmessage
+		PRIMARY KEY (
+			NO
+		);
+
+/* 채팅방 */
+CREATE TABLE chatroom (
+	ROOM_ID VARCHAR2(100) NOT NULL, /* 채팅방아이디 */
+	NAME VARCHAR2(50), /* 채팅방명 */
+	OFFICIAL_NO VARCHAR2(50), /* 관계자번호 */
+	REG_DATE DATE /* 등록일 */
+);
+
+ALTER TABLE chatroom
+	ADD
+		CONSTRAINT PK_chatroom
+		PRIMARY KEY (
+			ROOM_ID
+		);
+
+/* 강의실 */
+CREATE TABLE classroom (
+	classroom_code VARCHAR2(20) NOT NULL, /* 강의실코드 */
+	classroom_name VARCHAR2(30) NOT NULL, /* 강의실명 */
+	building_code VARCHAR2(30) NOT NULL /* 건물코드 */
+);
+
+ALTER TABLE classroom
+	ADD
+		CONSTRAINT PK_classroom
+		PRIMARY KEY (
+			classroom_code
+		);
+
+/* 학과 */
+CREATE TABLE department (
+	dep_no NUMBER NOT NULL, /* 학과번호 */
+	dep_name VARCHAR2(100) NOT NULL, /* 학과명 */
+	tel VARCHAR2(30), /* 전화번호 */
+	building_code VARCHAR2(30), /* 건물코드 */
+	faculty_no NUMBER, /* 학부번호 */
+	total_credit NUMBER /* 졸업이수학점 */
+);
+
+ALTER TABLE department
+	ADD
+		CONSTRAINT department
+		PRIMARY KEY (
+			dep_no
+		);
+
+/* 과제 등록 */
+CREATE TABLE distribute_assign (
+	assign_no NUMBER NOT NULL, /* 과제번호 */
+	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
+	assign_name VARCHAR2(100), /* 과제명 */
+	reg_date DATE DEFAULT sysdate /* 등록일 */
+);
+
+ALTER TABLE distribute_assign
+	ADD
+		CONSTRAINT PK_distribute_assign
+		PRIMARY KEY (
+			assign_no
 		);
 
 /* 부서 */
@@ -346,6 +263,39 @@ ALTER TABLE emp_depart
 		CONSTRAINT PK_emp_depart
 		PRIMARY KEY (
 			dep_code
+		);
+
+/* 임직원 직책 */
+CREATE TABLE emp_position (
+	position_code VARCHAR2(50) NOT NULL, /* 직책코드 */
+	position_name VARCHAR2(50) NOT NULL /* 직책명 */
+);
+
+ALTER TABLE emp_position
+	ADD
+		CONSTRAINT PK_emp_position
+		PRIMARY KEY (
+			position_code
+		);
+
+/* 임직원 */
+CREATE TABLE employee (
+	emp_no VARCHAR2(100) NOT NULL, /* 임직원번호 */
+	pwd VARCHAR2(150) NOT NULL, /* 비밀번호 */
+	start_date DATE DEFAULT sysdate, /* 입사일 */
+	dep_code VARCHAR2(50), /* 부서코드 */
+	position_code VARCHAR2(50), /* 직책코드 */
+	auth_code VARCHAR2(50), /* 권한코드 */
+	emp_name VARCHAR2(50) NOT NULL, /* 임직원명 */
+	resignation_date DATE, /* 퇴사일 */
+	Identity_state CHAR(1) DEFAULT 'N' /* 본인인증상태 */
+);
+
+ALTER TABLE employee
+	ADD
+		CONSTRAINT PK_employee
+		PRIMARY KEY (
+			emp_no
 		);
 
 /* 성적 */
@@ -372,158 +322,17 @@ ALTER TABLE evaluation
 			classification
 		);
 
-/* 수강신청 */
-CREATE TABLE registration (
-	sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
-	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
-	classification VARCHAR2(30) NOT NULL, /* 수강구분 */
-	reg_date DATE DEFAULT sysdate, /* 수강신청일자 */
-	score NUMBER, /* 성적 */
-	lecture_eval_flag CHAR(1) DEFAULT 'N' /* 강의평가완료여부 */
+/* 학부 */
+CREATE TABLE faculty (
+	faculty_no NUMBER NOT NULL, /* 학부번호 */
+	faculty_name VARCHAR2(100) NOT NULL /* 학부이름 */
 );
 
-ALTER TABLE registration
+ALTER TABLE faculty
 	ADD
-		CONSTRAINT PK_registration
+		CONSTRAINT PK_faculty
 		PRIMARY KEY (
-			sub_code,
-			stu_no,
-			classification
-		);
-
-/* 은행 */
-CREATE TABLE bank (
-	bank_code VARCHAR2(20) NOT NULL, /* 은행코드 */
-	bank_name VARCHAR2(50) NOT NULL /* 은행명 */
-);
-
-ALTER TABLE bank
-	ADD
-		CONSTRAINT PK_bank
-		PRIMARY KEY (
-			bank_code
-		);
-
-/* 이수구분 */
-CREATE TABLE subj_type (
-	type_code VARCHAR2(30) NOT NULL, /* 구분코드 */
-	type VARCHAR2(30) /* 이수구분 */
-);
-
-ALTER TABLE subj_type
-	ADD
-		CONSTRAINT PK_subj_type
-		PRIMARY KEY (
-			type_code
-		);
-
-/* 임직원 */
-CREATE TABLE employee (
-	emp_no VARCHAR2(100) NOT NULL, /* 임직원번호 */
-	pwd VARCHAR2(150) NOT NULL, /* 비밀번호 */
-	start_date DATE DEFAULT sysdate, /* 입사일 */
-	dep_code VARCHAR2(50), /* 부서코드 */
-	position_code VARCHAR2(50), /* 직책코드 */
-	auth_code VARCHAR2(50), /* 권한코드 */
-	emp_name VARCHAR2(50) NOT NULL, /* 임직원명 */
-	resignation_date DATE, /* 퇴사일 */
-	Identity_state CHAR(1) DEFAULT 'N' /* 본인인증상태 */
-);
-
-ALTER TABLE employee
-	ADD
-		CONSTRAINT PK_employee
-		PRIMARY KEY (
-			emp_no
-		);
-
-/* 임직원 직책 */
-CREATE TABLE emp_position (
-	position_code VARCHAR2(50) NOT NULL, /* 직책코드 */
-	position_name VARCHAR2(50) NOT NULL /* 직책명 */
-);
-
-ALTER TABLE emp_position
-	ADD
-		CONSTRAINT PK_emp_position
-		PRIMARY KEY (
-			position_code
-		);
-
-/* 장학금 */
-CREATE TABLE scholarship (
-	scholarship_no NUMBER NOT NULL, /* 장학금 번호 */
-	scholarship_type VARCHAR2(50), /* 장학금 종류 */
-	scholarship NUMBER /* 장학금 금액 */
-);
-
-ALTER TABLE scholarship
-	ADD
-		CONSTRAINT PK_scholarship
-		PRIMARY KEY (
-			scholarship_no
-		);
-
-/* 장학금 수여 */
-CREATE TABLE award (
-	no NUMBER NOT NULL, /* 번호 */
-	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
-	scholarship_no NUMBER NOT NULL, /* 장학금 번호 */
-	awarding_date DATE DEFAULT sysdate /* 수여일 */
-);
-
-ALTER TABLE award
-	ADD
-		CONSTRAINT PK_award
-		PRIMARY KEY (
-			no
-		);
-
-/* 쪽지 발신함 */
-CREATE TABLE outbox (
-	msg_no NUMBER NOT NULL, /* 족지번호 */
-	sender VARCHAR2(100) NOT NULL, /* 발신인번호 */
-	title VARCHAR2(150) NOT NULL, /* 제목 */
-	contents CLOB, /* 내용 */
-	send_date DATE DEFAULT sysdate /* 발송일 */
-);
-
-ALTER TABLE outbox
-	ADD
-		CONSTRAINT PK_outbox
-		PRIMARY KEY (
-			msg_no
-		);
-
-/* 쪽지 수신함 */
-CREATE TABLE inbox (
-	no NUMBER NOT NULL, /* 번호 */
-	msg_no NUMBER NOT NULL, /* 족지번호 */
-	addressee VARCHAR2(100) NOT NULL, /* 수신인번호 */
-	read_date DATE, /* 읽은날짜 */
-	keep_flag CHAR(1) DEFAULT 'N' /* 보관여부 */
-);
-
-ALTER TABLE inbox
-	ADD
-		CONSTRAINT PK_inbox
-		PRIMARY KEY (
-			no
-		);
-
-/* 카테고리 */
-CREATE TABLE category (
-	category_code VARCHAR2(10) NOT NULL, /* 카테고리코드 */
-	category_name VARCHAR2(100) NOT NULL, /* 카테고리명 */
-	usage CHAR(1) DEFAULT 'N', /* 사용여부 */
-	reg_date DATE DEFAULT sysdate /* 등록일 */
-);
-
-ALTER TABLE category
-	ADD
-		CONSTRAINT PK_category
-		PRIMARY KEY (
-			category_code
+			faculty_no
 		);
 
 /* 파일 */
@@ -544,53 +353,221 @@ ALTER TABLE files
 			no
 		);
 
-/* 학과 */
-CREATE TABLE department (
-	dep_no NUMBER NOT NULL, /* 학과번호 */
-	dep_name VARCHAR2(100) NOT NULL, /* 학과명 */
-	tel VARCHAR2(30), /* 전화번호 */
-	building_code VARCHAR2(30), /* 건물코드 */
-	faculty_no NUMBER, /* 학부번호 */
-	total_credit NUMBER /* 졸업이수학점 */
+/* 하단정보 */
+CREATE TABLE footer (
+	company_name VARCHAR2(100), /* 회사명 */
+	tel VARCHAR2(100), /* 전화번호 */
+	zipcode VARCHAR2(100), /* 우편번호 */
+	address1 VARCHAR2(100), /* 주소1 */
+	address2 VARCHAR2(100), /* 주소2 */
+	policy CLOB, /* 개인정보처리방침 */
+	start_year VARCHAR2(100) /* 설립연도 */
 );
 
-ALTER TABLE department
+/* 쪽지 수신함 */
+CREATE TABLE inbox (
+	no NUMBER NOT NULL, /* 번호 */
+	msg_no NUMBER NOT NULL, /* 족지번호 */
+	official_no VARCHAR2(100) NOT NULL, /* 수신인번호 */
+	read_date DATE, /* 읽은날짜 */
+	keep_flag CHAR(1) DEFAULT 'N' /* 보관여부 */
+);
+
+ALTER TABLE inbox
 	ADD
-		CONSTRAINT department
+		CONSTRAINT PK_inbox
 		PRIMARY KEY (
-			dep_no
+			no
 		);
 
-/* 학부 */
-CREATE TABLE faculty (
-	faculty_no NUMBER NOT NULL, /* 학부번호 */
-	faculty_name VARCHAR2(100) NOT NULL /* 학부이름 */
+/* 관계자 상세정보 */
+CREATE TABLE official_info (
+	official_no VARCHAR2(100) NOT NULL, /* 관계자 번호 */
+	hp1 VARCHAR2(10), /* 핸드폰1 */
+	hp2 VARCHAR2(10), /* 핸드폰2 */
+	hp3 VARCHAR2(10), /* 핸드폰3 */
+	email1 VARCHAR2(50), /* 이메일1 */
+	email2 VARCHAR2(50), /* 이메일2 */
+	zipcode VARCHAR2(50), /* 우편번호 */
+	address VARCHAR2(100), /* 주소 */
+	addr_detail VARCHAR2(100), /* 주소상세 */
+	ssn VARCHAR2(100), /* 주민번호 */
+	gender VARCHAR2(20), /* 성별 */
+	image_url VARCHAR2(150) DEFAULT 'default.jpg' /* 사진 */
 );
 
-ALTER TABLE faculty
+ALTER TABLE official_info
 	ADD
-		CONSTRAINT PK_faculty
+		CONSTRAINT PK_official_info
 		PRIMARY KEY (
-			faculty_no
+			official_no
 		);
 
-/* 학적상태 */
-CREATE TABLE student_state (
-   state VARCHAR2(100) NOT NULL, /* 학적상태번호 */
-   state_name VARCHAR2(100) /* 학적상태이름 */
+/* 개설교과과정 */
+CREATE TABLE open_subj (
+	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
+	subj_code VARCHAR2(30) NOT NULL, /* 과목코드 */
+	open_date DATE DEFAULT sysdate, /* 개설일자 */
+	close_date DATE, /* 폐지일자 */
+	prof_no VARCHAR2(100) NOT NULL /* 교수번호 */
 );
 
-CREATE UNIQUE INDEX PK_student_state
-   ON student_state (
-      state ASC
-   );
-ALTER TABLE student_state
-   ADD
-      CONSTRAINT PK_student_state
-      PRIMARY KEY (
-         state
-      );
+ALTER TABLE open_subj
+	ADD
+		CONSTRAINT PK_open_subj
+		PRIMARY KEY (
+			open_sub_code
+		);
 
+/* 쪽지 발신함 */
+CREATE TABLE outbox (
+	msg_no NUMBER NOT NULL, /* 족지번호 */
+	official_no VARCHAR2(100) NOT NULL, /* 발신인번호 */
+	contents CLOB, /* 내용 */
+	send_date DATE DEFAULT sysdate, /* 발송일 */
+	official_name VARCHAR2(20), /* 발신인명 */
+	del_flag CHAR(1) DEFAULT 'N' /* 삭제여부 */
+);
+
+ALTER TABLE outbox
+	ADD
+		CONSTRAINT PK_outbox
+		PRIMARY KEY (
+			msg_no
+		);
+
+/* 게시글 */
+CREATE TABLE posts (
+	post_no NUMBER NOT NULL, /* 게시글번호 */
+	official_no VARCHAR2(150), /* 관계자번호 */
+	title VARCHAR2(150), /* 제목 */
+	contents CLOB, /* 내용 */
+	reg_date DATE DEFAULT sysdate, /* 등록일 */
+	read_count NUMBER DEFAULT 0, /* 조회수 */
+	del_flag CHAR(1) DEFAULT 'N', /* 삭제여부 */
+	group_no NUMBER, /* 원본글번호 */
+	sort_no NUMBER, /* 정렬번호 */
+	step NUMBER, /* 차수 */
+	bd_code VARCHAR2(10), /* 게시판코드 */
+	edit_date DATE DEFAULT sysdate, /* 수정일 */
+	is_private CHAR(1) DEFAULT 'N' /* 비밀글여부 */
+);
+
+ALTER TABLE posts
+	ADD
+		CONSTRAINT posts
+		PRIMARY KEY (
+			post_no
+		);
+
+/* 교수 직책 */
+CREATE TABLE prof_position (
+	position_no NUMBER NOT NULL, /* 직책번호 */
+	position_name VARCHAR2(50) NOT NULL /* 직책명 */
+);
+
+ALTER TABLE prof_position
+	ADD
+		CONSTRAINT PK_prof_position
+		PRIMARY KEY (
+			position_no
+		);
+
+/* 교수 */
+CREATE TABLE professor (
+	prof_no VARCHAR2(100) NOT NULL, /* 교수번호 */
+	pwd VARCHAR2(150) NOT NULL, /* 비밀번호 */
+	prof_name VARCHAR2(50) NOT NULL, /* 교수명 */
+	dep_no NUMBER, /* 학과번호 */
+	position_no NUMBER NOT NULL, /* 직책번호 */
+	start_date DATE DEFAULT sysdate, /* 임용일 */
+	resignation_date DATE, /* 퇴직일 */
+	identity_state CHAR(1) DEFAULT 'N', /* 본인인증상태 */
+	identity_code VARCHAR2(20), /* 본인인증코드 */
+	change_date DATE /* 비밀번호변경일 */
+);
+
+ALTER TABLE professor
+	ADD
+		CONSTRAINT professor
+		PRIMARY KEY (
+			prof_no
+		);
+
+/* 요약시간표 */
+CREATE TABLE regi_timetable (
+	open_sub_code VARCHAR2(10), /* 개설교과과목코드 */
+	short_name VARCHAR2(50) /* 요약명 */
+);
+
+/* 수강신청 */
+CREATE TABLE registration (
+	sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
+	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
+	classification VARCHAR2(30) NOT NULL, /* 수강구분 */
+	reg_date DATE DEFAULT sysdate, /* 수강신청일자 */
+	score NUMBER, /* 성적 */
+	lecture_eval_flag CHAR(1) DEFAULT 'N' /* 강의평가완료여부 */
+);
+
+ALTER TABLE registration
+	ADD
+		CONSTRAINT PK_registration
+		PRIMARY KEY (
+			sub_code,
+			stu_no,
+			classification
+		);
+
+/* 댓글 */
+CREATE TABLE reply (
+	reply_no NUMBER NOT NULL, /* 댓글번호 */
+	official_no VARCHAR2(100) NOT NULL, /* 관계자번호 */
+	reg_date DATE DEFAULT sysdate, /* 등록일 */
+	contents CLOB, /* 내용 */
+	del_flag CHAR(1) DEFAULT 'N', /* 삭제여부 */
+	post_no NUMBER, /* 게시글번호 */
+	official_name VARCHAR2(20) /* 관계자이름 */
+);
+
+ALTER TABLE reply
+	ADD
+		CONSTRAINT PK_reply
+		PRIMARY KEY (
+			reply_no
+		);
+
+/* 대댓글 */
+CREATE TABLE rereply (
+	rereply_no NUMBER NOT NULL, /* 대댓글번호 */
+	reply_no NUMBER NOT NULL, /* 댓글번호 */
+	official_no VARCHAR2(100) NOT NULL, /* 관계자번호 */
+	reg_date DATE DEFAULT sysdate, /* 등록일 */
+	contents CLOB, /* 내용 */
+	del_flag CHAR(1) DEFAULT 'N', /* 삭제여부 */
+	official_name <지정 되지 않음> /* 관계자이름 */
+);
+
+ALTER TABLE rereply
+	ADD
+		CONSTRAINT PK_rereply
+		PRIMARY KEY (
+			rereply_no
+		);
+
+/* 장학금 */
+CREATE TABLE scholarship (
+	scholarship_no NUMBER NOT NULL, /* 장학금 번호 */
+	scholarship_type VARCHAR2(50), /* 장학금 종류 */
+	scholarship NUMBER /* 장학금 금액 */
+);
+
+ALTER TABLE scholarship
+	ADD
+		CONSTRAINT PK_scholarship
+		PRIMARY KEY (
+			scholarship_no
+		);
 
 /* 학부생 */
 CREATE TABLE student (
@@ -600,7 +577,7 @@ CREATE TABLE student (
 	major NUMBER, /* 전공 */
 	semester NUMBER DEFAULT 1, /* 학기 */
 	credits NUMBER DEFAULT 0, /* 이수학점 */
-	state VARCHAR2(100) DEFAULT '1', /* 학적상태 */
+	state VARCHAR2(100) DEFAULT '신입생', /* 학적상태번호 */
 	admission_date DATE DEFAULT sysdate, /* 입학일 */
 	graduation_date DATE, /* 졸업일 */
 	identity_state CHAR(1) DEFAULT 'N', /* 본인인증상태 */
@@ -616,98 +593,179 @@ ALTER TABLE student
 			stu_no
 		);
 
-ALTER TABLE syllabus
+/* 학적상태 */
+CREATE TABLE student_state (
+	state VARCHAR2(100) NOT NULL, /* 학적상태번호 */
+	state_name VARCHAR2(100) /* 학적상태이름 */
+);
+
+ALTER TABLE student_state
 	ADD
-		CONSTRAINT FK_open_subj_3
-		FOREIGN KEY (
-			open_sub_code
-		)
-		REFERENCES open_subj (
-			open_sub_code
+		CONSTRAINT PK_student_state
+		PRIMARY KEY (
+			state
 		);
 
-ALTER TABLE subj_time
-	ADD
-		CONSTRAINT FK_timetable_
-		FOREIGN KEY (
-			timetable_code
-		)
-		REFERENCES timetable (
-			timetable_code
-		);
-
-ALTER TABLE subj_time
-	ADD
-		CONSTRAINT FK_open_subj_2
-		FOREIGN KEY (
-			open_sub_code
-		)
-		REFERENCES open_subj (
-			open_sub_code
-		);
-
-ALTER TABLE subj_time
-	ADD
-		CONSTRAINT FK_classroom_
-		FOREIGN KEY (
-			classroom_code
-		)
-		REFERENCES classroom (
-			classroom_code
-		);
-
-ALTER TABLE classroom
-	ADD
-		CONSTRAINT FK_building_TO_classroom
-		FOREIGN KEY (
-			building_code
-		)
-		REFERENCES building (
-			building_code
-		);
+/* 강의평가 */
+CREATE TABLE subj_eval (
+	sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
+	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
+	classification VARCHAR2(30) NOT NULL, /* 수강구분 */
+	q1 NUMBER, /* 문항1 */
+	q2 NUMBER, /* 문항2 */
+	q3 NUMBER, /* 문항3 */
+	q4 NUMBER, /* 문항4 */
+	q5 NUMBER, /* 문항5 */
+	q6 NUMBER, /* 문항6 */
+	q7 NUMBER, /* 문항7 */
+	q8 NUMBER, /* 문항8 */
+	content CLOB /* 평가내용 */
+);
 
 ALTER TABLE subj_eval
 	ADD
-		CONSTRAINT FK_registration_
-		FOREIGN KEY (
-			sub_code,
-			stu_no,
-			classification
-		)
-		REFERENCES registration (
+		CONSTRAINT PK_subj_eval
+		PRIMARY KEY (
 			sub_code,
 			stu_no,
 			classification
 		);
 
-ALTER TABLE open_subj
+/* 강의시간표 */
+CREATE TABLE subj_time (
+	lecture_time_no NUMBER NOT NULL, /* 강의시간표코드 */
+	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
+	timetable_code VARCHAR2(10) NOT NULL, /* 시간기준코드 */
+	classroom_code VARCHAR2(20) /* 강의실코드 */
+);
+
+ALTER TABLE subj_time
 	ADD
-		CONSTRAINT FK_subject_
-		FOREIGN KEY (
-			subj_code
-		)
-		REFERENCES subject (
+		CONSTRAINT PK_subj_time
+		PRIMARY KEY (
+			lecture_time_no
+		);
+
+/* 이수구분 */
+CREATE TABLE subj_type (
+	type_code VARCHAR2(30) NOT NULL, /* 구분코드 */
+	type VARCHAR2(30) /* 이수구분 */
+);
+
+ALTER TABLE subj_type
+	ADD
+		CONSTRAINT PK_subj_type
+		PRIMARY KEY (
+			type_code
+		);
+
+/* 과목 */
+CREATE TABLE subject (
+	subj_code VARCHAR2(30) NOT NULL, /* 과목코드 */
+	subj_name VARCHAR2(100) NOT NULL, /* 과목명 */
+	explanation CLOB, /* 과목설명 */
+	type_code VARCHAR2(30), /* 구분코드 */
+	credit NUMBER, /* 이수학점 */
+	prof_no VARCHAR2(100), /* 교수번호 */
+	PERSONNEL NUMBER NOT NULL /* 인원 */
+);
+
+ALTER TABLE subject
+	ADD
+		CONSTRAINT PK_subject
+		PRIMARY KEY (
 			subj_code
 		);
 
-ALTER TABLE open_subj
+/* 강의계획 */
+CREATE TABLE syllabus (
+	open_sub_code VARCHAR2(10) NOT NULL, /* 개설교과과목코드 */
+	syllabus VARCHAR2(100) NOT NULL, /* 강의계획서 */
+	theory_time NUMBER, /* 이론시간 */
+	training_time NUMBER /* 실습시간 */
+);
+
+/* 기본 시간표 */
+CREATE TABLE timetable (
+	timetable_code VARCHAR2(10) NOT NULL, /* 시간기준코드 */
+	timetable_name VARCHAR2(50) NOT NULL, /* 표시교시명 */
+	day VARCHAR2(10) NOT NULL, /* 요일 */
+	period NUMBER NOT NULL, /* 교시 */
+	short_name VARCHAR2(20) NOT NULL /* 요약교시명 */
+);
+
+ALTER TABLE timetable
 	ADD
-		CONSTRAINT FK_professor_
-		FOREIGN KEY (
-			prof_no
-		)
-		REFERENCES professor (
-			prof_no
+		CONSTRAINT PK_timetable
+		PRIMARY KEY (
+			timetable_code
 		);
 
-ALTER TABLE posts
+/* 등록금 */
+CREATE TABLE tuition (
+	no NUMBER NOT NULL, /* 번호 */
+	stu_no VARCHAR2(100) NOT NULL, /* 학번 */
+	semester NUMBER, /* 학기 */
+	tuition NUMBER, /* 수강료 */
+	deposit_state CHAR(1) DEFAULT 'N', /* 납부여부 */
+	deposit_date DATE /* 납부일 */
+);
+
+ALTER TABLE tuition
 	ADD
-		CONSTRAINT FK_board_TO_posts
+		CONSTRAINT PK_tuition
+		PRIMARY KEY (
+			no
+		);
+
+ALTER TABLE account_info
+	ADD
+		CONSTRAINT FK_bank_TO_account_info
 		FOREIGN KEY (
-			bd_code
+			bank_code
 		)
-		REFERENCES board (
-			bd_code
+		REFERENCES bank (
+			bank_code
+		);
+
+ALTER TABLE assignment
+	ADD
+		CONSTRAINT FK_distribute_assign_TO_assignment
+		FOREIGN KEY (
+			assign_no
+		)
+		REFERENCES distribute_assign (
+			assign_no
+		);
+
+ALTER TABLE assignment
+	ADD
+		CONSTRAINT FK_student_TO_assignment
+		FOREIGN KEY (
+			stu_no
+		)
+		REFERENCES student (
+			stu_no
+		);
+
+ALTER TABLE award
+	ADD
+		CONSTRAINT FK_student_TO_award
+		FOREIGN KEY (
+			stu_no
+		)
+		REFERENCES student (
+			stu_no
+		);
+
+ALTER TABLE award
+	ADD
+		CONSTRAINT FK_scholarship_TO_award
+		FOREIGN KEY (
+			scholarship_no
+		)
+		REFERENCES scholarship (
+			scholarship_no
 		);
 
 ALTER TABLE board
@@ -730,83 +788,9 @@ ALTER TABLE board
 			auth_code
 		);
 
-ALTER TABLE account_info
+ALTER TABLE certification
 	ADD
-		CONSTRAINT FK_bank_TO_account_info
-		FOREIGN KEY (
-			bank_code
-		)
-		REFERENCES bank (
-			bank_code
-		);
-
-ALTER TABLE subject
-	ADD
-		CONSTRAINT FK_subj_type_TO_subject
-		FOREIGN KEY (
-			type_code
-		)
-		REFERENCES subj_type (
-			type_code
-		);
-
-ALTER TABLE subject
-	ADD
-		CONSTRAINT FK_professor_TO_subject
-		FOREIGN KEY (
-			prof_no
-		)
-		REFERENCES professor (
-			prof_no
-		);
-
-ALTER TABLE assignment
-	ADD
-		CONSTRAINT FK_registration_TO_assignment
-		FOREIGN KEY (
-			sub_code,
-			stu_no,
-			classification
-		)
-		REFERENCES registration (
-			sub_code,
-			stu_no,
-			classification
-		);
-
-ALTER TABLE professor
-	ADD
-		CONSTRAINT FK_prof_position_TO_professor
-		FOREIGN KEY (
-			position_no
-		)
-		REFERENCES prof_position (
-			position_no
-		);
-
-ALTER TABLE professor
-	ADD
-		CONSTRAINT FK_department_TO_professor
-		FOREIGN KEY (
-			dep_no
-		)
-		REFERENCES department (
-			dep_no
-		);
-
-ALTER TABLE reply
-	ADD
-		CONSTRAINT FK_posts_TO_reply
-		FOREIGN KEY (
-			post_no
-		)
-		REFERENCES posts (
-			post_no
-		);
-
-ALTER TABLE tuition
-	ADD
-		CONSTRAINT FK_student_TO_tuition
+		CONSTRAINT FK_student_
 		FOREIGN KEY (
 			stu_no
 		)
@@ -814,38 +798,54 @@ ALTER TABLE tuition
 			stu_no
 		);
 
-ALTER TABLE evaluation
+ALTER TABLE chatmessage
 	ADD
-		CONSTRAINT FK_registration_TO_evaluation
+		CONSTRAINT FK_chatroom_
 		FOREIGN KEY (
-			sub_code,
-			stu_no,
-			classification
+			ROOM_ID
 		)
-		REFERENCES registration (
-			sub_code,
-			stu_no,
-			classification
+		REFERENCES chatroom (
+			ROOM_ID
 		);
 
-ALTER TABLE registration
+ALTER TABLE classroom
 	ADD
-		CONSTRAINT FK_open_subj_
+		CONSTRAINT FK_building_TO_classroom
 		FOREIGN KEY (
-			sub_code
+			building_code
+		)
+		REFERENCES building (
+			building_code
+		);
+
+ALTER TABLE department
+	ADD
+		CONSTRAINT FK_faculty_TO_department
+		FOREIGN KEY (
+			faculty_no
+		)
+		REFERENCES faculty (
+			faculty_no
+		);
+
+ALTER TABLE department
+	ADD
+		CONSTRAINT FK_building_TO_department
+		FOREIGN KEY (
+			building_code
+		)
+		REFERENCES building (
+			building_code
+		);
+
+ALTER TABLE distribute_assign
+	ADD
+		CONSTRAINT FK_open_subj_TO_distribute_assign
+		FOREIGN KEY (
+			open_sub_code
 		)
 		REFERENCES open_subj (
 			open_sub_code
-		);
-
-ALTER TABLE registration
-	ADD
-		CONSTRAINT FK_student_TO_registration
-		FOREIGN KEY (
-			stu_no
-		)
-		REFERENCES student (
-			stu_no
 		);
 
 ALTER TABLE employee
@@ -878,34 +878,18 @@ ALTER TABLE employee
 			position_code
 		);
 
-ALTER TABLE award
+ALTER TABLE evaluation
 	ADD
-		CONSTRAINT FK_student_TO_award
+		CONSTRAINT FK_registration_TO_evaluation
 		FOREIGN KEY (
-			stu_no
+			sub_code,
+			stu_no,
+			classification
 		)
-		REFERENCES student (
-			stu_no
-		);
-
-ALTER TABLE award
-	ADD
-		CONSTRAINT FK_scholarship_TO_award
-		FOREIGN KEY (
-			scholarship_no
-		)
-		REFERENCES scholarship (
-			scholarship_no
-		);
-
-ALTER TABLE inbox
-	ADD
-		CONSTRAINT FK_outbox_TO_inbox
-		FOREIGN KEY (
-			msg_no
-		)
-		REFERENCES outbox (
-			msg_no
+		REFERENCES registration (
+			sub_code,
+			stu_no,
+			classification
 		);
 
 ALTER TABLE files
@@ -918,24 +902,114 @@ ALTER TABLE files
 			post_no
 		);
 
-ALTER TABLE department
+ALTER TABLE inbox
 	ADD
-		CONSTRAINT FK_faculty_TO_department
+		CONSTRAINT FK_outbox_TO_inbox
 		FOREIGN KEY (
-			faculty_no
+			msg_no
 		)
-		REFERENCES faculty (
-			faculty_no
+		REFERENCES outbox (
+			msg_no
 		);
 
-ALTER TABLE department
+ALTER TABLE open_subj
 	ADD
-		CONSTRAINT FK_building_TO_department
+		CONSTRAINT FK_subject_
 		FOREIGN KEY (
-			building_code
+			subj_code
 		)
-		REFERENCES building (
-			building_code
+		REFERENCES subject (
+			subj_code
+		);
+
+ALTER TABLE open_subj
+	ADD
+		CONSTRAINT FK_professor_
+		FOREIGN KEY (
+			prof_no
+		)
+		REFERENCES professor (
+			prof_no
+		);
+
+ALTER TABLE posts
+	ADD
+		CONSTRAINT FK_board_TO_posts
+		FOREIGN KEY (
+			bd_code
+		)
+		REFERENCES board (
+			bd_code
+		);
+
+ALTER TABLE professor
+	ADD
+		CONSTRAINT FK_prof_position_TO_professor
+		FOREIGN KEY (
+			position_no
+		)
+		REFERENCES prof_position (
+			position_no
+		);
+
+ALTER TABLE professor
+	ADD
+		CONSTRAINT FK_department_TO_professor
+		FOREIGN KEY (
+			dep_no
+		)
+		REFERENCES department (
+			dep_no
+		);
+
+ALTER TABLE regi_timetable
+	ADD
+		CONSTRAINT FK_open_subj_4
+		FOREIGN KEY (
+			open_sub_code
+		)
+		REFERENCES open_subj (
+			open_sub_code
+		);
+
+ALTER TABLE registration
+	ADD
+		CONSTRAINT FK_open_subj_
+		FOREIGN KEY (
+			sub_code
+		)
+		REFERENCES open_subj (
+			open_sub_code
+		);
+
+ALTER TABLE registration
+	ADD
+		CONSTRAINT FK_student_TO_registration
+		FOREIGN KEY (
+			stu_no
+		)
+		REFERENCES student (
+			stu_no
+		);
+
+ALTER TABLE reply
+	ADD
+		CONSTRAINT FK_posts_TO_reply
+		FOREIGN KEY (
+			post_no
+		)
+		REFERENCES posts (
+			post_no
+		);
+
+ALTER TABLE rereply
+	ADD
+		CONSTRAINT FK_reply_
+		FOREIGN KEY (
+			reply_no
+		)
+		REFERENCES reply (
+			reply_no
 		);
 
 ALTER TABLE student
@@ -947,15 +1021,100 @@ ALTER TABLE student
 		REFERENCES department (
 			dep_no
 		);
+
 ALTER TABLE student
-   ADD
-      CONSTRAINT FK_student_state_TO_student
-      FOREIGN KEY (
-         state
-      )
-      REFERENCES student_state (
-         state
-      );
+	ADD
+		CONSTRAINT FK_student_state_TO_student
+		FOREIGN KEY (
+			state
+		)
+		REFERENCES student_state (
+			state
+		);
+
+ALTER TABLE subj_eval
+	ADD
+		CONSTRAINT FK_registration_
+		FOREIGN KEY (
+			sub_code,
+			stu_no,
+			classification
+		)
+		REFERENCES registration (
+			sub_code,
+			stu_no,
+			classification
+		);
+
+ALTER TABLE subj_time
+	ADD
+		CONSTRAINT FK_timetable_
+		FOREIGN KEY (
+			timetable_code
+		)
+		REFERENCES timetable (
+			timetable_code
+		);
+
+ALTER TABLE subj_time
+	ADD
+		CONSTRAINT FK_open_subj_2
+		FOREIGN KEY (
+			open_sub_code
+		)
+		REFERENCES open_subj (
+			open_sub_code
+		);
+
+ALTER TABLE subj_time
+	ADD
+		CONSTRAINT FK_classroom_
+		FOREIGN KEY (
+			classroom_code
+		)
+		REFERENCES classroom (
+			classroom_code
+		);
+
+ALTER TABLE subject
+	ADD
+		CONSTRAINT FK_subj_type_TO_subject
+		FOREIGN KEY (
+			type_code
+		)
+		REFERENCES subj_type (
+			type_code
+		);
+
+ALTER TABLE subject
+	ADD
+		CONSTRAINT FK_professor_TO_subject
+		FOREIGN KEY (
+			prof_no
+		)
+		REFERENCES professor (
+			prof_no
+		);
+
+ALTER TABLE syllabus
+	ADD
+		CONSTRAINT FK_open_subj_3
+		FOREIGN KEY (
+			open_sub_code
+		)
+		REFERENCES open_subj (
+			open_sub_code
+		);
+
+ALTER TABLE tuition
+	ADD
+		CONSTRAINT FK_student_TO_tuition
+		FOREIGN KEY (
+			stu_no
+		)
+		REFERENCES student (
+			stu_no
+		);
 
 /* 시퀀스 생성 */
 
