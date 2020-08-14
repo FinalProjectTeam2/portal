@@ -134,7 +134,7 @@ public class AdminMemberController {
 	@RequestMapping(value = "/adminRegisterEmployee", method = RequestMethod.POST)
 	public String adminRegisterEmployee_post(@ModelAttribute EmployeeVO employeeVo,
 			@ModelAttribute Official_infoVO officialVo, @RequestParam(required = false) String email3,
-			@RequestParam String name, @RequestParam int sort) {
+			@RequestParam String name, @RequestParam int sort, Model model) {
 		logger.info("adminRegisterEmployee_post, param: {}", employeeVo);
 		logger.info("adminRegisterEmployee_post, param: {}", officialVo);
 		logger.info("adminRegisterEmployee_post, param: sort={}", sort);
@@ -143,14 +143,18 @@ public class AdminMemberController {
 		if (officialVo.getEmail2().equals("etc")) {
 			officialVo.setEmail2(email3);
 		}
+		String url="";
+		String msg="입력 실패!";
 		int cnt = employeeService.insertEmployee(employeeVo, officialVo, sort);
-		String url = "";
 		if (cnt > 0) {
-			url = "admin/adminMain";
+			url="/admin/member/adminManageEmployee";
+			msg="직원 등록 완료!";
 			logger.info("adminRegisterEmployee SUCCESS!!");
 		}
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
 
-		return url;
+		return "common/message";
 	}
 
 	/**
@@ -166,7 +170,7 @@ public class AdminMemberController {
 	@RequestMapping(value = "/adminRegisterProfessor", method = RequestMethod.POST)
 	public String adminRegisterProfessor_post(@ModelAttribute ProfessorVO professorVo,
 			@ModelAttribute Official_infoVO officialVo, @RequestParam(required = false) String email3,
-			@RequestParam String name, @RequestParam int sort) {
+			@RequestParam String name, @RequestParam int sort, Model model) {
 		logger.info("adminRegisterProfessor_post, param: {}", professorVo);
 		logger.info("adminRegisterProfessor_post, param: {}", officialVo);
 		logger.info("adminRegisterProfessor_post, param: name={}", name);
@@ -180,13 +184,18 @@ public class AdminMemberController {
 		}
 		int cnt = professorService.insertProfessor(professorVo, officialVo, sort);
 
-		String url = "";
+		String url="admin/adminMain";
+		String msg="입력 실패!";
 		if (cnt > 0) {
-			url = "admin/adminMain";
+			
+			url="/admin/member/adminManageProfessor";
+			msg="교수 등록 완료!";
 			logger.info("adminRegisterProfessor SUCCESS!!");
 		}
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
 
-		return url;
+		return "common/message";
 	}
 
 	/**
@@ -202,7 +211,7 @@ public class AdminMemberController {
 	@RequestMapping(value = "/adminRegisterStudent", method = RequestMethod.POST)
 	public String adminRegisterStudent_post(@ModelAttribute StudentVO studentVo,
 			@ModelAttribute Official_infoVO officialVo, @RequestParam int depNo, @RequestParam int sort,
-			@RequestParam(required = false) String email3) {
+			@RequestParam(required = false) String email3,Model model) {
 		studentVo.setMajor(depNo);
 		logger.info("adminRegisterStudent_post, param: {}", studentVo);
 		logger.info("adminRegisterStudent_post, param: {}", officialVo);
@@ -213,13 +222,17 @@ public class AdminMemberController {
 		}
 		int cnt = studentService.insertStudent(studentVo, officialVo, sort);
 
-		String url = "";
+		String url="";
+		String msg="입력 실패!";
 		if (cnt > 0) {
-			url = "admin/adminMain";
+			url="/admin/member/adminManageStudent";
+			msg="학생 등록 완료!";
 			logger.info("adminRegisterStudent SUCCESS!!");
 		}
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
 
-		return url;
+		return "common/message";
 	}
 
 	/**
