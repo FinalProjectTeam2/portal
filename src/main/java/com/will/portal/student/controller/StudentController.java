@@ -147,11 +147,11 @@ public class StudentController {
 		String sortCh = "";
 		for (String sem : slist) {
 			if (sem.substring(sem.length() - 1).equals("2")) {
-				sortCh = "01";
+				sortCh = "/1학기";
 			} else if (sem.substring(sem.length() - 1).equals("8")) {
-				sortCh = "02";
+				sortCh = "/2학기";
 			}
-			slistCh.add(sem.substring(0, 4) + sortCh);
+			slistCh.add("\""+sem.substring(0, 4) + sortCh+"\"");
 		}
 		logger.info("slistCh={}", slistCh);
 

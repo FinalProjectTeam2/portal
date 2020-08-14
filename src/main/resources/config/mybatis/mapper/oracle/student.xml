@@ -183,8 +183,8 @@
 	<select id="selectSemester" resultType="string"
 		parameterType="string">
 		select distinct extract(year from open_date) || extract(month from
-		open_date) from (select open_date from score_view where
-		stu_no=#{stuNo} and total_grade is not null) 
+		open_date) as semester from (select open_date from score_view where
+		stu_no=#{stuNo} and total_grade is not null) order by semester
 		<!--where -->
 	</select>
 	

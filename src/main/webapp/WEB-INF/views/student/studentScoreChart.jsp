@@ -130,7 +130,7 @@ span.fontLar {
 					</c:if>
 					<div class="divList">
 						<div class="container">
-							<canvas id="myChart"></canvas>
+							<canvas id="myChart" style="margin-bottom: 50px;"></canvas>
 							<table class="box2" summary="강의 목록">
 								<caption>성적 조회</caption>
 								<colgroup>
