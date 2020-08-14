@@ -493,7 +493,7 @@
 							<li><a href="<c:url value='/admin/member/adminManageStudent'/>">회원관리</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminRegisterLecture'/>">강의등록</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminManageLecture'/>">강의관리</a></li>
-							<li><a href="<c:url value='/admin/lecture/adminManageDepartment'/>">학부관리</a></li>
+							<li><a href="<c:url value='/admin/adminManageFaculty'/>">학부관리</a></li>
 							<li><a href="<c:url value='/admin/board/manager'/>">게시판 관리</a></li>
 							<li><a href="<c:url value='/portal/board/write?bdCode=P'/>">공지 등록</a></li>
 						</ul></li>
