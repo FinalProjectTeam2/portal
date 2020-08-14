@@ -152,6 +152,7 @@ input#savenote {
 					<span class="tx">
 						<input type="text" id="officialNo" value="" style="ime-mode: disabled;">
 					</span>
+					<button class="btn btn-secondary">주소록</button>
 				</span>
 				</div>
 				<div class="writing_area">

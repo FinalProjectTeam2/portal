@@ -83,7 +83,7 @@
 		});
 		
 		$('#btXls').click(function(){
-			$.ajax({
+			/* $.ajax({
 				url:"<c:url value='/lecture/downloadScore'/>",
 				type:"post",
 				data:{
@@ -91,10 +91,12 @@
 					"subjName":$('#subjCode option:selected').text()
 				},
 				success:function(res){
-					alert(res+'로 저장 되었습니다.');
+					alert('다운로드폴더에 저장 되었습니다.');
 				}
 				
-			});
+			}); */
+			location.href = "<c:url value='/lecture/downloadScore?subjCode='/>"+$('#subjCode option:selected').val()
+					+"&subjName="+$('#subjCode option:selected').text();
 		});
 		
 		
