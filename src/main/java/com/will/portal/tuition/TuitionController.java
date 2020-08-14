@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.w3c.dom.ls.LSInput;
 
 import com.will.portal.account_info.model.Account_InfoService;
@@ -30,9 +31,11 @@ import com.will.portal.scholarship.model.ScholarshipService;
 import com.will.portal.scholarship.model.ScholarshipVO;
 import com.will.portal.student.model.StudentService;
 import com.will.portal.student.model.StudentVO;
+import com.will.portal.tuition.model.TuitionDetailVO;
 import com.will.portal.tuition.model.TuitionService;
 import com.will.portal.tuition.model.TuitionStuVO;
 import com.will.portal.tuition.model.TuitionVO;
+import com.will.portal.tuition.model.TuitionViewVO;
 
 
 @Controller
@@ -41,13 +44,6 @@ public class TuitionController {
 	private static final Logger logger = LoggerFactory.getLogger(TuitionController.class);
 	
 	@Autowired TuitionService tuitionService;
-	@Autowired StudentService stuService;
-	@Autowired FacultyService facultyService;
-	@Autowired DepartmentService departService;
-	@Autowired Account_InfoService accountService;
-	@Autowired BankService bankService;
-	@Autowired AwardService awardService;
-	@Autowired ScholarshipService scholarshipService;
 	
 	@RequestMapping(value="/tuition1", method = RequestMethod.GET) 
 	public String tuition1_get() {
@@ -76,32 +72,30 @@ public class TuitionController {
 	
 	
 	@RequestMapping("/tuition2") 
-	public Map<String, Object> tuition2(Principal principal,  Model model) {
+	public String tuition2(Principal principal,  Model model) {
 		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
 		String officicalNo = user.getOfficialNo();
 		
-		Map<String, Object> tuitionStu = tuitionService.selectStuView(officicalNo);
-		Map<String, Object> tuition = tuitionService.selectTuitionView(officicalNo);
-		Map<String, Object> tuitionD = tuitionService.selectTuitionDView(officicalNo);
+		System.out.println(officicalNo);
 		
+		System.out.println("목록");
+		List<TuitionStuVO> stuList = tuitionService.selectStuView(officicalNo);
+		List<TuitionViewVO> tList = tuitionService.selectTuitionView(officicalNo);
+		List<TuitionDetailVO> tDList = tuitionService.selectTuitionDView(officicalNo);
+		
+		for(TuitionStuVO vo: stuList) {
+			System.out.println(vo);
+		}
+		
+		System.out.println("목록 확인 결과 stuList="+ stuList.size());
+		System.out.println("목록 확인 결과 tList="+ tList.size());
+		System.out.println("목록 확인 결과 tDList="+ tDList.size());
+		model.addAttribute("stuList", stuList);
+		model.addAttribute("tList", tList);
+		model.addAttribute("tDList", tDList);
 
-		List<FacultyVO> fList = facultyService.selectFaculty();
-		List<DepartmentVO> dList = departService.selectDepartment();
-		List<Account_infoVO> aList = accountService.selectAllAccount();
-		List<BankVO> bList = bankService.selectAllBank();
-		List<AwardVO> awardList = awardService.selectAllaward();
-		List<ScholarshipVO> scholarshipList = scholarshipService.selectAllScholarship();
 		
-		model.addAttribute("tuition", tuition);
-		model.addAttribute("tuitionD", tuitionD);
-		model.addAttribute("tuitionStu", tuitionStu);
-		model.addAttribute("fList", fList);
-		model.addAttribute("dList", dList);
-		model.addAttribute("aList", aList);
-		model.addAttribute("bList", bList);
-		model.addAttribute("awardList", awardList);
-		
-		return map;
+		return "tuition/tuition2";
 	}
 
 }

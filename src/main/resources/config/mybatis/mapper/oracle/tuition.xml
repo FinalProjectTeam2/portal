@@ -3,17 +3,17 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.tuition">
-	<select id="selectStuView" parameterType="string" resultType="map">
+	<select id="selectStuView" parameterType="string" resultType="TuitionStuVO">
 		select * from student_view2
 		where stu_no=#{officicalNo}
 	</select>	
 	
-	<select id="selectTuitionView" parameterType="string" resultType="map">
+	<select id="selectTuitionView" parameterType="string" resultType="TuitionViewVO">
 		select * from tuition_view
 		where stu_no=#{officicalNo}
 	</select>
 
-	<select id="selectTuitionDView" parameterType="string" resultType="map">
+	<select id="selectTuitionDView" parameterType="string" resultType="TuitionDetailVO">
 		select * from tuitionD_view
 		where stu_no=#{officicalNo}
 	</select>

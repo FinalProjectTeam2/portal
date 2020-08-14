@@ -77,46 +77,57 @@ $(function() {
 	});
 });
 </script>
-<div class="container">
-<h1>등록금 납부 상세 내역</h1>
-<div id="tuition1">
-<form name="frmWrite" method="post" action="<c:url value=''/>" >
+
+<div id="tuition">
+	<div class="title">
+		<h1>등록금 납부 상세 내역</h1>
+	</div>
+
 	<div class="divTable" > 
-		<div class="divTableBody"> 
-			<div class="divTableRow"> 
-				<div class="cellColor">학부</div> 
-				<div class="divTableCell">${faculty_name}</div> 			
-				<div class="cellColor">학과</div>
-				<div class="divTableCell">${dep_name} </div> 
-			</div> 
-		<div class="divTableRow"> 
-			<div class="cellColor">학번</div> 
-			<div class="divTableCell">{stu_no}</div> 						
-			<div class="cellColor">이름</div>
-			<div class="divTableCell">${name }</div> 
-		</div> 
-		<div class="divTableRow"> 
-			<div class="cellColor">학기</div> 
-			<div class="divTableCell">
-				<select>
-					<option> -- 구분 -- </option>
-					<option> 1학기  1차</option>
-					<option> 1학기  2차</option>
-					<option> 2학기 1차</option>
-					<option> 2학기 2차</option>
-					<option> 계절학기</option>
-				</select>
-			</div>
-			<div class="cellColor">&nbsp;</div>
-			<div class="divTableCell">&nbsp;</div> 
+		<table class="table1">
+			<tr>
+				<th>학부</th>
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+						${vo.facultyName}
+					</c:forEach>
+				</td>
+				<th>학과</th>
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+						${vo.depName}
+					</c:forEach>
+				</td> 
+			</tr>
+			<tr>
+				<th>학번</th>
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+					${vo.stuNo}
+				</c:forEach>
+				</td>
+				<th>학기</th>
+				<td colspan="3">
+					<c:forEach var="vo" items="${stuList}">
+						${vo.semester}
+					</c:forEach>
+				</td> 
+			</tr>	
+			<tr>
+				<th>이름</th>
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${stuList}">
+						${vo.name}
+					</c:forEach>
+				</td> 
+			</tr>
+		</table>
 	</div>
-	</div>
-</div>	
-</form>		
-		
+	
 <br><br><br>
+
 <div class="divTable">
-	<table class="box">
+	<table class="table2">
 		<colgroup>
 			<col style="width:10%;" />
 			<col style="width:10%;" />
@@ -148,7 +159,7 @@ $(function() {
 				<td>납부</td>
 			</tr>
 		</tbody>
-</table>
+	</table>
 </div>
 
 <br><br><br>
@@ -164,57 +175,76 @@ $(function() {
 			<col style="width:10%;" />		
 			<col style="width:10%;" />		
 			<col style="width:10%;" />		
-			<col style="width:10%;" />		
 		</colgroup>
 		<thead>
 	  		<tr>
 				<th>구분</th>
 				<th>금액</th>
-				<th>비고</th>
 			</tr>
 		</thead>
 		<tbody>
-		<c:if test="${!empty list }"> 
-			<c:forEach var="TuitionVO" items="${list }">
+			<tr>
+				<th>
+					<c:if test="${!empty tDList }"> 
+					조회 목록이 없습니다.
+					</c:if>
+				</th>
+			</tr>
 			<tr>
 				<td>입학금</td>
-				<td>${TuitionVO.admissionfee }</td>
-				<td>&nbsp;</td>
+				<td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.admissionfee}
+					</c:forEach>
+				</td>
+				
 			</tr>
 			<tr>
 				<td>수업료</td>
-				<td>${TuitionStuVO.TuitionVO.tuition }</td>
-				<td>수강신청학점:15학점</td>
+				<td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.tuition}
+					</c:forEach>
+				</td>
 			</tr>
 			<tr>
 				<td>실습비</td>
-				<td>${TuitionStuVO.TuitionVO.practicecost }</td>
-				<td>&nbsp;</td>
+				<td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.practicecost}
+					</c:forEach>
+				</td>
 			</tr>
 			<tr>
 				<td>학생회비</td>
-				<td>${TuitionStuVO.TuitionVO.studentfee }</td>
-				<td>&nbsp;</td>
+				<td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.studentfee}
+					</c:forEach>
+				</td>
 			</tr>
 			<tr>
 				<td>등록금계</td>
-				<td>1,000,000원</td>
-				<td>입학금+수업료+실습비</td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.total}
+					</c:forEach>
+				</td>
 			</tr>
 			<tr>
-				<td>국가장학금 감면액</td>
-				<td>0원</td>
-				<td>유형: 국가장학금1유형</td>
+				<td>장학금</td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.scholarship}
+					</c:forEach>
+				</td>
 			</tr>
-			<tr>
-				<td>교내장학금 감면액</td>
-				<td>0원</td>
-				<td>유형:</td>
-			</tr>
+
 			<tr>
 				<td>감면금액합계</td>
-				<td>0원</td>
-				<td>&nbsp;</td>
+				<td>장학금</td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.reduction}
+					</c:forEach>
+				</td>
 			</tr>
 			<tr>
 				<td>납부할 금액</td>
@@ -226,8 +256,7 @@ $(function() {
 				<td>${TuitionStuVO.TuitionVO.deposit_state }</td>
 				<td>&nbsp;</td>
 			</tr>
-			</c:forEach>
-		</c:if>
+		
 		</tbody>
 </table>
 </div>
