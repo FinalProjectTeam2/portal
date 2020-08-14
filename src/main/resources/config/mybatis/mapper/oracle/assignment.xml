@@ -17,6 +17,19 @@
 		values(#{assignNo}, #{stuNo}, #{fileName}, #{fileSize}, #{originalFileName})
 	</insert>
 	
+	<select id="assignStuList" parameterType="distribute_assignVo" resultType="map">
+		select s.stu_no, s.name,
+		(select count(*) from ASSIGNMENT a
+		WHERE assign_no=(select assign_no from distribute_assign where assign_no = #{assignNo})
+		and a.stu_no=s.stu_no) as count,
+		(select apply_date from ASSIGNMENT a
+		WHERE assign_no=(select assign_no from distribute_assign where assign_no = #{assignNo})
+		and a.stu_no=s.stu_no) as apply_date
+		from registration r join student s
+		on r.stu_no=s.stu_no
+		where r.sub_code=#{openSubCode}
+	</select>
+	
 </mapper>
 
 

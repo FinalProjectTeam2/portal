@@ -25,6 +25,11 @@ public class AssignmentServiceImpl implements AssignmentService{
 	public int assignUpload(AssignmentVO vo) {
 		return assignDao.assignUpload(vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> assignStuList(Distribute_assignVO vo) {
+		return assignDao.assignStuList(vo);
+	}
 	
 	
 
