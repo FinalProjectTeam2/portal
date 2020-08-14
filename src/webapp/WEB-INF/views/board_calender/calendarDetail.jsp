@@ -267,10 +267,7 @@
 <article class="calendar">
 	<div class="calendar_head">
 		<h2 id="SCH_YEAR">< 2020 ></h2>
-		<p>
-			<a href="#;" class="typeCal" title="월별 캘린더 화면으로 이동">월별캘린더</a>
-			<a href="#;" class="typeSum on" title="요약보기 : 선택됨">요약보기</a>
-		</p>
+
 		<ul>
 			<li><a href="#month1" title="1월">1</a></li>
 			<li><a href="#month2" title="2월">2</a></li>

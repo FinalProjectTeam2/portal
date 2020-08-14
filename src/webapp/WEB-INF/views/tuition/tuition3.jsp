@@ -164,43 +164,22 @@ $(function() {
 
 <br><br><br>
 
-<div class="divTable">
-	<table class="box">
-		<colgroup>
-			<col style="width:10%;" />
-			<col style="width:10%;" />
-			<col style="width:10%;" />
-			<col style="width:10%;" />
-			<col style="width:10%;" />		
-			<col style="width:10%;" />		
-			<col style="width:10%;" />		
-			<col style="width:10%;" />		
-		</colgroup>
-		<thead>
-	  		<tr>
+	<div class="divTable">
+		<table class="table3">
+			<tr>
 				<th>구분</th>
 				<th>금액</th>
 			</tr>
-		</thead>
-		<tbody>
 			<tr>
-				<th>
-					<c:if test="${!empty tDList }"> 
-					조회 목록이 없습니다.
-					</c:if>
-				</th>
-			</tr>
-			<tr>
-				<td>입학금</td>
+				<th>입학금</th>
 				<td>
 					<c:forEach var="vo" items="${tDList }">
 						${vo.admissionfee}
 					</c:forEach>
 				</td>
-				
 			</tr>
 			<tr>
-				<td>수업료</td>
+				<th>수업료</th>
 				<td>
 					<c:forEach var="vo" items="${tDList }">
 						${vo.tuition}
@@ -208,7 +187,7 @@ $(function() {
 				</td>
 			</tr>
 			<tr>
-				<td>실습비</td>
+				<th>실습비</th>
 				<td>
 					<c:forEach var="vo" items="${tDList }">
 						${vo.practicecost}
@@ -216,7 +195,7 @@ $(function() {
 				</td>
 			</tr>
 			<tr>
-				<td>학생회비</td>
+				<th>학생회비</th>
 				<td>
 					<c:forEach var="vo" items="${tDList }">
 						${vo.studentfee}
@@ -224,42 +203,47 @@ $(function() {
 				</td>
 			</tr>
 			<tr>
-				<td>등록금계</td>
+				<th>등록금계</th>
+				<td>
 					<c:forEach var="vo" items="${tDList }">
 						${vo.total}
 					</c:forEach>
 				</td>
 			</tr>
 			<tr>
-				<td>장학금</td>
+				<th>장학금</th>
+				<td>
 					<c:forEach var="vo" items="${tDList }">
 						${vo.scholarship}
 					</c:forEach>
 				</td>
 			</tr>
-
 			<tr>
-				<td>감면금액합계</td>
-				<td>장학금</td>
+				<th>감면금액</th>
+				<td>
 					<c:forEach var="vo" items="${tDList }">
 						${vo.reduction}
 					</c:forEach>
 				</td>
 			</tr>
 			<tr>
-				<td>납부할 금액</td>
-				<td>${TuitionStuVO.TuitionVO.total }</td>
-				<td>&nbsp;</td>
+				<th>납부할 금액</th>
+				<td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.total}
+					</c:forEach>
+				</td>
 			</tr>
 			<tr>
-				<td>납부현황</td>
-				<td>${TuitionStuVO.TuitionVO.deposit_state }</td>
-				<td>&nbsp;</td>
+				<th>납부현황</th>
+				<td>
+					<c:forEach var="vo" items="${tDList }">
+						${vo.deposit_state }
+					</c:forEach>
+				</td>
 			</tr>
-		
-		</tbody>
-</table>
-</div>
+		</table>
+	</div>
 
 <input type="submit" value="영수증 보기" id="bt">
 </div>

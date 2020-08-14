@@ -50,14 +50,7 @@ public class TuitionController {
 		logger.info("납부 안내");
 		return "tuition/tuition1";
 	}
-	
 
-	@RequestMapping(value="/tuition3", method = RequestMethod.GET) 
-	public String tuition3_get() {
-		logger.info("등록금 상세조회");
-		return "tuition/tuition3";
-	}
-	
 	@RequestMapping(value="/tuition4", method = RequestMethod.GET) 
 	public String tuition4_get() {
 		logger.info("등록금 영수증 확인");
@@ -94,8 +87,35 @@ public class TuitionController {
 		model.addAttribute("tList", tList);
 		model.addAttribute("tDList", tDList);
 
-		
 		return "tuition/tuition2";
 	}
+	
+	@RequestMapping("/tuition3") 
+	public String tuition3(Principal principal,  Model model) {
+		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
+		String officicalNo = user.getOfficialNo();
+		
+		System.out.println(officicalNo);
+		
+		System.out.println("목록");
+		List<TuitionStuVO> stuList = tuitionService.selectStuView(officicalNo);
+		List<TuitionViewVO> tList = tuitionService.selectTuitionView(officicalNo);
+		List<TuitionDetailVO> tDList = tuitionService.selectTuitionDView(officicalNo);
+		
+		for(TuitionStuVO vo: stuList) {
+			System.out.println(vo);
+		}
+		
+		System.out.println("목록 확인 결과 stuList="+ stuList.size());
+		System.out.println("목록 확인 결과 tList="+ tList.size());
+		System.out.println("목록 확인 결과 tDList="+ tDList.size());
+		model.addAttribute("stuList", stuList);
+		model.addAttribute("tList", tList);
+		model.addAttribute("tDList", tDList);
+
+		return "tuition/tuition3";
+	}
+	
+
 
 }

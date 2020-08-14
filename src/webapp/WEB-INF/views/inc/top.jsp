@@ -472,6 +472,8 @@
 							<li><a href="<c:url value='/member/memberEdit'/>">정보조회</a></li>
 							<li><a href="<c:url value='/lecture/studentTT'/>">시간표 조회</a></li>
 							<li><a href="<c:url value='/student/studentScore'/>">성적조회</a></li>
+							<li><a href="<c:url value='/tuition/tuition2'/>">등록금조회</a></li>
+							<li><a href="<c:url value='/scholarship/scholarship3'/>">장학금조회</a></li>
 							<li><a href="<c:url value='/assignment/assignApply'/>">과제 제출</a></li>
 							<li><a href="<c:url value='/board_issueacertificate/issueacertificate'/>">증명서 발급</a></li>
 						</ul></li>
@@ -495,7 +497,10 @@
 							<li><a href="<c:url value='/admin/member/adminManageStudent'/>">회원관리</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminRegisterLecture'/>">강의등록</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminManageLecture'/>">강의관리</a></li>
+							<li><a href="<c:url value='/assignment/assignment1'/>">과제관리</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminManageDepartment'/>">학부관리</a></li>
+							<li><a href="<c:url value='/tuition/tuition5'/>">등록금관리</a></li>
+							<li><a href="<c:url value='/scholarship/scholarship4'/>">장학금관리</a></li>
 							<li><a href="<c:url value='/admin/board/manager'/>">게시판 관리</a></li>
 							<li><a href="<c:url value='/portal/board/write?bdCode=P'/>">공지 등록</a></li>
 						</ul></li>
