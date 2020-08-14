@@ -278,8 +278,8 @@
 			<li><a href="#month4" title="4월">4</a></li>
 			<li><a href="#month5" title="5월">5</a></li>
 			<li><a href="#month6" title="6월">6</a></li>
-			<li><a href="#month7" title="7월:선택됨" class="on">7</a></li>
-			<li><a href="#month8" title="8월">8</a></li>
+			<li><a href="#month7" title="7월">7</a></li>
+			<li><a href="#month8" title="8월:선택됨" class="on">8</a></li>
 			<li><a href="#month9" title="9월">9</a></li>
 			<li><a href="#month10" title="10월">10</a></li>
 			<li><a href="#month11" title="11월">11</a></li>
