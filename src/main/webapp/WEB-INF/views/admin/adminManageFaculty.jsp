@@ -8,52 +8,66 @@
 #searchSelect {
 	margin: 0 5px 0 3px;
 }
+
 .divRight select {
 	width: 180px;
 }
-.box2 td{
+
+.box2 td {
 	border: solid 1px;
+}
+
+.colNone {
+	border-left: none !important;
+	border-right: none !important;
 }
 </style>
 <script type="text/javascript">
-$(function(){
-$('#faculty').change(
-		function() {
-			$('#department').find('option').each(function() {
-				$(this).remove();
-			});
+	$(function() {
+		$('#faculty')
+				.change(
+						function() {
+							$('#department').find('option').each(function() {
+								$(this).remove();
+							});
 
-			var faculty = $(this).val();
-			if (faculty != "") {
-				$('#department').append("<option value=''>선택</option>");
+							var faculty = $(this).val();
+							if (faculty != "") {
+								$('#department').append(
+										"<option value=''>선택</option>");
 
-				$.ajax({
-					type : 'get',
-					url : "/portal/common/departmentList",
-					data : "facultyNo=" + $('#faculty').val(),
-					dataType : "json",
-					success : function(res) {
-						$(res).each(
-								function(i) {
-									$('#department').append(
-											"<option value=\""
+								$
+										.ajax({
+											type : 'get',
+											url : "/portal/common/departmentList",
+											data : "facultyNo="
+													+ $('#faculty').val(),
+											dataType : "json",
+											success : function(res) {
+												$(res)
+														.each(
+																function(i) {
+																	$(
+																			'#department')
+																			.append(
+																					"<option value=\""
 													+ res[i].depNo + "\">"
-													+ res[i].depName
-													+ "</option>");
-								});
-					},
-					error : function(xhr) {
-						console.log(xhr.responseTest);
-						alert("오류");
-						return;
-					}
+																							+ res[i].depName
+																							+ "</option>");
+																});
+											},
+											error : function(xhr) {
+												console.log(xhr.responseTest);
+												alert("오류");
+												return;
+											}
 
-				})
-			} else {
-				$('#department').append(
-						"<option value=''>학부를 선택하세요</option>");
-			}
-		});
+										})
+							} else {
+								$('#department').append(
+										"<option value=''>학부를 선택하세요</option>");
+							}
+						});
 	});
 </script>
 <main role="main" class="flex-shrink-0">
@@ -88,30 +102,32 @@ $('#faculty').change(
 							</colgroup>
 							<thead>
 								<tr>
-									<th scope="col" style="border-left: solid 1px #e5e5e5">학부</th>
+									<th scope="col">학부</th>
 									<th scope="col">학과</th>
 									<th scope="col">전화번호</th>
 									<th scope="col">건물</th>
 									<th scope="col">수정</th>
-									<th scope="col" style="border-right: solid 1px #e5e5e5">학생조회</th>
+									<th scope="col">학생조회</th>
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="i" begin="0" end="${fn:length(flist)-1}" step="1">
-								<tr class="align_center">
-								<c:if test="${i ==0 }">
-									<td rowspan="${flist[i]['DEP_COUNT'] }">${flist[i]['FACULTY_NAME'] }</td>
-								</c:if>
-								<c:if test="${i!=0 && (flist[i]['FACULTY_NO']!=flist[i-1]['FACULTY_NO'])}">
-									<td rowspan="${flist[i]['DEP_COUNT'] }">${flist[i]['FACULTY_NAME'] }</td>
-								</c:if>
-									<td style="border-left: 1px solid #e5e5e5">${flist[i]['DEP_NAME'] }</td>
-									<td>${flist[i]['TEL'] }</td>
-									<td>${flist[i]['BUILDING_NAME'] }</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">조회</a></td>
-								</tr>
-							</c:forEach>
+								<c:forEach var="i" begin="0" end="${fn:length(flist)-1}"
+									step="1">
+									<tr class="align_center">
+										<c:if test="${i ==0 }">
+											<td rowspan="${flist[i]['DEP_COUNT'] }" class="colNone">${flist[i]['FACULTY_NAME'] }</td>
+										</c:if>
+										<c:if
+											test="${i!=0 && (flist[i]['FACULTY_NO']!=flist[i-1]['FACULTY_NO'])}">
+											<td rowspan="${flist[i]['DEP_COUNT'] }" class="colNone">${flist[i]['FACULTY_NAME'] }</td>
+										</c:if>
+										<td style="border-left: 1px solid #e5e5e5">${flist[i]['DEP_NAME'] }</td>
+										<td>${flist[i]['TEL'] }</td>
+										<td>${flist[i]['BUILDING_NAME'] }</td>
+										<td><a href="#">수정</a></td>
+										<td class="colNone"><a href="#">조회</a></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
