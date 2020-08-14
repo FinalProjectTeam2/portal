@@ -29,6 +29,11 @@ public class CertificationServiceImpl implements CertificationService{
 	public CertificationVO selectByNo(String no) {
 		return certDao.selectByNo(no);
 	}
+
+	@Override
+	public int updateIsPrint(String no) {
+		return certDao.updateIsPrint(no);
+	}
 	
 	
 

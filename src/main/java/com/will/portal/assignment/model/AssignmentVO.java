@@ -1,29 +1,25 @@
 package com.will.portal.assignment.model;
 
+import java.sql.Timestamp;
+
 public class AssignmentVO {
-	private String subCode;
+	private int assignNo;
 	private String stuNo;
-	private String classification;
 	private String fileName;
 	private long fileSize;
 	private String originalFileName;
-	public String getSubCode() {
-		return subCode;
+	private Timestamp applyDate;
+	public int getAssignNo() {
+		return assignNo;
 	}
-	public void setSubCode(String subCode) {
-		this.subCode = subCode;
+	public void setAssignNo(int assignNo) {
+		this.assignNo = assignNo;
 	}
 	public String getStuNo() {
 		return stuNo;
 	}
 	public void setStuNo(String stuNo) {
 		this.stuNo = stuNo;
-	}
-	public String getClassification() {
-		return classification;
-	}
-	public void setClassification(String classification) {
-		this.classification = classification;
 	}
 	public String getFileName() {
 		return fileName;
@@ -43,11 +39,18 @@ public class AssignmentVO {
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
 	}
+	public Timestamp getApplyDate() {
+		return applyDate;
+	}
+	public void setApplyDate(Timestamp applyDate) {
+		this.applyDate = applyDate;
+	}
 	@Override
 	public String toString() {
-		return "AssignmentVO [subCode=" + subCode + ", stuNo=" + stuNo + ", classification=" + classification
-				+ ", fileName=" + fileName + ", fileSize=" + fileSize + ", originalFileName=" + originalFileName + "]";
+		return "AssignmentVO [assignNo=" + assignNo + ", stuNo=" + stuNo + ", fileName=" + fileName + ", fileSize="
+				+ fileSize + ", originalFileName=" + originalFileName + ", applyDate=" + applyDate + "]";
 	}
+	
 	
 	
 	

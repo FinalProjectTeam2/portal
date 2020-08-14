@@ -40,4 +40,6 @@
 		insert into account_info(official_no,BANK_CODE)
 		values(#{officialNo},'1')
 	</insert>
+	
+
 </mapper>

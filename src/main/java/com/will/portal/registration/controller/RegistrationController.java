@@ -86,24 +86,21 @@ public class RegistrationController {
 		regSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
 		String checkNull = "";
 		List<OpenSubjListVO> list = registServ.openSubjList(regSearchVo);
+		//학점과 등록된 시간표의 시간 개수가 일치하지 않으면 삭제한다.
+//		if(list!=null && !list.isEmpty()) {
+//			for(int i = 0; i < list.size(); i++) {
+//				OpenSubjListVO vo = list.get(i);
+//				String[] sArr = vo.getShortNames().split(",");
+//				if(vo.getCredit() != sArr.length) {
+//					list.remove(i);
+//				}
+//				
+//			}
+//		}
 		int count = list.size();
 		logger.info("리스트 개수 count={}", count);
-		//학점과 등록된 시간표의 시간 개수가 일치하지 않으면 삭제한다.
-		if(list!=null && !list.isEmpty()) {
-			for(int i = 0; i < list.size(); i++) {
-				OpenSubjListVO vo = list.get(i);
-				String[] sArr = vo.getShortNames().split(",");
-				if(vo.getCredit() != sArr.length) {
-					list.remove(i);
-				}
-				
-			}
-		}
-		
-		
-		
-		
-		
+		int totalCount = registServ.openSubjCount(regSearchVo);
+		pagingInfo.setTotalRecord(totalCount);
 		if(count < 1) {
 			checkNull="Y";
 		}else {
@@ -115,8 +112,8 @@ public class RegistrationController {
 		map.put("list", list);
 		map.put("count", count);
 		map.put("checkNull", checkNull);
+		map.put("pagingInfo", pagingInfo);
 		return map;
-		
 		
 	}
 	

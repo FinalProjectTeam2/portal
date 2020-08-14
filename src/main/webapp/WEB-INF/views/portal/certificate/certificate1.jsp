@@ -2,25 +2,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
 <style type="text/css">
 .certificate {
 	border: 2px solid gray;
-	width: 800px;
-	height: 1000px;
-	min-width: 500px;
-	min-height: 400px;
-	margin: 0 auto;
+	width: 793.7007874px;
+	height: 1122.519685px;
+	margin: 5px;
 }
 
-.num {
+.certificate .num {
 	margin-left: 2%;
 }
 
-.title {
+.certificate .title {
 	text-align: center;
+	margin-top: 60px;
+	letter-spacing: 1em;
 }
 
-.table {
+.certificate .table {
 	font-size:18px;
 	margin-left: 20%;
 	margin-top:10%;
@@ -28,52 +34,52 @@
 	display: table;
 }
 
-.row {
+.certificate .row {
 	display: table-row;
 }
 
-.cell, .cell2 {
+.certificate .cell, .certificate .cell2 {
 	display: table-cell;
 }
 
-.cell {
+.certificate .cell {
 	width: 180px;
 }
 
-.cell2{
+.certificate .cell2{
 	width: 400px;
 }
 
-.div1 {
+.certificate .div1 {
 	font-size: 24px;
-	margin-top: 12%;
+	margin-top: 13%;
 	text-align: center;
 }
 
-.div2 {
+.certificate .div2 {
 	font-size: 20px;
 	margin-left: 45%;
 	text-align: center;
 }
 
-.div3 {
-	margin-top: 7%;
+.certificate .div3 {
+	margin-top: 10%;
     text-align: center;
 }
 
-img {
+.certificate img {
 	width: 500px;
 }
 </style>
 
-<!-- 재학 증명서 -->
-<div class="certificate">
+<body>
+<div class="certificate" >
 	<div class="num">
 		<h6>제2020 - 10101010호</h6>
 	</div>
 	
 	<div class="title">
-		<h1>재 학 증 명 서</h1>
+		<h1>${vo.certName }</h1>
 	</div>
 	
 	<div class="table">
@@ -126,3 +132,5 @@ img {
 		<img alt="직인" src="<c:url value='/resources/images/stamp1.png'/>">
 	</div>
 </div>
+</body>
+</html>

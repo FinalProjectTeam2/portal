@@ -10,7 +10,7 @@
 		    select rownum as RNUM, A.*
 		    from(
 		        select p.post_no, official_no, title, reg_date, group_No, sort_no, step,
-			    read_count, contents, del_flag, bd_code,
+			    read_count, contents, del_flag, bd_code, is_private,
 			   	 (sysdate-reg_date)*24 as newImgTerm,
 			   	 (select count(*) from files f where f.post_no = p.post_no) file_count,
 			   	 (
@@ -56,8 +56,8 @@
 		<selectKey order="BEFORE" keyProperty="postNo" resultType="int">
 			select POSTS_SEQ.nextval from dual
 		</selectKey>
-		insert into posts(POST_NO,OFFICIAL_NO,TITLE,CONTENTS,BD_CODE,group_No)
-		values(#{postNo},#{officialNo},#{title},#{contents},#{bdCode},#{postNo})
+		insert into posts(POST_NO,OFFICIAL_NO,TITLE,CONTENTS,BD_CODE,group_No,is_private)
+		values(#{postNo},#{officialNo},#{title},#{contents},#{bdCode},#{postNo},#{isPrivate})
 	</insert>
 	
 	<insert id="insertComment" parameterType="postsVo">
@@ -91,6 +91,7 @@
 			<result column="SORT_NO" jdbcType="NUMERIC" property="sortNo" />
 			<result column="step" jdbcType="NUMERIC" property="step" />
 			<result column="newImgTerm" jdbcType="NUMERIC" property="newImgTerm" />
+			<result column="is_private" jdbcType="CHAR" property="isPrivate" />
 		</association>
 		<association property="boardVo" javaType="boardVo" select="selectBoardBybdCode"
 			column="BD_CODE">
@@ -164,7 +165,7 @@
 	
 	<update id="updatePost" parameterType="postsVo">
 		update posts
-		set title = #{title}, contents = #{contents}, edit_date = sysdate
+		set title = #{title}, contents = #{contents}, edit_date = sysdate, is_private = #{isPrivate}
 		where post_no = #{postNo}
 	</update>
 	
@@ -197,7 +198,7 @@
 		    select rownum as RNUM, A.*
 		    from(
 		        select p.post_no, official_no, title, reg_date, group_No, sort_no, step,
-			    read_count, contents, del_flag, bd_code,
+			    read_count, contents, del_flag, bd_code, is_private,
 			   	 (sysdate-reg_date)*24 as newImgTerm,
 			   	 (select count(*) from files f where f.post_no = p.post_no) file_count,
 			   	 (
@@ -225,7 +226,7 @@
 		    select rownum as RNUM, A.*
 		    from(
 		        select p.post_no, official_no, title, reg_date, group_No, sort_no, step,
-			    read_count, contents, del_flag, bd_code,
+			    read_count, contents, del_flag, bd_code,is_private,
 			   	 (sysdate-reg_date)*24 as newImgTerm,
 			   	 (select count(*) from files f where f.post_no = p.post_no) file_count,
 			   	 (

@@ -3,10 +3,16 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/regi_lec.css'/>">
+<style type="text/css">
+#divPage{
+	margin: 0 auto;
+    display: table;
+}
+</style>
 <script type="text/javascript">
 	$(function(){
 		getDate();
-		subjList();
+		subjList(1);
 		getRegistList()
 		//학부 선택시 해당되는 학과만 나오도록 함
 		$('#p_daehak').change(function(){
@@ -18,27 +24,67 @@
 				success:function(res){
 					var str="<select name='p_major' id='p_major' style='width: 100%'>";
 					str+="<option value='All'>---All---</option>";
-					
+
 					$.each(res, function(index, item){
 						str+="<option value='"+item.depNo+"'>"+item.depName+"</option>";
 					});
 						str+="</select>";
 						$('#major').html(str);
 				}
-				
+
 			});
 		});
-		
-		
-		
-		//검색 버튼 눌렀을때 
+
+
+
+		//검색 버튼 눌렀을때
 		$('#selectBt').click(function(){
-			subjList();
+			subjList(1);
 		});
 	});
+
+	function pageMake(obj) {
+		var pagingInfo = obj.pagingInfo;
+
+		var str = "";
+
+		str += '<nav aria-label="Page navigation example">'
+				+ '<ul class="pagination">';
+		//이전블록
+		if (pagingInfo.firstPage > 1) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="subjList('
+					+ (pagingInfo.firstPage - 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
+		}
+
+		//페이지 처리
+		for (var i = pagingInfo.firstPage; i <= pagingInfo.lastPage; i++) {
+			if (i == pagingInfo.currentPage) {
+				str += '<li class="page-item"><a class="page-link" '
+						+ 'style="background: skyblue; color: white;">'
+						+ i + '</a></li>';
+			} else {
+				str += '<li class="page-item"><a class="page-link" onclick="subjList('
+						+ i + ')"' + ' href="#">' + i + '</a></li>';
+			}
+		}
+
+		//다음 블록
+		if (pagingInfo.lastPage < pagingInfo.totalPage) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="subjList('
+					+ (pagingInfo.lastPage + 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
+		}
+
+		str += '</ul></nav>';
+
+		$("#divPage").html(str);
+	}
 	
 	//수강신청 모든 리스트(검색기능 사용시 검색할 내용만 sort)
-	function subjList(){
+	function subjList(currentPage){
 		var faculty=$('#p_daehak').val();
 		var department=$('#p_major').val();
 		var subjName=$('#p_subjt').val();
@@ -46,7 +92,7 @@
 		var time2=$('#p_time').val();
 		var profName=$('#p_teach').val();
 		var openSubCode=$('#p_code').val();
-		
+
 		$.ajax({
 			url:"<c:url value='/registration/openSubjList'/>",
 			data:{
@@ -56,7 +102,8 @@
 				"time1":time1,
 				"time2":time2,
 				"profName":profName,
-				"openSubCode":openSubCode
+				"openSubCode":openSubCode,
+				currentPage : currentPage
 			},
 			dataType:"json",
 			type:"post",
@@ -65,19 +112,20 @@
 				var count=res.count;
 				var checkNull=res.checkNull;
 				console.log(checkNull);
+				pageMake(res);
 				$('#meta_1 em').text(count);
 					if(checkNull=='Y'){
 						str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
 						str+="<td colspan='10'>검색된 학과가 없습니다.</td></tr>";
-						
+
 					}else if(checkNull=='N'){
 							$.each(res.list, function(idx, item){
-						
+
 							str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
-							str+="<td role='gridcell' style='height: 0px; width: 7%;'><button class='applyBt'>신청</button></td>";
+							str+="<td role='gridcell' style='height: 0px; width: 7%;'><button type='button' class='applyBt'>신청</button></td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 18%; text-align: center'>"+item.subjName+"</td>";
-							str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+item.count/item.credit + "/" +item.personnel+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 7%;'>"+(item.count/item.credit)+ "/" +item.personnel+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.profName+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 5%;'>"+item.credit+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
@@ -87,19 +135,19 @@
 							str+="</tr>";
 						});
 					}
-				
+
 				$('#gridLecture1 tbody').html(str);
-				
+
 				$('#meta_1').find('em').text(res.count);
-				
-				
+
+
 				$('.applyBt').click(function(){
 					var tdArr= new Array();
 					var checkBtn= $(this);
-					
+
 					var tr = $(this).parent().parent();
 					var td = tr.children();
-					
+
 					var openSubCode=td.eq(1).text();
 					var subjName=td.eq(2).text();
 					var col1=td.eq(3).text().split("/");
@@ -113,9 +161,9 @@
 					var type = td.eq(7).text();
 					var syllabus=td.eq(9).text();
 					if(count>=personnel){
-						
-					 alert('정원초과 다른 강의를 선택하세요.');
-					 	return; 
+
+					alert('정원초과 다른 강의를 선택하세요.');
+					 	return;
 					}else{
 						$.ajax({
 							url:"<c:url value='/registration/insertReg'/>",
@@ -133,20 +181,20 @@
 							}
 						});
 					}
-					
+
 				});
-				
-				
-				
-				
+
+
+
+
 			}
-			
-			
-			
+
+
+
 		});
 	}
-	
-	
+
+
 	//해당학생이 수강신청 한 리스트만 검색 후 출력
 	function getRegistList(){
 		$.ajax({
@@ -179,13 +227,13 @@
 				$('#gridLecture2 tbody').html(str);
 				$('#numOfSubj').val(res.appliedCount);
 				$('#sumCredit').val(sum);
-				
+
 				$('.cancelBt').click(function(){
 					var tdArr= new Array();
 					var tr = $(this).parent().parent();
 					var td = tr.children();
 					var openSubCode=td.eq(1).text();
-					
+
 					$.ajax({
 						url:"<c:url value='/registration/deleteReg'/>",
 						data:{
@@ -201,15 +249,15 @@
 						}
 					});
 				});
-				
+
 			}
 		});
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	function getDate(){
 		//년도 띄우기
 		var today = new Date();
@@ -500,7 +548,7 @@
 											style="width: 9%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
-										
+
 										<div id="jqgh_gridLecture_lectPlan" class="ui-jqgrid-sortable">
 												강의계획서<span class="s-ico" style="display: none"><span
 													sort="asc"
@@ -520,13 +568,17 @@
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
-									
+
 								</tbody>
+								<tfoot>
+								</tfoot>
 							</table>
 						</div>
 					</div>
 				</div>
-				<div class="ui-jqgrid-resize-mark" id="rs_mgridLecture">&nbsp;</div>
+				<div class="ui-jqgrid-resize-mark" id="rs_mgridLecture">&nbsp;
+				 <div id="divPage"></div>
+				 </div>
 			</div>
 
 			<div style="margin: 20px; margin-left: 0;">
@@ -586,7 +638,7 @@
 											style="width: 7%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
-										
+
 										<div id="jqgh_gridLecture_asign_pcnt"
 												class="ui-jqgrid-sortable">
 												정원<span class="s-ico" style="display: none"><span
@@ -662,7 +714,7 @@
 											style="width: 9%;"><span
 											class="ui-jqgrid-resize ui-jqgrid-resize-ltr"
 											style="cursor: col-resize;">&nbsp;</span>
-										
+
 										<div id="jqgh_gridLecture_lectPlan" class="ui-jqgrid-sortable">
 												강의계획서<span class="s-ico" style="display: none"><span
 													sort="asc"
@@ -682,18 +734,7 @@
 								aria-multiselectable="false" aria-labelledby="gbox_gridLecture"
 								class="ui-jqgrid-btable" style="text-align: center; font-size: 15px;">
 								<tbody>
-									<tr class="jqgfirstrow" role="row" id="applyContent">
-										<td role="gridcell" style="height: 0px; width: 7%;"><button id="cancelBt">삭제</button></td>
-										<td role="gridcell" style="height: 0px; width: 9%;">dsad</td>
-										<td role="gridcell" style="height: 0px; width: 18%; text-align: center">sd</td>
-										<td role="gridcell" style="height: 0px; width: 7%;">sd</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 5%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 14%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 6%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-										<td role="gridcell" style="height: 0px; width: 9%;">s</td>
-									</tr>
+
 								</tbody>
 							</table>
 						</div>
@@ -714,5 +755,5 @@
 			</div>
 		</div>
 	</div>
-		
+
 <%@ include file="../inc/bottom.jsp"%>

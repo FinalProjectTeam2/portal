@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.portal.certification.model.CertificationService;
 import com.will.portal.certification.model.CertificationVO;
+import com.will.portal.common.MemberDetails;
 import com.will.portal.student.model.StudentService;
 
 
@@ -27,14 +29,32 @@ public class CertificateController {
 	@Autowired
 	private CertificationService certiServ;
 	
+	@RequestMapping("/test")
+	public String test(@RequestParam String no, Model model) {
+		model.addAttribute("no", no);
+		return "portal/certificate/test";
+	}
+	
 	@RequestMapping(value="/certificate1",method = RequestMethod.GET) 
-	public String certificate1_get(@RequestParam String stuNo, @RequestParam String no, Model model) {
+	public String certificate1_get(Authentication authentication, @RequestParam String no, Model model) {
 		logger.info("재학증명서 페이지");
-		Map<String,Object> map = stuServ.selectViewByStuNo(stuNo);
+		MemberDetails user = (MemberDetails)authentication.getPrincipal();
+		Map<String,Object> map = stuServ.selectViewByStuNo(user.getOfficialNo());
 		CertificationVO vo = certiServ.selectByNo(no);
+		int cnt = certiServ.updateIsPrint(no);
+		logger.info("프린트 없데이트 결과={}",cnt);
 		model.addAttribute("map", map);
 		model.addAttribute("vo", vo);
-		return "portal/certificate/certificate1";
+		switch (vo.getCertCode()) {
+			case "certEnroll": //재학
+				return "portal/certificate/certificate1";
+			case "certGradu": //졸업
+				return "portal/certificate/certificate2";
+			case "certEnroll2": // 재적
+				return "portal/certificate/certificate3";
+		default: // 장학
+			return "portal/certificate/certificate4";
+		}
 	}
 
 	@RequestMapping(value="/certificate2",method = RequestMethod.GET) 
