@@ -33,7 +33,7 @@
    		select t.*, s.subj_name
    		from subj_time t join subject s
    		on t.open_sub_code = substr(s.subj_code, 5)
-   		<if test="list!=null">
+   		<if test="list.size!=0">
 	   		where OPEN_SUB_CODE in
 	   		<foreach collection="list" item="item" index="index"
 	   			open="(" separator="," close=")">
