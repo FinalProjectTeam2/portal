@@ -27,6 +27,11 @@ public class AssignmentDAOMybatis implements AssignmentDAO{
 	public int assignUpload(AssignmentVO vo) {
 		return sqlSession.insert(namespace+"assignUpload", vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> assignStuList(Distribute_assignVO vo) {
+		return sqlSession.selectList(namespace+"assignStuList", vo);
+	}
 	
 	
 	

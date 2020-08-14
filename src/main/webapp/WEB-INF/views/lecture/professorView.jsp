@@ -163,7 +163,11 @@
 			dataType:"json",
 			type:"post",
 			success:function(res){
-				$('#listTitle').text($("#subjCode option:selected").text()+" 수강생 목록");
+				if($('#subjCode option:selected').val()!='none'){
+					$('#listTitle').text($("#subjCode option:selected").text()+" 수강생 목록");
+				}else{
+					$('#listTitle').text("수강생 목록");
+				}
 				var table = "<table border='1'>"+
 								"<colgroup>"+
 									"<col width='12%'>"+
@@ -191,22 +195,26 @@
 									"<th>총점</th>"+
 									"<th></th>"
 								"</tr>";
-					$.each(res, function(index, item){
-						$('tr:odd').find('input').css('background', '#efefef');
-						table += "<tr class='trScore'>"+
-									"<td class='firsttd'>"+ item.subCode +"</td>"+
-									"<td>"+ item.stuNo +"</td>"+
-									"<td>"+ item.name +"</td>"+
-									"<td>"+ item.classification +"</td>"+
-									"<td class='score'><input type='text' size='3' value='"+ item.midterm +"'></td>"+
-									"<td class='score'><input type='text' size='3' value='"+ item.finals +"'></td>"+
-									"<td class='score'><input type='text' size='3' value='"+ item.assignment +"'></td>"+
-									"<td class='score'><input type='text' size='3' value='"+ item.attendance +"'></td>"+
-									"<td class='score'><input type='text' size='3' value='"+ item.etc +"'></td>"+
-									"<td class='total'><input type='text' size='3' value='"+ item.totalGrade +"'></td>"+
-									"<td><button type='button' class='btn btn-primary btOk'>입력</button></td>"+
-								"</tr>";
-					});
+					if($('#subjCode option:selected').val()!='none'){			
+						$.each(res, function(index, item){
+							$('tr:odd').find('input').css('background', '#efefef');
+							table += "<tr class='trScore'>"+
+										"<td class='firsttd'>"+ item.subCode +"</td>"+
+										"<td>"+ item.stuNo +"</td>"+
+										"<td>"+ item.name +"</td>"+
+										"<td>"+ item.classification +"</td>"+
+										"<td class='score'><input type='text' size='3' value='"+ item.midterm +"'></td>"+
+										"<td class='score'><input type='text' size='3' value='"+ item.finals +"'></td>"+
+										"<td class='score'><input type='text' size='3' value='"+ item.assignment +"'></td>"+
+										"<td class='score'><input type='text' size='3' value='"+ item.attendance +"'></td>"+
+										"<td class='score'><input type='text' size='3' value='"+ item.etc +"'></td>"+
+										"<td class='total'><input type='text' size='3' value='"+ item.totalGrade +"'></td>"+
+										"<td><button type='button' class='btn btn-primary btOk'>입력</button></td>"+
+									"</tr>";
+						});
+					}else{
+						table+="<tr><td colspan='11'>개설하신 과목을 선택해주세요.</td></tr>";
+					}
 					table+="</table>";
 					
 					$('#tableDiv').html(table);
@@ -339,7 +347,11 @@ function inputScoreByExcel(){
 	<input type="button" id="btXls" value="excel로 다운받기" style="float: right; margin-right: 100px;">
 	</form>
 	<select class="form-control" id="subjCode" style="width: 72%;">
+		<c:if test="${empty sList }">
+			<option value="none">교수님께서 개설하신 과목이 없습니다.</option>
+		</c:if>
 		<c:if test="${!empty sList }">
+			<option value="none">개설하신 과목을 선택해주세요.</option>
 			<c:forEach var="map" items="${sList }">
 				<option value="${map['OPEN_SUB_CODE']}">${map['SUBJ_NAME']}</option>
 			</c:forEach>

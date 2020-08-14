@@ -254,7 +254,12 @@ div.sender p.num {
 				dataType:"json",
 				type:"post",
 				success:function(res){
-					$('#listTitle').text($("#subjCode option:selected").text()+" 수강생 목록");
+					if($('#subjCode option:selected').val()!='none'){
+						$('#listTitle').text($("#subjCode option:selected").text()+" 수강생 목록");
+					}else{
+						$('#listTitle').text("수강생 목록");
+					}
+
 					var table = "<table border='1'>"+
 									"<colgroup>"+
 									"<col width='5%'>"+
@@ -272,17 +277,22 @@ div.sender p.num {
 										"<th>학과</th>"+
 										"<th>연락처</th>"+
 									"</tr>";
-						$.each(res, function(index, item){
-							table+="<tr>"+
-							"<td><input type='checkbox' class='inputChk'></td>"+
-							"<td>"+ item.stuNo +"</td>"+
-							"<td>"+ item.name +"</td>"+
-							"<td>"+ item.semester +"</td>"+
-							"<td>"+ item.depName +"</td>"+
-							"<td>"+ item.phoneNo +"</td>"+
-						"</tr>"
-						});
-						
+								
+							if($('#subjCode option:selected').val()!='none'){
+								$.each(res, function(index, item){
+									table+="<tr>"+
+									"<td><input type='checkbox' class='inputChk'></td>"+
+									"<td>"+ item.stuNo +"</td>"+
+									"<td>"+ item.name +"</td>"+
+									"<td>"+ item.semester +"</td>"+
+									"<td>"+ item.depName +"</td>"+
+									"<td>"+ item.phoneNo +"</td>"+
+									"</tr>";
+								});
+							}else{
+								table+="<tr><td colspan='6'>개설하신 강의를 선택해주세요.</td></tr>"
+							}
+							
 						table+="</table>";
 						$('#tableDiv').html(table);
 						
@@ -316,7 +326,11 @@ div.sender p.num {
 <div class="container">
 	<div><h2>과목을 선택하세요</h2></div>
 	<select class="form-control" id="subjCode" style="width: 72%;">
+		<c:if test="${empty sList }">
+			<option value="none">개설하신 과목이 없습니다.</option>
+		</c:if>
 		<c:if test="${!empty sList }">
+				<option value="none">개설하신 과목을 선택하세요.</option>
 			<c:forEach var="map" items="${sList }">
 				<option value="${map['OPEN_SUB_CODE']}">${map['SUBJ_NAME']}</option>
 			</c:forEach>
