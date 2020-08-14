@@ -11,6 +11,9 @@
 .divRight select {
 	width: 180px;
 }
+.box2 td{
+	border: solid 1px;
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -85,93 +88,32 @@ $('#faculty').change(
 							</colgroup>
 							<thead>
 								<tr>
-									<th scope="col">학부</th>
+									<th scope="col" style="border-left: solid 1px #e5e5e5">학부</th>
 									<th scope="col">학과</th>
 									<th scope="col">전화번호</th>
 									<th scope="col">건물</th>
 									<th scope="col">수정</th>
-									<th scope="col">삭제</th>
+									<th scope="col" style="border-right: solid 1px #e5e5e5">학생조회</th>
 								</tr>
 							</thead>
 							<tbody>
-								<%-- <c:if test="${empty list }">
-								<tr>
-									<td colspan="8">결과가 없습니다.</td>
-								</tr>
-							</c:if> --%>
-								<%-- <c:if test="${!empty list }">
-								<!-- 반복 시작 -->
-								<c:set var="idx" value="0" />
-								<c:forEach var="vo" items="${list }"> --%>
+							<c:forEach var="i" begin="0" end="${fn:length(flist)-1}" step="1">
 								<tr class="align_center">
-									<td>손쉬운 프론트엔드 디자인</td>
-									<td>양명숙</td>
-									<td>컴퓨터 공학부</td>
-									<td>게임학과</td>
+								<c:if test="${i ==0 }">
+									<td rowspan="${flist[i]['DEP_COUNT'] }">${flist[i]['FACULTY_NAME'] }</td>
+								</c:if>
+								<c:if test="${i!=0 && (flist[i]['FACULTY_NO']!=flist[i-1]['FACULTY_NO'])}">
+									<td rowspan="${flist[i]['DEP_COUNT'] }">${flist[i]['FACULTY_NAME'] }</td>
+								</c:if>
+									<td style="border-left: 1px solid #e5e5e5">${flist[i]['DEP_NAME'] }</td>
+									<td>${flist[i]['TEL'] }</td>
+									<td>${flist[i]['BUILDING_NAME'] }</td>
 									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
+									<td><a href="#">조회</a></td>
 								</tr>
-								<tr class="align_center">
-									<td>어려운 프론트엔드 디자인</td>
-									<td>양명숙</td>
-									<td>컴퓨터 공학부</td>
-									<td>폰게임학과</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
-								</tr>
-								<tr class="align_center">
-									<td>적당한 프론트엔드 디자인</td>
-									<td>양명숙</td>
-									<td>컴퓨터 공학부</td>
-									<td>보드게임학과</td>
-									<td><a href="#">수정</a></td>
-									<td><a href="#">삭제</a></td>
-								</tr>
-
-
-								<%-- 		<c:set var="idx" value="${idx+1 }" />
-								</c:forEach>
-								<!-- 반복 끝 -->
-							</c:if> --%>
+							</c:forEach>
 							</tbody>
 						</table>
-					</div>
-					<div class="divPage">
-						<!-- 페이지 번호 추가 -->
-						<c:if test="${pagingInfo.firstPage>1 }">
-							<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"> <img
-								src='<c:url value="/resources/images/first.JPG" />' border="0">
-							</a>
-						</c:if>
-
-						<!-- [1][2][3][4][5][6][7][8][9][10] -->
-						<c:forEach var="i" begin="${pagingInfo.firstPage }"
-							end="${pagingInfo.lastPage }">
-							<c:if test="${i==pagingInfo.currentPage }">
-								<span style="color: blue; font-weight: bold">${i }</span>
-							</c:if>
-							<c:if test="${i!=pagingInfo.currentPage }">
-								<a href="#" onclick="boardList(${i})"> [${i }] </a>
-							</c:if>
-						</c:forEach>
-
-						<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-							<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"> <img
-								src="<c:url value="/resources/images/last.JPG" />" border="0">
-							</a>
-						</c:if>
-						<!--  페이지 번호 끝 -->
-					</div>
-
-					<div class="btdiv">
-						<input type="button"
-							class="btCustom btn btn-primary btn-lg login-button"
-							id="btMultiDel" value="강의 추가"><br>
-					</div>
-					<div class="btdiv">
-						<input type="button"
-							class="btCustom btn btn-primary btn-lg login-button"
-							id="btMultiDel" value="선택한 강의 삭제"><br>
 					</div>
 			</form>
 		</div>

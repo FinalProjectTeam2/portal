@@ -1,6 +1,7 @@
 package com.will.portal.admin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class AdminController {
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
 		logger.info("adminManageFaculty,");
 		
+		List<Map<String, Object>> flist = facultyService.selectFacultyView();
+		
+		model.addAttribute("flist",flist);
 		model.addAttribute("facultyList",facultyList);
 		return "admin/adminManageFaculty";
 		

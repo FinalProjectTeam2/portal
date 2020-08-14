@@ -6,6 +6,9 @@
 	<select id="selectFaculty" resultType="facultyVO">
 		select * from faculty
 	</select>
+	<select id="selectFacultyView" resultType="map">
+	select * from faculty_view order by faculty_no
+	</select>
 </mapper>
 
 
