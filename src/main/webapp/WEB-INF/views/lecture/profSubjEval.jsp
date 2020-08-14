@@ -21,26 +21,34 @@
 	
 </style>
 <script>
-
-
-/* 		function showContents(i) {
-		var subCode = "${evalList[j].subCode}";
-		console.log(subCode);
-			 $.ajax({
-		            url: "<c:url value='/lecture/evalContent' />",
-		            type:'GET',
-		            data:{"subCode":subCode},
-		            dataType : "json",
-		            success:function(res){
-		                 console.log(res);
-		             },
-		             error: function(xhr,status,error){
-		                console.log(xhr+status+error);
-		             } 
-		        });
-			 return false;
-		} */
-	
+		function showContents(i) {
+			var result = new Array();
+			
+			<c:forEach var="AllSubjAvgVO" items="${evalList}" >
+				var json = new Object();
+				json.subCode="${AllSubjAvgVO.subCode }";
+				result.push(json);
+			</c:forEach>
+			
+			console.log("jsonIfno=" + JSON.stringify(result));
+			
+			var subCode = result[i].subCode;
+			alert(subCode);
+			
+			$.ajax({
+				type:"get",
+				url:"<c:url value='/lecture/ajax/evalContents' />",
+				data : {subCode: subCode},
+				async:false,
+				dataType : "json",
+				succeess:function(res){
+					console.log("res : "+res);
+				},error:function(xhr,status,error){
+					alert(error);
+				}
+			});
+		}
+		
 </script>
 
 
@@ -75,13 +83,13 @@
 					<c:forEach var="AllSubjAvgVO" items="${evalList }">
 						<tr>
 							<td style="text-align: left;">
-							${AllSubjAvgVO.subjName }
-<%-- 								<c:if test="${!empty AllSubjAvgVO.subjAvgVO }">
+							<%-- ${AllSubjAvgVO.subjName } --%>
+								<c:if test="${!empty AllSubjAvgVO.subjAvgVO }">
 									<a href="#" onclick="showContents(${j});">${AllSubjAvgVO.subjName }</a>
 								</c:if>
 								<c:if test="${empty AllSubjAvgVO.subjAvgVO }">
 									${AllSubjAvgVO.subjName }
-								</c:if> --%>
+								</c:if> 
 							</td>
 							<td>${AllSubjAvgVO.subCode }</td>
 							<c:set var="vo" value="${AllSubjAvgVO.subjAvgVO }"></c:set>

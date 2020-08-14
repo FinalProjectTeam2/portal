@@ -19,8 +19,10 @@
 	<c:if test="${!empty contentsList }">
 		<ul style="list-style: none;">
 		<c:forEach var="contents" items="${contentsList }">
-			<li>${contents }</li>
-			<hr>
+			<c:if test="${!empty contents }">
+				<li>${contents }</li>
+				<hr>
+			</c:if>
 		</c:forEach>
 		</ul>
 	</c:if>

@@ -10,7 +10,11 @@
 
  $(function() {
 	$('#evalForm').submit(function() {
-		if(!confirm('강의평가 제출 후 수정은 불가능합니다. 정말 제출 하시겠습니까?')){
+		if($('#contents').val() == ''){
+			alert('빈칸을 입력해주세요');
+			$('#contents').focus();
+			event.preventDefault();
+		}else if(!confirm('강의평가 제출 후 수정은 불가능합니다. 정말 제출 하시겠습니까?')){
 			event.preventDefault();
 		}
 	});
@@ -28,7 +32,6 @@
 	
  	#subjEval .lecLab{
 		width: 90%;
-		float: left;
 	} 
 </style>
 <main role="main" class="flex-shrink-0" id="mainmain">
@@ -39,12 +42,10 @@
 		</div>
 		<div style="margin-bottom: 10px; text-align: right; margin-right: 10px; font-weight: bold;" >
 			<div>
-				<label class="lecLab">강의명 : </label>
-				<label>${map['SUBJ_NAME'] }</label>
+				<label class="lecLab">강의명 : ${map['SUBJ_NAME'] }</label>
 			</div>
 			<div>
-				<label class="lecLab">담당교수 : </label>
-				<label>${map['PROF_NAME'] }</label>
+				<label class="lecLab">담당교수 : ${map['PROF_NAME'] }</label>
 			</div>
 		</div>
 		<form id="evalForm" name="evalForm" method="post" action="<c:url value='/student/subjEval' />"><!-- studentController -->
@@ -109,7 +110,7 @@
 	   		<li>
 				<label>강의에서 좋았던 점이나 개선할 점이 있다면 자유롭게 적어주세요</label>
 				<div>	   				
-				    <textarea name ="content" style="width: 100%;"></textarea>
+				    <textarea id="contents" name ="content" style="width: 100%;" placeholder="100자이내로 자유롭게 기술해 주세요"></textarea>
 		   		</div>
 	   		</li>
 	   		<li>
