@@ -51,14 +51,19 @@
 		});
 		
 		$("#delBt").click(function() {
+		 	var checkArr = new Array();
+		   
+			$("input[class='chBox']:checked").each(function(){
+				checkArr.push($(this).attr("data-cartNum"));
+			});
+			
+			if(checkArr.length < 1){
+				alert("체크하세요");
+				   return;
+			   }
 			var confirm_val = confirm("정말 삭제하시겠습니까?");
 			  
 			if(confirm_val) {
-			 	var checkArr = new Array();
-			   
-				$("input[class='chBox']:checked").each(function(){
-					checkArr.push($(this).attr("data-cartNum"));
-				});
 			   
 				$.ajax({
 					url : "<c:url value='/bookmark/delete'/>",
