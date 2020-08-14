@@ -26,6 +26,16 @@ public class CertificationDAOMybatis implements CertificationDAO{
 	public List<CertificationVO> selectByStuNo(String stuNo) {
 		return sqlSession.selectList(namespace+"selectByStuNo", stuNo);
 	}
+
+	@Override
+	public CertificationVO selectByNo(String no) {
+		return sqlSession.selectOne(namespace+"selectByNo", no);
+	}
+
+	@Override
+	public int updateIsPrint(String no) {
+		return sqlSession.update(namespace+"updateIsPrint",no);
+	}
 	
 	
 	

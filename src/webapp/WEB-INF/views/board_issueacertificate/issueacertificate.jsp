@@ -5,10 +5,13 @@
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/certificate.css'/>">
-<style>
-	 
 
- 
+<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<style>
+#tableDiv button.btn {
+    width: 80px;
+}
 </style>
 
 <script type="text/javascript">
@@ -37,9 +40,7 @@ function tui2(){
 	
 	
 	$(function(){
-		if(${reload == 'Y'}){
-			tui2();
-		}
+		
 		$('#tuition2').hide();
 		$('#summery').hide();
 		$('.on').click(function(){
@@ -80,18 +81,66 @@ function tui2(){
 		
 		});
 		
-		
 		$('#pay').click(function(){
 			payment();
-			
-			
 		});
-		
-		
-		
+		getSuccess();
 	});
-	
-	
+
+function getSuccess() {
+	$.ajax({
+		url : "<c:url value='/payments/getSeccess'/>",
+		type : "get",
+		dataType : "json",
+		success : function(res) {
+			var data = "";
+			if(res.length > 0){
+				$.each(res, function(idx, item) {
+					data += '<tr class="'+item.no+'">'
+						+ '<td>'+(idx+1)+'</td>'
+						+'<td>' + item.certName + '</td>'
+						+'<td>'+ moment(item.regDate).format('YYYY-MM-DD')+'</td>';
+					if(item.isPrint == 'N'){
+						data += '<td><button type="button" class="btn btn-primary btn-sm print">발급</button></td>';
+					}else{
+						data += '<td><button type="button" disabled="disabled" class="btn btn-secondary btn-sm print">발급 완료</button></td>';
+					}
+					data +='</tr>';
+				});
+			}else{
+				data += '<tr><td colspan="4" style="text-align: center">발급된 증명서가 없습니다.</td></tr>';
+			}
+			$("#tableDiv table tbody").html(data);
+			
+			$(".print").click(function() {
+				var no = $(this).parent().parent().attr("class");
+				getPrint(no);
+			});
+		}
+	});
+}
+function getPrint(no) {
+	$.ajax( {
+		url : "<c:url value='/certificate/certificate1'/>",
+		data : {no: no},
+		type :"get",
+		async : true,
+		dataType : "html",
+		cache : false,
+		success : function(res) {
+			//pdf_wrap을 canvas객체로 변환
+			$('#data').html(res);
+			html2canvas($('#data').find(".certificate")[0]).then(function(canvas) {
+				  var doc = new jsPDF('p', 'mm', 'a4'); //jspdf객체 생성
+				  var imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
+				  doc.addImage(imgData, 'PNG', 0, 0); //이미지를 기반으로 pdf생성
+				  doc.save('${vo.certName }.pdf'); //pdf저장
+					
+				});
+			getSuccess();
+		}
+	});
+}
 function payment(){
 	IMP.init('imp78464192'); // 아임포트 관리자 페이지의 "시스템 설정" > "내 정보" 에서 확인 가능
 	
@@ -109,31 +158,31 @@ function payment(){
 	}, function(rsp) {
 	    if ( rsp.success ) {
 	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-	    	jQuery.ajax({
+	    	$.ajax({
 	    		url: "<c:url value='/payments/complete'/>", //cross-domain error가 발생하지 않도록 주의해주세요
 	    		type: 'post',
+	    		dataType : "json",
 	    		data: {
 		    		imp_uid : rsp.imp_uid,
 		    		//기타 필요한 데이터가 있으면 추가 전달
 		    		"certName":$('.form-control option:selected').text(),
 		    		"qty":$('.qty').val(),
-		    		"stuNo":${principal.officialNo},
+		    		"stuNo":'${principal.officialNo}',
 		    		"certCode":$('.form-control option:selected').val()
-	    		}
-	    	}).done(function(data) {
-	    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-	    		if ( everythings_fine ) {
-	    			var msg = '결제가 완료되었습니다.';
-	    			msg += '\n고유ID : ' + rsp.imp_uid;
-	    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-	    			msg += '카드 승인번호 : ' + rsp.apply_num;
-	    			
-	    			alert(msg);
-	    		} else {
-	    			//[3] 아직 제대로 결제가 되지 않았습니다.
-	    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-	    		}
+	    		},
+	    		success : function(data) {
+	    			//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+	    			if ( data.cnt > 0 ) {
+		    			alert('결제가 완료되었습니다.');
+		    			window.open("<c:url value='/payments/complete?no='/>"+data.no, "결제완료",
+		    					"width=490, height=340, left=300, top=300, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		    			getSuccess();
+		    		} else {
+		    			alert('결제에 실패하였습니다.');
+		    			//[3] 아직 제대로 결제가 되지 않았습니다.
+		    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+		    		}
+				}
 	    	});
 	    } else {
 	        var msg = '결제에 실패하였습니다.';
@@ -142,8 +191,6 @@ function payment(){
 	        alert(msg);
 	    }
 	});
-	
-	
 }
 </script>
 
@@ -516,29 +563,17 @@ function payment(){
 							<col width="20%">
 							<col width="20%">
 						</colgroup>
+						<thead>
 						<tr>
 							<th>순번</th>
 							<th>증명서 종류</th>
 							<th>발급일자</th>
 							<th>발급</th>
 						</tr>
-						<c:if test="${empty list}">
-							<tr>
-								<td colspan="4" style="text-align: center">발급된 증명서가 없습니다.</td>
-							</tr>
-						</c:if>
-						<c:if test="${!empty list}">
-							<c:forEach var="vo" items="${list }">
-								<tr>
-									<td>no</td>
-									<td>${vo.certName }</td>
-									<td>${vo.regDate }</td>
-									<td>버튼</td>
-								</tr>
-								<c:set var='no' value='no+1'/>
-							</c:forEach>
-						</c:if>
+						</thead>
+						<tbody></tbody>
 					</table>
+					<div id="data" style="overflow: hidden; height: 0px;"></div>
 				</div>
 			</article>
 		</div>

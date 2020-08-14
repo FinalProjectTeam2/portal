@@ -16,4 +16,5 @@ public interface RegistrationService {
 	int countForDup(Map<String, Object> map);
 	int insertReg(Map<String, Object> map);
 	int deleteReg(Map<String, Object> map);
+	int openSubjCount(RegistrationSearchVO vo);
 }

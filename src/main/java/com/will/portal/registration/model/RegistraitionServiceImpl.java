@@ -64,6 +64,11 @@ public class RegistraitionServiceImpl implements RegistrationService{
 		cnt=registrationDao.deleteReg(map);
 		return cnt;
 	}
+
+	@Override
+	public int openSubjCount(RegistrationSearchVO vo) {
+		return registrationDao.openSubjCount(vo);
+	}
 	
 	
 	

@@ -6,6 +6,10 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/board/write.css'/>" />
 <style type="text/css">
+div#isPrivate {
+    margin: 8px 12px;
+    display: inline-block;
+}
 </style>
 <script type="text/javascript">
 	
@@ -108,9 +112,13 @@
 			<div class="row1">
 				<div class="col-25">
 					<label for="l_title" class="formTitle">제목</label>
+					<c:if test="${vo.isPrivate == 'Y' }">
+						<div id="isPrivate"><input type="checkbox" id="private" name="isPrivate"><label for="private">비밀글</label></div>
+					</c:if>
 				</div>
 				<div class="col-75">
 					<input type="text" id="title" name="title">
+					
 				</div>
 			</div>
 			<div class="row1">

@@ -184,7 +184,7 @@
 		var locTime = (hours < 10 ? '0' + hours : hours) + ':'
 		+ (minutes < 10 ? '0' + minutes : minutes) + ':'
 		+ (seconds < 10 ? '0' + seconds : seconds);
-		
+
 		$("#locTime").html(locTime);
 	}
 	$(function() {
@@ -237,19 +237,19 @@
 				'autohide' : false
 			});
 			$('#myToast').hide();
-			
+
 			$('#myToast').on('hidden.bs.toast', function () {
 				$(".toast-body").off('click');
 				$(".toast-body").css('cursor', 'default');
 			});
-			
+
 			$('#myToast').on('shown.bs.toast', function () {
 				$(".toast-body").on('click', function() {
 					location.href = "<c:url value='/message/messageBox'/>";
 				});
 				$(".toast-body").css('cursor', 'pointer');
 			});
-			
+
 			$(window).bind('beforeunload', function() {
 				disconnect12();
 				return;
@@ -320,7 +320,7 @@
 				$('#myToast').hide();
 			}
 		};
-		
+
 	</script>
 </sec:authorize>
 <meta name="theme-color" content="#563d7c">
@@ -470,6 +470,10 @@
 							<li><a href="#">학사정보</a></li>
 							<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
 							<li><a href="<c:url value='/member/memberEdit'/>">정보조회</a></li>
+							<li><a href="<c:url value='/lecture/studentTT'/>">시간표 조회</a></li>
+							<li><a href="<c:url value='/student/studentScore'/>">성적조회</a></li>
+							<li><a href="<c:url value='/assignment/assignApply'/>">과제 제출</a></li>
+							<li><a href="<c:url value='/board_issueacertificate/issueacertificate'/>">증명서 발급</a></li>
 						</ul></li>
 					</c:if>
 					<c:if test="${principal.type=='PROFESSOR' }">
@@ -478,8 +482,10 @@
 							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
 							<li><a href="<c:url value='/lecture/createLecture'/>">강의 개설</a></li>
 							<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
+							<li><a href="<c:url value='/assignment/distAssign'/>">과제등록</a></li>
+							<li><a href="<c:url value='/lecture/profSubjEval'/>">강의평가</a></li>
 							<li><a href="<c:url value='/lecture/phoneBook'/>">수강생 연락처</a></li>
-
+														
 						</ul></li>
 					</c:if>
 					<c:if test="${principal.type=='ADMIN' }">

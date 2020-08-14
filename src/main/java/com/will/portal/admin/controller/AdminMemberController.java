@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.will.portal.account_info.model.Account_infoVO;
@@ -815,7 +816,7 @@ public class AdminMemberController {
 		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png
 	}
 	
-	@RequestMapping(value = "/insertByExcel", produces = "application/text; charset=utf8", method = RequestMethod.POST)
+	@RequestMapping(value = "/insertByExcel", produces = "application/text; charset=utf8", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String insertByExcel(MultipartHttpServletRequest request)throws Exception{
 		MultipartFile excelFile  = request.getFile("excelFile");
@@ -843,9 +844,11 @@ public class AdminMemberController {
 		logger.info("file삭제 결과 bool={}", bool);
 		int cnt = 0;
 		for(Map<String, Object> map : list) {
+			if((String)map.get("A")==null || ((String)map.get("A")).isEmpty()){
+				break;
+			}
 			StudentVO sVo = new StudentVO();
 			Official_infoVO oVo = new Official_infoVO();
-			
 			sVo.setName((String)map.get("A"));
 			sVo.setMajor(Integer.parseInt((String)map.get("B")));
 			oVo.setHp1((String)map.get("C"));

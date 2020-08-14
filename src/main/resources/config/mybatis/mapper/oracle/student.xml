@@ -167,13 +167,37 @@
 		where stu_no=#{stuNo}
 	</update>
 
-	<select id="selectScore" resultType="map">
+	<select id="selectScore" resultType="map"
+		parameterType="scoreSearchVO">
 		select * from score_view
+		where stu_no=#{stuNo} and total_grade is not null
+		<if test="semester == null or semester == ''">
+			order by open_date
+		</if>
+		<if test="semester != null and semester != ''">
+			and extract(year from open_date) || extract(month from
+			open_date)=#{semester}
+		</if>
 		<!--where -->
 	</select>
-	<select id="selectSemester" resultType="string">
+	<select id="selectSemester" resultType="string"
+		parameterType="string">
 		select distinct extract(year from open_date) || extract(month from
-		open_date) from score_view
+		open_date) from (select open_date from score_view where
+		stu_no=#{stuNo} and total_grade is not null) 
 		<!--where -->
+	</select>
+	
+	<select id="selectTimetable" parameterType="string" resultType="studenttimetableVo">
+		select s.subj_code, s.subj_name, s.explanation, s.credit, p.prof_name, c.classroom_name, st.timetable_code, r.lecture_eval_flag
+		from subject s join registration r
+		on substr(s.subj_code, 5)=r.sub_code
+		join professor p 
+		on p.prof_no=s.prof_no
+		join subj_time st
+		on st.open_sub_code=r.sub_code
+		join classroom c
+		on c.classroom_code=st.classroom_code
+		where r.stu_no=#{stuNo}
 	</select>
 </mapper>

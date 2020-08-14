@@ -25,7 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,12 +47,19 @@ import com.will.portal.phoneBook.model.PhoneBookVO;
 import com.will.portal.professor.model.ProfessorService;
 import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.regi_timetable.model.Regi_timetableVO;
+import com.will.portal.registration.model.RegistrationVO;
+import com.will.portal.student.model.StudentService;
+import com.will.portal.student.model.StudentTimeTableVO;
 import com.will.portal.student.model.StudentVO;
+import com.will.portal.subj_eval.model.AllSubjAvgVO;
+import com.will.portal.subj_eval.model.Subj_evalService;
+import com.will.portal.subj_eval.model.Subj_evalVO;
 import com.will.portal.subj_time.model.Subj_timeVO;
 import com.will.portal.subj_type.model.Subj_typeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.subject.model.SubjectService;
 import com.will.portal.subject.model.SubjectVO;
+import com.will.portal.timetable.model.TimetableVO;
 
 @Controller
 public class LectureController {
@@ -61,6 +70,10 @@ public class LectureController {
 	private EvaluationService evaluationServ;
 	@Autowired
 	private SubjectService subjectServ;
+	@Autowired
+	private StudentService stuService;
+	@Autowired
+	private Subj_evalService subEvalService;
 	
 	@RequestMapping("/lecture/openLecture_bak")
 	public void openLecture_bak() {
@@ -511,11 +524,6 @@ public class LectureController {
 		return list;
 	}
 	
-	@RequestMapping("/lecture/studentTT")
-	public String studentTT() {
-		logger.info("studentTT 화면");
-		return "lecture/studentTT";
-	}
 	
 	@RequestMapping(value = "/lecture/inputScoreByExcel", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -734,4 +742,72 @@ public class LectureController {
 		
 	}
 	
+	
+	
+	@RequestMapping(value = "/lecture/studentTT", method = RequestMethod.GET)
+	public String studentTT() {
+		logger.info("studentTT 화면");
+		
+		
+		return "lecture/studentTT";
+	}
+	
+	@RequestMapping(value = "/lecture/studentTT", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<StudentTimeTableVO> studentTT(Principal principal){
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String stuNo=user.getOfficialNo();
+		
+		List<StudentTimeTableVO> list=stuService.selectTimetable(stuNo);
+		logger.info("list.size={}", list.size());
+		return list;
+	}
+	
+	@RequestMapping("/lecture/ajax/evalCheck")
+	@ResponseBody
+	public boolean evalCheck(Principal pincipal, @RequestParam String subjCode) {
+		MemberDetails user = (MemberDetails)((Authentication)pincipal).getPrincipal();
+		String stuNo=user.getOfficialNo();
+		boolean bool = false;
+		String subCode = subjCode.substring(4);
+		logger.info("subjCode={}",subjCode);
+		logger.info("subCode={} stuNo={}", subCode,stuNo);
+		RegistrationVO regiVo = new RegistrationVO();
+		regiVo.setStuNo(stuNo);
+		regiVo.setSubCode(subCode);
+		String flag = subEvalService.selectEvalFlag(regiVo);
+		logger.info("강의평가 완료 여부 flag = {}", flag);
+		if("Y".equals(flag)) {
+			bool = true;
+		}
+		
+		return bool;
+	}
+	
+	@RequestMapping("/lecture/profSubjEval")
+	public String profSubEval(Principal pincipal,Model model) {
+		MemberDetails user = (MemberDetails)((Authentication)pincipal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		List<AllSubjAvgVO> evalList = subEvalService.selectsubCodeByProfNo(profNo);
+		logger.info("교수 강의평가 evalList={}", evalList);
+		model.addAttribute("evalList", evalList);
+		return "lecture/profSubjEval";
+	}
+	
+	@RequestMapping("/lecture/evalContents")
+	public String evalContent(@RequestParam String subCode, @RequestParam String subjName,
+			Model model) {
+		logger.info("subCode={}",subCode);
+		List<Subj_evalVO> list = subEvalService.selectEvalBysubCode(subCode);
+		List<String> contentsList = new ArrayList<String>();
+		String contents="";
+		logger.info("list={}",list);
+		for (int i = 0; i < list.size(); i++) {
+			contents = list.get(i).getContent();
+			contentsList.add(contents);
+		}
+		logger.info("contentList= {}",contentsList);
+		model.addAttribute("contentsList", contentsList);
+		return "lecture/evalContents";//팝업창 새로만들기
+	}
 }

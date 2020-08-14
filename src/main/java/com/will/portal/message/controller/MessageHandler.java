@@ -3,6 +3,7 @@ package com.will.portal.message.controller;
 import java.util.Map;
 
 import org.apache.commons.collections4.map.HashedMap;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.will.portal.common.MemberDetails;
 import com.will.portal.message.model.MessageService;
+import com.will.portal.message.model.SendVO;
 
 @Component
 public class MessageHandler extends TextWebSocketHandler {
@@ -24,6 +26,7 @@ public class MessageHandler extends TextWebSocketHandler {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
 	private Map<String,WebSocketSession> sessionmap = new HashedMap<String, WebSocketSession>();
+	private final ObjectMapper objectMapper=  new ObjectMapper();
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -41,12 +44,27 @@ public class MessageHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		logger.info("메세지 전송 = {} : {}",session,message.getPayload());
-        
-    	for (String key : sessionmap.keySet()) {
-    		int count = service.selectCountMsg(key);
-    		WebSocketSession sess = sessionmap.get(key);
-    		sess.sendMessage(new TextMessage(Integer.toString(count)));
+		SendVO vo = objectMapper.readValue(message.getPayload(),SendVO.class);
+		String officialNo = vo.getOfficialNo();
+		String[] offiSplit = {};
+		if(officialNo.indexOf(',') != -1) {
+			offiSplit = officialNo.split(",");
+    		logger.info("offiLeng={}",offiSplit.length);
+    		for (String str : offiSplit) {
+    			int count = service.selectCountMsg(str);
+        		WebSocketSession sess = sessionmap.get(str);
+        		if(sess != null) {
+        			sess.sendMessage(new TextMessage(Integer.toString(count)));
+        		}
+			}
+		}else {
+    		int count = service.selectCountMsg(officialNo);
+    		WebSocketSession sess = sessionmap.get(officialNo);
+    		if(sess != null) {
+    			sess.sendMessage(new TextMessage(Integer.toString(count)));
+    		}
 		}
+    	
 	}
 
 	@Override

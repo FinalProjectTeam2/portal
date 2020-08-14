@@ -32,6 +32,7 @@ public class FileUploadUtil {
 	public static final int PATH_PDS=1; //자료실 사용
 	public static final int PATH_IMAGE=2; //프로필 사진 업로드 사용
 	public static final int PATH_PDF=3;	//교수 강의계획서 업로드 사용
+	public static final int PATH_DOC=4; //학생 과제제출 업로드 사용
 	
 	public boolean fileDelete(HttpServletRequest request, String fileName, int pathGb) {
 		boolean bool = false;
@@ -127,6 +128,8 @@ public class FileUploadUtil {
 	            key="imageFile.upload.path";
 	         }else if(pathGb==PATH_PDF) {
 	        	 key="pdfFile.upload.path";
+	         }else if(pathGb==PATH_DOC) {
+	        	 key="docFile.upload.path";
 	         }
 
 	         uploadPath=fileUploadProps.getProperty(key);

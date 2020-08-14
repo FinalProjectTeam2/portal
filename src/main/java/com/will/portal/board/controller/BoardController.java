@@ -133,12 +133,17 @@ public class BoardController {
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write_post(@RequestParam String title, @RequestParam String contents, @RequestParam String officialNo,
-			@RequestParam String bdCode, HttpServletRequest request, Model model) {
+			@RequestParam String bdCode, @RequestParam(required = false) String isPrivate, HttpServletRequest request, Model model) {
 		PostsVO vo = new PostsVO();
 		vo.setBdCode(bdCode);
 		vo.setContents(contents);
 		vo.setTitle(title);
 		vo.setOfficialNo(officialNo);
+		if(isPrivate == null || isPrivate.isEmpty()) {
+			vo.setIsPrivate("N");
+		}else {
+			vo.setIsPrivate("Y");
+		}
 		logger.info("게시글 작성 처리, 파라미터 vo={}", vo);
 
 		int cnt = postsService.insertPosts(vo);
@@ -312,12 +317,17 @@ public class BoardController {
 
 	@PostMapping(value = "/edit")
 	public String edit_post(@RequestParam String title, @RequestParam String contents, @RequestParam int postNo,
-			HttpServletRequest request, Model model) {
+			@RequestParam(required = false) String isPrivate,HttpServletRequest request, Model model) {
 		logger.info("게시글 수정 처리");
 		PostsVO vo = new PostsVO();
 		vo.setPostNo(postNo);
 		vo.setContents(contents);
 		vo.setTitle(title);
+		if(isPrivate == null || isPrivate.isEmpty()) {
+			vo.setIsPrivate("N");
+		}else {
+			vo.setIsPrivate("Y");
+		}
 		logger.info("게시글 수정 처리, 파라미터 vo={}", vo);
 
 		int cnt = postsService.updatePost(vo);
