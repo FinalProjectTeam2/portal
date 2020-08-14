@@ -50,24 +50,26 @@ div#isPrivate {
 			$("#fileList .firstFile").show();
 		}
 		$("#delFile").click(function() {
-			var fileName = $(this).find(".fileName").val();
-			var no = $(this).find(".no").val();
-			var parent = $(this).parent();
-			$.ajax({
-				url : "<c:url value='/portal/board/ajax/delFile'/>",
-				data : {fileName : fileName, no : no },
-				success : function(res) {
-					if(res == 'true'){
-						parent.remove();
-						count = count - 1;
-						if(count > maxCount){
-							$("#fileList .firstFile").hide();
-						}else{
-							$("#fileList .firstFile").show();
+			if(confirm("첨부파일을 삭제하시겠습니까?\r\n수정을 안하셔도 즉시 '영구삭제'처리 됩니다.")){
+				var fileName = $(this).find(".fileName").val();
+				var no = $(this).find(".no").val();
+				var parent = $(this).parent();
+				$.ajax({
+					url : "<c:url value='/portal/board/ajax/delFile'/>",
+					data : {fileName : fileName, no : no },
+					success : function(res) {
+						if(res == 'true'){
+							parent.remove();
+							count = count - 1;
+							if(count > maxCount){
+								$("#fileList .firstFile").hide();
+							}else{
+								$("#fileList .firstFile").show();
+							}
 						}
 					}
-				}
-			});
+				});
+			}
 			//$(this).parent().remove();
 		});
 		

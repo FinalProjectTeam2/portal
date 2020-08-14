@@ -11,7 +11,6 @@
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <style type="text/css">
 #bodyContents{
-	height: 100%;
 	overflow: auto;
 }
 .box {float:left; overflow: hidden; }
