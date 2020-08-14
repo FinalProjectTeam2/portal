@@ -12,8 +12,17 @@ public class TuitionServiceImpl implements TuitionService {
 
 	@Override
 	public Map<String, Object> selectStuView(String officicalNo) {
-		
 		return tuitionDao.selectStuView(officicalNo);
+	}
+
+	@Override
+	public Map<String, Object> selectTuitionView(String officicalNo) {
+		return tuitionDao.selectTuitionView(officicalNo);
+	}
+
+	@Override
+	public Map<String, Object> selectTuitionDView(String officicalNo) {
+		return tuitionDao.selectTuitionView(officicalNo);
 	}
 
 

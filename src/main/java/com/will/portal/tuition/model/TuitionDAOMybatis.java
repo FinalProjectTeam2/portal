@@ -20,8 +20,13 @@ public class TuitionDAOMybatis implements TuitionDAO {
 		return sqlSession.selectOne(namespace+"selectStuView", officicalNo);
 	}
 
+	@Override
+	public Map<String, Object> selectTuitionView(String officicalNo) {
+		return sqlSession.selectOne(namespace+"selectTuitionView", officicalNo);
+	}
 
-
-
-
+	@Override
+	public Map<String, Object> selectTuitionDView(String officicalNo) {
+		return sqlSession.selectOne(namespace+"selectTuitionDView", officicalNo);
+	}
 }

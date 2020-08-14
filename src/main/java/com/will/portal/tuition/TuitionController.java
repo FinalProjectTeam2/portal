@@ -80,10 +80,11 @@ public class TuitionController {
 		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
 		String officicalNo = user.getOfficialNo();
 		
-		Map<String, Object> map = new HashedMap<>();
+		Map<String, Object> tuitionStu = tuitionService.selectStuView(officicalNo);
+		Map<String, Object> tuition = tuitionService.selectTuitionView(officicalNo);
+		Map<String, Object> tuitionD = tuitionService.selectTuitionDView(officicalNo);
 		
-		Map<String, Object> tuituionStu= tuitionService.selectStuView(officicalNo);
-		List<StudentVO> stuList = stuService.selectStudent();
+
 		List<FacultyVO> fList = facultyService.selectFaculty();
 		List<DepartmentVO> dList = departService.selectDepartment();
 		List<Account_infoVO> aList = accountService.selectAllAccount();
@@ -91,8 +92,9 @@ public class TuitionController {
 		List<AwardVO> awardList = awardService.selectAllaward();
 		List<ScholarshipVO> scholarshipList = scholarshipService.selectAllScholarship();
 		
-		model.addAttribute("tuitionStu", tuituionStu);
-		model.addAttribute("stuList", stuList);
+		model.addAttribute("tuition", tuition);
+		model.addAttribute("tuitionD", tuitionD);
+		model.addAttribute("tuitionStu", tuitionStu);
 		model.addAttribute("fList", fList);
 		model.addAttribute("dList", dList);
 		model.addAttribute("aList", aList);

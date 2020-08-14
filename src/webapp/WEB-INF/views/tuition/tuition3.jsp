@@ -175,10 +175,10 @@ $(function() {
 		</thead>
 		<tbody>
 		<c:if test="${!empty list }"> 
-			<c:forEach var="TuitionStuVO" items="${list }">
+			<c:forEach var="TuitionVO" items="${list }">
 			<tr>
 				<td>입학금</td>
-				<td>${TuitionStuVO.TuitionVO.admissionfee }</td>
+				<td>${TuitionVO.admissionfee }</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
