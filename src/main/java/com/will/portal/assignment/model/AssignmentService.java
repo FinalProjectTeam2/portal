@@ -8,4 +8,6 @@ public interface AssignmentService {
 	List<Distribute_assignVO> getDistAssign(String openSubCode);
 	int assignUpload(AssignmentVO vo);
 	List<Map<String, Object>> assignStuList(Distribute_assignVO vo);
+	int inputAssign(Distribute_assignVO vo);
+	int delAssign(Distribute_assignVO vo);
 }

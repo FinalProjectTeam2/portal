@@ -120,7 +120,13 @@
 
 					}else if(checkNull=='N'){
 							$.each(res.list, function(idx, item){
-
+							var fileName=item.syllabus;
+							var fileNameIdx=fileName.lastIndexOf("_");
+							var extIdx=fileName.lastIndexOf(".");
+							console.log(fileNameIdx);
+							var ext=fileName.substr(extIdx);
+							var originalFileName=fileName.substr(0, fileNameIdx)+ext;
+							console.log(originalFileName);
 							str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
 							str+="<td role='gridcell' style='height: 0px; width: 7%;'><button type='button' class='applyBt'>신청</button></td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
@@ -131,7 +137,9 @@
 							str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 6%;'>"+item.type+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>한국어</td>";
-							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.syllabus+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+
+							"<a href='<c:url value='/registration/download?fileName="+fileName+"&originalFileName="+originalFileName+"'/>'>"+
+							originalFileName+"</a></td>";
 							str+="</tr>";
 						});
 					}
@@ -207,6 +215,12 @@
 				if(res.checkNull=="N"){
 					$.each(res.subList, function(idx, item){
 						sum+=item.credit;
+						var fileName=item.syllabus;
+						var fileNameIdx=fileName.lastIndexOf("_");
+						var extIdx=fileName.lastIndexOf(".");
+						console.log(fileNameIdx);
+						var ext=fileName.substr(extIdx);
+						var originalFileName=fileName.substr(0, fileNameIdx)+ext;
 						str+="<tr class='jqgfirstrow' role='row' id='appliedList'>";
 						str+="<td role='gridcell' style='height: 0px; width: 7%;'><button class='cancelBt'>취소</button></td>";
 						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
@@ -217,8 +231,9 @@
 						str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
 						str+="<td role='gridcell' style='height: 0px; width: 6%;'>"+item.type+"</td>";
 						str+="<td role='gridcell' style='height: 0px; width: 9%;'>한국어</td>";
-						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.syllabus+"</td>";
-						str+="</tr>";
+						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+
+						"<a href='<c:url value='/registration/download?fileName="+fileName+"&originalFileName="+originalFileName+"'/>'>"+
+						originalFileName+"</a></td></tr>";
 					});
 				}else if(res.checkNull=="Y"){
 					str+="<tr class='jqgfirstrow' role='row' id='subjects'>";

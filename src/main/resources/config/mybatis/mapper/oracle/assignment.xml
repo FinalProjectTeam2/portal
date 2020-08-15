@@ -24,11 +24,36 @@
 		and a.stu_no=s.stu_no) as count,
 		(select apply_date from ASSIGNMENT a
 		WHERE assign_no=(select assign_no from distribute_assign where assign_no = #{assignNo})
-		and a.stu_no=s.stu_no) as apply_date
+		and a.stu_no=s.stu_no) as apply_date,
+		(select file_name from ASSIGNMENT a
+		WHERE assign_no=(select assign_no from distribute_assign where assign_no = #{assignNo})
+		and a.stu_no=s.stu_no) as file_name,
+        (select original_file_name from ASSIGNMENT a
+		WHERE assign_no=(select assign_no from distribute_assign where assign_no = #{assignNo})
+		and a.stu_no=s.stu_no) as original_file_name,
+        (select assign_no from ASSIGNMENT a
+		WHERE assign_no=(select assign_no from distribute_assign where assign_no = #{assignNo})
+		and a.stu_no=s.stu_no) as assign_no
 		from registration r join student s
 		on r.stu_no=s.stu_no
 		where r.sub_code=#{openSubCode}
+		
 	</select>
+	
+	<insert id="inputAssign" parameterType="distribute_assignVo">
+		<selectKey order="BEFORE" keyProperty="assignNo" resultType="int">
+			select DIST_ASSIGN_SEQ.nextval from dual		
+		</selectKey>
+		insert into distribute_assign(assign_no, assign_name, open_sub_code)
+		values(#{assignNo},#{assignName},#{openSubCode})
+	</insert>
+	
+	<delete id="delAssign" parameterType="distribute_assignVo">
+		delete from distribute_assign where assign_no=#{assignNo}
+	</delete>
+	<delete id="delAssignStu" parameterType="distribute_assignVo">
+		delete from assignment where assign_no=#{assignNo}
+	</delete>
 	
 </mapper>
 
