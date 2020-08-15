@@ -78,10 +78,12 @@
 		$('#btSearch').click(function(){
 			if($('select[name=major]').val() == 0){
 				alert("학과를 선택해 주세요");
-				return false;
-			}
-			location.href="/portal/admin/faculty/adminFacultySelectStudent?facultyNo="+$('#faculty').val()
+				event.preventDefault();
+			}else{
+				
+			location.href="/portal/admin/member/adminFacultySelectStudent?facultyNo="+$('#faculty').val()
 					+"&major="+$('#department').val();
+			}
 		});
 		$('#cancel1').click(function(){
 			location.href="/portal/admin/member/memberEdit?officialNo="+$('#stuNo').val();
