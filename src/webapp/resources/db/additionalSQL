@@ -294,3 +294,12 @@ CREATE SEQUENCE cert_seq
 INCREMENT BY 1
 START WITH 1
 NOCACHE;
+
+/*학과 관리 뷰*/
+create or replace view faculty_view
+as
+select d.*,dd.dep_count,f.faculty_name, b.building_name from department d join 
+(select faculty_no, count(dep_no) as dep_count from department group by faculty_no)dd
+on d.faculty_no=dd.faculty_no join faculty f on d.faculty_no=f.faculty_no 
+join building b on b.BUILDING_CODE = d.BUILDING_CODE;
+

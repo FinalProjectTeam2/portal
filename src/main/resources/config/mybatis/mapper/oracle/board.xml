@@ -59,7 +59,7 @@
 	
 	<update id="updateCate" parameterType="categoryVo">
 		update category
-		set category_name = #{categoryName}
+		set category_name = #{categoryName}, usage=#{usage}
 		where category_code = #{categoryCode}
 	</update>
 	
@@ -80,7 +80,7 @@
 		set BD_NAME = #{bdName},BD_ORDER = #{bdOrder},IS_REPLY = #{isReply},IS_COMMENT = #{isComment}
 			,IS_PRIVATE = #{isPrivate},IS_UPLOAD = #{isUpload},MAX_UPFILE = #{maxUpfile}
 			,MAX_FILESIZE = #{maxFilesize},CATEGORY_CODE = #{categoryCode},AUTH_CODE = #{authCode}
-			,edit_date = sysdate
+			,edit_date = sysdate, usage=#{usage}
 		where bd_code = #{bdCode}
 	</update>
 	

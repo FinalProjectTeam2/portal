@@ -20,7 +20,20 @@
 .assignTable{
 	width: 100%
 }
-
+.assignstuList th{
+	color: black;
+	text-align: center;
+}
+.assignstuList td{
+	color: black;
+	text-align: center;
+}
+.assignTable{
+	width: 100%
+}
+table.assignstuList {
+    font-size: 0.65em;
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -57,7 +70,7 @@ $(function(){
 							str+="<tr class='assignLine'>"+
 								"<td>"+item.assignNo+"</td>"+
 								"<td>"+item.assignName+"</td>"+
-								"<td>"+item.regDate+"</td>"+
+								"<td>"+moment(item.regDate).format('YYYY/MM/DD')+"</td>"+
 								"</tr>";
 						});
 					}else{
@@ -74,6 +87,58 @@ $(function(){
 						var regDate=$(this).children().eq(2).html();
 						var openSubCode=$('#subjCode option:selected').val();
 						alert(assignNo+","+assignName+","+regDate+","+openSubCode);
+						
+						$.ajax({
+							url:"<c:url value='/assignment/assignStuList'/>",
+							type:"post",
+							data:{
+								"assignNo":assignNo,
+								"openSubCode":openSubCode
+							},
+							dataType:"json",
+							success:function(res){
+								var str="<h4>과제 제출 현황<h4>"+
+								"<table class='assignstuList' border='1'>"+
+								"<colgroup>"+
+									"<col width='20%'>"+
+									"<col width='20%'>"+
+									"<col width='20%'>"+
+									"<col width='20%'>"+
+								"<colgroup>"+
+								"<tr>"+
+									"<th>학번</th>"+
+									"<th>이름</th>"+
+									"<th>제출여부</th>"+
+									"<th>제출일</th>"+
+								"</tr>";
+								var len = res.length;
+								if(len>0){
+									$.each(res, function(idx, item){
+										str+="<tr class='assignLine'>"+
+											"<td>"+item.STU_NO+"</td>"+
+											"<td>"+item.NAME+"</td>";
+											if(item.COUNT<1){
+												str+="<td>미제출</td>";
+											}else if(item.COUNT>0){
+												str+="<td>제출완료</td>";
+											}
+											"<td>"+moment(item.APPLY_DATE).format('YYYY/MM/DD')+"</td>"+
+											"</tr>";
+									});
+								}else{
+									str+="<tr>"+
+											"<td colspan='4'>수강신청 인원이 없습니다.</td></tr>";
+								}
+								str+="</table>";
+								
+								
+								$('#rightDiv').html(str);
+							}
+							
+						});
+						
+						
+						
 						
 					});
 					
@@ -104,7 +169,7 @@ $(function(){
 	</c:if>
 </select>
 </div>
-	<hr style="border: solid 2px lightgreen">
+	<hr style="border: solid 2px lightgray">
 <div class='form-group' id='distAssign' style='margin-top: 20px;float: left;width: 45%'>
 	<label for="exampleFormControlTextarea3">과제를 입력하세요</label>
   <textarea class='form-control' id='exampleFormControlTextarea3' rows='7' cols="20"></textarea>
@@ -113,7 +178,7 @@ $(function(){
   
   </div>
 </div>
-<div id="rightDiv" style="margin-top: 20px;float: left;width: 45%; margin-left: 50px">
+<div id="rightDiv" style="margin-top: 20px;float: left;width: 45%; margin-left: 80px">
 </div>
 
 <%@ include file="../inc/bottom.jsp"%>

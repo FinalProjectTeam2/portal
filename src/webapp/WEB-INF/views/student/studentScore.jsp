@@ -80,7 +80,7 @@ span.fontLar {
 				<form name="frmList" method="post">
 					<input type="hidden" value="${principal.name }" id="name"
 						name="stuName">
-					<c:if test="${!empty slist and (param.semester ==null || param.semester=='')}">
+					<c:if test="${!empty slist and (param.semester ==null || param.semester=='') and fn:length(slist)>1}">
 						<div class="divLeft">
 							<button type="submit"
 								class="btCustom btn btn-primary btn-lg login-button"
@@ -108,11 +108,11 @@ span.fontLar {
 						<table class="box2" summary="강의 목록">
 							<caption>성적 조회</caption>
 							<colgroup>
-								<col style="width: 5%" />
-								<col style="width: 5%" />
+								<col style="width: 10%" />
+								<col style="width: 10%" />
 								<col style="width: 10%" />
 								<col style="width: 40%" />
-								<col style="width: 20%" />
+								<col style="width: 10%" />
 								<col style="width: 10%" />
 								<col style="width: 10%" />
 							</colgroup>

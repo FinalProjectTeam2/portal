@@ -147,6 +147,18 @@ public class AssignmentController {
 	}
 	
 	
+	@RequestMapping(value = "/assignStuList", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<Map<String, Object>> assignStuList(@RequestParam int assignNo, @RequestParam String openSubCode){
+		logger.info("수강신청 인원별 과제 제출 현황 파라미터 assignNo={}, openSubCode={}",assignNo, openSubCode);
+		Distribute_assignVO vo = new Distribute_assignVO();
+		vo.setAssignNo(assignNo);
+		vo.setOpenSubCode(openSubCode);
+		
+		List<Map<String, Object>> list=assignServ.assignStuList(vo);
+		logger.info("list.size={}", list.size());
+		return list;
+	}
 	
 	
 }
