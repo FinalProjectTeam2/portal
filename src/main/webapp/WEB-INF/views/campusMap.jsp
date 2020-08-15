@@ -5,6 +5,7 @@
 <!-- sidebar -->
 <%@ include file="inc/mainSidebar.jsp"%>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="<c:url value='/resources/js/cloud-zoom.css' />">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- main 시작 -->
 <script type="text/javascript">
@@ -12,6 +13,8 @@ $(document).ready(function() {
 $('#tabs').tabs(); // 탭
 });
 </script>
+
+<script type="text/javascript" src="<c:url value='/resources/js/cloud-zoom.1.0.2.min.js' />"></script>
 <style>
 
 	#tabs table, th, td{
@@ -35,7 +38,15 @@ $('#tabs').tabs(); // 탭
 		<img alt="" src="<c:url value='/resources/images/mapLogo.png' />" width="60px;">
 		<span style="font-size: 2em; font-weight: bold">CAMPUS MAP</span>
 	</div>
-	<img alt="캠퍼스맵" src="<c:url value='/resources/images/campusMap2.jpg' />" width="100%" height="650px;"> 
+<%-- 	<div id="wrap">
+		<img alt="캠퍼스맵" src="<c:url value='/resources/images/campusMap2.jpg' />" width="100%" height="650px;" id="big"> 
+	</div> --%>
+<a href="<c:url value='/resources/images/campusMap2.jpg' />" 
+ id="zoom1" 
+ rel="adjustX:10, adjustY:-4"
+ class="cloud-zoom">
+	<img src="<c:url value='/resources/images/campusMap2.jpg' />" title="optional">
+</a>
 
 <div id="tabs">
 	<ul>

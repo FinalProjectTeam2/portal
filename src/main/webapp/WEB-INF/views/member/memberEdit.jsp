@@ -150,7 +150,7 @@ function inputPhoneNumber(obj) {
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>소속</th>'
-	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME+'</td>'
+	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME+'/ 부전공 : '+res.minor_dep_name +'</td>'
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>과정</th>'

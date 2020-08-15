@@ -121,6 +121,9 @@ public class Official_infoController {
 		 Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
 		 if(type.equals("STUDENT")) {
 			 map = studentService.selectViewByStuNo(officialNo);
+			 if(map.get("minor_dep_name")==null) {
+				 map.put("minor_dep_name","");
+			 }
 		 }else if(type.equals("PROFESSOR")) {
 			 map =professorService.selectViewByProfNo(officialNo);
 		 }else if(type.equals("ADMIN")) {
