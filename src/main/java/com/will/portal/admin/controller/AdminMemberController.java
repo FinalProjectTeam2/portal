@@ -285,7 +285,6 @@ public class AdminMemberController {
 		model.addAttribute("pagingInfo", pagingInfo);
 		model.addAttribute("state",state);
 	}
-
 	/**
 	 * 체크박스 조건 설정
 	 *
