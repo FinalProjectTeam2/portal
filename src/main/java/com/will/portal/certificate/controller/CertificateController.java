@@ -41,9 +41,20 @@ public class CertificateController {
 		MemberDetails user = (MemberDetails)authentication.getPrincipal();
 		Map<String,Object> map = stuServ.selectViewByStuNo(user.getOfficialNo());
 		CertificationVO vo = certiServ.selectByNo(no);
+		int cnt = certiServ.updateIsPrint(no);
+		logger.info("프린트 없데이트 결과={}",cnt);
 		model.addAttribute("map", map);
 		model.addAttribute("vo", vo);
-		return "portal/certificate/certificate1";
+		switch (vo.getCertCode()) {
+			case "certEnroll": //재학
+				return "portal/certificate/certificate1";
+			case "certGradu": //졸업
+				return "portal/certificate/certificate2";
+			case "certEnroll2": // 재적
+				return "portal/certificate/certificate3";
+		default: // 장학
+			return "portal/certificate/certificate4";
+		}
 	}
 
 	@RequestMapping(value="/certificate2",method = RequestMethod.GET) 

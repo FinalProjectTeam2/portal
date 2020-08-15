@@ -3,10 +3,16 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/mainSidebar.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/regi_lec.css'/>">
+<style type="text/css">
+#divPage{
+	margin: 0 auto;
+    display: table;
+}
+</style>
 <script type="text/javascript">
 	$(function(){
 		getDate();
-		subjList();
+		subjList(1);
 		getRegistList()
 		//학부 선택시 해당되는 학과만 나오도록 함
 		$('#p_daehak').change(function(){
@@ -17,7 +23,7 @@
 				data:{"facultyNo":facultyNo},
 				success:function(res){
 					var str="<select name='p_major' id='p_major' style='width: 100%'>";
-					str+="<option value='All'>---All---</option>";
+					str+="<option value='0'>---All---</option>";
 
 					$.each(res, function(index, item){
 						str+="<option value='"+item.depNo+"'>"+item.depName+"</option>";
@@ -33,30 +39,71 @@
 
 		//검색 버튼 눌렀을때
 		$('#selectBt').click(function(){
-			subjList();
+			subjList(1);
 		});
 	});
 
+	function pageMake(obj) {
+		var pagingInfo = obj.pagingInfo;
+
+		var str = "";
+
+		str += '<nav aria-label="Page navigation example">'
+				+ '<ul class="pagination">';
+		//이전블록
+		if (pagingInfo.firstPage > 1) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="subjList('
+					+ (pagingInfo.firstPage - 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
+		}
+
+		//페이지 처리
+		for (var i = pagingInfo.firstPage; i <= pagingInfo.lastPage; i++) {
+			if (i == pagingInfo.currentPage) {
+				str += '<li class="page-item"><a class="page-link" '
+						+ 'style="background: skyblue; color: white;">'
+						+ i + '</a></li>';
+			} else {
+				str += '<li class="page-item"><a class="page-link" onclick="subjList('
+						+ i + ')"' + ' href="#">' + i + '</a></li>';
+			}
+		}
+
+		//다음 블록
+		if (pagingInfo.lastPage < pagingInfo.totalPage) {
+			str += '<li class="page-item">' + '<a class="page-link" href="#" '
+					+ 'aria-label="Previous" onclick="subjList('
+					+ (pagingInfo.lastPage + 1) + ')">'
+					+ '<span aria-hidden="true">&laquo;</span>' + '</a></li>';
+		}
+
+		str += '</ul></nav>';
+
+		$("#divPage").html(str);
+	}
+	
 	//수강신청 모든 리스트(검색기능 사용시 검색할 내용만 sort)
-	function subjList(){
-		var faculty=$('#p_daehak').val();
+	function subjList(currentPage){
+		var facultyNo=$('#p_daehak').val();
 		var department=$('#p_major').val();
 		var subjName=$('#p_subjt').val();
 		var time1=$('#p_day').val();
 		var time2=$('#p_time').val();
 		var profName=$('#p_teach').val();
 		var openSubCode=$('#p_code').val();
-
+		console.log(facultyNo+","+department);
 		$.ajax({
 			url:"<c:url value='/registration/openSubjList'/>",
 			data:{
-				"facultyNo":faculty,
+				"facultyNo":facultyNo,
 				"depNo":department,
 				"subjName":subjName,
 				"time1":time1,
 				"time2":time2,
 				"profName":profName,
-				"openSubCode":openSubCode
+				"openSubCode":openSubCode,
+				currentPage : currentPage
 			},
 			dataType:"json",
 			type:"post",
@@ -65,6 +112,7 @@
 				var count=res.count;
 				var checkNull=res.checkNull;
 				console.log(checkNull);
+				pageMake(res);
 				$('#meta_1 em').text(count);
 					if(checkNull=='Y'){
 						str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
@@ -214,20 +262,20 @@
 		//년도 띄우기
 		var today = new Date();
 		var year = today.getFullYear();
-		$('#p_year option').val(year+3).prop("selected", true);
+		$('#p_year').val(year).prop("selected", true);
 		//임의로 분기별로 수강신청 해당학기 정함
 		var month = today.getMonth()+1;
 		if(month >= 1 && month <=3){
-			$('#p_term option').val('25').prop("selected", true);
+			$('#p_term').val('25').prop("selected", true);
 			$('#p_term').prop("disable");
 		}else if(month >= 4 && month <=6){
-			$('#p_term option').val('10').prop("selected", true);
+			$('#p_term').val('10').prop("selected", true);
 			$('#p_term').prop("disable");
 		}else if(month >= 7 && month <=9){
-			$('#p_term option').val('15').prop("selected", true);
+			$('#p_term').val('15').prop("selected", true);
 			$('#p_term').prop("disable");
 		}else if(month >= 10 && month <=12){
-			$('#p_term option').val('20').prop("selected", true);
+			$('#p_term').val('20').prop("selected", true);
 			$('#p_term').prop(disable);
 		}
 	}
@@ -522,11 +570,15 @@
 								<tbody>
 
 								</tbody>
+								<tfoot>
+								</tfoot>
 							</table>
 						</div>
 					</div>
 				</div>
-				<div class="ui-jqgrid-resize-mark" id="rs_mgridLecture">&nbsp;</div>
+				<div class="ui-jqgrid-resize-mark" id="rs_mgridLecture">&nbsp;
+				 <div id="divPage"></div>
+				 </div>
 			</div>
 
 			<div style="margin: 20px; margin-left: 0;">

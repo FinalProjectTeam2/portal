@@ -31,6 +31,9 @@ ul.pagination {
 	color: blue;
 	text-decoration: none;
 }
+.private{
+	cursor: pointer;
+}
 </style>
 <!-- 공지사항 -->
 <script type="text/javascript">
@@ -55,8 +58,21 @@ ul.pagination {
 		$("#sort").change(function() {
 			$.send($("#currentPage").val());
 		});
+		
+		
 	});
 
+	function isPrivate(offiNo,postNo) {
+		if('${principal.type}' != 'ADMIN'){
+			if('${principal.officialNo}' != offiNo){
+				alert("비밀글 입니다.");
+				return false;
+			}
+		}
+		location.href = "<c:url value='/portal/board/detailCount?postNo='/>"+postNo;
+		
+	}
+	
 	$.send = function(curPage) {
 		$("#currentPage").val(curPage);
 
@@ -134,10 +150,18 @@ ul.pagination {
 								str += "<tr>";
 								str += "<td>" + item.postNo + "</td>";
 								if (item.delFlag == 'N') {
-									str += "<td class='title'><a href=\"<c:url value='/portal/board/detailCount'/>?postNo="
+									console.log('비밀글?'+item.isPrivate);
+									if(item.isPrivate == 'N'){
+										str += "<td class='title'><a href=\"<c:url value='/portal/board/detailCount'/>?postNo="
 											+ item.postNo
 											+ "\" title=\""
 											+ item.title + "\">";
+									}else{
+										str += "<td class='title'><a class='private' onclick=\"isPrivate("+item.officialNo+","+item.postNo+")\" title=\""
+											+ item.title + "\">"
+											+ "<img alt=\"file\" src=\"<c:url value='/resources/images/icon_secret.gif'/>\">";
+									}
+									
 									var offiType = item.officialNo.substring(4, 5);
 									if(offiType == '1'){
 										str += "<img alt=\"file\" src=\"<c:url value='/resources/images/lbl_bbs_notice.png'/>\">";
@@ -247,7 +271,7 @@ ul.pagination {
 		<!-- 게시판 -->
 		<form name="frmSearch" method="post" action="">
 			<div id="menu1" class="tabcontent">
-				<div class="listinfo1"></div>
+				<div class="listinfo1" ></div>
 				<div class="listinfo2">
 					<select name="sort" id="sort">
 						<option value="write">작성일</option>

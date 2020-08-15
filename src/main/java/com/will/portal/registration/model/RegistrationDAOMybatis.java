@@ -66,6 +66,11 @@ public class RegistrationDAOMybatis implements RegistrationDAO{
 	public int deleteEval(Map<String, Object> map) {
 		return sqlSession.delete(namespace+"deleteEval", map);
 	}
+
+	@Override
+	public int openSubjCount(RegistrationSearchVO vo) {
+		return sqlSession.selectOne(namespace+"openSubjCount", vo);
+	}
 	
 	
 	

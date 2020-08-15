@@ -1,8 +1,8 @@
 package com.will.portal.tuition.model;
 
-import java.util.List;
+import java.util.Map;
 
 public interface TuitionDAO {
-	List<TuitionStuVO> selectStu(String officialNo);
-	List<TuitionVO> selectTuition(String officialNo);
+	Map<String, Object> selectStuView(String officicalNo);
+
 }

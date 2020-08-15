@@ -3,15 +3,14 @@
 <%@ include file="../inc/portalSidebar.jsp"%>
 <style type="text/css">
 #privacy1{
-	margin-top: -18%;
-	margin-left: 20%;
-	margin-right: 5%;
 	width:88%;
 	min-width: 500px;
 	min-height: 500px;
 	font-family: 'nanum gothic',맑은 고딕, 한컴돋움, 돋움;
 }
-
+#privacy1 h1{
+	font-weight: bold;
+}
 table {
 	border: 1px solid gray;
 }
@@ -31,9 +30,11 @@ table td {
 	line-height: 14px;
 }
 </style>
+<main role="main" class="flex-shrink-0">
+	<div class="container">
 <div id="privacy1">
 	<div class="title">
-		<h3><span>개인정보처리방침</span></h3>
+		<h1><span>개인정보처리방침</span></h1>
 	</div>	
 	<p>&nbsp;</p>
 	<div class="section">

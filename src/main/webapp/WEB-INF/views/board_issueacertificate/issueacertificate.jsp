@@ -5,10 +5,13 @@
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/certificate.css'/>">
-<style>
-	 
 
- 
+<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<style>
+#tableDiv button.btn {
+    width: 80px;
+}
 </style>
 
 <script type="text/javascript">
@@ -100,7 +103,7 @@ function getSuccess() {
 					if(item.isPrint == 'N'){
 						data += '<td><button type="button" class="btn btn-primary btn-sm print">발급</button></td>';
 					}else{
-						data += '<td><button type="button" disabled="disabled" class="btn btn-secondary btn-sm print">발급</button></td>';
+						data += '<td><button type="button" disabled="disabled" class="btn btn-secondary btn-sm print">발급 완료</button></td>';
 					}
 					data +='</tr>';
 				});
@@ -110,15 +113,35 @@ function getSuccess() {
 			$("#tableDiv table tbody").html(data);
 			
 			$(".print").click(function() {
-				var no = $(this).parent().parent().attr( 'class' );
-				window.open("<c:url value='/certificate/test?no='/>"+no, "결제완료",
-				"width=490, height=340, left=300, top=300, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
-				getSuccess();
+				var no = $(this).parent().parent().attr("class");
+				getPrint(no);
 			});
 		}
 	});
 }
-	
+function getPrint(no) {
+	$.ajax( {
+		url : "<c:url value='/certificate/certificate1'/>",
+		data : {no: no},
+		type :"get",
+		async : true,
+		dataType : "html",
+		cache : false,
+		success : function(res) {
+			//pdf_wrap을 canvas객체로 변환
+			$('#data').html(res);
+			var name = $('#data').find(".certificate .title h1").html();
+			html2canvas($('#data').find(".certificate")[0]).then(function(canvas) {
+				  var doc = new jsPDF('p', 'mm', 'a4'); //jspdf객체 생성
+				  var imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
+				  doc.addImage(imgData, 'PNG', 0, 0); //이미지를 기반으로 pdf생성
+				  doc.save(name +'.pdf'); //pdf저장
+					
+				});
+			getSuccess();
+		}
+	});
+}
 function payment(){
 	IMP.init('imp78464192'); // 아임포트 관리자 페이지의 "시스템 설정" > "내 정보" 에서 확인 가능
 	
@@ -508,9 +531,15 @@ function payment(){
 						<h5>증명서 종류</h5>
 						<select class='form-control' style='width: 80%;'>
 							<option value='none' style='text-align: center;'>----증명서를 선택해 주세요----</option>
-							<option value='certEnroll'>재학증명서</option>
-							<option value='certGradu'>졸업증명서</option>
-							<option value='certEnroll2'>재적증명서</option>
+							<c:if test="${principal.state == 1 or principal.state == 2 or principal.state == 5}">
+								<option value='certEnroll'>재학증명서</option>
+							</c:if>
+							<c:if test="${principal.state == 5 or principal.state == 4}">
+								<option value='certGradu'>졸업증명서</option>
+							</c:if>
+							<c:if test="${principal.state == 6}">
+								<option value='certEnroll2'>제적증명서</option>
+							</c:if>
 							<option value='certAward'>장학증명서</option>
 						</select><br>
 						<h5>수량</h5>
@@ -551,6 +580,7 @@ function payment(){
 						</thead>
 						<tbody></tbody>
 					</table>
+					<div id="data" style="overflow: hidden; height: 0px;"></div>
 				</div>
 			</article>
 		</div>

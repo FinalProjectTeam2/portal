@@ -2,13 +2,16 @@
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
 <style type="text/css">
-#img {
+.disclosureInformation {
+	margin-top: 2%;
+}
+.disclosureInformation #img {
 	background: #ccc;
 	width: 160px;
 	padding: 5px;
 }
 
-.divBox1 {
+.disclosureInformation .divBox1 {
 	width:1200px;
 	min-width:500px;
 	margin-left:18.5%;
@@ -16,32 +19,32 @@
 	padding: 2% 2% 2% 2%;
 }
 
-.boxImg {
+.disclosureInformation .boxImg {
 	width: 30%;
 	margin-top: -5%;
 }
 
-.boxInfo {
+.disclosureInformation .boxInfo {
 	width: 70%;
 	margin-left: 16%;
 	margin-top: -5%;
 }
 
-.divBox2, .divBox3 {
+.disclosureInformation .divBox2, .disclosureInformation .divBox3 {
 	width: 1400px; 
 	min-width: 500px;
 }
 
-.divBox2 {
+.disclosureInformation .divBox2 {
 	margin-left: 20%;
 }
 
-.divBox3 {
+.disclosureInformation .divBox3 {
 	margin-left: 20%;
 	margin-top: 8%;
 }
 
-.divBox2 ul li{   
+.disclosureInformation .divBox2 ul li{   
 	list-style: none;          
 	color: white;               
 	background-color: #026BAD; 
@@ -51,7 +54,7 @@
 	text-align: center;        
 }
 
-.menuLink {                             
+.disclosureInformation .menuLink {                             
     text-decoration:none;                     
     color: white;
     display: block;  
@@ -61,12 +64,12 @@
     font-family: 'nanum gothic',맑은 고딕, 한컴돋움, 돋움;
 }
 
-.menuLink:hover {
+.disclosureInformation .menuLink:hover {
     color: skyblue;
     background-color: #0C4A71;
 }
 
-.divBox3 ul li {
+.disclosureInformation .divBox3 ul li {
 	list-style: none;          
 	color: white;               
 	background-color: skyblue; 
@@ -76,22 +79,22 @@
 	text-align: center;        
 }
 
-.divBox3 .menuLink {
+.disclosureInformation .divBox3 .menuLink {
 	width: 400px;
 	font-size: 18px;
 	padding: 2%;
 }
 
-.divBox4{
+.disclosureInformation .divBox4{
 	margin-left: 20%;
 	margin-top: 13%;
 }
 
-.divBox2 {
+.disclosureInformation .divBox2 {
 	margin-top: -2%;
 }
 
-.divBox5, .divBox6{
+.disclosureInformation .divBox5, .disclosureInformation .divBox6{
 	margin-left: 20%;
 	margin-top: 11%;
 }
@@ -125,6 +128,8 @@
 		});
 	});
 </script>
+<main role="main" class="flex-shrink-0">
+	<div class="container">
 <div class="disclosureInformation">
 	<div class="divBox1">
 		<div class="boxImg">

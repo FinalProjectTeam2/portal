@@ -59,7 +59,7 @@ hr {
 					<td>경영이론1</td>	
 					<td>변사또</td>	
 					<td>시장조사분석</td>	
-					<td><input type="text"></td>	
+					<td>홍길동</td>	
 					<td>
 						<select>
 							<option> -- 구분 -- </option>

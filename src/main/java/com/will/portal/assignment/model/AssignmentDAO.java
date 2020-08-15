@@ -5,4 +5,7 @@ import java.util.Map;
 
 public interface AssignmentDAO {
 	List<Map<String, Object>> subjByStuNo(String stuNo);
+	List<Distribute_assignVO> getDistAssign(String openSubCode);
+	int assignUpload(AssignmentVO vo);
+	List<Map<String, Object>> assignStuList(Distribute_assignVO vo);
 }

@@ -20,6 +20,29 @@
 	}
 	
 </style>
+<script>
+
+
+/* 		function showContents(i) {
+		var subCode = "${evalList[j].subCode}";
+		console.log(subCode);
+			 $.ajax({
+		            url: "<c:url value='/lecture/evalContent' />",
+		            type:'GET',
+		            data:{"subCode":subCode},
+		            dataType : "json",
+		            success:function(res){
+		                 console.log(res);
+		             },
+		             error: function(xhr,status,error){
+		                console.log(xhr+status+error);
+		             } 
+		        });
+			 return false;
+		} */
+	
+</script>
+
 
 <!-- main 시작 -->
 <main role="main" class="flex-shrink-0" id="mainmain">
@@ -42,20 +65,23 @@
 					<th>Q7</th>
 					<th>Q8</th>
 					<th>총점</th>
+					<th>강의평</th>
 				</tr>
 					<c:if test="${empty evalList }">
-						<td colspan="11">데이터가 존재하지 않습니다</td>
+						<td colspan="12">데이터가 존재하지 않습니다</td>
 					</c:if>	
 					<c:if test="${!empty evalList }">
+					<c:set var="j" value="0"></c:set>
 					<c:forEach var="AllSubjAvgVO" items="${evalList }">
 						<tr>
 							<td style="text-align: left;">
-								<c:if test="${!empty AllSubjAvgVO.subjAvgVO }">
-									<a href="<c:url value='/lecture/evalContent?subCode=${AllSubjAvgVO.subCode } ' />" id="evalDetail">${AllSubjAvgVO.subjName }</a>
+							${AllSubjAvgVO.subjName }
+<%-- 								<c:if test="${!empty AllSubjAvgVO.subjAvgVO }">
+									<a href="#" onclick="showContents(${j});">${AllSubjAvgVO.subjName }</a>
 								</c:if>
 								<c:if test="${empty AllSubjAvgVO.subjAvgVO }">
-									<a>${AllSubjAvgVO.subjName }</a>
-								</c:if>
+									${AllSubjAvgVO.subjName }
+								</c:if> --%>
 							</td>
 							<td>${AllSubjAvgVO.subCode }</td>
 							<c:set var="vo" value="${AllSubjAvgVO.subjAvgVO }"></c:set>
@@ -73,7 +99,16 @@
 							<fmt:formatNumber value="${sum }" pattern=".0"/>
 							</c:if>
 							</td>
+							<td>
+								<c:if test="${vo.avgQ1 != null}">
+									<a onclick="window.open('/portal/lecture/evalContents?subCode=${AllSubjAvgVO.subCode }&subjName=${AllSubjAvgVO.subjName }',
+									'강의평보기','width=500,height=500')" 
+									href="#">강의평 확인</a>
+								</c:if>
+								
+							</td>
 						</tr>
+						<c:set var="j" value="${j+1 }"></c:set>
 					</c:forEach>
 					</c:if>
 			</table>

@@ -9,6 +9,27 @@
 		on r.sub_code=substr(s.subj_code, 5)
 		where r.stu_no=#{stuNo}
 	</select>
+	<select id="getDistAssign" parameterType="string" resultType="distribute_assignVo">
+			select * from distribute_assign where open_sub_code=#{openSubCode}
+	</select>
+	<insert id="assignUpload" parameterType="assignmentVo">
+		insert into assignment(assign_no, stu_no, file_name, file_size, original_file_name)
+		values(#{assignNo}, #{stuNo}, #{fileName}, #{fileSize}, #{originalFileName})
+	</insert>
+	
+	<select id="assignStuList" parameterType="distribute_assignVo" resultType="map">
+		select s.stu_no, s.name,
+		(select count(*) from ASSIGNMENT a
+		WHERE assign_no=(select assign_no from distribute_assign where assign_no = #{assignNo})
+		and a.stu_no=s.stu_no) as count,
+		(select apply_date from ASSIGNMENT a
+		WHERE assign_no=(select assign_no from distribute_assign where assign_no = #{assignNo})
+		and a.stu_no=s.stu_no) as apply_date
+		from registration r join student s
+		on r.stu_no=s.stu_no
+		where r.sub_code=#{openSubCode}
+	</select>
+	
 </mapper>
 
 

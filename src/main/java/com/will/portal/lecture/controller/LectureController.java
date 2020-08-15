@@ -1,6 +1,7 @@
 package com.will.portal.lecture.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,9 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,12 +46,10 @@ import com.will.portal.message.SendMmsMessage;
 import com.will.portal.open_subj.model.Open_subjVO;
 import com.will.portal.phoneBook.model.PhoneBookVO;
 import com.will.portal.professor.model.ProfessorService;
-import com.will.portal.professor.model.ProfessorVO;
 import com.will.portal.regi_timetable.model.Regi_timetableVO;
 import com.will.portal.registration.model.RegistrationVO;
 import com.will.portal.student.model.StudentService;
 import com.will.portal.student.model.StudentTimeTableVO;
-import com.will.portal.student.model.StudentVO;
 import com.will.portal.subj_eval.model.AllSubjAvgVO;
 import com.will.portal.subj_eval.model.Subj_evalService;
 import com.will.portal.subj_eval.model.Subj_evalVO;
@@ -59,7 +58,6 @@ import com.will.portal.subj_type.model.Subj_typeVO;
 import com.will.portal.subject.model.SubjectAllVO;
 import com.will.portal.subject.model.SubjectService;
 import com.will.portal.subject.model.SubjectVO;
-import com.will.portal.timetable.model.TimetableVO;
 
 @Controller
 public class LectureController {
@@ -212,7 +210,7 @@ public class LectureController {
 	}
 	
 	
-	@RequestMapping(value = "/lecture/downloadScore", produces="text/plain;charset=UTF-8", method = RequestMethod.POST)
+	@RequestMapping(value = "/lecture/downloadScore", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String downloadScore(Principal principal, HttpServletResponse response, @RequestParam String subjCode, 
 			@RequestParam String subjName, Model model) {
@@ -222,9 +220,9 @@ public class LectureController {
 		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
 		String profNo = user.getOfficialNo();
 		
-		
+		String home = System.getProperty("user.home");
 		String fileName = profNo+"-"+subjName;
-		String filePath = "d:\\"+fileName+".xls";
+		String filePath = home+"/Downloads/"+fileName+".xlsx";
 		
 		
 		//excel 파일 틀 설
@@ -353,14 +351,14 @@ public class LectureController {
        try {
     	   //xlsWb = (SXSSFWorkbook)model.get("workbook");
            
-    	   os = new FileOutputStream(filePath);
-    	   //os = response.getOutputStream();
+    	   //os = new FileOutputStream(fileName+".xlsx");
+    	   os = response.getOutputStream();
            
            
            // 파일생성
            //workbook.write(os);
            xlsWb.write(os);
-           os.flush();
+         //  os.flush();
        }catch (Exception e) {
            e.printStackTrace();
        } finally {
@@ -794,9 +792,10 @@ public class LectureController {
 		return "lecture/profSubjEval";
 	}
 	
-	@RequestMapping("/lecture/evalContent")
-	@ResponseBody
-	public String evalContent(@RequestParam String subCode, Model model) {
+	@RequestMapping("/lecture/evalContents")
+	public String evalContent(@RequestParam String subCode, @RequestParam String subjName,
+			Model model) {
+		logger.info("subCode={}",subCode);
 		List<Subj_evalVO> list = subEvalService.selectEvalBysubCode(subCode);
 		List<String> contentsList = new ArrayList<String>();
 		String contents="";

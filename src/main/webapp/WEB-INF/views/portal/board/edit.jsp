@@ -34,6 +34,10 @@
     font-weight: bold;
     text-shadow: 0px 0px 4px #f2f2f2;
 }
+div#isPrivate {
+    margin: 8px 12px;
+    display: inline-block;
+}
 </style>
 <script type="text/javascript">
 	var count = 1+${fn:length(postVo.fileList) };
@@ -46,24 +50,26 @@
 			$("#fileList .firstFile").show();
 		}
 		$("#delFile").click(function() {
-			var fileName = $(this).find(".fileName").val();
-			var no = $(this).find(".no").val();
-			var parent = $(this).parent();
-			$.ajax({
-				url : "<c:url value='/portal/board/ajax/delFile'/>",
-				data : {fileName : fileName, no : no },
-				success : function(res) {
-					if(res == 'true'){
-						parent.remove();
-						count = count - 1;
-						if(count > maxCount){
-							$("#fileList .firstFile").hide();
-						}else{
-							$("#fileList .firstFile").show();
+			if(confirm("첨부파일을 삭제하시겠습니까?\r\n수정을 안하셔도 즉시 '영구삭제'처리 됩니다.")){
+				var fileName = $(this).find(".fileName").val();
+				var no = $(this).find(".no").val();
+				var parent = $(this).parent();
+				$.ajax({
+					url : "<c:url value='/portal/board/ajax/delFile'/>",
+					data : {fileName : fileName, no : no },
+					success : function(res) {
+						if(res == 'true'){
+							parent.remove();
+							count = count - 1;
+							if(count > maxCount){
+								$("#fileList .firstFile").hide();
+							}else{
+								$("#fileList .firstFile").show();
+							}
 						}
 					}
-				}
-			});
+				});
+			}
 			//$(this).parent().remove();
 		});
 		
@@ -164,6 +170,13 @@
 			<div class="row1">
 				<div class="col-25">
 					<label for="l_title" class="formTitle">제목</label>
+					<c:if test="${vo.isPrivate == 'Y' }">
+						<div id="isPrivate"><input type="checkbox" id="private" name="isPrivate"
+						<c:if test="${postVo.postsVo.isPrivate == 'Y' }">
+						 checked="checked"
+						</c:if>
+						><label for="private">비밀글</label></div>
+					</c:if>
 				</div>
 				<div class="col-75">
 					<input type="text" id="title" name="title" value="${postVo.postsVo.title }">

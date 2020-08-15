@@ -8,12 +8,9 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style type="text/css">
 #uploadForm{
-  position: relative;
   top: 50%;
-  left: 50%;
-  margin-left: -265px;
-  width: 445px;
-  height: 200px;
+  width: 72%;
+  height: 230px;
   border: 4px dashed gray;
 }
 form p{
@@ -34,18 +31,18 @@ form input{
   opacity: 0;
 }
 #btUpload{
-  position: relative;
-  margin: 0;
+  clear:both;
+  margin-top: -50px;
   color: #fff;
   background: #16a085;
   border: none;
-  width: 445px;
+  width: 100%;
   height: 35px;
-  margin-left: -4px;
   border-radius: 4px;
   border-bottom: 4px solid #117A60;
   transition: all .2s ease;
   outline: none;
+  margin-bottom: 500px;
 }
 #btUpload:hover{
   background: #149174;
@@ -57,10 +54,7 @@ form input{
 
 #info{
 	position: relative;
-	top: 26%;
-	left: 28%;
-	width: 500px;
-	padding-right: 20%;
+	width: 100%;
 }
 div#assign {
     border-bottom: 1px solid gray;
@@ -69,15 +63,53 @@ div#assign {
 }
 
 </style>
-
+<script src="<c:url value='/resources/js/jquery.MultiFile.min.js'/>" type="text/javascript"> </script>
 <script type="text/javascript">
 	$(function(){
 		$('#assign').hide();
+		$('#info').hide();
 		$('#subjCode').change(function(){
 			if($('#subjCode option:selected').val()!='all'){
 				$('#assign').show();
+				
+				$.ajax({
+					url:"<c:url value='/assignment/getAssignment'/>",
+					type:"post",
+					data:{
+						openSubCode:$('#subjCode option:selected').val()
+					},
+					dataType:"json",
+					success:function(res){
+						var str = "";
+						var len = res.length;
+						if(len>0){
+							str+="<option value='all'>과목을 선택해 주세요</option>";
+							$.each(res, function(idx, item){
+								str+="<option value='"+item.assignNo+"'>"+item.assignName+"</option>";
+								$('#assign').show();
+							});
+						}else{
+							str+="<option value='all'>등록된 과제가 없습니다.</option>";
+							$('#info').hide();
+							$('#assign').show();
+							
+						}
+						$('#assignment').html(str);
+						
+						$('#assignment').change(function(){
+							if($('#assignment option:selected').val()!='all'){
+								$('#info').show();
+							}else{
+								$('#info').hide();
+							}
+						});
+					}
+					
+				});
+				
 			}else{
 				$('#assign').hide();
+				$('#info').hide();
 			}
 		});
 		
@@ -157,9 +189,9 @@ div#assign {
                 // 파일 사이즈(단위 :MB)
                 var fileSize = files[i].size/1024/1024;
                 
-                if($.inArray(ext, ['pdf']) != 0){
+                if($.inArray(ext, ['docx','doc']) != 0){
                     // 확장자 체크
-                    alert("pdf만 등록 가능합니다.");
+                    alert("워드파일(doc, docx)만 등록 가능합니다.");
                     break;
                 }else if(fileSize > uploadSize){
                     // 파일 사이즈 체크
@@ -191,7 +223,7 @@ div#assign {
     function addFileList(fIndex, fileName, fileSize){
         var html = "";
         html += "<tr id='fileTr_" + fIndex + "'>";
-        html += "    <td class='left' >";
+        html += "    <td class='left1' >";
         html +=         fileName + " / " + fileSize + "KB "  + "<a href='#' onclick='deleteFile(" + fIndex + "); return false;' class='btn small bg_02'><img style='width:17px; height:auto;' src='<c:url value='/resources/images/deleteIcon.png'/>'></a>"
         html += "    </td>"
         html += "</tr>"
@@ -218,19 +250,7 @@ div#assign {
     function uploadFile(){
         // 등록할 파일 리스트
         var uploadFileList = Object.keys(fileList);
-		
-        // 이론시간 등록되었는지 체크
-		if($('#theoryTime').val().length < 1){
-        	alert('이론시간을 입력해야 합니다.');
-        	return;
-        }
-
-        // 실기시간 등록되었는지 체크
-		if($('#trainingTime').val().length < 1){
-        	alert('실기시간을 입력해야 합니다.');
-        	return;
-        }
-        
+	        
         // 파일이 있는지 체크
         if(uploadFileList.length == 0){
             // 파일등록 경고창
@@ -253,12 +273,10 @@ div#assign {
             for(var i = 0; i < uploadFileList.length; i++){
                 formData.append('files', fileList[uploadFileList[i]]);
             }
-            formData.append('openSubCode', $('#openSubj').val());
-            formData.append('theoryTime', $('#theoryTime').val());
-            formData.append('trainingTime', $('#trainingTime').val());
-            
+            console.log(formData);
+            formData.append('assignNo', $('#assignment option:selected').val());
             $.ajax({
-                url:"<c:url value='/syllabus/upload'/>",
+                url:"<c:url value='/assignment/assignUpload'/>",
                 data:formData,
                 type:'POST',
                 enctype:'multipart/form-data',
@@ -270,8 +288,6 @@ div#assign {
                         location.reload();
                         
                 
-                },error(xhr, status, error){
-                	alert(error);
                 }
             });
         }
@@ -305,11 +321,11 @@ div#assign {
 <div id="assign">
 	<h4>과제를 선택하세요</h4>
 	<select class="form-control" id="assignment" style="width: 72%;">
-		<c:if test="${!empty list }">
+		<%-- <c:if test="${!empty list }">
 			<c:forEach var="map" items="${list }">
 				<option value="${map['SUB_CODE']}">${map['SUBJ_NAME']}</option>
 			</c:forEach>
-		</c:if>
+		</c:if> --%>
 	</select>
 </div>
 
@@ -320,11 +336,11 @@ div#assign {
   			
     	
     	
-        <table class="table" width="100%" border="1px">
+        <table class="table" width="100%" border="1px" style="!important">
             <tbody id="fileTableTbody">
                
             </tbody>
-        </table>
+        </table><br>
         <button onclick="uploadFile(); return false;" class="btn bg_01" id="btUpload">파일 업로드</button>
     </form>
 </div>

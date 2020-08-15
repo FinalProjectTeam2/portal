@@ -140,10 +140,7 @@ $(function () {
 				<span id="address1"></span><span id="address2"></span><span id="zipcode"></span> 
 				<a href="<c:url value='/board_disclosure/privacy1'/>" id="policy">개인정보처리방침</a>
 			
-				<ul>
-					<li><a href="#" class="email">이메일무단수집거부</a></li>
-					<li><a href="<c:url value='/board_disclosure/disclosureInformation' />">척척학사공시정보</a></li>
-				</ul>
+				
 			</div>
 			<div class="foot_copyright">Copyright(c) <span id="companyName"></span> <span id="startYear"></span> All rights reserved.</div>
 		</div>
