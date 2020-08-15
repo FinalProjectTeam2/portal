@@ -72,8 +72,6 @@
 </script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-
-
 		<div id="adminMngMem">
 			<h2>학부 관리</h2>
 			<form name="frmList" method="post" action="<c:url value='/admin'/>">
@@ -111,14 +109,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="i" begin="0" end="${fn:length(flist)-1}"
+								<tr class="align_center">
+									<td rowspan="${flist[0]['DEP_COUNT'] }" class="colNone">${flist[0]['FACULTY_NAME'] }</td>
+									<td style="border-left: 1px solid #e5e5e5">${flist[0]['DEP_NAME'] }</td>
+									<td>${flist[0]['TEL'] }</td>
+									<td>${flist[0]['BUILDING_NAME'] }</td>
+									<td><a href="#">수정</a></td>
+									<td class="colNone"><a href="#">조회</a></td>
+								</tr>
+								<c:forEach var="i" begin="1" end="${fn:length(flist)-1}"
 									step="1">
 									<tr class="align_center">
-										<c:if test="${i ==0 }">
-											<td rowspan="${flist[i]['DEP_COUNT'] }" class="colNone">${flist[i]['FACULTY_NAME'] }</td>
-										</c:if>
 										<c:if
-											test="${i!=0 && (flist[i]['FACULTY_NO']!=flist[i-1]['FACULTY_NO'])}">
+											test="${flist[i]['FACULTY_NO']!=flist[i-1]['FACULTY_NO']}">
 											<td rowspan="${flist[i]['DEP_COUNT'] }" class="colNone">${flist[i]['FACULTY_NAME'] }</td>
 										</c:if>
 										<td style="border-left: 1px solid #e5e5e5">${flist[i]['DEP_NAME'] }</td>
