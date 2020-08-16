@@ -88,6 +88,11 @@
 		$('#cancel1').click(function(){
 			location.href="/portal/admin/member/memberEdit?officialNo="+$('#stuNo').val();
 		});
+		$("#cateIn").click(function() {
+			var win = window.open("<c:url value='/admin/board/cateIn?type=in'/>", "_blank",
+			"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=560,height=390");
+			return false;
+		});
 	});
 </script>
 <main role="main" class="flex-shrink-0">
@@ -150,9 +155,9 @@
 										<td>${flist[i]['TEL'] }</td>
 										<td>${flist[i]['BUILDING_NAME'] }</td>
 										<td><a href="#">수정</a></td>
-										<td class="colNone"><a href="#">조회</a></td>
+										<td class="colNone"><a href="/portal/admin/member/adminFacultySelectStudent?facultyNo=${flist[i]['FACULTY_NO']}&major=${flist[i]['DEP_NO']}">조회</a></td>
 									</tr>
-								</c:forEach>
+								</c:forEach>  
 							</tbody>
 						</table>
 					</div>
