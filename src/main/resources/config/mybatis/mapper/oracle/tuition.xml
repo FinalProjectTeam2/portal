@@ -18,6 +18,25 @@
 		where stu_no=#{officicalNo}
 	</select>
 
+	<select id="selectByNo" parameterType="int" resultType="TuitionDetailVO">
+		select * from tuitionD_view 
+		where no=#{no} 
+	</select>
 
+	<insert id="insertTuition" parameterType="TuitionDetailVO">
+		insert into tuitionD_view(stuNo, admissionfee, tuition, practicecost, studentfee, scholarship, reduction, total)  
+		values(#{stuNo}, #{admissionfee}, #{tuition}, #{practicecost}, #{studentfee}, #{scholarship}, #{reduction}, #{total})
+	</insert>
+
+	<update id="updateTuition" parameterType="TuitionDetailVO">
+		update tuitionD_view
+		set #{stuNo}, #{admissionfee}, #{tuition}, #{practicecost}, #{studentfee}, #{scholarship}, #{reduction}, #{total}
+		where stu_no=#{officicalNo}
+	</update>
+	
+	<delete id="deleteTuition" parameterType="String">
+		delete from tuitionD_view
+		where stu_no=#{officicalNo}
+	</delete>
 
 </mapper>

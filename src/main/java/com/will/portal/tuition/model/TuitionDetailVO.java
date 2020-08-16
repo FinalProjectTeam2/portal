@@ -6,6 +6,7 @@ import lombok.ToString;
 
 @Getter @Setter @ToString
 public class TuitionDetailVO {
+	private int no; // 번호
 	private String stuNo; // 학번
 	private int admissionfee; // 입학금
 	private int tuition; // 등록금

@@ -1,7 +1,6 @@
 package com.will.portal.tuition.model;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,26 @@ public class TuitionDAOMybatis implements TuitionDAO {
 	@Override
 	public List<TuitionDetailVO> selectTuitionDView(String officicalNo) {
 		return sqlSession.selectList(namespace+"selectTuitionDView", officicalNo);
+	}
+
+	@Override
+	public int insertTuition(TuitionDetailVO dVo) {
+		return sqlSession.insert(namespace+"insertTuition", dVo);
+	}
+
+	@Override
+	public int updateTuition(TuitionDetailVO dVo) {
+		return sqlSession.update(namespace+"updateTuition", dVo);
+	}
+
+	@Override
+	public int deleteTuition(String officicalNo) {
+		return sqlSession.delete(namespace+"deleteTuition", officicalNo);
+	}
+
+	@Override
+	public int selectByNo(int no) {
+		return sqlSession.selectOne(namespace+"selectByNo", no);
 	}
 
 
