@@ -87,6 +87,10 @@ a.btn.btn-primary {
 input#savenote {
     margin: 0;
 }
+#addrList{
+	margin: 0 0 3px 0;
+    padding: 0 5px;
+}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -108,6 +112,12 @@ input#savenote {
 					alert(e);
 				}
 			});
+		});
+		
+		$("#addrList").click(function() {
+			var win = window.open("<c:url value='/message/addrList'/>", "_blank",
+			"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=500,height=390");
+			return false;
 		});
 		
 		$("#writeNote").keyup(function() {
@@ -152,7 +162,7 @@ input#savenote {
 					<span class="tx">
 						<input type="text" id="officialNo" value="" style="ime-mode: disabled;">
 					</span>
-					<button class="btn btn-secondary">주소록</button>
+					<button id="addrList" class="btn btn-secondary">주소록</button>
 				</span>
 				</div>
 				<div class="writing_area">

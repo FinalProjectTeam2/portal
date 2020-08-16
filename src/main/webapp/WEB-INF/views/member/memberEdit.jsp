@@ -247,6 +247,35 @@ li:focus {
 a:focus {
 	background-color: #ffffff00;
 }
+.toast {
+    border-radius: 0;
+    top: 60px;
+    width: 260px;
+    margin-top: 0;
+    position: fixed;
+    max-width: 350px;
+    height: auto;
+    min-height: 48px;
+    line-height: 1em;
+    background-color: white;
+    padding: 0;
+    font-size: 0.8em;
+    font-weight: 100;
+    color: white;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    cursor: default;
+}
 </style>
 <main role="main" class="flex-shrink-0">
 	<div class="container">

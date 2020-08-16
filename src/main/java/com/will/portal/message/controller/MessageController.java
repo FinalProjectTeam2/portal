@@ -193,4 +193,9 @@ public class MessageController {
 		log.info("쪽지 보관 결과, cnt={}",cnt);
 		return cnt+"";
 	}
+	
+	@RequestMapping("/addrList")
+	public void addrList() {
+		log.info("주소록 검색");
+	}
 }
