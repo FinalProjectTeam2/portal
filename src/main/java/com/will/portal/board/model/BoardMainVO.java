@@ -12,5 +12,7 @@ import lombok.ToString;
 public class BoardMainVO {
 	private String bdCode;
 	private String bdName;
+	private String usage;
+	private String isPrivate;
 	private List<PostsVO> postsList;
 }

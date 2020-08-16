@@ -59,6 +59,9 @@
 			<result column="avgQ7" jdbcType="NUMERIC" property="avgQ7" />
 			<result column="avgQ8" jdbcType="NUMERIC" property="avgQ8" />
 		</association>
+		<collection property="subjList" column="SUB_CODE"
+			javaType="ArrayList" ofType="Subj_evalVO" select="selectEvalBysubCode">
+		</collection>
 	</resultMap>
 	
 	<select id="selectsubCodeByProfNo" parameterType="String" resultMap="selectBySubCodeResultMap">

@@ -33,6 +33,10 @@ public class TestController {
 		return "test/adminRegisterMember";
 	}
 	
+	@RequestMapping("/zoomTest")
+	public void zoomTest() {
+		
+	}
 	
 
 }

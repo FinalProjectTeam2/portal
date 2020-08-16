@@ -3,7 +3,7 @@
 	
 <%@ include file="../inc/top.jsp"%>
 <!-- sidebar -->
-<%@ include file="../inc/mainSidebar.jsp"%>
+<%@ include file="../inc/portalSidebar.jsp"%>
 <link href="<c:url value='/resources/css/searchTel.css'/>"
 	rel="stylesheet">
 <script type="text/javascript">	

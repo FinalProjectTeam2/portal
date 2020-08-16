@@ -45,19 +45,14 @@
 	padding: 12px;
 }
 #timeTableDiv .lectureName{
-	background-color: #01539d;
-	padding-top: 7px;
-    padding-bottom: 7px;
-    padding-left: 17px;
-    padding-right: 17px;
-    border-radius: 5px;
     margin-top: 10px;
-    font-size: 16px;
-    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    color: #004c90;
 }
 
 #timeTableDiv .profName{
-    margin-top: 10px;
+    margin-top: 5px;
     font-size: 14px;
     display: inline-block;	
 }
@@ -84,7 +79,7 @@
 	background-color: #a900ff2b;/* #ffbf00c7 */
 }
 #timeTableDiv #pop{
-	background-color : #fff6e6;
+	background-color : #fdfcf9;
 	position:absolute; 
 	left:100px; 
 	top:100px; 
@@ -107,8 +102,7 @@
 }
 
 #pop .lab{
-	width: 35%;
-	float: left;
+
 }
 #timeTableDiv .hidden{
 	display: none;
@@ -125,6 +119,12 @@
 			success:function(res){
 				$.each(res, function(idx, item){
 					var subjName=item.subjName;
+					var shortsbjName;
+					if(subjName.length > 10){
+						shortsbjName=subjName.substr(0,9) + "...";
+					}else{
+						shortsbjName=item.subjName;
+					}
 					var subjCode=item.subjCode;
 					var profName=item.profName;
 					var explanation=item.explanation;
@@ -136,23 +136,20 @@
 					console.log(item.timetableCode);
 					console.log(tdId);
 					var content= "<a class='lectureInLink'>"+
-                				"<div class='lectureIn'>"+
-                        		"<span class='lectureName'>"+subjName+"</span><br>"+
-                        		"<span class='profName'>"+profName+"</span>"+
+                				"<div class='lectureIn'>"+"<input type='hidden' id='idSubjName' value='"+subjName +"'>"+
+                        		"<span class='lectureName'>"+shortsbjName+"</span><br>"+
+                        		"<span class='profName'>"+profName+" 교수님</span>"+
                         		"<input type='hidden' class='credit' value='"+credit+"'/>"+
                         		"<input type='hidden' class='classroom' value='"+classroomName +"'/>"+
                         		"<input type='hidden' class='explanation' value='"+explanation +"'/>"+
                         		"<input type='hidden' class='subjCode' value='"+subjCode +"'/>"+
                 				"</div>"+
                 				"</a>";
-					
-					
 					$(tdId).html(content);
-					
 				});
 				/* <td class="input" id="WE3"></td> */
 				$('.lectureInLink').click(function() {
-					$('#pop div:eq(0) .popSubjName').html($(this).children().children('span:eq(0)').html());
+					$('#pop div:eq(0) .popSubjName').html($(this).find('#idSubjName').val());
 					$('#pop div:eq(1) .popCredit').html($(this).children().children('input:eq(0)').val()+'학점');
 					$('#pop div:eq(2) .popProfName').html($(this).children().children('span:eq(1)').html());
 					$('#pop div:eq(3) .popClassroom').html($(this).children().children('input:eq(1)').val());
@@ -321,7 +318,7 @@
                     </table>
             </div>
 			<div id="pop" class="pop">
-					<fieldset style="border: 2px solid #01539d; padding: 15px;">
+					<fieldset style="border: 2px solid #01539d; padding: 15px; color: #212121;">
 					<legend style="width: 32%; font-weight: bold;">강의 정보</legend>
 					<div>
 						<label class="lab">강의명 : </label>
@@ -353,8 +350,8 @@
 						<span class="popExplanation"></span>
 					</div>
 					</fieldset>
-					<div style="text-align: center; margin-top: 13px;">
-						<button type="button" id="evalBt" class="btn btn-success">강의평가</button>
+					<div style="text-align: center; margin-top: 5px;">
+						<button type="button" id="evalBt" class="btn btn-outline-primary">강의평가</button>
 						<input type="hidden" class="subjectCode" value="">
 					</div>
 				

@@ -57,21 +57,34 @@ a.more {
 				console.log(res);
 				for(var i  =0; i < res.length ; i++){
 					var bdCode = res[i].bdCode; 
-					var bdName = res[i].bdName; 
-					var postsList = res[i].postsList; 
+					var bdName = res[i].bdName;
+					var usage = res[i].usage;
+					var isPrivate = res[i].isPrivate;
+					
+		 			if(usage=='N' || isPrivate =='Y'){
+						continue;
+					}
+					
+					 var postsList = res[i].postsList; 
 					var boxByBdcode = '<div class="indexDOM_large"><p class="title">'+bdName +'</p>'
 									+ '<ul class="list-group list-group-flush" id="writingsList">';
+									
 					console.log("bdCode : " + bdCode +", postsList.length : " +postsList.length);
 					for(var j  =0; j < postsList.length ; j++){
 						var PostsVO = postsList[j];
 						var title= PostsVO.title;
+						var postIsPrivate = PostsVO.isPrivate;
+						console.log(postIsPrivate);
+ 				 		if(postIsPrivate=='Y'){
+							continue;
+						}  
 						console.log(title);
 						boxByBdcode += '<li class="list-group-item"><a href=\'<c:url value=""/>/portal/portal/board/detail?postNo='+PostsVO.postNo+'\'>'+ title +'</a></li>';
 					}
 					
 					boxByBdcode+='</ul><a href=\'<c:url value=""/>/portal/portal/board/list?ctCode='+categoryCode +'&bdCode='+ bdCode +'\' class="more"></a></div>';
-					$('.more').html(img);
 					$('#box').append(boxByBdcode);
+					$('.more').html(img);
 				}
 			},
 			error:function(xhr,status,error){

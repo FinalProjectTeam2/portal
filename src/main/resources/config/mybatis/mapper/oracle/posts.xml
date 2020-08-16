@@ -182,13 +182,19 @@
 		<association property="bdName" javaType="string" column="bd_code">
 			<result column="bd_name" jdbcType="VARCHAR" property="bdName" />
 		</association>
+		<association property="usage" javaType="string" column="bd_code">
+			<result column="usage" jdbcType="VARCHAR" property="usage" />
+		</association>
+		<association property="isPrivate" javaType="string" column="bd_code">
+			<result column="is_private" jdbcType="VARCHAR" property="isPrivate" />
+		</association>
 		<collection property="postsList" column="bd_code"
 			javaType="ArrayList" ofType="PostsVO" select="selectByBdcode">
 		</collection>
 	</resultMap>
 	
 	<select id="selectBdcodeBycategory" resultMap="selectByBdcodeResultMap" parameterType="String">
-		select bd_code, bd_name from board where category_code = #{categoryCode}
+		select bd_code, bd_name,usage,is_private from board where category_code = #{categoryCode}
 	</select>
 	
 	<select id="selectPostsPrev" parameterType="postsVo" resultType="postsVo">
