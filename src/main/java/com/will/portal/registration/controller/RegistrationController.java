@@ -1,8 +1,12 @@
 package com.will.portal.registration.controller;
 
+import java.io.File;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.slf4j.Logger;
@@ -16,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.will.portal.common.FileUploadUtil;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.common.PaginationInfo;
 import com.will.portal.common.RegistrationSearchVO;
@@ -31,7 +37,8 @@ public class RegistrationController {
 	private static final Logger logger=LoggerFactory.getLogger(RegistrationController.class);
 	@Autowired
 	private RegistrationService registServ;
-	
+	@Autowired 
+	private FileUploadUtil fileUploadUtil;
 	
 	@RequestMapping(value = "/registration/main", method = RequestMethod.GET)
 	public String register_get(@RequestParam(defaultValue = "0") int facultyNo, Model model) {
@@ -216,7 +223,26 @@ public class RegistrationController {
 		return result;
 	}
 	
-	
+	@RequestMapping("/registration/download")
+	public ModelAndView download(@RequestParam String originalFileName,	@RequestParam String fileName, HttpServletRequest request, Model model) {
+		// 1.
+		logger.info("다운로드 파라미터 originalFileName={}, fileName={}", originalFileName, fileName);
+		// 2.
+
+		// 다운로드 처리를 위한 페이지로 넘겨준다
+		String upPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDF);
+		File file = new File(upPath, fileName);
+
+		// 3.
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("file", file);
+
+		// 4.
+		// model에 map 넣기
+		ModelAndView mav = new ModelAndView("reBoardDownloadView", map);
+		return mav;
+	}
 	
 	
 }

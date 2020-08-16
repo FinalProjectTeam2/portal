@@ -1,6 +1,8 @@
 package com.will.portal.assignment.controller;
 
+import java.io.File;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.will.portal.assignment.model.AssignmentService;
 import com.will.portal.assignment.model.AssignmentVO;
 import com.will.portal.assignment.model.Distribute_assignVO;
 import com.will.portal.common.FileUploadUtil;
 import com.will.portal.common.MemberDetails;
-import com.will.portal.evaluation.model.EvaluationAllVO;
 import com.will.portal.evaluation.model.EvaluationService;
 import com.will.portal.files.model.FilesService;
 
@@ -157,6 +157,66 @@ public class AssignmentController {
 		
 		List<Map<String, Object>> list=assignServ.assignStuList(vo);
 		logger.info("list.size={}", list.size());
+		return list;
+	}
+	
+	@RequestMapping(value = "/inputDistAssign", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<Distribute_assignVO> inputDistAssign(@RequestParam String openSubCode, @RequestParam String assignName) {
+		logger.info("과제등록 버튼 누른 후 파라미터 openSubCode={}, assignName={}", openSubCode, assignName);
+		Distribute_assignVO vo = new Distribute_assignVO();
+		vo.setAssignName(assignName);
+		vo.setOpenSubCode(openSubCode);
+		
+		int cnt = assignServ.inputAssign(vo);
+		
+		List<Distribute_assignVO> list = null;
+		if(cnt > 0 ) {
+			list=assignServ.getDistAssign(openSubCode);
+		}
+		
+		return list;
+	}
+	
+	@RequestMapping("/download")
+	public ModelAndView download(@RequestParam int assignNo, @RequestParam String originalFileName, 
+			@RequestParam String fileName, HttpServletRequest request, Model model) {
+		// 1.
+		logger.info("다운로드 파라미터 assignNo={}, fileName={}", assignNo, fileName);
+		logger.info("다운로드 파라미터 originalFileName={}", originalFileName);
+		// 2.
+
+		// 다운로드 처리를 위한 페이지로 넘겨준다
+		String upPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_DOC);
+		File file = new File(upPath, fileName);
+
+		// 3.
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("file", file);
+
+		// 4.
+		// model에 map 넣기
+		ModelAndView mav = new ModelAndView("reBoardDownloadView", map);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/delAssign", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<Distribute_assignVO> delAssign(@RequestParam int assignNo, @RequestParam String assignName,
+			@RequestParam String openSubCode) {
+		logger.info("과제등록 버튼 누른 후 파라미터 openSubCode={}, assignName={}", assignNo, assignName);
+		Distribute_assignVO vo = new Distribute_assignVO();
+		vo.setAssignName(assignName);
+		vo.setAssignNo(assignNo);
+		
+		int cnt = assignServ.delAssign(vo);
+		
+		List<Distribute_assignVO> list = null;
+		if(cnt > 0 ) {
+			list=assignServ.getDistAssign(openSubCode);
+		}
+	
 		return list;
 	}
 	
