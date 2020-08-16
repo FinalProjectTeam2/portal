@@ -5,7 +5,6 @@
 <!-- sidebar -->
 <%@ include file="inc/mainSidebar.jsp"%>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="<c:url value='/resources/js/cloud-zoom.css' />">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- main 시작 -->
 <script type="text/javascript">
@@ -14,6 +13,7 @@ $('#tabs').tabs(); // 탭
 });
 </script>
 
+<link rel="stylesheet" href="<c:url value='/resources/js/cloud-zoom.css' />">
 <script type="text/javascript" src="<c:url value='/resources/js/cloud-zoom.1.0.2.min.js' />"></script>
 <style>
 
