@@ -31,5 +31,9 @@ public interface ProfessorDAO {
 	int deleteProfessor(String profNo);
 	
 	List<PhoneBookVO> phoneBook(String subCode);
+	
+	int updateProfessor(ProfessorVO profVo);
+	
+	
 
 }
