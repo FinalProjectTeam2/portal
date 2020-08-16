@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -48,163 +48,170 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/board/write2.css'/>" />
 <style type="text/css">
-#adminBd{
-	width: 560px;
+body {
+	padding-top: 20px;
 }
+
+#adminBd {
+	width: 500px;
+}
+
 #boardFrm .col-75 {
-    float: left;
-    width: 80%;
+	float: left;
+	width: 80%;
 }
+
 #boardFrm .row1 {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
+
 #boardFrm .col-25 {
-    width: 20%;
+	width: 20%;
 }
-#chDup{
-	height: 50px;
-}
+
 .bts {
-    margin-bottom: 0;
+	margin-bottom: 25px;
+}
+
+button#cancel {
+	float: right;
+	margin: 0 2% 0 0;
+}
+
+button#write {
+	margin: 0 0 0 2%;
+}
+
+.telInp {
+	width: 25% !important;
+}
+
+span.telSlash {
+	font-size: 2em;
+	margin: 10px;
+	vertical-align: top;
 }
 </style>
 <script>
-$(function() {
-	var pattern_eng = /[a-zA-Z]/;
-	$("#boardFrm").submit(function() {
-		if($("#isDup").val() != 'Y'){
-			alert("중복확인을 해야 합니다.");
-			return false;
-		}
-		var formData = $("#boardFrm").serialize();
-		if('${type}' == 'in'){
+	$(function() {
+
+		$("#boardFrm").submit(function() {
+			/*유효성  */
+			var formData = $("#boardFrm").serialize();
 			$.ajax({
-				url : "<c:url value='/admin/board/insertCate'/>",
+				url : "/portal/admin/faculty/adminEditFacultyAjax",
 				data : formData,
 				type : "get",
 				success : function(res) {
-					if(res == 'Y'){
-						alert("등록 성공!");
-						self.close();
-						opener.location.reload();
-					}else{
-						alert("등록 실패!");
-					}
-				}
-			});
-		}else{
-			$.ajax({
-				url : "<c:url value='/admin/board/editCate'/>",
-				data : formData,
-				type : "get",
-				success : function(res) {
-					if(res == 'Y'){
+					if (res) {
 						alert("수정 성공!");
 						self.close();
 						opener.location.reload();
-					}else{
+					} else {
 						alert("수정 실패!");
 					}
 				}
 			});
-		}
-		return false;
-	});
-	
-	$("#list").click(function() {
-		self.close();
-	});
-	$("#chDup").click(function() {
-		var code = $("#title").val();
-		if(code.length <1){
-			alert("카테고리 코드를 입력해주세요");
-			return false;
-		}
-		if(!pattern_eng.test(code)){
-			alert("영문만 가능합니다.");
-			return false;
-		}
-		$.ajax({
-			url : "<c:url value='/admin/board/checkCateCode'/>",
-			data : {
-				code : code
-			},
-			type : "get",
-			success : function(res) {
-				if(res == 'Y'){
-					alert("사용 가능한 코드입니다.");
-					$("#isDup").val('Y');
-					$("#title").attr("readonly","readonly");
-					$("#chDup").attr("disabled","disabled");
-				}else{
-					alert("이미 사용 중인 코드입니다.");
-				}
-			}
+
+		});
+		$("#cancel").click(function() {
+			self.close();
 		});
 	});
-	
-	if('${type}' == 'edit'){
-		$("#title").attr("readonly","readonly").val('${vo.categoryCode}');
-		$("#chDup").attr("disabled","disabled");
-		$("#categoryName").val('${vo.categoryName}');
-		$("#isDup").val('Y');
-		$("#usage").val('${vo.usage}');
-	}
-});
 </script>
 </head>
 <body>
 	<div id="adminBd">
-	<form action="" class="writeFrm" id="boardFrm" method="post">
+		<form action="" class="writeFrm" id="boardFrm" method="post">
 			<input type="hidden" id="isDup" value="N">
 			<div class="row1">
 				<div class="col-75">
-					<label for="title" class="formTitle">카테고리 코드</label>
-					<label style="color: red; font-size: 0.9em; padding-top: 7px; font-weight: bold">(대소문자 구분X)</label>
+					<label for="faculty" class="formTitle" style="color: #01539d">
+						${map['DEP_NAME']}</label><label class="formTitle">&nbsp; 학과수정</label>
 				</div>
 			</div>
 			<div class="row1">
 				<div class="col-75">
-					<input type="text" id="title" name="categoryCode" required="required">
-				</div>
-				<div class="col-25">
-					<button type="button" class="btn btn-primary" id="chDup">중복확인</button>
+					<label for="faculty" class="formTitle">소속 학부</label>
 				</div>
 			</div>
 			<div class="row1">
 				<div class="col-75">
-					<label for="title" class="formTitle">카테고리 명</label>
+					<select name="facultyNo" id="faculty">
+						<option value="">선택</option>
+						<c:forEach var="facVo" items="${facultyList }">
+							<option value="${facVo.facultyNo }"
+								<c:if test="${map['FACULTY_NO']==facVo.facultyNo}">
+							 selected="selected"
+							</c:if>>${facVo.facultyName }</option>
+						</c:forEach>
+					</select>
+					<input type="hidden" value="${map['DEP_NO']}" name="depNo">
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-75">
+					<label for="depName" class="formTitle">학과 이름</label>
 				</div>
 			</div>
 			<div class="row1">
 				<div class="">
-					<input type="text" id="categoryName" name="categoryName" required="required">
+					<input type="text" id="depName" name="depName"
+						value="${map['DEP_NAME']}">
 				</div>
 			</div>
 			<div class="row1">
-				<div class="col-25">
-					<label for="l_category"  class="formTitle">사용 여부</label>
-				</div>
 				<div class="col-75">
-					<select id="usage" name="usage">
-						<option value="Y">YES</option>
-						<option value="N">NO</option>
+					<label for="totalCredit" class="formTitle">총 학점</label>
+				</div>
+			</div>
+			<div class="row1">
+				<div class="">
+					<input type="text" id="totalCredit" name="totalCredit"
+						value="${map['TOTAL_CREDIT']}" placeholder="숫자만 입력해주세요">
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-75">
+					<label for="tel1" class="formTitle">전화번호</label>
+				</div>
+			</div>
+			<div class="row1">
+				<div class="">
+					<input type="text" id="tel1" name="tel1" class="telInp"
+						value="${fn:split(map['TEL'],'-')[0]}" placeholder="숫자만 입력">
+					<span class="telSlash">-</span><input type="text" id="tel2"
+						name="tel2" class="telInp" value="${fn:split(map['TEL'],'-')[1]}"
+						placeholder="숫자만 입력"> <span class="telSlash">-</span><input
+						type="text" id="tel3" name="tel3" class="telInp"
+						value="${fn:split(map['TEL'],'-')[2]}" placeholder="숫자만 입력">
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-75">
+					<label for="buildingCode" class="formTitle">건물</label>
+				</div>
+			</div>
+			<div class="row1">
+				<div class="col-75">
+					<select name="buildingCode" id="buildingCode">
+						<option value="">선택</option>
+						<c:forEach var="vo" items="${blist }">
+							<option value="${vo.buildingCode }"
+								<c:if test="${map['BUILDING_CODE']==vo.buildingCode}">
+							 selected="selected"
+							</c:if>>${vo.buildingCode}(${vo.buildingName})</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>
 			<div class="bts">
 				<button type="submit" class="btn btn-primary" id="write">
-					<c:if test="${type == 'in' }">
-					등록
-					</c:if>
-					<c:if test="${type == 'edit' }">
-					수정
-					</c:if>
-				</button>
-				<button type="button" class="btn btn-primary" id="list">닫기</button>
+					저장</button>
+				<button type="button" class="btn btn-primary" id="cancel">닫기</button>
 			</div>
 		</form>
 	</div>
-</body>	
+</body>
 </html>

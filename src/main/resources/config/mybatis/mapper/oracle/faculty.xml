@@ -9,6 +9,10 @@
 	<select id="selectFacultyView" resultType="map">
 	select * from faculty_view order by faculty_no
 	</select>
+	<select id="selectFacultyViewBydepNo" parameterType="int" resultType="map">
+	select * from faculty_view
+	where dep_no=#{depNo}
+	</select>
 </mapper>
 
 

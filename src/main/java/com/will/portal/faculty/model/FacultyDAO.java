@@ -6,4 +6,5 @@ import java.util.Map;
 public interface FacultyDAO {
 	public List<FacultyVO> selectFaculty();
 	List<Map<String,Object>> selectFacultyView();
+	Map<String,Object> selectFacultyViewBydepNo(int depNo);
 }

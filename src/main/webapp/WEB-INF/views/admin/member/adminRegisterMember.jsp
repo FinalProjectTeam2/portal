@@ -191,7 +191,7 @@
 									<div>
 										<label for="depNo">학과</label> <select name="depNo"
 											id="department">
-											<option value="">선택</option>
+											<option value="">학부를 선택하세요</option>
 										</select>
 									</div>
 								</div>

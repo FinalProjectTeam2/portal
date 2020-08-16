@@ -32,5 +32,11 @@ public class DepartmentServiceImpl implements DepartmentService{
 	public int selectTotalRecord(SearchVO searchVo) {
 		return departmentDao.selectTotalRecord(searchVo);
 	}
+
+	@Override
+	public int updateDepartment(DepartmentVO departmentVo) {
+		return departmentDao.updateDepartment(departmentVo);
+	}
+	
 	
 }
