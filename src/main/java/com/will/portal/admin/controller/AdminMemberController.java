@@ -2,7 +2,9 @@ package com.will.portal.admin.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -285,7 +287,6 @@ public class AdminMemberController {
 		model.addAttribute("pagingInfo", pagingInfo);
 		model.addAttribute("state",state);
 	}
-
 	/**
 	 * 체크박스 조건 설정
 	 *
@@ -293,6 +294,8 @@ public class AdminMemberController {
 	 * @param slist
 	 * @param idx
 	 */
+	
+	
 	private void setState(StudentSearchVO studentSearchVo, String[] slist) {
 		int idx = slist.length;
 		studentSearchVo.setState1(slist[0]);
@@ -321,6 +324,27 @@ public class AdminMemberController {
 			return;
 	}
 
+	@RequestMapping("/adminFacultySelectStudent")
+	public String adminFacultySelectStudent(@RequestParam(defaultValue = "0") int facultyNo,
+			@RequestParam(defaultValue = "0") int major, Model model) {
+	
+		logger.info("adminFacultySelectStudent,{},{}",facultyNo,major);
+		StudentSearchVO studentSearchVo = new StudentSearchVO();
+		
+		studentSearchVo.setFacultyNo(facultyNo);
+		studentSearchVo.setMajor(major);
+		
+
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy");
+		Date time = new Date();
+		studentSearchVo.setEndNo(format1.format(time));
+		studentSearchVo.setStartNo("1990");
+		logger.info("major={},{}",major,studentSearchVo);
+		
+		adminManageStudent(studentSearchVo, null, model);
+		
+		return "admin/member/adminManageStudent";
+	}
 	/**
 	 * 회원관리 - 교수
 	 *

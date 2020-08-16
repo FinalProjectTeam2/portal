@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
-<%@ include file="../inc/mainSidebar.jsp"%>
+<%@ include file="../../inc/top.jsp"%>
+<%@ include file="../../inc/mainSidebar.jsp"%>
 <link href="<c:url value='/resources/css/admin/adminManageMember.css'/>"
 	rel="stylesheet">
 <style>
@@ -20,6 +20,13 @@
 .colNone {
 	border-left: none !important;
 	border-right: none !important;
+}
+#btEdit{
+    width: 50px;
+    height: 31px;
+    font-size: 1em;
+    padding: 0;
+    margin: -6px -16px 0 0;
 }
 </style>
 <script type="text/javascript">
@@ -68,12 +75,23 @@
 										"<option value=''>학부를 선택하세요</option>");
 							}
 						});
+		$('#btSearch').click(function(){
+			if($('select[name=major]').val() == 0){
+				alert("학과를 선택해 주세요");
+				event.preventDefault();
+			}else{
+				
+			location.href="/portal/admin/member/adminFacultySelectStudent?facultyNo="+$('#faculty').val()
+					+"&major="+$('#department').val();
+			}
+		});
+		$('#cancel1').click(function(){
+			location.href="/portal/admin/member/memberEdit?officialNo="+$('#stuNo').val();
+		});
 	});
 </script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
-
-
 		<div id="adminMngMem">
 			<h2>학부 관리</h2>
 			<form name="frmList" method="post" action="<c:url value='/admin'/>">
@@ -84,11 +102,13 @@
 						<c:forEach var="facVo" items="${facultyList }">
 							<option value="${facVo.facultyNo }">${facVo.facultyName }</option>
 						</c:forEach>
-					</select> <label for="depNo">학과</label> <select name="depNo" id="department">
+					</select> <label for="depNo">학과</label> <select name="major" id="department">
 						<option value="">학부를 선택하세요</option>
 					</select>
-					<button class="btCustom btn btn-primary btn-lg login-button"
-						id="btSearch">수정</button>
+					<button type="button" class="btCustom btn btn-primary btn-lg login-button"
+						id="btEdit">수정</button>
+					<button type="button" class="btCustom btn btn-primary btn-lg login-button"
+						id="btSearch">조회</button>
 					<div class="divList">
 						<table class="box2" summary="학과 목록">
 							<caption>학과 목록</caption>
@@ -111,14 +131,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="i" begin="0" end="${fn:length(flist)-1}"
+								<tr class="align_center">
+									<td rowspan="${flist[0]['DEP_COUNT'] }" class="colNone">${flist[0]['FACULTY_NAME'] }</td>
+									<td style="border-left: 1px solid #e5e5e5">${flist[0]['DEP_NAME'] }</td>
+									<td>${flist[0]['TEL'] }</td>
+									<td>${flist[0]['BUILDING_NAME'] }</td>
+									<td><a href="#">수정</a></td>
+									<td class="colNone"><a href="#">조회</a></td>
+								</tr>
+								<c:forEach var="i" begin="1" end="${fn:length(flist)-1}"
 									step="1">
 									<tr class="align_center">
-										<c:if test="${i ==0 }">
-											<td rowspan="${flist[i]['DEP_COUNT'] }" class="colNone">${flist[i]['FACULTY_NAME'] }</td>
-										</c:if>
 										<c:if
-											test="${i!=0 && (flist[i]['FACULTY_NO']!=flist[i-1]['FACULTY_NO'])}">
+											test="${flist[i]['FACULTY_NO']!=flist[i-1]['FACULTY_NO']}">
 											<td rowspan="${flist[i]['DEP_COUNT'] }" class="colNone">${flist[i]['FACULTY_NAME'] }</td>
 										</c:if>
 										<td style="border-left: 1px solid #e5e5e5">${flist[i]['DEP_NAME'] }</td>
@@ -133,4 +158,4 @@
 					</div>
 			</form>
 		</div>
-		<%@ include file="../inc/bottom.jsp"%>
+		<%@ include file="../../inc/bottom.jsp"%>
