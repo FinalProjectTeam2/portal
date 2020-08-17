@@ -1,32 +1,14 @@
 package com.will.portal.scholarship.model;
 
-public class ScholarshipVO {
-	private int scholarshipNo;
-	private String scholarshipType;
-	private int scholarship;
-	public int getScholarshipNo() {
-		return scholarshipNo;
-	}
-	public void setScholarshipNo(int scholarshipNo) {
-		this.scholarshipNo = scholarshipNo;
-	}
-	public String getScholarshipType() {
-		return scholarshipType;
-	}
-	public void setScholarshipType(String scholarshipType) {
-		this.scholarshipType = scholarshipType;
-	}
-	public int getScholarship() {
-		return scholarship;
-	}
-	public void setScholarship(int scholarship) {
-		this.scholarship = scholarship;
-	}
-	@Override
-	public String toString() {
-		return "ScholarshipVO [scholarshipNo=" + scholarshipNo + ", scholarshipType=" + scholarshipType
-				+ ", scholarship=" + scholarship + "]";
-	}
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter @Setter @ToString
+public class ScholarshipVO {
+	private int  scholarshipNo; // 장학금 번호  pk
+	private String scholarshipType; // 장학금 종류
+	private int scholarship; // 장학금 금액 
+	private String scholarshipName; // 장학금명
 	
 }

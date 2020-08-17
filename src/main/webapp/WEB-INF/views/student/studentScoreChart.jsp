@@ -76,7 +76,7 @@ span.fontLar {
 			data : {
 				labels : str,
 				datasets : [ {
-					label : '${stuName}학생의 성적',
+					label : '${stuName} 학생의 성적',
 					backgroundColor : '#00000000',
 					borderColor : '#4babef',
 					data : ${dlist}

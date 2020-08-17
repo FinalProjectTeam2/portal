@@ -195,4 +195,11 @@
 			where r.sub_code=#{subCode}
 		</if> 
 	</select>
+	
+	<update id="updateProfessor" parameterType="professorVo">
+		update professor
+		set dep_no = #{depNo}, position_no=#{positionNo}
+		where prof_no = #{profNo}
+	</update>
+	
 </mapper>

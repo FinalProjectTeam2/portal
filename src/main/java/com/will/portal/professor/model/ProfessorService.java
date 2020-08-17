@@ -36,6 +36,8 @@ public interface ProfessorService {
 	int deleteProfessor(String profNo);
 	int multiDelete(List<ProfessorVO> list);
 	List<PhoneBookVO> phoneBook(String subCode);
+	
+	public int updateProfessor(ProfessorVO profVo);
 
 
 }

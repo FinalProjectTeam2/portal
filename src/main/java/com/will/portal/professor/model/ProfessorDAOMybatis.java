@@ -117,6 +117,11 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 		return sqlsession.selectList(namespace+"phoneBook", subCode);
 	}
 
+	@Override
+	public int updateProfessor(ProfessorVO profVo) {
+		return sqlsession.update(namespace + "updateProfessor",profVo);
+	}
+
 
 	
 

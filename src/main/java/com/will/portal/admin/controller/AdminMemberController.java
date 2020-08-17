@@ -2,7 +2,9 @@ package com.will.portal.admin.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -285,7 +287,6 @@ public class AdminMemberController {
 		model.addAttribute("pagingInfo", pagingInfo);
 		model.addAttribute("state",state);
 	}
-
 	/**
 	 * 체크박스 조건 설정
 	 *
@@ -293,6 +294,8 @@ public class AdminMemberController {
 	 * @param slist
 	 * @param idx
 	 */
+	
+	
 	private void setState(StudentSearchVO studentSearchVo, String[] slist) {
 		int idx = slist.length;
 		studentSearchVo.setState1(slist[0]);
@@ -321,6 +324,27 @@ public class AdminMemberController {
 			return;
 	}
 
+	@RequestMapping("/adminFacultySelectStudent")
+	public String adminFacultySelectStudent(@RequestParam(defaultValue = "0") int facultyNo,
+			@RequestParam(defaultValue = "0") int major, Model model) {
+	
+		logger.info("adminFacultySelectStudent,{},{}",facultyNo,major);
+		StudentSearchVO studentSearchVo = new StudentSearchVO();
+		
+		studentSearchVo.setFacultyNo(facultyNo);
+		studentSearchVo.setMajor(major);
+		
+
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy");
+		Date time = new Date();
+		studentSearchVo.setEndNo(format1.format(time));
+		studentSearchVo.setStartNo("1990");
+		logger.info("major={},{}",major,studentSearchVo);
+		
+		adminManageStudent(studentSearchVo, null, model);
+		
+		return "admin/member/adminManageStudent";
+	}
 	/**
 	 * 회원관리 - 교수
 	 *
@@ -677,9 +701,20 @@ public class AdminMemberController {
 	public String edit_get(String officialNo, Model model) {
 		logger.info("수정화면 페이지 보여주기, officialNo={}", officialNo);
 		List<BankVO> bankList = bankService.selectAllBank();
+		List<FacultyVO> facultyList= facultyService.selectFaculty();
+		
+		if(officialNo.substring(4, 5).equals("2")) {
+			Map<String, Object> profMap = professorService.selectViewByProfNo(officialNo);
+			int facultyNo=Integer.parseInt(profMap.get("FACULTY_NO").toString());
+			List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(facultyNo);
+			List<Prof_positionVO> positionList = profPositionService.selectProfPosition();
+			model.addAttribute("profMap", profMap);
+			model.addAttribute("departmentList",departmentList);
+			model.addAttribute("positionList",positionList);
+		}
 		model.addAttribute("bankList", bankList);
+		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("officialNo", officialNo);
-
 		return "/admin/member/adminEditMember";
 	}
 	
@@ -723,7 +758,9 @@ public class AdminMemberController {
 	@ResponseBody
 	public boolean edit_post(@RequestParam String officialNo, Model model, @ModelAttribute Account_infoVO accInfoVo,
 			@ModelAttribute Official_infoVO offiVo, @RequestParam String hp, @RequestParam String email,
-			@RequestParam(required = false) String oldFileName, HttpServletRequest request) {
+			@RequestParam(required = false) String oldFileName, HttpServletRequest request,
+			@RequestParam(defaultValue = "0") int department,
+			@RequestParam(defaultValue = "0") int position) {
 		logger.info("member 수정 처리 파라미터 officialNo={},offiVo={}",officialNo,offiVo);
 		boolean bool = false;
 
@@ -738,7 +775,7 @@ public class AdminMemberController {
 		offiVo.setHp1(hp1);
 		offiVo.setHp2(hp2);
 		offiVo.setHp3(hp3);
-
+		
 		// 파일 업로드 처리
 		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_IMAGE);
 
@@ -759,12 +796,26 @@ public class AdminMemberController {
 			}
 		}
 
-		int cnt1 = bankService.updateAccount(accInfoVo);
-		int cnt2 = offiService.updateOfficialInfo(offiVo);
-		if (cnt1 > 0 && cnt2 > 0) {
-			bool = true;
+		int cnt = 0;
+		if(officialNo.substring(4,5).equals("2")) {
+			ProfessorVO profVo = new ProfessorVO();
+			profVo.setDepNo(department);
+			profVo.setPositionNo(position);
+			profVo.setProfNo(officialNo);
+			cnt = bankService.updateAccount(accInfoVo);
+			cnt = offiService.updateOfficialInfo(offiVo);
+			cnt = professorService.updateProfessor(profVo);
+			if(cnt> 0 ) {
+				bool = true;
+			}
+		}else {
+			cnt = bankService.updateAccount(accInfoVo);
+			cnt = offiService.updateOfficialInfo(offiVo);
+			if(cnt> 0 ) {
+				bool = true;
+			}
 		}
-
+		
 		logger.info("oldFileName = {}", oldFileName);
 		logger.info("bool = {}", bool);
 		return bool;
@@ -790,6 +841,9 @@ public class AdminMemberController {
 		Map<String, Object> map = studentService.selectViewByStuNo(officialNo);
 		if (type.equals("STUDENT")) {
 			map = studentService.selectViewByStuNo(officialNo);
+			 if(map.get("minor_dep_name")==null) {
+				 map.put("minor_dep_name","");
+			 }
 		} else if (type.equals("PROFESSOR")) {
 			map = professorService.selectViewByProfNo(officialNo);
 		} else if (type.equals("ADMIN")) {

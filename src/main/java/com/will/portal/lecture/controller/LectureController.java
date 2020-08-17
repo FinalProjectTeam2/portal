@@ -808,4 +808,22 @@ public class LectureController {
 		model.addAttribute("contentsList", contentsList);
 		return "lecture/evalContents";//팝업창 새로만들기
 	}
+	
+	@RequestMapping("/lecture/ajax/evalContents")
+	@ResponseBody
+	public List<String> evalContent_ajax(@RequestParam String subCode) {
+		logger.info("subCode={}",subCode);
+		List<Subj_evalVO> list = subEvalService.selectEvalBysubCode(subCode);
+		List<String> contentsList = new ArrayList<String>();
+		String contents="";
+		logger.info("list={}",list);
+		
+		for (int i = 0; i < list.size(); i++) {
+			contents = list.get(i).getContent();
+			contentsList.add(contents);
+		}
+		
+		logger.info("contentList= {}",contentsList);
+		return contentsList;
+	}
 }
