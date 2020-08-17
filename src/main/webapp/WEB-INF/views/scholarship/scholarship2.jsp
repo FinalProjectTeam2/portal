@@ -1,172 +1,247 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/board/write.css'/>" />
 <style type="text/css">
+.scholarship {
+	margin-left: 20%;
+	margin-top: -20%;
+	width: 80%;
+}
+
+/* 검색 조건 css */
+.divTable {
+	border: 1px solid gray;
+}
+
+.tableSearch {
+	width: 1000px;
+	min-width: 500px;
+	border-collapse:collapse;
+ 	border-spacing: 1px;
+	font-family: 'nanum gothic',맑은 고딕, 한컴돋움, 돋움;
+	font-size: 0.9em;
+	padding: 4px;
+	margin: 20px 10px;
+	line-height: 1.5;
+}
+
+.tableSearch tr, td {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	margin: 1%, 5%, 1%, 1%;
+}
+
+#search {
+	margin-left: 46%;
+	margin-top: -105%;
+	border: none;
+	padding: 14px 28px;
+	background-color: #2196F3;
+	color: white;	
+	font-size: 16px;
+	cursor: pointer;
+	margin-top: 1.5%;
+	margin-bottom: 1.5%;
+}
+
+#search:hover {
+	background: #0b7dda;
+}	
+
+/* 지급내역 css */	
+.tablePayments {
+	width: 1000px;
+	min-width: 500px;
+	border-collapse:collapse;
+ 	border-spacing: 1px;
+	font-family: 'nanum gothic',맑은 고딕, 한컴돋움, 돋움;
+	font-size: 0.9em;
+	padding: 4px;
+	margin: 20px 10px;
+	line-height: 1.5;s
+}
+
+.tablePayments tr, td {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
 </style>
-<script type="text/javascript">
+
+<div class="scholarship">
+<h1>장학금 관리 페이지</h1>
+<hr align="left" width="55%">
+<br>
+<!-- 검색 조건 -->
+<c:if test="${!empty param.searchKeyword }">
+	<p>검색어 : ${param.searchKeyword },
+		 ${pagingInfo.totalRecord}건 검색되었습니다.</p>
+</c:if>
+		
 	
-	var count = 1;
-	var maxCount = ${vo.maxUpfile};
-	$(function() {
-		
-		if(${vo.isUpload == 'N'}){
-			$("#fileList").hide();
-		}
-		
-		$("input[type=file]").change(function(){
-			var fileName = $(this).val().substr( $(this).val().lastIndexOf( "\\" ) + 1);
-			$(this).next().html(fileName);
-		});
-		
-		$("#boardFrm").submit(function() {
-			if($("#title").val().length < 1){
-				alert("제목을 작성하셔야 합니다.");
-				return false;
-			}
-			if($("#bdCode").val().length < 1){
-				alert("분류를 선택하셔야 합니다.");
-				return false;
-			}
-			
-			$("#contents").val(CKEDITOR.instances.subject.getData());
-			$("#subject").remove();
-		});
-		
-		$("#list").click(function() {
-			location.href = "<c:url value='/portal/board/list?bdCode="+$("#bdCode").val()+"'/>";
-		});
-		
-		$("#addFile").click(function() {
-			if(count >= maxCount){
-				alert("파일 업로드는 " + maxCount + "개 까지만 가능합니다.");
-				return false;
-			}
-			count = count + 1;
-			var fileTag = '<div class="input-group mb-3 col-75">'
-				+'<div class="input-group-prepend">'
-				+ '<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>'
-				+'</div>'
-				+'<div class="custom-file">'
-				+ '<input type="file" class="custom-file-input" name="files'+count+'" id="inputGroupFile0'+count+'" '
-				+' aria-describedby="inputGroupFileAddon01"> <label '
-				+'class="custom-file-label" for="inputGroupFile0'+count+'">파일을 선택하세요</label>'
-				+'</div>'
-				+ '<button type="button" onclick="$.delFile(this)" name="delFile">'
-				+ '<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">'
-				+ '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'
-				+ '<path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>'
-				+ '</svg>' + '</button>'
-				+'</div>';
-			$("#fileList").append(fileTag);
-			
-			return false;
-		});
-		
-		$("#bdCode").change(function() {
-			if($(this).val() != ''){
-				$.ajax({
-					url: "<c:url value='/portal/board/ajax/findBoard'/>",
-					data: {bdCode: $(this).val()},
-					dataType: "json",
-					type: "get",
-					success: function(res) {
-						maxCount = res.maxUpfile;
-						$("button[name=delFile]").each(function() {
-							$(this).parent().remove();
-						});
-						if(res.isUpload == 'N'){
-							$("#fileList").hide();
-						}else{
-							$("#fileList").show();
-						}
-						count = 1;
-					}
-				});
-			}
-			
-			return false;
-		});
-	});
-	
-	$.delFile = function(self) {
-		$(self).parent().remove();
-		count = count - 1;
-		return false;
-	}
-</script>
-<main role="main" class="flex-shrink-0">
-<div><h1>장학금 신청</h1></div><hr align="left" width="45%"><br>
-	<div class="container">
-		<form action="<c:url value='/portal/board/write'/>" class="writeFrm" id="boardFrm" method="post" enctype="multipart/form-data">
-			<input type="hidden" value="${principal.officialNo }"name="officialNo"> 
-			<input type="hidden" id="contents" name="contents">
-			
-			<div class="row1">
-				<div class="col-25">
-					<label for="l_title" class="formTitle">제목</label>
-				</div>
-				<div class="col-75">
-					<input type="text" id="title" name="title">
-				</div>
-			</div>
-			<div class="row1">
-				<div class="col-25">
-					<label for="l_category" class="formTitle">분류</label>
-				</div>
-				<div class="col-75">
-					<select id="bdCode" name="bdCode">
-						<option value="">선택하세요</option>
-						<c:forEach var="vo" items="${list }">
-							<c:if test="${vo.usage == 'Y' }">
-								<option value="${vo.bdCode }"
-									<c:if test="${param.bdCode == vo.bdCode }">
-									selected="selected"
-								</c:if>>${vo.bdName }</option>
-							</c:if>
-						</c:forEach>
+	<div class="divTable" style="width: 77%;">
+		<table class="tableSearch">
+			<colgroup>
+				<col style="width:15%;" />
+				<col style="width:30%;" />
+				<col style="width:15%;" />
+				<col style="width:30%;" />
+			</colgroup>
+			<tr>
+				<td>신청일자</td>
+				<td colspan="3"><%@ include file="../board_food/dateTerm.jsp"%></td>
+			</tr>
+			<tr>
+				<td>장학금분류</td>
+				<td>
+					<select style="width: 150px;">
+						<option> -- 구분 -- </option>
+						<option>교내장학금</option>
+						<option>교외장학금</option>
 					</select>
-				</div>
-			</div>
-			<div class="row1" id="fileList">
-				<div class="col-25">
-					<label for="l_date" class="formTitle">파일</label>
-					<button type="button" id="addFile" class="btn btn-info">파일
-						추가</button>
-				</div>
-				<div class="input-group mb-3 col-75">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-					</div>
-					<div class="custom-file">
-						<input type="file" class="custom-file-input" name="files"
-							id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-						<label class="custom-file-label" for="inputGroupFile01">파일을
-							선택하세요</label>
-					</div>
-				</div>
-			</div>
-			<div class="row1" style="padding-left: 2%;">
-				<textarea id="subject" name="subject" placeholder="내용을 입력하세요."
-					style="height: 600px"></textarea>
-			</div>
-			<script type="text/javascript">
-				//CKEDITOR.replace("description"); //태그의 id
-				//이미지 업로드를 할 경우
-				CKEDITOR
-						.replace(
-								"subject",
-								{
-									//CKEDITOR.replace와 id("description")를 잘 적어주면 그 태그가 smart editor 스타일로 바뀌게 된다. 
-									filebrowserUploadUrl : "${pageContext.request.contextPath}/imageUpload",
-									//파일을 업로드 해야하기 때문에 filebrowserUploadUrl을 사용하고, 서버쪽에 코드를 완성해주어야 한다.
-									height : "500px"
-								});
-			</script>
-			<div class="bts">
-				<input type="submit" id="write" value="등록"> <input
-					type="button" value="목록" id="list">
-			</div>
-		</form>
+				</td>
+				<td>장학금명</td>
+				<td>
+					<select style="width: 150px;">
+						<option> -- 구분 -- </option>
+						<option>성적우수</option>
+						<option>추천</option>
+					</select>
+				</td>					
+			</tr>
+			<tr>	
+				<td>지급여부</td>
+				<td>
+					<select>
+						<option> -- 구분 -- </option>
+						<option>미지급</option>
+						<option>지급</option>
+					</select>
+				</td>
+				<td>승인여부</td>
+				<td>
+					<select>
+						<option> -- 구분 -- </option>
+						<option>대기</option>
+						<option>완료</option>
+					</select>
+				</td>
+			</tr>
+			<tr>	
+				<td>학부</td>
+				<td>
+					<select>
+						<option> -- 구분 -- </option>
+						<option>경영학부</option>
+						<option>예체능</option>
+					</select>
+				</td>
+				<td>학과</td>
+				<td>
+					<select style="width: 300px;">
+						<option> -- 구분 -- </option>
+						<option>경영학과</option>
+						<option>경제학과</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<div>
+			<input type="submit" id="search" value="검색">
+		</div>
+	</div>
+
+<br>
+<!-- 장학금 지급 내역 -->
+	<div class="divPayments" style="width: 100%;">
+		<div class="btn"> 
+			<input type="button" value="추가">
+			<input type="button" value="수정">
+			<input type="button" value="삭제">
+		</div>
+		
+		<table class="tablePayments">
+			<colgroup>
+				<col style="width:3%;" /> 
+				<col style="width:10%;" />
+				<col style="width:10%;" />
+				<col style="width:7%;" /> 
+				<col style="width:5%;" /> 
+				<col style="width:10%;" />
+				<col style="width:10%;" />
+				<col style="width:10%;" />
+				<col style="width:5%;" />
+				<col style="width:10%;" /> 
+				<col style="width:5%;" /> 
+			</colgroup>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>학부</td>
+				<td>학과</td>
+				<td>학번</td>
+				<td>이름</td>
+				<td>장학금분류</td>
+				<td>장학금명</td>	
+				<td>승인여부</td>
+				<td>승인일자</td>
+				<td>지급구분</td>
+				<td>지급액</td>
+			</tr>
+			<tr> 
+				<td><input type="checkbox"></td>
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+						${vo.facultyName}
+					</c:forEach>
+				</td>
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+						${vo.depName}
+					</c:forEach>
+				</td> 
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+						${vo.stuNo}
+					</c:forEach>
+				</td>
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${stuList}">
+						${vo.name}
+					</c:forEach>
+				</td> 
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${list}">
+						${vo.scholarshipType}
+					</c:forEach>
+				</td> 				
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${list}">
+						${vo.scholarshipName}
+					</c:forEach>
+				</td> 	
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${list}">
+						${vo.approval}
+					</c:forEach>
+				</td> 
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${list}">
+						${vo.approvalDate}
+					</c:forEach>
+				</td> 
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${list}">
+						${vo.aymentOrNot}
+					</c:forEach>
+				</td> 
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${list}">
+						${vo.scholarship}
+					</c:forEach>
+				</td> 
+			</tr>	
+		</table>
+	</div>
+<br>	
+<!-- 페이징처리 -->		
+</div>
 <%@ include file="../inc/bottom.jsp"%>

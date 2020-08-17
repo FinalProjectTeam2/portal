@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../inc/top.jsp"%>
 <%@ include file="../inc/portalSidebar.jsp"%>
+
 <sec:authentication var="principal" property="principal" />
 <style type="text/css">
 .divTable { 
@@ -61,23 +62,6 @@
 	
 }
 </style>
-<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
-<script type="text/javascript">
-$(function() {
-	$.ajax({
-		url:"<c:url value=''/>",
-		type:"get",
-		dataType:"json",
-		success:function(res){
-			$("").append(res);
-		},
-		error:function(xhr, status, error){
-			alert(error);
-		}
-	});
-});
-</script>
-
 <div id="tuition">
 	<div class="title">
 		<h1>등록금 납부 상세 내역</h1>
@@ -126,41 +110,40 @@ $(function() {
 	
 <br><br><br>
 
-<div class="divTable">
-	<table class="table2">
-		<colgroup>
-			<col style="width:10%;" />
-			<col style="width:10%;" />
-			<col style="width:10%;" />
-			<col style="width:10%;" />
-			<col style="width:10%;" />		
-			<col style="width:10%;" />		
-			<col style="width:10%;" />		
-			<col style="width:10%;" />		
-			<col style="width:10%;" />		
-		</colgroup>
-		<thead>
+	<div class="divTable">
+		<table class="table2">
 	  		<tr>
 				<th>선택</th>
 				<th>수납구분</th>
 				<th>납부기간</th>
 				<th>가상계좌</th>
 				<th>수납금액</th>
-				<th>수납여부</th>
 			</tr>
-		</thead>
-		<tbody>
 			<tr>
 				<td><input type="radio"></td>
-				<td>등록금 수납</td>
-				<td>2020-03-10 ~ 2020-03-20</td>
-				<td>국민은행111-1111</td>
-				<td>1,000,000</td>
-				<td>납부</td>
+				<td>
+					<c:forEach var="vo" items="${tList}">
+						${vo.depositState}
+					</c:forEach>
+				</td>
+				<td>
+					<c:forEach var="vo" items="${tList}">
+						${vo.depositDate}
+					</c:forEach>
+				</td>
+				<td>
+					<c:forEach var="vo" items="${tList}">
+						${vo.bankName} ${vo.account_no}
+					</c:forEach>
+				</td>
+				<td>
+					<c:forEach var="vo" items="${tList}">
+						${total}
+					</c:forEach>
+				</td>
 			</tr>
-		</tbody>
-	</table>
-</div>
+		</table>
+	</div>
 
 <br><br><br>
 

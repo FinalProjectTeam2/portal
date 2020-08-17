@@ -28,9 +28,23 @@ public class TuitionServiceImpl implements TuitionService {
 		return tuitionDao.selectTuitionDView(officicalNo);
 	}
 
+	@Override
+	public int insertTuition(TuitionDetailVO dVo) {
+		return tuitionDao.insertTuition(dVo);
+	}
 
+	@Override
+	public int updateTuition(TuitionDetailVO dVo) {
+		return tuitionDao.updateTuition(dVo);
+	}
 
+	@Override
+	public int deleteTuition(String officicalNo) {
+		return tuitionDao.deleteTuition(officicalNo);
+	}
 
-
-
+	@Override
+	public int selectByNo(int no) {
+		return tuitionDao.selectByNo(no);
+	}
 }

@@ -85,9 +85,22 @@
 					+"&major="+$('#department').val();
 			}
 		});
-		$('#cancel1').click(function(){
-			location.href="/portal/admin/member/memberEdit?officialNo="+$('#stuNo').val();
+		$('#btEdit').click(function(){
+			var facultyNo =$("#faculty").val();
+			if(facultyNo.length == 0){
+				alert('학부를 선택해 주세요');
+				return false;
+			}
+			var department =$("#department").val();
+			if(department.length == 0){
+				alert('학과를 선택해 주세요');
+				return false;
+			}
+			var win = window.open("/portal/admin/faculty/adminEditFaculty?facultyNo="+$('#faculty').val()+"&depNo="+$('#department').val(),
+					"학과정보 수정","top=250,left=500,width=500,height=650");
+			return false;
 		});
+		
 	});
 </script>
 <main role="main" class="flex-shrink-0">
@@ -136,7 +149,8 @@
 									<td style="border-left: 1px solid #e5e5e5">${flist[0]['DEP_NAME'] }</td>
 									<td>${flist[0]['TEL'] }</td>
 									<td>${flist[0]['BUILDING_NAME'] }</td>
-									<td><a href="#">수정</a></td>
+									<td><a href="/portal/admin/faculty/adminEditFaculty?facultyNo=${flist[0]['FACULTY_NO']}&depNo=${flist[0]['DEP_NO']}"
+										 onclick="window.open(this.href,'학과정보 수정','top=250,left=500,width=500,height=650');return false;">수정</a></td>
 									<td class="colNone"><a href="#">조회</a></td>
 								</tr>
 								<c:forEach var="i" begin="1" end="${fn:length(flist)-1}"
@@ -149,10 +163,11 @@
 										<td style="border-left: 1px solid #e5e5e5">${flist[i]['DEP_NAME'] }</td>
 										<td>${flist[i]['TEL'] }</td>
 										<td>${flist[i]['BUILDING_NAME'] }</td>
-										<td><a href="#">수정</a></td>
-										<td class="colNone"><a href="#">조회</a></td>
+										<td><a href="/portal/admin/faculty/adminEditFaculty?facultyNo=${flist[i]['FACULTY_NO']}&depNo=${flist[i]['DEP_NO']}"
+										 onclick="window.open(this.href,'학과정보 수정','top=250,left=500,width=500,height=650');return false;">수정</a></td>
+										<td class="colNone"><a href="/portal/admin/member/adminFacultySelectStudent?facultyNo=${flist[i]['FACULTY_NO']}&major=${flist[i]['DEP_NO']}">조회</a></td>
 									</tr>
-								</c:forEach>
+								</c:forEach>  
 							</tbody>
 						</table>
 					</div>
