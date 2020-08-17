@@ -59,6 +59,11 @@ public class EmployeeDAOMybatis implements EmployeeDAO{
 	public int deleteEmployee(String empNo) {
 		return sqlSession.delete(namespace+"deleteEmployee",empNo);
 	}
+
+	@Override
+	public List<EmployeeVO> selectListByName(String name) {
+		return sqlSession.selectList(namespace+"selectListByName", name);
+	}
 	
 	
 }

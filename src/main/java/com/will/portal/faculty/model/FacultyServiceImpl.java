@@ -19,5 +19,21 @@ public class FacultyServiceImpl implements FacultyService{
 	public List<Map<String, Object>> selectFacultyView() {
 		return facultyDao.selectFacultyView();
 	}
+
+	@Override
+	public Map<String, Object> selectFacultyViewBydepNo(int depNo) {
+		return facultyDao.selectFacultyViewBydepNo(depNo);
+	}
+
+	@Override
+	public FacultyVO selectFacultyByFacultyNo(int facultyNo) {
+		return facultyDao.selectFacultyByFacultyNo(facultyNo);
+	}
+
+	@Override
+	public int updateFacultyName(FacultyVO facultyVo) {
+		return facultyDao.updateFacultyName(facultyVo);
+	}
+	
 	
 }

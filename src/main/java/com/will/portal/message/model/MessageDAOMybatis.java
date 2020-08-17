@@ -90,6 +90,11 @@ public class MessageDAOMybatis implements MessageDAO{
 	public int updateKeepMsg(int no) {
 		return sqlSession.update(namespace+"updateKeepMsg", no);
 	}
+
+	@Override
+	public List<MessageAllVO> selectMainList(String officialNo) {
+		return sqlSession.selectList(namespace+"selectMainList", officialNo);
+	}
 	
 	
 

@@ -395,7 +395,7 @@
 			<a class="navbar-brand"
 				<sec:authorize access="isAuthenticated()">
 			<c:if test="${principal.type == 'ADMIN' }">
-				href="<c:url value='/admin/adminMain'/>"
+				href="<c:url value='/index'/>"
 			</c:if>
 			<c:if test="${principal.type != 'ADMIN' }">
 				href="<c:url value='/index'/>"

@@ -41,6 +41,11 @@
 				substr(building_tel,-4) like '%' || #{searchKeyword} || '%'
 			order by dep_no
 	</select>
+	<update id="updateDepartment" parameterType="departmentVO">
+	update department
+	set dep_name=#{depName}, tel=#{tel}, building_code=#{buildingCode},faculty_no=#{facultyNo},
+	total_credit=#{totalCredit} where dep_no=#{depNo}
+	</update>
 </mapper>
 
 

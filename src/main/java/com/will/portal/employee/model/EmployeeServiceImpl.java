@@ -164,4 +164,9 @@ public class EmployeeServiceImpl implements EmployService {
 		
 		return cnt;
 	}
+
+	@Override
+	public List<EmployeeVO> selectListByName(String name) {
+		return employeeDao.selectListByName(name);
+	}
 }

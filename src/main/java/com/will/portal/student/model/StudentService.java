@@ -30,5 +30,7 @@ public interface StudentService {
 	List<StudentTimeTableVO> selectTimetable(String stuNo);
 	List<Map<String, Object>> selectScore(ScoreSearchVO scoreSearchVo);
 	List<String> selectSemester(String stuNo);
+	
+	List<StudentVO> selectListByName(String name);
 
 }

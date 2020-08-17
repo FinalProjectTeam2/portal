@@ -72,7 +72,7 @@
 						</div>
 						<div class="main-login main-center">
 							<div class="container">
-								
+
 								<!--  -->
 								<div class="col">
 									<div id="excelRegi" class="col">

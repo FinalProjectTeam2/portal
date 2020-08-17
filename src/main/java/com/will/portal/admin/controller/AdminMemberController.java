@@ -323,7 +323,14 @@ public class AdminMemberController {
 		if (idx < 1)
 			return;
 	}
-
+	
+	/**
+	 * 학부관리 - 학과 별 학생 조회
+	 * @param facultyNo
+	 * @param major
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/adminFacultySelectStudent")
 	public String adminFacultySelectStudent(@RequestParam(defaultValue = "0") int facultyNo,
 			@RequestParam(defaultValue = "0") int major, Model model) {

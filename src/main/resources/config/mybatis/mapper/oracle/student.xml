@@ -200,4 +200,9 @@
 		on c.classroom_code=st.classroom_code
 		where r.stu_no=#{stuNo}
 	</select>
+	
+	<select id="selectListByName" parameterType="String" resultType="studentVO">
+		select e.*, (select dep_name from department d where d.dep_no=e.major) major_name
+		from student e where e.name like '%'|| #{name} ||'%'
+	</select>
 </mapper>

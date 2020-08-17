@@ -34,5 +34,10 @@ public class DepartmentDAOMybatis implements DepartmentDAO{
 	public int selectTotalRecord(SearchVO searchVo) {
 		return sqlSession.selectOne(namespace + "selectTotalRecord", searchVo);
 	}
+
+	@Override
+	public int updateDepartment(DepartmentVO departmentVo) {
+		return sqlSession.update(namespace+"updateDepartment",departmentVo);
+	}
 	
 }

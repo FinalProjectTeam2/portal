@@ -118,6 +118,10 @@
 		where EMP_NO=#{empNo}
 	</delete>
 
+	<select id="selectListByName" parameterType="String" resultType="employeeVO">
+		select e.*, (select dep_name from emp_depart d where d.dep_code=e.dep_code) dep_name 
+		from employee e where emp_name like '%'|| #{name} ||'%'
+	</select>
 </mapper>
 
 

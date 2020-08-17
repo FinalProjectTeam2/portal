@@ -200,6 +200,11 @@ public class StudentServiceImpl implements StudentService {
 	public List<StudentTimeTableVO> selectTimetable(String stuNo) {
 		return studentDao.selectTimetable(stuNo);
 	}
+
+	@Override
+	public List<StudentVO> selectListByName(String name) {
+		return studentDao.selectListByName(name);
+	}
 	
 	
 }

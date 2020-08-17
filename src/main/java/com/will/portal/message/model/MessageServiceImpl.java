@@ -90,4 +90,9 @@ public class MessageServiceImpl implements MessageService{
 		return dao.updateKeepMsg(no);
 	}
 
+	@Override
+	public List<MessageAllVO> selectMainList(String officialNo) {
+		return dao.selectMainList(officialNo);
+	}
+
 }
