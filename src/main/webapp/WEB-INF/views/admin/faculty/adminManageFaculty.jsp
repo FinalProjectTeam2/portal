@@ -145,7 +145,10 @@
 							</thead>
 							<tbody>
 								<tr class="align_center">
-									<td rowspan="${flist[0]['DEP_COUNT'] }" class="colNone">${flist[0]['FACULTY_NAME'] }</td>
+									<td rowspan="${flist[0]['DEP_COUNT'] }" class="colNone">${flist[0]['FACULTY_NAME'] }<br>
+									(<a href="/portal/admin/faculty/adminEditFacultyName?facultyNo=${flist[0]['FACULTY_NO']}"
+										 onclick="window.open(this.href,'학부정보 수정','top=250,left=500,width=500,height=255');return false;">수정</a>)
+									</td>
 									<td style="border-left: 1px solid #e5e5e5">${flist[0]['DEP_NAME'] }</td>
 									<td>${flist[0]['TEL'] }</td>
 									<td>${flist[0]['BUILDING_NAME'] }</td>
@@ -158,7 +161,11 @@
 									<tr class="align_center">
 										<c:if
 											test="${flist[i]['FACULTY_NO']!=flist[i-1]['FACULTY_NO']}">
-											<td rowspan="${flist[i]['DEP_COUNT'] }" class="colNone">${flist[i]['FACULTY_NAME'] }</td>
+											<td rowspan="${flist[i]['DEP_COUNT'] }" class="colNone">${flist[i]['FACULTY_NAME'] }
+											<br>
+									(<a href="/portal/admin/faculty/adminEditFacultyName?facultyNo=${flist[i]['FACULTY_NO']}"
+										 onclick="window.open(this.href,'학부정보 수정','top=250,left=500,width=500,height=255');return false;">수정</a>)
+											</td>
 										</c:if>
 										<td style="border-left: 1px solid #e5e5e5">${flist[i]['DEP_NAME'] }</td>
 										<td>${flist[i]['TEL'] }</td>

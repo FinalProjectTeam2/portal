@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,7 +33,11 @@ public class AdminFacultyController {
 	@Autowired
 	private DepartmentService departmentService;
 	
-	
+	/**
+	 * 학부관리 페이지
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/adminManageFaculty")
 	public String adminManageFaculty(Model model) {
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
@@ -48,6 +51,12 @@ public class AdminFacultyController {
 		
 	}
 	
+	/**
+	 * 학부관리 수정팝업 페이지 열기
+	 * @param facultyNo
+	 * @param depNo
+	 * @param model
+	 */
 	@RequestMapping("/adminEditFaculty")
 	public void adminEditFaculty(@RequestParam(defaultValue = "0") int facultyNo,
 			@RequestParam(defaultValue = "0") int depNo,Model model) {
@@ -64,6 +73,14 @@ public class AdminFacultyController {
 		model.addAttribute("map",map);
 	}
 	
+	/**
+	 * 수정팝업 수정하기 완료 ajax
+	 * @param departmentVo
+	 * @param tel1
+	 * @param tel2
+	 * @param tel3
+	 * @return
+	 */
 	@RequestMapping("/adminEditFacultyAjax")
 	@ResponseBody
 	public boolean adminEditFacultyAjax(@ModelAttribute DepartmentVO departmentVo,
@@ -78,6 +95,42 @@ public class AdminFacultyController {
 		if(cnt>0) {
 			result=true;
 		}
+		return result;
+	}
+	
+	/**
+	 * 학부이름 수정하기 팝업
+	 * @param facultyNo
+	 * @param model
+	 */
+	@RequestMapping("/adminEditFacultyName")
+	public void adminEditFacultyName(@RequestParam(defaultValue = "0") int facultyNo,
+			Model model) {
+		logger.info("adminEditFacultyName, popup");
+		FacultyVO facultyVo= facultyService.selectFacultyByFacultyNo(facultyNo);
+		
+		logger.info("selectFacultyByFacultyNo,{}",facultyVo);
+		
+		model.addAttribute("facultyVo",facultyVo);
+	}
+	
+	/**
+	 * 학부이름 수정하기 완료 ajax
+	 * @param facultyVo
+	 * @return
+	 */
+	@RequestMapping("/adminEditFacultyNameAjax")
+	@ResponseBody
+	public boolean adminEditFacultyNameAjax(@ModelAttribute FacultyVO facultyVo) {
+		logger.info("adminEditFacultyNameAjax, {}",facultyVo);
+
+		int cnt=facultyService.updateFacultyName(facultyVo);
+		
+		boolean result=false;
+		if(cnt>0) {
+			result=true;
+		}
+		logger.info("cnt={}, result={}",cnt,result);
 		return result;
 	}
 }

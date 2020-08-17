@@ -6,13 +6,21 @@
 	<select id="selectFaculty" resultType="facultyVO">
 		select * from faculty
 	</select>
+	<select id="selectFacultyByFacultyNo" resultType="facultyVO"
+		parameterType="int">
+		select * from faculty where faculty_no=#{facultyNo}
+	</select>
 	<select id="selectFacultyView" resultType="map">
-	select * from faculty_view order by faculty_no
+		select * from faculty_view order by faculty_no
 	</select>
-	<select id="selectFacultyViewBydepNo" parameterType="int" resultType="map">
-	select * from faculty_view
-	where dep_no=#{depNo}
+	<select id="selectFacultyViewBydepNo" parameterType="int"
+		resultType="map">
+		select * from faculty_view
+		where dep_no=#{depNo}
 	</select>
+	<update id="updateFacultyName" parameterType="facultyVO">
+		update faculty set faculty_name=#{facultyName} where faculty_no=#{facultyNo}
+	</update>
 </mapper>
 
 
