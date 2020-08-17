@@ -125,6 +125,14 @@
 				formData.append("department", $("#department").val());
 				formData.append("position", $("#position").val());
 			}
+			
+			if($("#officialNo").val().substring(4,5)=='1'){
+				
+				formData.append("authCode", $("#authCode").val());
+			}
+			
+			
+			
 
 			$.ajax({
 				url : "<c:url value='/admin/member/memberEdit' />",
@@ -251,7 +259,7 @@
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>직급</th>'
-	      			+ '<td>'+res.POSITION_NAME+' </td>'
+	      			+ '<td>'+res.POSITION_NAME+' / 권한 : '+ res.AUTH_NAME  +' </td>'
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>기타</th>'
@@ -412,6 +420,27 @@ a:focus {
 								<th>전화번호</th>
 								<td><input placeholder="핸드폰번호" onKeyup="inputPhoneNumber(this);" name="hp" id="hp" type="text" class="validate" value=""></td>
 				      		</tr>
+				      		
+				      		<c:if test="${fn:substring(officialNo,4,5)=='1' }">
+								<tr>
+									<th>권한</th>
+									<td>
+										<select class="browser-default" name="authCode" id="authCode">
+											<c:if test="${!empty authorityList}">
+											<c:forEach var="authorityVo" items="${authorityList }">
+									      		<option value="${authorityVo.authCode }" 
+									      		<c:if test="${empMap['AUTH_CODE']==authorityVo.authCode}">
+													 selected="selected"
+												</c:if>
+									      		>${authorityVo.authName }</option>
+									      	</c:forEach>
+											</c:if>
+										</select>
+									
+									</td>
+								</tr>
+							</c:if>				      		
+				      		
 				      		<c:if test="${fn:substring(officialNo,4,5)=='2' }">
 								<tr>
 									<th>학부</th>

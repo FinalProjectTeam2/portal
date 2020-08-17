@@ -164,4 +164,9 @@ public class EmployeeServiceImpl implements EmployService {
 		
 		return cnt;
 	}
+
+	@Override
+	public int updateAuthcode(EmployeeVO empvo) {
+		return employeeDao.updateAuthcode(empvo);
+	}
 }

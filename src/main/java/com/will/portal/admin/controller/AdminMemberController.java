@@ -577,24 +577,31 @@ public class AdminMemberController {
 	}
 
    @RequestMapping(value = "/multiDelete")
-   public String multiDeleteStudent(@ModelAttribute StudentListVO studentList, Model model,
+   public String multiDeleteStudent(@ModelAttribute StudentListVO stuList, Model model,
          HttpServletRequest request) {
-      List<StudentVO> list = studentList.getStuList();
+	  logger.info("stuList ={}" ,stuList);
+      List<StudentVO> list = stuList.getStuList();
+      logger.info("삭제 list= {} ",list);
       List<Official_infoVO> offiList= new ArrayList<Official_infoVO>();
       List<Account_infoVO> accList = new ArrayList<Account_infoVO>();
       boolean bool = false;
       for (StudentVO studentVO : list) {
          Official_infoVO offiVo = offiService.selectByNo(studentVO.getOfficialNo());
+        logger.info("offiVo={},studentVO.getOfficialNo()={}",offiVo,studentVO.getOfficialNo());
          offiList.add(offiVo);
          Account_infoVO accVo = bankService.selectAccByofficialNo(studentVO.getOfficialNo());
+         logger.info("accVo={}",accVo);
          accList.add(accVo);
+         
          if(!offiVo.getImageUrl().equals("default.jpg")) {
             bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
          }
       }
       
       logger.info("파일 다중 삭제여부 = {}", bool);
+      logger.info("offiList={}", offiList);
       int cnt = studentService.deleteMulti(list);
+      logger.info("cnt={}",cnt);
       int offiCnt = offiService.deleteMulti(offiList);
       int offiBank =bankService.deleteMulti(accList);
       logger.info("offiCnt = {}",offiCnt);
@@ -628,7 +635,6 @@ public class AdminMemberController {
       }
       logger.info("파일 다중 삭제여부 = {}", bool);
       
-      
       int cnt = professorService.multiDelete(list);
       int offiCnt = offiService.deleteMulti(offiList);
       int offiBank =bankService.deleteMulti(accList);
@@ -645,6 +651,47 @@ public class AdminMemberController {
       return "common/message";
    }
    
+   
+   @RequestMapping(value = "/multiDeleteEmployee")
+   public String multiDeleteProfessor(@ModelAttribute EmployeeListVO empList, Model model,
+         HttpServletRequest request) {
+	  
+	  logger.info("empList={}", empList);
+      List<EmployeeVO> list = empList.getEmpList();
+      List<Official_infoVO> offiList= new ArrayList<Official_infoVO>();
+      List<Account_infoVO> accList = new ArrayList<Account_infoVO>();
+      boolean bool = false;
+      for (EmployeeVO empVo : list) {
+         if(empVo.getEmpNo()!= null) {
+        	 Official_infoVO offiVo = offiService.selectByNo(empVo.getEmpNo());
+        	 offiList.add(offiVo);
+        	 Account_infoVO accVo = bankService.selectAccByofficialNo(empVo.getEmpNo());
+        	 accList.add(accVo);
+        	 if(!offiVo.getImageUrl().equals("default.jpg")) {
+        		 bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
+        	 }
+         }
+      }
+      logger.info("파일 다중 삭제여부 = {}", bool);
+      
+      
+      int cnt = employeeService.multiDelete(list);
+      int offiCnt = offiService.deleteMulti(offiList);
+      int offiBank =bankService.deleteMulti(accList);
+      logger.info("offiCnt = {}",offiCnt);
+      logger.info("offiBank = {}",offiBank);
+      
+      String msg = "직원 삭제 실패", url = "/admin/member/adminManageEmployee";
+      if (cnt > 0) {
+         msg = "직원 삭제 성공";
+      }
+      
+      model.addAttribute("msg", msg);
+      model.addAttribute("url", url);
+      return "common/message";
+   }
+   
+   
    @RequestMapping("/deleteStudent")
    public String deleteStudent(String stuNo, Model model, HttpServletRequest request) {
       Official_infoVO offiVo = offiService.selectByNo(stuNo);
@@ -654,6 +701,7 @@ public class AdminMemberController {
       }
       
       logger.info("파일삭제여부 bool={}",bool);
+      
       
       int cnt = studentService.deleteStudent(stuNo);
       cnt = offiService.deleteOfficial(stuNo);
@@ -719,6 +767,14 @@ public class AdminMemberController {
 			model.addAttribute("departmentList",departmentList);
 			model.addAttribute("positionList",positionList);
 		}
+		
+		if(officialNo.substring(4,5).equals("1")) {
+			List<AuthorityVO> authorityList = authorityService.selectAuthority();
+			Map<String, Object> empMap= employeeService.selectViewByEmpNo(officialNo);
+			model.addAttribute("authorityList", authorityList);
+			model.addAttribute("empMap", empMap);
+		}
+		
 		model.addAttribute("bankList", bankList);
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("officialNo", officialNo);
@@ -767,8 +823,10 @@ public class AdminMemberController {
 			@ModelAttribute Official_infoVO offiVo, @RequestParam String hp, @RequestParam String email,
 			@RequestParam(required = false) String oldFileName, HttpServletRequest request,
 			@RequestParam(defaultValue = "0") int department,
-			@RequestParam(defaultValue = "0") int position) {
+			@RequestParam(defaultValue = "0") int position,
+			@RequestParam String authCode) {
 		logger.info("member 수정 처리 파라미터 officialNo={},offiVo={}",officialNo,offiVo);
+		
 		boolean bool = false;
 
 		accInfoVo.setOfficialNo(officialNo);
@@ -812,6 +870,17 @@ public class AdminMemberController {
 			cnt = bankService.updateAccount(accInfoVo);
 			cnt = offiService.updateOfficialInfo(offiVo);
 			cnt = professorService.updateProfessor(profVo);
+			if(cnt> 0 ) {
+				bool = true;
+			}
+		}else if(officialNo.substring(4,5).equals("1")){
+			EmployeeVO empVo = new EmployeeVO();
+			logger.info("authCode= {}", authCode);
+			empVo.setAuthCode(authCode);
+			empVo.setEmpNo(officialNo);
+			cnt = employeeService.updateAuthcode(empVo);
+			cnt = bankService.updateAccount(accInfoVo);
+			cnt = offiService.updateOfficialInfo(offiVo);
 			if(cnt> 0 ) {
 				bool = true;
 			}

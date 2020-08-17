@@ -351,7 +351,7 @@
 					</div>
 					</fieldset>
 					<div style="text-align: center; margin-top: 5px;">
-						<button type="button" id="evalBt" class="btn btn-outline-primary">강의평가</button>
+						<button type="button" id="evalBt" class="btn btn-outline-primary" style="padding: 3px;">강의평가</button>
 						<input type="hidden" class="subjectCode" value="">
 					</div>
 				

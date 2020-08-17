@@ -59,6 +59,11 @@ public class EmployeeDAOMybatis implements EmployeeDAO{
 	public int deleteEmployee(String empNo) {
 		return sqlSession.delete(namespace+"deleteEmployee",empNo);
 	}
+
+	@Override
+	public int updateAuthcode(EmployeeVO empvo) {
+		return sqlSession.update(namespace+"updateAuthcode",empvo);
+	}
 	
 	
 }

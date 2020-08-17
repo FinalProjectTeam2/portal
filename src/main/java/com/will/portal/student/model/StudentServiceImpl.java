@@ -17,6 +17,7 @@ import com.will.portal.common.StudentSearchVO;
 import com.will.portal.common.model.CommonDAO;
 import com.will.portal.official_info.model.Official_infoDAO;
 import com.will.portal.official_info.model.Official_infoVO;
+import com.will.portal.professor.model.ProfessorVO;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -151,22 +152,15 @@ public class StudentServiceImpl implements StudentService {
 		}
 		return cnt;
 	}
-
+	
 	@Override
 	public int deleteMulti(List<StudentVO> studentList) {
 		int cnt = 0;
-
-		try {
-			for (StudentVO studentVO : studentList) {
-				if(studentVO.getStuNo()!=null) {
-					cnt = studentDao.deleteStudent(studentVO.getStuNo());
-				}
+		
+		for (StudentVO studentVO : studentList) {
+			if(studentVO.getStuNo()!=null) {
+				cnt = studentDao.deleteStudent(studentVO.getStuNo());
 			}
-
-		}catch(RuntimeException e) {
-			cnt = -1;
-			e.printStackTrace();
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		return cnt;
 	}

@@ -65,6 +65,7 @@
 		} */
 		
 	$(function () {
+			$('.evalContentsTr').toggleClass("hidden");
 			$('.trList').click(function() {
 				$(this).nextUntil('#trList').toggleClass("hidden");
 			});
@@ -90,7 +91,6 @@
 			var chart = new Chart(ctx, {
 			    // The type of chart we want to create
 			    type: 'horizontalBar',//horizontalBar
-
 			    // The data for our dataset
 			    data: {
 			        labels: str,
@@ -105,18 +105,24 @@
 			        }]
 			    },
 
-			    // Configuration options go here
-			    options: {
-			    	legend: {
-			            labels: {
-			                // This more specific font property overrides the global property
-			                fontSize: 20
-			            }
-			        },
-			    		labels:{
-			    			fontSize: 20
-			    		}
-			    }
+				// Configuration options go here
+				options : {
+					 legend: {
+				            labels: {
+				                // This more specific font property overrides the global property
+				                fontSize: 20
+				            }
+				        },
+				        scales: {
+				            xAxes: [{
+				                display: true,
+				                stacked: true,
+				                ticks: {
+				                    max:80 // maximum value
+				                }
+				            }]
+				        }
+				}
 			});	
 			
 		

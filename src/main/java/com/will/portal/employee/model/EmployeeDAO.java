@@ -15,5 +15,5 @@ public interface EmployeeDAO {
 	int getTotalRecord(EmployeeSearchVO empSearchVo);
 	int updatePosition(EmployeeVO empVo);
 	int deleteEmployee(String empNo);
-
+	int updateAuthcode(EmployeeVO empvo);
 }

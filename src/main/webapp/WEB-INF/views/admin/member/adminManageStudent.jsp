@@ -151,22 +151,22 @@
 						<table class="box2" summary="학생 목록">
 							<caption>학생 목록</caption>
 							<colgroup>
-								<col style="width: 5%" />
+								<col style="width: 6%" />
 								<!-- 체크박스 -->
-								<col style="width: 10%" />
+								<col style="width: 11%" />
 								<!-- 번호 -->
-								<col style="width: 15%" />
+								<col style="width: 16%" />
 								<!-- 이름 -->
-								<col style="width: 10%" />
+								<col style="width: 11%" />
 								<!-- 학부 -->
-								<col style="width: 20%" />
+								<col style="width: 21%" />
 								<!-- 학과 -->
-								<col style="width: 10%" />
+								<col style="width: 11%" />
 								<!-- 학기 -->
-								<col style="width: 14%" />
+								<col style="width: 15%" />
 								<!-- 학적 -->
-								<col style="width: 8%" />
-								<col style="width: 8%" />
+								<col style="width: 9%" />
+								<!-- <col style="width: 8%" /> -->
 							</colgroup>
 							<thead>
 								<tr>
@@ -178,7 +178,7 @@
 									<th scope="col">학기</th>
 									<th scope="col">학적 상태</th>
 									<th scope="col">수정</th>
-									<th scope="col">삭제</th>
+									<!-- <th scope="col">삭제</th> -->
 								</tr>
 							</thead>
 							<tbody>
@@ -202,8 +202,8 @@
 											<td>${map['STATE_NAME']}</td>
 											<td><a
 												href="<c:url value='/admin/member/memberEdit?officialNo=${map["STU_NO"] }'/>">수정</a></td>
-											<td><a id="deleteBt"
-												href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
+											<%-- <td><a id="deleteBt"
+												href="<c:url value='/admin/member/deleteStudent?stuNo=${map["STU_NO"] }'/>">삭제</a></td> --%>
 										</tr>
 										<c:set var="idx" value="${idx+1 }"/>
 									</c:forEach>
@@ -266,11 +266,11 @@
 							onclick="location.href='<c:url value="/admin/member/adminRegisterMember?sort=3"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
-					<div class="btdiv">
+					<!-- <div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
 							id="btMultiDel" value="선택한 학생 삭제"><br>
-					</div>
+					</div> -->
 				</div>
 			</form>
 		</div>

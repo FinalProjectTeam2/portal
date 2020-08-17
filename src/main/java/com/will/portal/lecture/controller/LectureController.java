@@ -745,8 +745,6 @@ public class LectureController {
 	@RequestMapping(value = "/lecture/studentTT", method = RequestMethod.GET)
 	public String studentTT() {
 		logger.info("studentTT 화면");
-		
-		
 		return "lecture/studentTT";
 	}
 	
