@@ -21,6 +21,11 @@
 .table2 th {
 	background: #e6f3ff;
 }
+
+.text-left {
+	text-align: left;
+	padding-left: 10%;
+}
 </style>
 <div class="tuition">
 	<div class="title">
@@ -34,24 +39,42 @@
 		<table class="table1">
 			<tr>
 				<th>학부</th>
-				<td><c:if test="${map.FACULTY_NO}" /></td>
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+						${vo.facultyName}
+					</c:forEach>
+				</td>
 				<th>학과</th>
-				<td><c:if test="${map.DEP_NAME}" /></td>
-			
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+						${vo.depName}
+					</c:forEach>
+				</td> 
 			</tr>
 			<tr>
-			
 				<th>학번</th>
-				<td>${principal.officialNo }</td>
-				<th>이름</th>
-				<td>${principal.name }</td>
+				<td>
+					<c:forEach var="vo" items="${stuList}">
+					${vo.stuNo}
+				</c:forEach>
+				</td>
+				<th>학기</th>
+				<td colspan="3">
+					<c:forEach var="vo" items="${stuList}">
+						${vo.semester}
+					</c:forEach>
+				</td> 
 			</tr>	
 			<tr>
-				<th>학기</th>
-				<td colspan="2"><c:if test="${map.SEMESTER}" /></td> 
-				
+				<th>이름</th>
+				<td colspan="3" class="text-left">
+					<c:forEach var="vo" items="${stuList}">
+						${vo.name}
+					</c:forEach>
+				</td> 
 			</tr>
 		</table>
+		</form>
 	</div>
 
 <br><br><br>
@@ -64,17 +87,29 @@
 				<th>납부기간</th>
 				<th>가상계좌</th>
 				<th>수납금액</th>
-				<th>수납여부</th>
 			</tr>
 			<tr>
 				<td><input type="radio"></td>
-				<td>등록금 수납</td>
-				<td>2020-03-10 ~ 2020-03-20</td>
-				
-				<td><c:if test="${map.BANK_NAME}" /><c:if test="${map.ACCOUNT_NO }" /> </td>
-				
-				<td>1,000,000</td>
-				<td>납부</td>
+				<td>
+					<c:forEach var="vo" items="${tList}">
+						${vo.depositState}
+					</c:forEach>
+				</td>
+				<td>
+					<c:forEach var="vo" items="${tList}">
+						${vo.depositDate}
+					</c:forEach>
+				</td>
+				<td>
+					<c:forEach var="vo" items="${tList}">
+						${vo.bankName} ${vo.account_no}
+					</c:forEach>
+				</td>
+				<td>
+					<c:forEach var="vo" items="${tList}">
+						${total}
+					</c:forEach>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -83,7 +118,6 @@
 		<input type="submit" value="확인" id="bt">
 		<input type="button" value="취소" id="bt">
 	</div>
-</form>
 </div>
 
 

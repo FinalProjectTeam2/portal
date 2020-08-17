@@ -73,44 +73,44 @@ hr {
 			<thead>
 				<tr>
 					<th scope="col">학부</th>
-					<th scope="col">
+					<td>
 						<select>
 							<option> -- 구분 -- </option>
 							<option>경영대학</option>
 							<option>예체능</option>
 						</select> 
-					</th>
+					</td>
 					<th scope="col">학과</th>
-					<th scope="col">
+					<td>
 						<select>
 							<option> -- 구분 -- </option>
 							<option>경영학과</option>
 							<option>경제학과</option>
 						</select>
-					</th>
+					</td>
 				</tr>
 				<tr>
 					<th scope="col">학년</th>
-					<th scope="col">
+					<td>
 						<select>
 							<option> -- 구분 -- </option>
 							<option>1학년</option>
 							<option>2학년</option>
 						</select>
-					</th>
+					</td>
 					
 					<th scope="col">학기</th>
-					<th scope="col">
+					<td scope="col">
 						<select>
 							<option> -- 구분 -- </option>
 							<option>1학기</option>
 							<option>2학기</option>
 						</select>
-					</th>
+					</td>
 				</tr>
 				<tr>
 					<th scope="col">이름</th>
-					<th scope="col">홍길동</th>
+					<td>홍길동</td>
 				</tr>	
 			</thead>		
 		</table>

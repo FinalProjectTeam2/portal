@@ -1,8 +1,15 @@
 package com.will.portal.tuition.model;
 
-import java.util.Map;
+import java.util.List;
 
 public interface TuitionService {
-	Map<String, Object> selectStuView(String officicalNo);
-
+	List<TuitionStuVO> selectStuView(String officicalNo);
+	List<TuitionViewVO> selectTuitionView(String officicalNo);
+	List<TuitionDetailVO> selectTuitionDView(String officicalNo);
+	
+	int selectByNo(int no);
+	
+	int insertTuition(TuitionDetailVO dVo);
+	int updateTuition(TuitionDetailVO dVo);
+	int deleteTuition(String officicalNo);
 }

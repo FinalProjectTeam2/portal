@@ -3,15 +3,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style type="text/css">
+body{
+	margin: 0;
+}
 .certificate {
-	border: 2px solid gray;
 	width: 793.7007874px;
-	height: 1122.519685px;
-	margin: 5px;
+	height: 1122px;
+	margin: 10px 0;
 }
 
 .certificate .num {
 	margin-left: 2%;
+	margin: 5% 0 0 2%;
+	padding: 20px 0 0 0;
 }
 
 .certificate .title {

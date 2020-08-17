@@ -1,6 +1,7 @@
 package com.will.portal.professor.model;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -125,7 +126,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Override
 	public List<Subj_timeVO> timeByProfNo(String profNo) {
 		List<String> list = professorDao.codeByProfNo(profNo);
-		return professorDao.timeByCode(list);
+		if(list.size() > 0) {
+			return professorDao.timeByCode(list);
+		}else {
+			return new ArrayList<Subj_timeVO>();
+		}
 	}
 
 	@Override

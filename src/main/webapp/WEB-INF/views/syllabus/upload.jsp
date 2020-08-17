@@ -10,17 +10,17 @@
 
 <style type="text/css">
 body{
-  background: rgba(0,0,0,0.3);
+    overflow:hidden";
+	width: 800px;
+	height: 500px;
 }
-form{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -100px;
-  margin-left: -265px;
-  width: 445px;
-  height: 200px;
+#uploadForm{
+  position:relative;
+  width: 72.5%;
+  height: 220px;
   border: 4px dashed gray;
+  margin-top: 10%;
+  margin-left: 12%;
 }
 form p{
   width: 100%;
@@ -30,7 +30,7 @@ form p{
   color: black;
   font-family: Arial;
 }
-form input{
+#dropZone{
   position: absolute;
   margin: 0;
   padding: 0;
@@ -40,18 +40,17 @@ form input{
   opacity: 0;
 }
 #btUpload{
-  position: relative;
-  margin: 0;
+  clear:both;
   color: #fff;
   background: #16a085;
   border: none;
-  width: 445px;
+  width: 100%;
   height: 35px;
-  margin-left: -4px;
   border-radius: 4px;
   border-bottom: 4px solid #117A60;
   transition: all .2s ease;
   outline: none;
+  margin-bottom: 500px;
 }
 #btUpload:hover{
   background: #149174;
@@ -62,12 +61,11 @@ form input{
 }
 
 #info{
-	position: absolute;
-	top: 26%;
-	left: 28%;
-	width: 500px;
+	position: relative;
+	width: 80%;
+	margin-top: 5%;
+	margin-left: 12%;
 }
-
 	
 </style>
 
@@ -227,6 +225,11 @@ form input{
         	alert('실기시간을 입력해야 합니다.');
         	return;
         }
+        if($('#openSubj option:selected').val()=='none'){
+        	alert('과목을 선택해야 합니다.');
+        	return;
+        }
+        
         
         // 파일이 있는지 체크
         if(uploadFileList.length == 0){
@@ -279,19 +282,20 @@ form input{
 
 
 </head>
-<BODY>
+<body style="overflow: hidden;">
 
     	<div id="info">
-    		<span class="input-group-text" style="float: left">과목명 :&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    		<span class="input-group-text" style="float: left;width:21%">과목명 : </span>
 	    	<select class="form-control" id="openSubj" class="selectpicker" style="float: left; width: 70%">
 	    		<c:if test="${!empty list }">
+	    			<option value="none">과목을 선택해주세요</option>
 	    			<c:forEach var="vo" items="${list}">
 	    				<option value="${vo.subjCode }">${vo.subjName }</option>
-	    			</c:forEach>
+	    			</c:forEach>	
 	    		</c:if>
 	    	</select><br>
-	    	<span class="input-group-text" style="float: left">이론시간 :</span> <input type="text" class="form-control"  id="theoryTime" style="width: 70%" style="float: left">
-	    	<span class="input-group-text" style="float: left">이론시간 :</span><input type="text" class="form-control"  id="trainingTime" style="float: left;width: 70%">
+	    	<span class="input-group-text" style="float: left;width:21%">이론시간 :</span> <input type="text" class="form-control"  id="theoryTime" style="width: 70%" style="float: left">
+	    	<span class="input-group-text" style="float: left;width:21%">이론시간 :</span><input type="text" class="form-control"  id="trainingTime" style="float: left;width: 70%">
 	    	
     	</div>
     <form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">
@@ -309,7 +313,7 @@ form input{
     </form>
         
         
-</BODY>
+</body>
 </HTML>
 
 

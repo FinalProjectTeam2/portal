@@ -12,7 +12,6 @@ public class AdminController {
 	private static final Logger logger
 	= LoggerFactory.getLogger(AdminController.class);
 
-	
 	@RequestMapping(value = "/admin/adminMain",method = RequestMethod.GET)
 	public void adminMain() {
 		logger.info("adminMain, Get");
@@ -23,6 +22,5 @@ public class AdminController {
 	public void test() {
 		logger.info("test, Get");
 	}
-	
 	
 }

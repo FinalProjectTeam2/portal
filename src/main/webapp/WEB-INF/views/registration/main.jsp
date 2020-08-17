@@ -23,7 +23,7 @@
 				data:{"facultyNo":facultyNo},
 				success:function(res){
 					var str="<select name='p_major' id='p_major' style='width: 100%'>";
-					str+="<option value='All'>---All---</option>";
+					str+="<option value='0'>---All---</option>";
 
 					$.each(res, function(index, item){
 						str+="<option value='"+item.depNo+"'>"+item.depName+"</option>";
@@ -85,18 +85,18 @@
 	
 	//수강신청 모든 리스트(검색기능 사용시 검색할 내용만 sort)
 	function subjList(currentPage){
-		var faculty=$('#p_daehak').val();
+		var facultyNo=$('#p_daehak').val();
 		var department=$('#p_major').val();
 		var subjName=$('#p_subjt').val();
 		var time1=$('#p_day').val();
 		var time2=$('#p_time').val();
 		var profName=$('#p_teach').val();
 		var openSubCode=$('#p_code').val();
-
+		console.log(facultyNo+","+department);
 		$.ajax({
 			url:"<c:url value='/registration/openSubjList'/>",
 			data:{
-				"facultyNo":faculty,
+				"facultyNo":facultyNo,
 				"depNo":department,
 				"subjName":subjName,
 				"time1":time1,
@@ -120,7 +120,13 @@
 
 					}else if(checkNull=='N'){
 							$.each(res.list, function(idx, item){
-
+							var fileName=item.syllabus;
+							var fileNameIdx=fileName.lastIndexOf("_");
+							var extIdx=fileName.lastIndexOf(".");
+							console.log(fileNameIdx);
+							var ext=fileName.substr(extIdx);
+							var originalFileName=fileName.substr(0, fileNameIdx)+ext;
+							console.log(originalFileName);
 							str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
 							str+="<td role='gridcell' style='height: 0px; width: 7%;'><button type='button' class='applyBt'>신청</button></td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
@@ -131,7 +137,9 @@
 							str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 6%;'>"+item.type+"</td>";
 							str+="<td role='gridcell' style='height: 0px; width: 9%;'>한국어</td>";
-							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.syllabus+"</td>";
+							str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+
+							"<a href='<c:url value='/registration/download?fileName="+fileName+"&originalFileName="+originalFileName+"'/>'>"+
+							originalFileName+"</a></td>";
 							str+="</tr>";
 						});
 					}
@@ -207,6 +215,12 @@
 				if(res.checkNull=="N"){
 					$.each(res.subList, function(idx, item){
 						sum+=item.credit;
+						var fileName=item.syllabus;
+						var fileNameIdx=fileName.lastIndexOf("_");
+						var extIdx=fileName.lastIndexOf(".");
+						console.log(fileNameIdx);
+						var ext=fileName.substr(extIdx);
+						var originalFileName=fileName.substr(0, fileNameIdx)+ext;
 						str+="<tr class='jqgfirstrow' role='row' id='appliedList'>";
 						str+="<td role='gridcell' style='height: 0px; width: 7%;'><button class='cancelBt'>취소</button></td>";
 						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.openSubCode+"</td>";
@@ -217,8 +231,9 @@
 						str+="<td role='gridcell' style='height: 0px; width: 14%;'>"+item.shortNames+"/"+item.classroomName+"</td>";
 						str+="<td role='gridcell' style='height: 0px; width: 6%;'>"+item.type+"</td>";
 						str+="<td role='gridcell' style='height: 0px; width: 9%;'>한국어</td>";
-						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+item.syllabus+"</td>";
-						str+="</tr>";
+						str+="<td role='gridcell' style='height: 0px; width: 9%;'>"+
+						"<a href='<c:url value='/registration/download?fileName="+fileName+"&originalFileName="+originalFileName+"'/>'>"+
+						originalFileName+"</a></td></tr>";
 					});
 				}else if(res.checkNull=="Y"){
 					str+="<tr class='jqgfirstrow' role='row' id='subjects'>";
@@ -262,20 +277,20 @@
 		//년도 띄우기
 		var today = new Date();
 		var year = today.getFullYear();
-		$('#p_year option').val(year+3).prop("selected", true);
+		$('#p_year').val(year).prop("selected", true);
 		//임의로 분기별로 수강신청 해당학기 정함
 		var month = today.getMonth()+1;
 		if(month >= 1 && month <=3){
-			$('#p_term option').val('25').prop("selected", true);
+			$('#p_term').val('25').prop("selected", true);
 			$('#p_term').prop("disable");
 		}else if(month >= 4 && month <=6){
-			$('#p_term option').val('10').prop("selected", true);
+			$('#p_term').val('10').prop("selected", true);
 			$('#p_term').prop("disable");
 		}else if(month >= 7 && month <=9){
-			$('#p_term option').val('15').prop("selected", true);
+			$('#p_term').val('15').prop("selected", true);
 			$('#p_term').prop("disable");
 		}else if(month >= 10 && month <=12){
-			$('#p_term option').val('20').prop("selected", true);
+			$('#p_term').val('20').prop("selected", true);
 			$('#p_term').prop(disable);
 		}
 	}

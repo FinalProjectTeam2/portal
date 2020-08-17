@@ -1,6 +1,6 @@
 package com.will.portal.tuition.model;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,40 @@ public class TuitionServiceImpl implements TuitionService {
 	@Autowired private TuitionDAO tuitionDao;
 
 	@Override
-	public Map<String, Object> selectStuView(String officicalNo) {
+	public List<TuitionStuVO> selectStuView(String officicalNo) {
 		
 		return tuitionDao.selectStuView(officicalNo);
 	}
 
+	@Override
+	public List<TuitionViewVO> selectTuitionView(String officicalNo) {
+		
+		return tuitionDao.selectTuitionView(officicalNo);
+	}
 
+	@Override
+	public List<TuitionDetailVO> selectTuitionDView(String officicalNo) {
+		
+		return tuitionDao.selectTuitionDView(officicalNo);
+	}
 
+	@Override
+	public int insertTuition(TuitionDetailVO dVo) {
+		return tuitionDao.insertTuition(dVo);
+	}
 
+	@Override
+	public int updateTuition(TuitionDetailVO dVo) {
+		return tuitionDao.updateTuition(dVo);
+	}
+
+	@Override
+	public int deleteTuition(String officicalNo) {
+		return tuitionDao.deleteTuition(officicalNo);
+	}
+
+	@Override
+	public int selectByNo(int no) {
+		return tuitionDao.selectByNo(no);
+	}
 }

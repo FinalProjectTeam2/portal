@@ -25,6 +25,25 @@ public class AssignmentServiceImpl implements AssignmentService{
 	public int assignUpload(AssignmentVO vo) {
 		return assignDao.assignUpload(vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> assignStuList(Distribute_assignVO vo) {
+		return assignDao.assignStuList(vo);
+	}
+
+	@Override
+	public int inputAssign(Distribute_assignVO vo) {
+		return assignDao.inputAssign(vo);
+	}
+
+	@Override
+	public int delAssign(Distribute_assignVO vo) {
+		int cnt = 0;
+		cnt = assignDao.delAssignStu(vo);
+		cnt = assignDao.delAssign(vo);
+		
+		return cnt;
+	}
 	
 	
 

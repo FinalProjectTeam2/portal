@@ -3,9 +3,40 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.tuition">
-	<select id="selectStuView" parameterType="String" resultType="map">
+	<select id="selectStuView" parameterType="string" resultType="TuitionStuVO">
 		select * from student_view2
 		where stu_no=#{officicalNo}
 	</select>	
+	
+	<select id="selectTuitionView" parameterType="string" resultType="TuitionViewVO">
+		select * from tuition_view
+		where stu_no=#{officicalNo}
+	</select>
+
+	<select id="selectTuitionDView" parameterType="string" resultType="TuitionDetailVO">
+		select * from tuitionD_view
+		where stu_no=#{officicalNo}
+	</select>
+
+	<select id="selectByNo" parameterType="int" resultType="TuitionDetailVO">
+		select * from tuitionD_view 
+		where no=#{no} 
+	</select>
+
+	<insert id="insertTuition" parameterType="TuitionDetailVO">
+		insert into tuitionD_view(stuNo, admissionfee, tuition, practicecost, studentfee, scholarship, reduction, total)  
+		values(#{stuNo}, #{admissionfee}, #{tuition}, #{practicecost}, #{studentfee}, #{scholarship}, #{reduction}, #{total})
+	</insert>
+
+	<update id="updateTuition" parameterType="TuitionDetailVO">
+		update tuitionD_view
+		set #{stuNo}, #{admissionfee}, #{tuition}, #{practicecost}, #{studentfee}, #{scholarship}, #{reduction}, #{total}
+		where stu_no=#{officicalNo}
+	</update>
+	
+	<delete id="deleteTuition" parameterType="String">
+		delete from tuitionD_view
+		where stu_no=#{officicalNo}
+	</delete>
 
 </mapper>

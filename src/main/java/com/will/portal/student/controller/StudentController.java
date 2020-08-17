@@ -113,13 +113,51 @@ public class StudentController {
 	@RequestMapping("/studentScoreChart")
 	public void studentScoreChart(Principal principal,@ModelAttribute GradeListVO gradeList,
 			@RequestParam(required = false) String stuName, Model model) {
+		
 		MemberDetails user = (MemberDetails) ((Authentication) principal).getPrincipal();
 		String officialNo = user.getOfficialNo();
-		
-		logger.info("stuName={}",stuName);
-		logger.info("studentScore, param: gradeList={}, officialNo={}",gradeList, officialNo);
+
+		logger.info("studentScoreChart, param: officialNo={}", officialNo);
 		List<String> slist = studentService.selectSemester(officialNo);
 		logger.info("slist={}", slist);
+
+		List<List<Map<String, Object>>> tlist = new ArrayList<List<Map<String, Object>>>();
+		ScoreSearchVO scoreSearchVo = new ScoreSearchVO();
+		scoreSearchVo.setStuNo(officialNo);
+			for (int i = 0; i < slist.size(); i++) {
+				scoreSearchVo.setSemester(slist.get(i));
+				List<Map<String, Object>> list = studentService.selectScore(scoreSearchVo);
+				tlist.add(list);
+			}
+		logger.info("tlist={}", tlist);
+
+		List<String> slist2 = new ArrayList<String>();
+		String sort = "";
+		for (String sem : slist) {
+			if (sem.substring(sem.length() - 1).equals("2")) {
+				sort = "/1학기";
+			} else if (sem.substring(sem.length() - 1).equals("8")) {
+				sort = "/2학기";
+			}
+			slist2.add(sem.substring(0, 4) + sort);
+		}
+		logger.info("slist2={}", slist2);
+
+		List<String> slistCh = new ArrayList<String>();
+		String sortCh = "";
+		for (String sem : slist) {
+			if (sem.substring(sem.length() - 1).equals("2")) {
+				sortCh = "/1학기";
+			} else if (sem.substring(sem.length() - 1).equals("8")) {
+				sortCh = "/2학기";
+			}
+			slistCh.add("\""+sem.substring(0, 4) + sortCh+"\"");
+		}
+		logger.info("slistCh={}", slistCh);
+
+		
+		logger.info("stuName={}",stuName);
+		logger.info("studentScoreChart, param: gradeList={}, officialNo={}",gradeList, officialNo);
 		
 		List<GradeVO> glist= gradeList.getGradeList();
 		logger.info("{}",glist);
@@ -131,21 +169,13 @@ public class StudentController {
 			logger.info("dlist[{}]={}",i,glist.get(i).getGrade());
 		}
 		
-		List<String> slistCh = new ArrayList<String>();
-		String sortCh = "";
-		for (String sem : slist) {
-			if (sem.substring(sem.length() - 1).equals("2")) {
-				sortCh = "01";
-			} else if (sem.substring(sem.length() - 1).equals("8")) {
-				sortCh = "02";
-			}
-			slistCh.add(sem.substring(0, 4) + sortCh);
-		}
-		logger.info("slistCh={}", slistCh);
 		
 		double min=Collections.min(dlist);
 		
+		model.addAttribute("slist", slist);
+		model.addAttribute("slist2", slist2);
 		model.addAttribute("slistCh", slistCh);
+		model.addAttribute("tlist", tlist);
 		model.addAttribute("dlist",dlist);
 		model.addAttribute("stuName",stuName);
 		model.addAttribute("min",min);
