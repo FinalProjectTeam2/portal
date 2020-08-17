@@ -629,23 +629,24 @@ public class LectureController {
 		logger.info("list.size()={}", arrList.size());
 		List<EvaluationVO> list = new ArrayList<EvaluationVO>();
 		String result = "성적입력 실패";
+		logger.info("arrList.get(0), arrList.get(1)",arrList.get(0), arrList.get(1));
 		for(int i = 0; i < arrList.size(); i++) {
 			
 			EvaluationVO vo = new EvaluationVO();
 			logger.info("arrList.get({})={}",i,arrList.get(i));
 			String[] arr= arrList.get(i).split(",");
-			
-			vo.setSubCode(arr[0]);
-			vo.setStuNo(arr[1]);
-			vo.setClassification(arr[2]);
-			vo.setMidterm(Integer.parseInt(arr[3]));
-			vo.setFinals(Integer.parseInt(arr[4]));
-			vo.setAssignment(Integer.parseInt(arr[5]));
-			vo.setAttendance(Integer.parseInt(arr[6]));
-			vo.setEtc(Integer.parseInt(arr[7]));
-			vo.setTotalGrade(Integer.parseInt(arr[8]));
-			
-			list.add(vo);
+			if(arr[i]!=null) {
+				vo.setSubCode(arr[0]);
+				vo.setStuNo(arr[1]);
+				vo.setClassification(arr[2]);
+				vo.setMidterm(Integer.parseInt(arr[3]));
+				vo.setFinals(Integer.parseInt(arr[4]));
+				vo.setAssignment(Integer.parseInt(arr[5]));
+				vo.setAttendance(Integer.parseInt(arr[6]));
+				vo.setEtc(Integer.parseInt(arr[7]));
+				vo.setTotalGrade(Integer.parseInt(arr[8]));
+				list.add(vo);
+			}
 			
 		}
 		
@@ -761,7 +762,7 @@ public class LectureController {
 		return list;
 	}
 	
-	@RequestMapping("/lecture/ajax/evalCheck")
+	@RequestMapping(value = "/lecture/ajax/evalCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean evalCheck(Principal pincipal, @RequestParam String subjCode) {
 		MemberDetails user = (MemberDetails)((Authentication)pincipal).getPrincipal();

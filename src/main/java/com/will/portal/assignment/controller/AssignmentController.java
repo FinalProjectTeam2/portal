@@ -203,7 +203,7 @@ public class AssignmentController {
 	
 	@RequestMapping(value = "/delAssign", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public List<Distribute_assignVO> delAssign(@RequestParam int assignNo, @RequestParam String assignName,
+	public Map<String, Object> delAssign(@RequestParam int assignNo, @RequestParam String assignName,
 			@RequestParam String openSubCode) {
 		logger.info("과제등록 버튼 누른 후 파라미터 openSubCode={}, assignName={}", assignNo, assignName);
 		Distribute_assignVO vo = new Distribute_assignVO();
@@ -212,12 +212,11 @@ public class AssignmentController {
 		
 		int cnt = assignServ.delAssign(vo);
 		
-		List<Distribute_assignVO> list = null;
-		if(cnt > 0 ) {
-			list=assignServ.getDistAssign(openSubCode);
-		}
-	
-		return list;
+		List<Distribute_assignVO> list = assignServ.getDistAssign(openSubCode);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("cnt", cnt);
+		return map;
 	}
 	
 	
