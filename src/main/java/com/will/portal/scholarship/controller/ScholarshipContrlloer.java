@@ -164,7 +164,7 @@ public class ScholarshipContrlloer {
 		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
 		String officicalNo=user.getOfficialNo();
 		
-		List<TuitionStuVO> stuList = tuitionService.selectStuView(officicalNo);
+		List<ScholarshipAllVO> list = scholarshipService.selectAllScholarship(officicalNo);
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
 		
 		vo.setStuNo(officicalNo);
@@ -202,7 +202,7 @@ public class ScholarshipContrlloer {
 		
 		model.addAttribute("vo", vo);
 
-		return "scholarship/scholarship3";
+		return "scholarship/scholarshipEdit";
 	}
 	
 	@RequestMapping(value="/scholarshipEdit", method=RequestMethod.POST)

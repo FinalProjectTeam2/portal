@@ -17,7 +17,7 @@
             alert('지급상태를 변경하려는 학생부터 선택하세요');
             return;
          }else if($('#states').val() == '0'){
-            alert('변경하려는 학적상태를 선택하세요');
+            alert('변경하려는 상태를 선택하세요');
             return;
          }
          
@@ -78,8 +78,9 @@
 									 selected="selected"
 									</c:if>>${facVo.facultyName }</option>
 								</c:forEach>
-							</select> <label for="department"><span>학과</span></label> <select
-								name="major" class="rightEnd" id="department">
+							</select> 
+							<label for="department"><span>학과</span></label> 
+							<select name="major" class="rightEnd" id="department">
 								<c:if test="${empty param.facultyNo || param.facultyNo==0}">
 									<option value="0">학부를 선택하세요</option>
 								</c:if>
@@ -88,8 +89,9 @@
 									<c:forEach var="vo" items="${departmentList}">
 										<option value="${vo.depNo}"
 											<c:if test="${param.major==vo.depNo }">
-									 selected="selected" 
-									</c:if>>${vo.depName }</option>
+									 			selected="selected" 
+											</c:if>
+										> ${vo.depName }</option>
 									</c:forEach>
 								</c:if>
 							</select>
@@ -185,6 +187,94 @@
 												href="<c:url value='/tuition/tuitionEdit?officialNo=${map["STU_NO"] }'/>">수정</a></td>
 											<td><a id="deleteBt"
 												href="<c:url value='/tuition/tuitionDel?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
+										</tr>
+										<c:set var="idx" value="${idx+1 }"/>
+									</c:forEach>
+									<!-- 반복 끝 -->
+								</c:if>
+							</tbody>
+						</table>
+					</div>
+					
+					<!-- 등록금 내역 -->
+					<div class="divList">
+						<table class="box2" summary="등록금 목록">
+							<caption>등록금 내역</caption>
+							<colgroup>
+								<col style="width: 5%" />
+								<!-- 체크박스 -->
+								<col style="width: 10%" />
+								<!-- 번호 -->
+								<col style="width: 15%" />
+								<!-- 학번 -->
+								<col style="width: 10%" />
+								<!-- 학기 -->
+								<col style="width: 10%" />
+								<!-- 입학금 -->
+								<col style="width: 20%" />
+								<!-- 등록금 -->
+								<col style="width: 10%" />
+								<!-- 실습비 -->
+								<col style="width: 14%" />
+								<!-- 학생회비 -->
+								<col style="width: 10%" />
+								<!-- 장학금 -->
+								<col style="width: 20%" />
+								<!-- 감면액 -->
+								<col style="width: 10%" />
+								<!-- 총액 -->
+								<col style="width: 14%" />
+								<!-- 납부 여부 -->
+								<col style="width: 10%" />
+								<!-- 납부한 날짜 -->
+								<col style="width: 20%" />
+								
+							</colgroup>
+							<thead>
+								<tr>
+									<th><input type="checkbox" name="chkAll"></th>
+									<th scope="col">번호</th>
+									<th scope="col">학번</th>
+									<th scope="col">학기</th>
+									<th scope="col">입학금</th>
+									<th scope="col">등록금</th>
+									<th scope="col">실습비</th>
+									<th scope="col">학생회비</th>
+									<th scope="col">장학금</th>
+									<th scope="col">감면액</th>
+									<th scope="col">총액</th>
+									<th scope="col">납부 여부</th>
+									<th scope="col">납부한 날짜</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${empty tlist }">
+									<tr>
+										<td colspan="9">결과가 없습니다.</td>
+									</tr>
+								</c:if>
+								<c:if test="${!empty tlist }">
+									<!--반복시작-->
+									<c:set var="idx" value="0" />
+									<c:forEach var="vo" items="${tlist }">
+										<tr>
+											<td><input type="checkbox" name="tlist[${idx }].no" value="${vo.no}"></td>
+											<td>${vo.stuNo}</td>
+											<td>${vo.semester}</td>
+											<td>${vo.admissionfee}</td>
+											<td>${vo.tuition}</td>
+											<td>${vo.practicecost}</td>
+											<td>${vo.studentfee}</td>
+											<td>${vo.scholarship}</td>
+											<td>${vo.reduction}</td>
+											<td>${vo.total}</td>
+											<td>${vo.depositState}</td>
+											<td>${vo.datepaid}</td>
+											<td><a
+												href="<c:url value='/tuition/tuitionEdit?no=${vo.no}'/>">수정</a></td>
+											<td><a id="deleteBt"
+												href="<c:url value='/tuition/tuitionDel?no=${vo.no }'/>">삭제</a></td>
 										</tr>
 										<c:set var="idx" value="${idx+1 }"/>
 									</c:forEach>

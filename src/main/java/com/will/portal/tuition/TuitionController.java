@@ -127,9 +127,14 @@ public class TuitionController {
 	 */
 	@RequestMapping("/tuitionList")
 	public void tuitionList(@ModelAttribute StudentSearchVO studentSearchVo,
-			@RequestParam(required = false) String state, Model model) {
-		logger.info("adminManageStudent, param:state={}, {}", state, studentSearchVo);
-
+			@RequestParam(required = false) String state, Model model, Principal principal) {
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String officicalNo=user.getOfficialNo();
+		
+		List<TuitionDetailVO> tlist = tuitionService.selectTuitionDView(officicalNo);
+		
+		logger.info("tuitionList, param:state={}, {}", state, studentSearchVo);
+		
 		// select 생성
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
 		List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(studentSearchVo.getFacultyNo());
@@ -169,6 +174,7 @@ public class TuitionController {
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
 		model.addAttribute("state",state);
+		model.addAttribute("tlist", tlist);
 	}
 	/**
 	 * 체크박스 조건 설정
@@ -258,7 +264,7 @@ public class TuitionController {
 		int cnt=tuitionService.updateTuition(dVo);
 		if(cnt>0) {
 			msg="등록금 수정 처리되었습니다";
-			url="/tuition/tuitionDetail.do?no="+dVo.getNo();;
+			url="/tuition/tuitionDetail.do?no="+dVo.getNo();
 		}
 		
 		model.addAttribute("msg", msg);

@@ -26,10 +26,10 @@
 											<label for="name" class="cols-sm-2 control-label">이름</label>
 											<div class="cols-sm-10">
 												<div class="input-group">
-													<span class="input-group-addon"><i
-														class="fa fa-user fa" aria-hidden="true"></i></span> 
-														<input type="text" class="form-control" name="name" id="name"
-														placeholder="이름을 입력하세요" />
+													<span class="input-group-addon">
+														<i class="fa fa-user fa" aria-hidden="true"></i>
+													</span> 
+													<input type="text" class="form-control" name="name" id="name" placeholder="이름을 입력하세요" />
 												</div>
 											</div>
 										</div>
@@ -37,10 +37,10 @@
 											<label for="ssn" class="cols-sm-2 control-label">입학금</label>
 											<div class="cols-sm-10">
 												<div class="input-group">
-													<span class="input-group-addon"><i
-														class="fa fa-user fa" aria-hidden="true"></i></span> 
-														<input type="text" class="form-control" name="ssn" id="SSN" 
-														placeholder="금액을 입력하세요" />
+													<span class="input-group-addon">
+														<i class="fa fa-user fa" aria-hidden="true"></i>
+													</span> 
+													<input type="text" class="form-control" name="ssn" id="SSN" placeholder="금액을 입력하세요" />
 												</div>
 											</div>
 										</div>
@@ -49,9 +49,9 @@
 											<div class="cols-sm-10">
 												<div class="input-group">
 													<span class="input-group-addon">
-													<i class="fa fa-user fa" aria-hidden="true"></i>
+														<i class="fa fa-user fa" aria-hidden="true"></i>
 													</span> 
-														<input type="text" class="form-control" name="name" id="name" placeholder="금액을 입력하세요" />
+													<input type="text" class="form-control" name="name" id="name" placeholder="금액을 입력하세요" />
 												</div>
 											</div>
 										</div>
@@ -60,9 +60,9 @@
 											<div class="cols-sm-10">
 												<div class="input-group">
 													<span class="input-group-addon">
-													<i class="fa fa-user fa" aria-hidden="true"></i></span> 
-														<input type="text" class="form-control" name="name" id="name"
-														placeholder="금액을 입력하세요" />
+														<i class="fa fa-user fa" aria-hidden="true"></i>
+													</span> 
+													<input type="text" class="form-control" name="name" id="name" placeholder="금액을 입력하세요" />
 												</div>
 											</div>
 										</div>
@@ -70,10 +70,10 @@
 											<label for="name" class="cols-sm-2 control-label">학생회비</label>
 											<div class="cols-sm-10">
 												<div class="input-group">
-													<span class="input-group-addon"><i
-														class="fa fa-user fa" aria-hidden="true"></i></span> 
-														<input type="text" class="form-control" name="name" id="name"
-														placeholder="금액을 입력하세요" />
+													<span class="input-group-addon">
+														<i class="fa fa-user fa" aria-hidden="true"></i>
+													</span> 
+													<input type="text" class="form-control" name="name" id="name" placeholder="금액을 입력하세요" />
 												</div>
 											</div>
 										</div>
@@ -81,10 +81,10 @@
 											<label for="name" class="cols-sm-2 control-label">장학금</label>
 											<div class="cols-sm-10">
 												<div class="input-group">
-													<span class="input-group-addon"><i
-														class="fa fa-user fa" aria-hidden="true"></i></span> 
-														<input type="text" class="form-control" name="name" id="name"
-														placeholder="금액을 입력하세요" />
+													<span class="input-group-addon">
+														<i class="fa fa-user fa" aria-hidden="true"></i>
+													</span> 
+													<input type="text" class="form-control" name="name" id="name" placeholder="금액을 입력하세요" />
 												</div>
 											</div>
 										</div>
@@ -92,10 +92,10 @@
 											<label for="name" class="cols-sm-2 control-label">감면액</label>
 											<div class="cols-sm-10">
 												<div class="input-group">
-													<span class="input-group-addon"><i
-														class="fa fa-user fa" aria-hidden="true"></i></span> 
-														<input type="text" class="form-control" name="name" id="name"
-														placeholder="금액을 입력하세요" />
+													<span class="input-group-addon">
+														<i class="fa fa-user fa" aria-hidden="true"></i>
+													</span> 
+													<input type="text" class="form-control" name="name" id="name" placeholder="금액을 입력하세요" />
 												</div>
 											</div>
 										</div>
@@ -103,13 +103,14 @@
 											<label for="name" class="cols-sm-2 control-label">납부여부</label>
 											<div class="cols-sm-10">
 												<div class="input-group">
-													<span class="input-group-addon"><i
-														class="fa fa-user fa" aria-hidden="true"></i></span> 
-														<input type="text" class="form-control" name="name" id="name"
-														placeholder="금액을 입력하세요" />
+													<span class="input-group-addon">
+														<i class="fa fa-user fa" aria-hidden="true"></i>
+													</span> 
+													<input type="text" class="form-control" name="name" id="name" placeholder="금액을 입력하세요" />
 												</div>
 											</div>
 										</div>
+										
 										<!--공통입력 항목 구분선  -->
 										<hr id="selLine">
 										<div class="hid emp form-group">
