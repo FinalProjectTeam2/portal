@@ -200,4 +200,16 @@
 		set keep_flag = 'Y'
 		where no = #{no}
 	</update>
+	
+	<select id="selectMainList" resultType="messageAllVo" parameterType="String">
+		select * from
+		(select rownum rnum, A.* from
+		(select o.*, i.official_no in_Offi, i.no, i.read_date
+		from outbox o join inbox i on o.msg_no = i.msg_no 
+		where i.official_no = #{officialNo} and i.read_date is null
+		order by send_date desc)A)
+		<![CDATA[ 
+		where rnum < 8
+		]]>
+	</select>
 </mapper>

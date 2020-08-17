@@ -6,6 +6,8 @@
 <!-- sidebar -->
 <%@ include file="../../inc/portalSidebar.jsp"%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/resources/css/board/detail.css'/>" />
 <style>
 #others a{
 	color: black;

@@ -244,4 +244,15 @@ public class MessageController {
 		List<StudentVO> list = stuServ.selectListByName(name);
 		return list;
 	}
+	
+	@RequestMapping("/selectMainList")
+	@ResponseBody
+	public List<MessageAllVO> selectMainList(Authentication authentication) {
+		MemberDetails user = (MemberDetails) authentication.getPrincipal();
+		log.info("index 쪽지 보여주기 user={}",user);
+		
+		List<MessageAllVO> list = service.selectMainList(user.getOfficialNo());
+		log.info("결과 list.size={}",list.size());
+		return list;
+	}
 }

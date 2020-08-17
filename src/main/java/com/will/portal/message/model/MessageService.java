@@ -20,4 +20,5 @@ public interface MessageService {
 	int updateReadDateByNo(int no);
 	int deleteInboxByNo(int no);
 	int updateKeepMsg(int no);
+	List<MessageAllVO> selectMainList(String officialNo);
 }
