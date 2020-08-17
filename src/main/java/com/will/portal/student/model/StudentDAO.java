@@ -1,6 +1,5 @@
 package com.will.portal.student.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,5 +23,5 @@ public interface StudentDAO {
 	List<StudentTimeTableVO> selectTimetable(String stuNo);
 	List<Map<String, Object>> selectScore(ScoreSearchVO scoreSearchVo);
 	List<String> selectSemester(String stuNo);
-
+	List<StudentVO> selectListByName(String name);
 }

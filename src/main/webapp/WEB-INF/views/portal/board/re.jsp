@@ -76,7 +76,6 @@ function addReplyList(res) {
 	var data = '';
 	if(res.length > 0){
 		$.each(res, function(idx, item) {
-			console.log(item);
 			data += '<div class="divData">'
 				+'<div class="divIcon">'
 				+ "<img class='studentImg' alt='사진' src='${ pageContext.request.contextPath }/common/image?img=" +item.replyVo.imageUrl+ "'/>"

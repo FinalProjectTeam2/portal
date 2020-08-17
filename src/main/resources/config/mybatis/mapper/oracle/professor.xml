@@ -202,4 +202,9 @@
 		where prof_no = #{profNo}
 	</update>
 	
+	<select id="selectListByName" parameterType="String" resultType="professorVo">
+		select e.*, (select dep_name from department d where d.dep_no=e.dep_no) dep_name 
+		from professor e where e.prof_name like '%'|| #{name} ||'%'
+	</select>
+	
 </mapper>

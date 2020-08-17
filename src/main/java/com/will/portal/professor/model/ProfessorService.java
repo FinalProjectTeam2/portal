@@ -39,5 +39,5 @@ public interface ProfessorService {
 	
 	public int updateProfessor(ProfessorVO profVo);
 
-
+	List<ProfessorVO> selectListByName(String name);
 }

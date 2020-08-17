@@ -15,4 +15,9 @@ public class Emp_departDAOMybatis implements Emp_deaprtDAO{
 	public List<Emp_departVO> selectEmpDepart(){
 		return sqlSession.selectList(namespce + "selectEmpDepart");
 	}
+
+	@Override
+	public Emp_departVO selectEmpDepartByCode(String Code) {
+		return sqlSession.selectOne(namespce+"selectEmpDepartByCode", Code);
+	}
 }

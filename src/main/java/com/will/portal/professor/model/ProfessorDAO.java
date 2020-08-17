@@ -34,6 +34,6 @@ public interface ProfessorDAO {
 	
 	int updateProfessor(ProfessorVO profVo);
 	
-	
+	List<ProfessorVO> selectListByName(String name);
 
 }

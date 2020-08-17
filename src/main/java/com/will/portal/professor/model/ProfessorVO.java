@@ -23,6 +23,7 @@ public class ProfessorVO extends MemberDetails {
 	private Timestamp resignationDate;
 	private String identityState;
 	private String identifyCode;
+	private String depName;
 
 	@Override
 	public String toString() {
@@ -30,6 +31,16 @@ public class ProfessorVO extends MemberDetails {
 				+ ", positionNo=" + positionNo + ", startDate=" + startDate + ", resignationDate=" + resignationDate
 				+ ", identityState=" + identityState + ", identifyCode=" + identifyCode + "]";
 	}
+
+	public String getDepName() {
+		return depName;
+	}
+
+	public void setDepName(String depName) {
+		this.depName = depName;
+	}
+
+
 
 	public ProfessorVO() {
 		super();

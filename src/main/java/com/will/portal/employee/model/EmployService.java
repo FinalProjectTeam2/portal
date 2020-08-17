@@ -23,4 +23,5 @@ public interface EmployService {
 	int deleteEmployee(String empNo);
 	int multiUpdatePosition(List<EmployeeVO> list,String positionCode);
 	int multiDelete(List<EmployeeVO> list);
+	List<EmployeeVO> selectListByName(String name);
 }

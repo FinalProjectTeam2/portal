@@ -9,7 +9,6 @@
 			dataType:"json",
 			type:"get",
 			success: function(res) {
-				console.log(res);
 				var str = "";
 				str = '<div class="sidebar-sticky pt-3"'
 					+'style="background: #626d80; height: 100%;">'
@@ -50,6 +49,8 @@
 					+'</a></li>'
 					+'<li class="nav-item"><a class="nav-link" href="<c:url value='/search/searchTel' />"><span'
 					+'class="bullets"></span>전화번호 검색 </a></li>'
+					+'<li class="nav-item"><a class="nav-link" href="<c:url value='/campusMap' />"><span'
+					+'class="bullets"></span>캠퍼스 맵</a></li>'
 					+'</ul>';
 					
 				str += '</div>';
