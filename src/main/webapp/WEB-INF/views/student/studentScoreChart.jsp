@@ -98,7 +98,13 @@ span.fontLar {
 			                display: true,
 			                stacked: true,
 			                ticks: {
-			                    min: ${min-0.5}, // minimum value
+			                    min: 
+			                    	<c:if test="${min-0.5<0}">
+			                    	${min}
+			                    	</c:if>
+			                    	<c:if test="${min-0.5>=0}">
+			                    	${min-0.5}
+			                    	</c:if>, // minimum value
 			                    max: 4.5 // maximum value
 			                }
 			            }]

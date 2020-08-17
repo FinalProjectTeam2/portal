@@ -9,4 +9,5 @@ public interface FacultyDAO {
 	Map<String,Object> selectFacultyViewBydepNo(int depNo);
 	FacultyVO selectFacultyByFacultyNo(int facultyNo);
 	int updateFacultyName(FacultyVO facultyVo);
+	int insertFaculty(FacultyVO facultyVo);
 }

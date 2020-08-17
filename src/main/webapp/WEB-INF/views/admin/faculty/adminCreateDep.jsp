@@ -99,16 +99,16 @@ span.telSlash {
 			if(check()){
 				var formData = $("#boardFrm").serialize();
 				$.ajax({
-					url : "/portal/admin/faculty/adminEditFacultyAjax",
+					url : "/portal/admin/faculty/adminCreateDepAjax",
 					data : formData,
 					type : "get",
 					success : function(res) {
 						if (res) {
-							alert("수정 성공!");
+							alert("학과입력 성공!");
 							self.close();
 							opener.location.reload();
 						} else {
-							alert("수정 실패!");
+							alert("입력 실패!");
 						}
 					}
 				});
@@ -187,7 +187,7 @@ span.telSlash {
 			<div class="row1">
 				<div class="col-75">
 					<label for="faculty" class="formTitle" style="color: #01539d">
-						${map['DEP_NAME']}</label><label class="formTitle">&nbsp; 학과수정</label>
+						학과생성</label>
 				</div>
 			</div>
 			<div class="row1">
@@ -200,13 +200,10 @@ span.telSlash {
 					<select name="facultyNo" id="faculty">
 						<option value="">선택</option>
 						<c:forEach var="facVo" items="${facultyList }">
-							<option value="${facVo.facultyNo }"
-								<c:if test="${map['FACULTY_NO']==facVo.facultyNo}">
-							 selected="selected"
-							</c:if>>${facVo.facultyName }</option>
+							<option value="${facVo.facultyNo }">
+							${facVo.facultyName }</option>
 						</c:forEach>
 					</select>
-					<input type="hidden" value="${map['DEP_NO']}" name="depNo">
 				</div>
 			</div>
 			<div class="row1">
@@ -217,7 +214,7 @@ span.telSlash {
 			<div class="row1">
 				<div class="">
 					<input type="text" id="depName" name="depName"
-						value="${map['DEP_NAME']}">
+						value="">
 				</div>
 			</div>
 			<div class="row1">
@@ -228,7 +225,7 @@ span.telSlash {
 			<div class="row1">
 				<div class="">
 					<input type="text" id="totalCredit" name="totalCredit"
-						value="${map['TOTAL_CREDIT']}" placeholder="숫자만 입력해주세요">
+						value="" placeholder="숫자만 입력해주세요">
 				</div>
 			</div>
 			<div class="row1">
@@ -239,12 +236,12 @@ span.telSlash {
 			<div class="row1">
 				<div class="">
 					<input type="text" id="tel1" name="tel1" class="telInp"
-						value="${fn:split(map['TEL'],'-')[0]}" placeholder="숫자만 입력">
+						value="" placeholder="숫자만 입력">
 					<span class="telSlash">-</span><input type="text" id="tel2"
-						name="tel2" class="telInp" value="${fn:split(map['TEL'],'-')[1]}"
+						name="tel2" class="telInp" value=""
 						placeholder="숫자만 입력"> <span class="telSlash">-</span><input
 						type="text" id="tel3" name="tel3" class="telInp"
-						value="${fn:split(map['TEL'],'-')[2]}" placeholder="숫자만 입력">
+						value="" placeholder="숫자만 입력">
 				</div>
 			</div>
 			<div class="row1">
@@ -257,17 +254,15 @@ span.telSlash {
 					<select name="buildingCode" id="buildingCode">
 						<option value="">선택</option>
 						<c:forEach var="vo" items="${blist }">
-							<option value="${vo.buildingCode }"
-								<c:if test="${map['BUILDING_CODE']==vo.buildingCode}">
-							 selected="selected"
-							</c:if>>${vo.buildingCode}(${vo.buildingName})</option>
+							<option value="${vo.buildingCode }">
+							${vo.buildingCode}(${vo.buildingName})</option>
 						</c:forEach>
 					</select>
 				</div>
 			</div>
 			<div class="bts">
 				<button type="submit" class="btn btn-primary" id="write">
-					저장</button>
+					입력</button>
 				<button type="button" class="btn btn-primary" id="cancel">닫기</button>
 			</div>
 		</form>

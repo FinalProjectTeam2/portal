@@ -34,6 +34,9 @@ public class FacultyServiceImpl implements FacultyService{
 	public int updateFacultyName(FacultyVO facultyVo) {
 		return facultyDao.updateFacultyName(facultyVo);
 	}
-	
-	
+
+	@Override
+	public int insertFaculty(FacultyVO facultyVo) {
+		return facultyDao.insertFaculty(facultyVo);
+	}
 }

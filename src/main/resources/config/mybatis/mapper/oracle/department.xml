@@ -4,48 +4,57 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.department">
 	<select id="selectDepartment" resultType="departmentVO">
-		select * from department
+		select * from
+		department
 	</select>
-	<select id="selectDepartmentByFaculty" parameterType="int" resultType="departmentVO">
+	<select id="selectDepartmentByFaculty" parameterType="int"
+		resultType="departmentVO">
 		select * from department where faculty_no=#{facultyNo}
 	</select>
-	
-	<select id="selectDepartmentView" parameterType="SearchVO" resultType="map">
+
+	<select id="selectDepartmentView" parameterType="SearchVO"
+		resultType="map">
 		select *
 		from
 		(
 		select rownum as RNUM, A.*
 		from(
-		
-			select * from department_View 
-				where 
-				dep_name like '%' || #{searchKeyword} || '%' or
-				substr(tel,-4) like '%' || #{searchKeyword} || '%' or
-				faculty_name like '%' || #{searchKeyword} || '%' or
-				substr(building_tel,-4) like '%' || #{searchKeyword} || '%'
-			order by dep_no
-		
-			)A
+
+		select * from department_View
+		where
+		dep_name like '%' || #{searchKeyword} || '%' or
+		substr(tel,-4) like '%' || #{searchKeyword} || '%' or
+		faculty_name like '%' || #{searchKeyword} || '%' or
+		substr(building_tel,-4) like '%' || #{searchKeyword} || '%'
+		order by dep_no
+
+		)A
 		)
 		<![CDATA[
 		where RNUM>#{firstRecordIndex}
 		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
-	
-	<select id="selectTotalRecord" parameterType="SearchVO" resultType="int">
-			select count(*) from department_View 
-				where 
-				dep_name like '%' || #{searchKeyword} || '%' or
-				substr(tel,-4) like '%' || #{searchKeyword} || '%' or
-				faculty_name like '%' || #{searchKeyword} || '%' or
-				substr(building_tel,-4) like '%' || #{searchKeyword} || '%'
-			order by dep_no
+
+	<select id="selectTotalRecord" parameterType="SearchVO"
+		resultType="int">
+		select count(*) from department_View
+		where
+		dep_name like '%' || #{searchKeyword} || '%' or
+		substr(tel,-4) like '%' || #{searchKeyword} || '%' or
+		faculty_name like '%' || #{searchKeyword} || '%' or
+		substr(building_tel,-4) like '%' || #{searchKeyword} || '%'
+		order by dep_no
 	</select>
 	<update id="updateDepartment" parameterType="departmentVO">
-	update department
-	set dep_name=#{depName}, tel=#{tel}, building_code=#{buildingCode},faculty_no=#{facultyNo},
-	total_credit=#{totalCredit} where dep_no=#{depNo}
+		update department
+		set dep_name=#{depName}, tel=#{tel},
+		building_code=#{buildingCode},faculty_no=#{facultyNo},
+		total_credit=#{totalCredit} where dep_no=#{depNo}
 	</update>
+	<insert id="insertDepartment" parameterType="departmentVO">
+		insert into department
+		values(DEPARTMENT_SEQ.nextval,#{depName},#{tel},#{buildingCode},#{facultyNo},#{totalCredit})
+	</insert>
 </mapper>
 
 

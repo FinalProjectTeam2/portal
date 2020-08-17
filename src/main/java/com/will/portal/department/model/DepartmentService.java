@@ -12,4 +12,5 @@ public interface DepartmentService {
 	public List<Map<String, Object>> selectDepartmentView(SearchVO searchVo);
 	public int selectTotalRecord(SearchVO searchVo);
 	int updateDepartment(DepartmentVO departmentVo);
+	int insertDepartment(DepartmentVO departmentVo);
 }
