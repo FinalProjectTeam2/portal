@@ -224,6 +224,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDao.updateProfessor(profVo);
 	}
 
+	@Override
+	public List<ProfessorVO> selectListByName(String name) {
+		return professorDao.selectListByName(name);
+	}
+
 	
 	
 

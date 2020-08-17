@@ -20,6 +20,15 @@ public class EmployeeVO extends MemberDetails {
 	private Timestamp resignationDate;
 	private String identityState;
 	private String positionCode;
+	private String depName;
+	
+	public String getDepName() {
+		return depName;
+	}
+
+	public void setDepName(String depName) {
+		this.depName = depName;
+	}
 
 	public EmployeeVO() {
 		super();

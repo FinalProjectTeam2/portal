@@ -15,7 +15,7 @@
 	
 	<insert id="insertscholarship" parameterType="ScholarshipAllVO">
 		insert into scholarshipView()  
-		values(#{},)
+		
 	</insert>
 
 	<update id="updatescholarship" parameterType="ScholarshipAllVO">

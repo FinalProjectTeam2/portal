@@ -6,7 +6,9 @@
 	<select id="selectEmpDepart" resultType="emp_departVO">
 		select * from emp_depart
 	</select>
-   
+   <select id="selectEmpDepartByCode" parameterType="String" resultType="emp_departVO">
+		select * from emp_depart where dep_code = #{depCode}
+	</select>
 </mapper>
 
 

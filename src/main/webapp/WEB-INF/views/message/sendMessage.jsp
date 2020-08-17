@@ -116,7 +116,7 @@ input#savenote {
 		
 		$("#addrList").click(function() {
 			var win = window.open("<c:url value='/message/addrList'/>", "_blank",
-			"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=500,height=390");
+			"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=510,height=415");
 			return false;
 		});
 		
@@ -139,9 +139,11 @@ input#savenote {
 			$("#chk_tome").attr("checked","checked");
 			$("#officialNo").val('${principal.officialNo}');
 	        $("#officialNo").attr("disabled","disabled");
+	        $("#addrList").attr("disabled","disabled");
 		}else if('${type}' == 're'){
 			$("#officialNo").val('${officialNo}');
 	        $("#officialNo").attr("disabled","disabled");
+	        $("#addrList").attr("disabled","disabled");
 		}
 	});
 	
