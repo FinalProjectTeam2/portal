@@ -13,4 +13,5 @@ public interface Subj_evalDAO {
 	String selectEvalFlag(RegistrationVO regiVo);
 	Map<String, Object> selectProfNameBySubj(String subjCode);
 	List<Subj_evalVO> selectEvalBysubCode(String subCode);
+	
 }

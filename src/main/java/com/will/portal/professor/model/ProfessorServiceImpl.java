@@ -214,6 +214,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDao.phoneBook(subCode);
 	}
 
+	@Override
+	public int updateProfessor(ProfessorVO profVo) {
+		return professorDao.updateProfessor(profVo);
+	}
+
 	
 	
 

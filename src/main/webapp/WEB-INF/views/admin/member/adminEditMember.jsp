@@ -70,9 +70,34 @@
 	}
 
 	$(function() {
-
+		$('#faculty').change(function() {
+			$('#department').find('option').each(function() {
+				$(this).remove();
+			});
+			
+			var faculty = $(this).val();
+			if(faculty != ''){
+				$('#department').append("<option value=''>선택</option>");
+				$.ajax({
+					type : 'get',
+					url : "/portal/common/departmentList",
+					data : "facultyNo="
+							+ $('#faculty').val(),
+					dataType : "json",
+					success : function(res){
+						$(res).each(function(i) {
+								$('#department').append("<option value=\""+ res[i].depNo + "\">"+ res[i].depName+ "</option>");
+						});
+					},error : function(error){
+						alert(error);
+					}
+				});
+			}else{
+				$('#department').append("<option value=''>학부를 선택하세요</option>");
+			}
+		});
 		$.select();
-
+		
 		$('#editFrm').submit(function() {
 			var formData = new FormData();
 
@@ -91,6 +116,15 @@
 			formData.append("oldFileName", $("#oldFileName").val());
 
 			formData.append("upfile", $("#upfile")[0].files[0]);
+			
+			if($("#officialNo").val().substring(4,5)=='2'){
+				if($("#department").val()==''){
+					alert('학부를 선택하세요');
+					return false;
+				}
+				formData.append("department", $("#department").val());
+				formData.append("position", $("#position").val());
+			}
 
 			$.ajax({
 				url : "<c:url value='/admin/member/memberEdit' />",
@@ -139,8 +173,6 @@
 				$('#address').val(res.ADDRESS);
 				$('#addrDetail').val(res.ADDR_DETAIL);
 
-				$('#faculty').val(res.FACULTY_NO);
-				$('#major').val(res.MAJOR);
 
 				var imgDiv = "<img id='studentImg' alt='사진' src='${ pageContext.request.contextPath }/common/image?img=" +res.IMAGE_URL+ "'/>"
 						+'<div class="rowa" style=" margin-top: 20px;"> <label for="upfile">사진수정</label>'
@@ -163,7 +195,7 @@
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>소속</th>'
-	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME
+	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME+' / 부전공 : ' + res.minor_dep_name
 	      			+ '<input type="button"'
 					+ 'class="btCustom btn btn-primary btn-lg login-button"'
 					+' onclick="location.href=\'/portal/admin/member/adminManageMajor?stuNo='+res.STU_NO+'\'"'
@@ -380,7 +412,50 @@ a:focus {
 								<th>전화번호</th>
 								<td><input placeholder="핸드폰번호" onKeyup="inputPhoneNumber(this);" name="hp" id="hp" type="text" class="validate" value=""></td>
 				      		</tr>
-
+				      		<c:if test="${fn:substring(officialNo,4,5)=='2' }">
+								<tr>
+									<th>학부</th>
+									<td>
+									<select class="browser-default" name="facultyNo" id="faculty">
+								      <c:if test="${!empty facultyList }">
+								      	<c:forEach var="facultyVo" items="${facultyList }">
+								      		<option value="${facultyVo.facultyNo }" 
+								      		<c:if test="${profMap['FACULTY_NO']==facultyVo.facultyNo}">
+												 selected="selected"
+											</c:if>
+								      		>${facultyVo.facultyName }</option>
+								      	</c:forEach>
+								      </c:if>
+								    </select>
+									<div>
+										<label for="department">학과</label> 
+										<select name="depNo" id="department">
+												<option value="">학부를 선택하세요</option>
+												<c:forEach var="vo" items="${departmentList }">
+													<option value="${vo.depNo}"
+														<c:if test="${profMap['DEP_NO']==vo.depNo}">
+											 selected="selected"</c:if>>${vo.depName }</option>
+												</c:forEach>
+										</select>
+									</div>
+									</td>
+								
+									<th>직급</th>
+									<td>
+									<select class="browser-default" name="positionNo" id="position">
+								      <c:if test="${!empty positionList }">
+								      	<c:forEach var="posiVo" items="${positionList }">
+								      		<option value="${posiVo.positionNo }" 
+								      		<c:if test="${profMap['POSITION_NO']==posiVo.positionNo}">
+												 selected="selected"
+											</c:if>
+								      		>${posiVo.positionName }</option>
+								      	</c:forEach>
+								      </c:if>
+								    </select>
+									</td>
+								</tr>
+				      		</c:if>
 				      	</table>
 				      	<div style="text-align: center; margin-top: 10px;">
 				      			<input type="submit" id="editBt" value="정보수정" style="color: white;">
