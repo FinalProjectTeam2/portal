@@ -41,5 +41,32 @@
 		values(#{officialNo},'1')
 	</insert>
 	
+	<select id="selectSubType" resultType="subj_typeVo">
+		select * from subj_type	
+	</select>
+	
+	<select id="selectOpenSubj" resultType="adminOpenSebjVO" parameterType="adminSubjSearchVo">
+		select DISTINCT substr(s.subj_code, 5) as open_sub_code, s.subj_name, p.prof_name, d.dep_name, f.faculty_name
+		from open_subj o join professor p
+		on o.prof_no=p.prof_no
+		join subject s
+		on s.prof_no=p.prof_no
+		join department d
+		on d.dep_no=TO_NUMBER(substr(o.open_sub_code, 1, 3))
+		join faculty f
+		on f.faculty_no=d.faculty_no
+		join regi_timetable rt
+		on rt.open_sub_code=o.open_sub_code
+		join subj_type st
+		on st.type_code=s.type_code
+		<where>
+			<if test="facultyNo!=0">and d.faculty_no=#{facultyNo}</if>
+			<if test="typeCode!='all'">and st.type_code=#{typeCode}</if>
+			<if test="depNo!=0">and d.dep_no=#{depNo}</if>
+			<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
+			<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
+			<if test="openSubCode!=null">and o.open_sub_code like '%' || #{openSubCode} || '%'</if>
+		</where>
+	</select>
 
 </mapper>
