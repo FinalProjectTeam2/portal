@@ -63,6 +63,41 @@ $(function(){
 	allFields = $( [] ).add( subject ).add( time ).add( credit ),
 	tips = $( ".validateTips" );
 	
+	$('#subject').change(function(){
+		var openSubCode = $('#subject option:selected').val();
+		var str="";
+		$.ajax({
+			url:"<c:url value='/lecture/changeSubj'/>",
+			type:"post",
+			dataType:"json",
+			data:{
+				"openSubCode":openSubCode
+			},
+			success:function(res){
+				var len=res.length;
+				if(len<1){
+					str+="<option value='none'>등록된 강의실이 없습니다.</option>";
+				}else if(len==1){
+					str+="<option value='"+res[0].CLASSROOM_CODE+"'>"+res[0].CLASSROOM_NAME+"</option>";
+				}else{
+					str+="<option value='none'>---강의실을 선택하세요---</option>";
+					$.each(res, function(idx, item){
+						str+="<option value='"+item.CLASSROOM_CODE+"'>"+item.CLASSROOM_NAME+"</option>";
+						console.log(item.CLASSROOM_CODE+","+item.CLASSROOM_NAME);
+					});
+				}
+				$('#classroom').html(str);
+					
+			}
+			
+		});
+		$('#classroom').html();
+	});
+	
+	
+	
+	
+	
 	//강의 계획서 업로드 
 	$('#syllabus').click(function(){
 		window.open("<c:url value='/syllabus/upload'/>", "syllabusUpload", 
@@ -95,7 +130,10 @@ $(function(){
 						alert('더이상 등록할 수 없습니다.');
 						return;
 					}else{
-						
+						 var subject=$('#subject option:selected').val();
+			    		 var time=$('#time').val();
+			    		 var classroom =$('#classroom option:selected').val();
+			    		 console.log(subject+","+time+","+classroom+","+$('#classroom option:selected').text());
 					     $.ajax({
 					    	 url:"<c:url value='/lecture/addSubject'/>",
 					    	 type:"post",
@@ -142,7 +180,8 @@ $(function(){
 	        allFields.removeClass( "ui-state-error" );
 	      }
 	    });
-	 
+	 	
+	    
 	    form = dialog.find( "form" ).on( "submit", function( event ) {
 	      
 	      addSubjet();
@@ -158,6 +197,7 @@ $(function(){
 });
 
 function updateTable(){
+	
 	$.ajax({
 		url:"<c:url value='/lecture/updateTable'/>",
 		dataType:"json",
@@ -324,9 +364,15 @@ function timeTable(){
     <fieldset>
       <label for="subject">과목명</label>
       <select id="subject">
-      		<c:forEach var="vo" items="${list }">
-      			<option value="${vo.subjCode }">${vo.subjName }</option>
-      		</c:forEach>
+      		<c:if test="${empty list }">
+      			<option value="none">개설하신 과목이 없습니다.</option>
+      		</c:if>
+      		<c:if test="${!empty list }">
+      			<option value="none">---과목을 선택하세요---</option>
+	      		<c:forEach var="vo" items="${list }">
+	      			<option value="${vo.subjCode }">${vo.subjName }</option>
+	      		</c:forEach>
+      		</c:if>
       </select>
       <input type="hidden" name="typeCode" id="typeCode" value="${vo.typeCode }">
       <label for="time">시간</label>

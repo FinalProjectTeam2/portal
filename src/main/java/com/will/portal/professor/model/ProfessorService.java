@@ -41,4 +41,6 @@ public interface ProfessorService {
 	public int updateProfessor(ProfessorVO profVo);
 
 	List<ProfessorVO> selectListByName(String name);
+	int classCount(String openSubCode);
+	List<Map<String, Object>> loadBySubjCode(String openSubCode);
 }
