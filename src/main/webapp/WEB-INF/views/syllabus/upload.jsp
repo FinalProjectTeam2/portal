@@ -287,6 +287,9 @@ form p{
     	<div id="info">
     		<span class="input-group-text" style="float: left;width:21%">과목명 : </span>
 	    	<select class="form-control" id="openSubj" class="selectpicker" style="float: left; width: 70%">
+	    		<c:if test="${empty list }">
+	    			<option value="none">강의계획서 업로드 가능한 강의가 없습니다.</option>
+				</c:if>
 	    		<c:if test="${!empty list }">
 	    			<option value="none">과목을 선택해주세요</option>
 	    			<c:forEach var="vo" items="${list}">

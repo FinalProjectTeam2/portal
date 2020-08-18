@@ -132,4 +132,15 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 		return sqlsession.selectList(namespace+"selectUpList", profNo);
 	}
 
+	@Override
+	public int classCount(String openSubCode) {
+		return sqlsession.selectOne(namespace+"classCount", openSubCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> loadBySubjCode(String openSubCode) {
+		return sqlsession.selectList(namespace+"loadBySubjCode", openSubCode);
+	}
+	
+	
 }
