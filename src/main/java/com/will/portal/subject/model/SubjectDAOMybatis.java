@@ -30,6 +30,10 @@ public class SubjectDAOMybatis implements SubjectDAO{
 	public int insertOpenSubj(Open_subjVO vo) {
 		return sqlSession.insert(namespace+"insertOpenSubj", vo);
 	}
+	@Override
+	public int updateCloseDate(String openSubCode) {
+		return sqlSession.update(namespace+"updateCloseDate",openSubCode);
+	}
 	
 	
 	

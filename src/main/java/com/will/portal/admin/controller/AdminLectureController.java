@@ -20,8 +20,11 @@ import com.will.portal.admin.model.AdminService;
 import com.will.portal.common.AdminSubjSearchVO;
 import com.will.portal.department.model.DepartmentVO;
 import com.will.portal.faculty.model.FacultyVO;
+import com.will.portal.open_subj.model.Open_subjVO;
 import com.will.portal.registration.model.RegistrationService;
 import com.will.portal.subj_type.model.Subj_typeVO;
+import com.will.portal.subject.model.OpenSubjectListVO;
+import com.will.portal.subject.model.SubjectService;
 
 @Controller
 @RequestMapping("/admin/lecture")
@@ -32,6 +35,8 @@ public class AdminLectureController {
 	= LoggerFactory.getLogger(AdminLectureController.class);
 	@Autowired
 	private AdminService adminServ;
+	@Autowired
+	private SubjectService subjectService;
 	
 	
 	@RequestMapping(value = "/adminRegisterLecture", method = RequestMethod.GET)
@@ -76,6 +81,7 @@ public class AdminLectureController {
 	@RequestMapping(value = "/openSubjList", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> openSubjList(@ModelAttribute AdminSubjSearchVO vo, Model model){
+		logger.info("AdminSubjSearchVO vo={}",vo);
 		List<AdminOpenSebjVO> mList=adminServ.selectOpenSubj(vo);
 		int count = mList.size();
 		String checkNull = "";
@@ -91,7 +97,24 @@ public class AdminLectureController {
 		map.put("checkNull", checkNull);
 		map.put("count", count);
 		
-		
 		return map;
 	}
+	
+	@RequestMapping(value = "/deleteMultiLecture", method = RequestMethod.POST)
+	public String deleteMultiLecture(@ModelAttribute OpenSubjectListVO openSubList
+			, Model model) {
+		logger.info("과목코드 = {}",openSubList);
+		List<Open_subjVO> openSubjList = openSubList.getOpenSubList();
+		int cnt = subjectService.updateMultiCloseDate(openSubjList);
+		String msg = "선택한 강의 삭제 실패", url="/admin/lecture/adminManageLecture";
+		if(cnt > 0) {
+			msg = "선택한 강의를 삭제 하였습니다";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
 }

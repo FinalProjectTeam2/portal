@@ -19,7 +19,6 @@
 	<insert id="insertOpenSubj" parameterType="open_subjVo">
 		insert into open_subj(open_sub_code, subj_code, prof_no)
 		values(#{openSubCode}, #{subjCode}, #{profNo})
-		
 	</insert>
 	
 	<insert id="insertSubjEval" parameterType="subj_EvalVO">
@@ -81,6 +80,13 @@
 	<select id="selectEvalBysubCode" parameterType="String" resultType="Subj_evalVO">
 		select * from subj_eval where sub_code =#{subCode}
 	</select>
+	
+	<update id="updateCloseDate" parameterType="String">
+		update open_subj
+		set close_date = sysdate
+		where open_sub_code=#{openSubCode}
+	</update>
+
 	
 </mapper>
 
