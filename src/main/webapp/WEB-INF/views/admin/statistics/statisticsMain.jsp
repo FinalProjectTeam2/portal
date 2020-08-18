@@ -259,13 +259,14 @@
 			<div class="indexDOM_large">
 				<p class="title">
 					학과별 성적 <span class="pSpan">(평균 백분율 상위 학과)</span>
-					<a href="/portal/admin/statistics/statisticsScore" style="float: right;">더보기</a>
+					<a href="/portal/admin/statistics/statisticsScore" style="float: right;">자세히</a>
 				</p>
 				<canvas id="myChart1" class="chart"></canvas>
 			</div>
 			<div class="indexDOM_large">
 				<p class="title">
 					인기 게시판 <span class="pSpan">(최근 1달 게시물 수)</span>
+					<a href="#" style="float: right;">자세히</a>
 				</p>
 				<canvas id="myChart2" class="chart"></canvas>
 			</div>
@@ -276,7 +277,7 @@
 				<canvas id="myChart3" class="chart"></canvas>
 			</div>
 			<div class="indexDOM_large">
-				<p class="title">titi</p>
+				<p class="title">추가기능</p>
 			</div>
 		</div>
 		<%@ include file="../../inc/bottom.jsp"%>

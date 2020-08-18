@@ -83,6 +83,10 @@ button#search {
 	margin: 70px -12px 0 0;
 	float: right;
 }
+button#back {
+    float: right;
+    margin: 1% 14px 2% 0;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script
@@ -142,6 +146,8 @@ button#search {
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div style="overflow: hidden;" id="box">
+		<button type="button" class="btn btn-primary" id="back"
+		onclick="location.href='/portal/admin/statistics/statisticsMain'">돌아가기</button>
 			<div class="indexDOM_large">
 				<p class="title">
 					학과별 성적 <span class="pSpan">(평균 백분율 상위 학과)</span>
