@@ -470,6 +470,7 @@
 							<li><a href="<c:url value='/board_calender/calendarDetail'/>">학사정보</a></li>
 							<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
 							<li><a href="<c:url value='/member/memberEdit'/>">정보조회</a></li>
+							<li><a href="<c:url value='/login/inputChgPwd'/>">비밀번호 번경</a></li>
 							<li><a href="<c:url value='/lecture/studentTT'/>">시간표 조회</a></li>
 							<li><a href="<c:url value='/student/studentScore'/>">성적조회</a></li>
 							<%-- <li><a href="<c:url value='/tuition/tuition2'/>">등록금조회</a></li>
@@ -481,8 +482,9 @@
 					<c:if test="${principal.type=='PROFESSOR' }">
 					<li><a class="nav-link" href="#"> 강의 관리 </a>
 						<ul>
-							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
 							<li><a href="<c:url value='/member/memberEdit'/>">정보조회</a></li>
+							<li><a href="<c:url value='/login/inputChgPwd'/>">비밀번호 번경</a></li>
+							<li><a href="<c:url value='/lecture/openLecture'/>">시간표 관리</a></li>
 							<li><a href="<c:url value='/lecture/createLecture'/>">강의 개설</a></li>
 							<li><a href="<c:url value='/lecture/professorView'/>">성적입력</a></li>
 							<li><a href="<c:url value='/assignment/distAssign'/>">과제등록</a></li>
@@ -495,9 +497,9 @@
 					<li><a class="nav-link" href="#">관리자 메뉴 </a>
 						<ul>
 							<li><a href="<c:url value='/member/memberEdit'/>">정보조회</a></li>
+							<li><a href="<c:url value='/login/inputChgPwd'/>">비밀번호 번경</a></li>
 							<li><a href="<c:url value='/admin/member/adminRegisterMember'/>">회원등록</a></li>
 							<li><a href="<c:url value='/admin/member/adminManageStudent'/>">회원관리</a></li>
-							<li><a href="<c:url value='/admin/lecture/adminRegisterLecture'/>">강의등록</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminManageLecture'/>">강의관리</a></li>
 							<li><a href="<c:url value='/assignment/assignment1'/>">과제관리</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminManageDepartment'/>">학부관리</a></li>
