@@ -229,8 +229,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDao.selectListByName(name);
 	}
 
-	
-	
-
+	@Override
+	public List<SubjectAllVO> selectUpList(String profNo) {
+		return professorDao.selectUpList(profNo);
+	}
 
 }

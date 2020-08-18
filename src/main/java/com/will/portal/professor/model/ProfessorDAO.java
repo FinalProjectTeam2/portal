@@ -15,6 +15,7 @@ public interface ProfessorDAO {
 	public ProfessorVO selectByProfNo(String profNo);
 	public String selectSsn(String officialNo);
 	List<SubjectAllVO> loadByProfNo(String profNo);
+	List<SubjectAllVO> selectUpList(String profNo);
 	List<Subj_timeVO> timeByCode(List<String> codeList);
 	List<String> codeByProfNo(String profNo);
 	int insertSubjTime(Subj_timeVO vo);

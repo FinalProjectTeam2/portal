@@ -127,8 +127,9 @@ public class ProfessorDAOMybatis implements ProfessorDAO{
 		return sqlsession.selectList(namespace+"selectListByName", name);
 	}
 
-
-	
-
+	@Override
+	public List<SubjectAllVO> selectUpList(String profNo) {
+		return sqlsession.selectList(namespace+"selectUpList", profNo);
+	}
 
 }

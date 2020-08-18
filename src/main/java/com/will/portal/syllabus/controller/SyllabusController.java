@@ -42,7 +42,7 @@ public class SyllabusController {
 		MemberDetails user = (MemberDetails) ((Authentication)principal).getPrincipal();
 		String profNo = user.getOfficialNo();
 		
-		List<SubjectAllVO> list = profService.loadByProfNo(profNo);
+		List<SubjectAllVO> list = profService.selectUpList(profNo);
 		logger.info("list.size()={}", list.size());
 		
 		model.addAttribute("list", list);
@@ -50,9 +50,6 @@ public class SyllabusController {
 		return "syllabus/upload";
 		
 	}
-	
-	
-	
 	
 	@RequestMapping(value = "/syllabus/upload", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
