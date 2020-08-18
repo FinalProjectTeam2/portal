@@ -24,6 +24,11 @@
 .chart {
 	width: 100% !important;
 }
+
+.pSpan {
+	font-size: 0.7em;
+	color: #838383;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
@@ -33,35 +38,95 @@
 		var myChart1 = new Chart(ctx1, {
 			type : 'bar',
 			data : {
-				labels : [ 'Red', 'Blue', 'Yellow', 'Green', 'Purple' ],
+				labels : ${depListCh},
 				datasets : [ {
-					label : '# of Votes',
-					data : [ 12, 19, 3, 5, 20 ],
-					backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
-							'rgba(54, 162, 235, 0.2)',
-							'rgba(255, 206, 86, 0.2)',
-							'rgba(75, 192, 192, 0.2)',
+					label : '우수 학과',
+					data : ${scoreListCh},
+					backgroundColor : [ 'rgba(54, 162, 235, 0.2)',
 							'rgba(153, 102, 255, 0.2)',
-							'rgba(255, 159, 64, 0.2)' ],
-					borderColor : [ 'rgba(255, 99, 132, 1)',
-							'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)',
-							'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)',
-							'rgba(255, 159, 64, 1)' ],
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(255, 159, 64, 0.2)',
+							'rgba(255, 99, 132, 0.2)' ],
+					borderColor : [ 'rgba(54, 162, 235, 1)',
+							'rgba(153, 102, 255, 1)', 
+							'rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)',
+							'rgba(255, 99, 132, 1)' ],
 					borderWidth : 1
 				} ]
 			},
 			options : {
-				scales : {
-					yAxes : [ {
-						ticks : {
-							beginAtZero : true
-						}
-					} ]
-				}
+				 legend: {
+			            labels: {
+			                fontSize: 17
+			            }
+			        },
+			        scales: {
+			            yAxes: [{
+			                display: true,
+			                stacked: true,
+			                ticks: {
+			                    min: 
+			                    	<c:if test="${min-5<0}">
+			                    	${min}
+			                    	</c:if>
+			                    	<c:if test="${min-5>=0}">
+			                    	${min-5}
+			                    	</c:if>, // minimum value
+			                    max: 100 // maximum value
+			                }
+			            }]
+			        }
 			}
+			
 		});
 
-		/*두번째 */
+		/*두번째 doughnut  */
+		var ctx2 = document.getElementById('myChart2').getContext('2d');
+		var myChart2 = new Chart(ctx2, {
+			type : 'doughnut',
+			data : {
+				labels : ${boardListCh},
+				datasets : [ {
+					label : '게시글 수',
+					data : ${countListCh},
+					backgroundColor : [ 'rgba(54, 162, 235, 0.2)',
+						'rgba(153, 102, 255, 0.2)',
+						'rgba(75, 192, 192, 0.2)',
+						'rgba(255, 159, 64, 0.2)',
+						'rgba(255, 99, 132, 0.2)' ],
+				borderColor : [ 'rgba(54, 162, 235, 1)',
+						'rgba(153, 102, 255, 1)', 
+						'rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)',
+						'rgba(255, 99, 132, 1)' ],
+					borderWidth : 1
+				} ]
+			},
+			options : {
+				 legend: {
+			            labels: {
+			                fontSize: 17
+			            }
+			        },
+			       circumference : Math.PI,
+			       rotation : -Math.PI,
+			       tooltips: {
+			            enabled: true
+			        },
+			       plugins: {
+			            datalabels: {
+			                color: '#111',
+			                textAlign: 'center',
+			                font: {
+			                    lineHeight: 1.6
+			                }
+			            }
+			        }
+			}
+			
+		});
+		
+		
+		/*세번째 */
 		var MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June',
 				'July', 'August', 'September', 'October', 'November',
 				'December' ];
@@ -106,8 +171,8 @@
 
 		};
 
-		var ctx2 = document.getElementById('myChart2').getContext('2d');
-		var myChart2 = new Chart(ctx2, {
+		var ctx3 = document.getElementById('myChart3').getContext('2d');
+		var myChart3 = new Chart(ctx3, {
 			type : 'bar',
 			data : barChartData,
 			options : {
@@ -123,6 +188,52 @@
 		});
 
 		/*세번째  */
+		/* var ctx3 = document.getElementById('myChart3').getContext('2d');
+		var myChart3 = new Chart(ctx3, {
+			type : 'doughnut',
+			data : {
+				labels : ${depListCh},
+				datasets : [ {
+					label : '',
+					data : ${scoreListCh},
+					backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)' ],
+					borderColor : [ 'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)' ],
+					borderWidth : 1
+				} ]
+			},
+			options : {
+				 legend: {
+			            labels: {
+			                fontSize: 17
+			            }
+			        },
+			        scales: {
+			            yAxes: [{
+			                display: true,
+			                stacked: true,
+			                ticks: {
+			                    min: 
+			                    	<c:if test="${min-5<0}">
+			                    	${min}
+			                    	</c:if>
+			                    	<c:if test="${min-5>=0}">
+			                    	${min-5}
+			                    	</c:if>, // minimum value
+			                    max: 100 // maximum value
+			                }
+			            }]
+			        }
+			}
+			
+		}); */
 	})
 </script>
 <!-- main 시작 -->
@@ -130,15 +241,20 @@
 	<div class="container">
 		<div style="overflow: hidden;" id="box">
 			<div class="indexDOM_large">
-				<p class="title">학과별 성적</p>
+				<p class="title">
+					학과별 성적 <span class="pSpan">(평균 백분율 상위 학과)</span>
+				</p>
 				<canvas id="myChart1" class="chart"></canvas>
 			</div>
 			<div class="indexDOM_large">
-				<p class="title">학생수 대비 개설인원</p>
+				<p class="title">인기 게시판<span class="pSpan">(최근 1달 게시물 수)</span></p>
 				<canvas id="myChart2" class="chart"></canvas>
 			</div>
 			<div class="indexDOM_large">
-				<p class="title">카테고리 별 게시물 비율</p>
+				<p class="title">
+					학생수 대비 개설인원<span class="pSpan"></span>
+				</p>
+				<canvas id="myChart3" class="chart"></canvas>
 			</div>
 			<div class="indexDOM_large">
 				<p class="title">titi</p>

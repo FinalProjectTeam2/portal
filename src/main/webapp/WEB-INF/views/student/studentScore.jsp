@@ -197,7 +197,7 @@ span.fontLar {
 													</c:when>
 													<c:otherwise>
 									F
-									<c:set var="score" value="0" />
+									<c:set var="grade" value="0.0" />
 													</c:otherwise>
 												</c:choose></td>
 										</tr>
