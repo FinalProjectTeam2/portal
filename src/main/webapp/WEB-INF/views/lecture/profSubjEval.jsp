@@ -27,6 +27,7 @@
 		display: none;
 	}
 	
+	
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
@@ -132,6 +133,7 @@
 <style>
 	#profSubjEval .trList:hover {
 		font-weight: bold;
+		background-color: #dbdbe896;
 	}
 </style>
 <!-- main 시작 -->

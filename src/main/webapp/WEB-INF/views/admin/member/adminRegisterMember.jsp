@@ -60,7 +60,23 @@
 	float: right;
 	width: 15%;
 }
+
 </style>
+<script>
+	$(function() {
+		$('#sort').change(function() {
+			if($(this).val()=='1'){
+				$('#excelRegi').hide();
+			}else if($(this).val()=='2'){
+				$('#excelRegi').hide();
+			}else if($(this).val()=='3'){
+				$('#excelRegi').show();
+				
+			}
+			
+		});
+	});
+</script>
 <main role="main" class="flex-shrink-0">
 	<div class="container">
 		<div id="regiMember">
