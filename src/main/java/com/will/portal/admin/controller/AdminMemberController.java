@@ -824,7 +824,7 @@ public class AdminMemberController {
 			@RequestParam(required = false) String oldFileName, HttpServletRequest request,
 			@RequestParam(defaultValue = "0") int department,
 			@RequestParam(defaultValue = "0") int position,
-			@RequestParam String authCode) {
+			@RequestParam (required = false) String authCode) {
 		logger.info("member 수정 처리 파라미터 officialNo={},offiVo={}",officialNo,offiVo);
 		
 		boolean bool = false;

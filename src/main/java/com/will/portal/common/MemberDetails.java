@@ -13,6 +13,10 @@ public abstract class MemberDetails extends SearchVO implements UserDetails {
 	protected String type;
 	protected String officialNo;
 	protected String name;
+	
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public abstract String getType();
 	
