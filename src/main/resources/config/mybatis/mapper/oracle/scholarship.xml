@@ -13,6 +13,10 @@
 		where no=#{no}
 	</select>
 
+	<insert id="insertscholarship" parameterType="ScholarshipAllVO">
+		insert into scholarshipView()
+	</insert>
+
 	<!-- <insert id="insertscholarship" parameterType="ScholarshipAllVO">
 		insert into scholarshipView()
 

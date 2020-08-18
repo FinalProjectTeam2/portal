@@ -65,7 +65,7 @@
 			<if test="depNo!=0">and d.dep_no=#{depNo}</if>
 			<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
 			<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
-			<if test="openSubCode!=null">and o.open_sub_code like '%' || #{openSubCode} || '%'</if>
+			<if test="openSubCode!=null">and substr(s.subj_code, 5) like '%' || #{openSubCode} || '%'</if>
 		</where>
 	</select>
 
