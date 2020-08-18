@@ -34,6 +34,9 @@ ul.pagination {
 .private{
 	cursor: pointer;
 }
+.container .divPage {
+	margin-top: 10px;
+}
 </style>
 <!-- 공지사항 -->
 <script type="text/javascript">
@@ -286,7 +289,14 @@ ul.pagination {
 
 				<div class="divbt">
 					<!-- 비회원은 버튼 안 보임! -->
-					<button type="button" class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
+					<c:if test="${boardVo.categoryCode != 'N' }">
+						<button type="button" class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
+					</c:if>
+					<c:if test="${boardVo.categoryCode == 'N' }">
+						<c:if test="${principal.type == 'ADMIN' }">
+							<button type="button" class="btn btn-outline-success bt" id="boardWrite">글쓰기</button>
+						</c:if>
+					</c:if>
 				</div>
 			</div>
 			<!-- 페이지번호 -->

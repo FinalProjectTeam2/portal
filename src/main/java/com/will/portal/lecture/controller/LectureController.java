@@ -99,6 +99,35 @@ public class LectureController {
 		
 		return "/lecture/openLecture";
 	}
+	@RequestMapping(value = "/lecture/changeSubj", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, Object>> changeSubj(Principal principal,@RequestParam String openSubCode){
+		logger.info("다이얼로그 과목 변경시 이미 등록이 된 강의실 변경 처리 파라미터 openSubCode={}", openSubCode);
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String profNo = user.getOfficialNo();
+		String depNo = profNo.substring(5, 8);
+		List<Map<String, Object>> list = null;
+		
+		int cnt = 0;
+		
+		if(openSubCode=="none") {
+			list = profService.classroomByDepNo(depNo);
+		
+		}else {
+			cnt=profService.classCount(openSubCode.substring(4));
+			logger.info("과목 입력 개수 cnt={}", cnt);
+			if(cnt >= 1) {
+				list=profService.loadBySubjCode(openSubCode.substring(4));	//최소 1개 입력 후 남은 게 있을 때 강의실 하나만 나오도록 처리
+			}else {
+				list=profService.classroomByDepNo(depNo);	//로딩될때랑 같은거(다나옴)
+			}
+		}
+		logger.info("list.size()={}", list.size());
+		return list;
+		
+	}
+	
+	
 	
 	@RequestMapping(value = "/lecture/addSubject", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody

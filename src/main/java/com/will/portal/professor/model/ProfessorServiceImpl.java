@@ -234,4 +234,17 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDao.selectUpList(profNo);
 	}
 
+	@Override
+	public int classCount(String openSubCode) {
+		return professorDao.classCount(openSubCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> loadBySubjCode(String openSubCode) {
+		return professorDao.loadBySubjCode(openSubCode);
+	}
+	
+	
+
+	
 }

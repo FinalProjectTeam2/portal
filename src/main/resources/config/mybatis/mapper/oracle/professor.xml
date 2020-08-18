@@ -27,7 +27,14 @@
 	<select id="codeByProfNo" parameterType="string" resultType="string">
 		select OPEN_SUB_CODE from open_subj where prof_no=#{profNo}
 	</select>
-
+	
+	<select id="loadBySubjCode" parameterType="string" resultType="map">
+		select c.classroom_code, c.classroom_name 
+		from class c join subj_time st
+		on st.classroom_code=c.classroom_code
+		where st.open_sub_code=#{openSubCode}
+		group by c.classroom_code, c.classroom_name
+	</select>
 
    	<select id="timeByCode" resultType="subj_timetableVo" parameterType="list">
    		select t.*, s.subj_name
@@ -53,6 +60,13 @@
    	<select id="classroomByDepNo" parameterType="string" resultType="map">
    		select * from class where dep_no=#{depNo}
    	</select>
+
+	<select id="classCount" parameterType="string" resultType="integer">
+		select count(*) count from subj_time
+		where open_sub_code=#{openSubCode}
+		
+	</select>
+
 
    	<select id="selectViewByProfNo" parameterType="String"
 		resultType="map">

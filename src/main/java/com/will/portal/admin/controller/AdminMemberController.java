@@ -189,7 +189,7 @@ public class AdminMemberController {
 		String url="admin/adminMain";
 		String msg="입력 실패!";
 		if (cnt > 0) {
-			
+
 			url="/admin/member/adminManageProfessor";
 			msg="교수 등록 완료!";
 			logger.info("adminRegisterProfessor SUCCESS!!");
@@ -272,7 +272,7 @@ public class AdminMemberController {
 		model.addAttribute("departmentList", departmentList);
 		logger.info("{}",departmentList);
 		model.addAttribute("stateList", stateList);
-		
+
 		// db
 		List<Map<String, Object>> list = studentService.selectStudentView(studentSearchVo);
 		logger.info("학생  조회 결과, list.size={}", list.size());
@@ -294,8 +294,8 @@ public class AdminMemberController {
 	 * @param slist
 	 * @param idx
 	 */
-	
-	
+
+
 	private void setState(StudentSearchVO studentSearchVo, String[] slist) {
 		int idx = slist.length;
 		studentSearchVo.setState1(slist[0]);
@@ -323,7 +323,7 @@ public class AdminMemberController {
 		if (idx < 1)
 			return;
 	}
-	
+
 	/**
 	 * 학부관리 - 학과 별 학생 조회
 	 * @param facultyNo
@@ -334,22 +334,22 @@ public class AdminMemberController {
 	@RequestMapping("/adminFacultySelectStudent")
 	public String adminFacultySelectStudent(@RequestParam(defaultValue = "0") int facultyNo,
 			@RequestParam(defaultValue = "0") int major, Model model) {
-	
+
 		logger.info("adminFacultySelectStudent,{},{}",facultyNo,major);
 		StudentSearchVO studentSearchVo = new StudentSearchVO();
-		
+
 		studentSearchVo.setFacultyNo(facultyNo);
 		studentSearchVo.setMajor(major);
-		
+
 
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy");
 		Date time = new Date();
 		studentSearchVo.setEndNo(format1.format(time));
 		studentSearchVo.setStartNo("1990");
 		logger.info("major={},{}",major,studentSearchVo);
-		
+
 		adminManageStudent(studentSearchVo, null, model);
-		
+
 		return "admin/member/adminManageStudent";
 	}
 	/**
@@ -369,7 +369,7 @@ public class AdminMemberController {
 		if(profSearchVo.getFacultyNo()!=null && !profSearchVo.getFacultyNo().isEmpty()) {
 			List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(Integer.parseInt(profSearchVo.getFacultyNo()));
 			model.addAttribute("departmentList", departmentList);
-			
+
 		}
 		if (position != null && !position.isEmpty()) {
 			String[] slist = position.split(",");
@@ -486,8 +486,8 @@ public class AdminMemberController {
 		model.addAttribute("empPositionList", empPositionList);
 
 	}
-	
-	
+
+
 	private void setAuth(EmployeeSearchVO empSearchVo, String[] slist) {
 		int idx = slist.length;
 
@@ -559,21 +559,21 @@ public class AdminMemberController {
 	@RequestMapping("/multiUpdateEmpPosition")
 	public String multiUpdateposition(@RequestParam String positionC, @ModelAttribute EmployeeListVO empList,
 			Model model) {
-		
+
 		logger.info("empList={}, positionCode={}", empList, positionC);
 		List<EmployeeVO> list = empList.getEmpList();
 		int cnt =employeeService.multiUpdatePosition(list, positionC);
-		
+
 		logger.info("cnt = {}", cnt);
 		String msg = "직책 변경 실패", url = "/admin/member/adminManageEmployee";
 		if (cnt > 0) {
 			msg = "직책 변경 성공";
 		}
-		
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
-		
+
 	}
 
    @RequestMapping(value = "/multiDelete")
@@ -592,12 +592,12 @@ public class AdminMemberController {
          Account_infoVO accVo = bankService.selectAccByofficialNo(studentVO.getOfficialNo());
          logger.info("accVo={}",accVo);
          accList.add(accVo);
-         
+
          if(!offiVo.getImageUrl().equals("default.jpg")) {
             bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
          }
       }
-      
+
       logger.info("파일 다중 삭제여부 = {}", bool);
       logger.info("offiList={}", offiList);
       int cnt = studentService.deleteMulti(list);
@@ -606,7 +606,7 @@ public class AdminMemberController {
       int offiBank =bankService.deleteMulti(accList);
       logger.info("offiCnt = {}",offiCnt);
       logger.info("offiBank = {}",offiBank);
-      
+
       String msg = "학생 삭제 실패", url = "/admin/member/adminManageStudent";
       if (cnt > 0) {
          msg = "학생 삭제 성공";
@@ -616,7 +616,7 @@ public class AdminMemberController {
       model.addAttribute("url", url);
       return "common/message";
    }
-   
+
    @RequestMapping(value = "/multiDeleteProfessor")
    public String multiDeleteProfessor(@ModelAttribute ProfessorListVO profList, Model model,
          HttpServletRequest request) {
@@ -634,28 +634,28 @@ public class AdminMemberController {
          }
       }
       logger.info("파일 다중 삭제여부 = {}", bool);
-      
+
       int cnt = professorService.multiDelete(list);
       int offiCnt = offiService.deleteMulti(offiList);
       int offiBank =bankService.deleteMulti(accList);
       logger.info("offiCnt = {}",offiCnt);
       logger.info("offiBank = {}",offiBank);
-      
+
       String msg = "교수 삭제 실패", url = "/admin/member/adminManageProfessor";
       if (cnt > 0) {
          msg = "교수 삭제 성공";
       }
-      
+
       model.addAttribute("msg", msg);
       model.addAttribute("url", url);
       return "common/message";
    }
-   
-   
+
+
    @RequestMapping(value = "/multiDeleteEmployee")
    public String multiDeleteProfessor(@ModelAttribute EmployeeListVO empList, Model model,
          HttpServletRequest request) {
-	  
+
 	  logger.info("empList={}", empList);
       List<EmployeeVO> list = empList.getEmpList();
       List<Official_infoVO> offiList= new ArrayList<Official_infoVO>();
@@ -673,25 +673,25 @@ public class AdminMemberController {
          }
       }
       logger.info("파일 다중 삭제여부 = {}", bool);
-      
-      
+
+
       int cnt = employeeService.multiDelete(list);
       int offiCnt = offiService.deleteMulti(offiList);
       int offiBank =bankService.deleteMulti(accList);
       logger.info("offiCnt = {}",offiCnt);
       logger.info("offiBank = {}",offiBank);
-      
+
       String msg = "직원 삭제 실패", url = "/admin/member/adminManageEmployee";
       if (cnt > 0) {
          msg = "직원 삭제 성공";
       }
-      
+
       model.addAttribute("msg", msg);
       model.addAttribute("url", url);
       return "common/message";
    }
-   
-   
+
+
    @RequestMapping("/deleteStudent")
    public String deleteStudent(String stuNo, Model model, HttpServletRequest request) {
       Official_infoVO offiVo = offiService.selectByNo(stuNo);
@@ -699,14 +699,14 @@ public class AdminMemberController {
       if(!offiVo.getImageUrl().equals("default.jpg")) {
          bool = fileUploadUtil.fileDelete(request, offiVo.getImageUrl(), FileUploadUtil.PATH_IMAGE);
       }
-      
+
       logger.info("파일삭제여부 bool={}",bool);
-      
-      
+
+
       int cnt = studentService.deleteStudent(stuNo);
       cnt = offiService.deleteOfficial(stuNo);
       cnt = bankService.deleteAccountInfo(stuNo);
-      
+
       String msg = "삭제 실패", url = "/admin/member/adminManageStudent";
       if (cnt > 0) {
          msg = "삭제 성공";
@@ -715,7 +715,7 @@ public class AdminMemberController {
       model.addAttribute("url", url);
       return "common/message";
    }
-   
+
    @RequestMapping("/deleteProfessor")
    public String deleteProfessor(String profNo, Model model, HttpServletRequest request) {
       Official_infoVO offiVo = offiService.selectByNo(profNo);
@@ -749,7 +749,7 @@ public class AdminMemberController {
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "common/message";
-		
+
 	}
 
 	@RequestMapping(value = "/memberEdit", method = RequestMethod.GET)
@@ -757,7 +757,7 @@ public class AdminMemberController {
 		logger.info("수정화면 페이지 보여주기, officialNo={}", officialNo);
 		List<BankVO> bankList = bankService.selectAllBank();
 		List<FacultyVO> facultyList= facultyService.selectFaculty();
-		
+
 		if(officialNo.substring(4, 5).equals("2")) {
 			Map<String, Object> profMap = professorService.selectViewByProfNo(officialNo);
 			int facultyNo=Integer.parseInt(profMap.get("FACULTY_NO").toString());
@@ -767,20 +767,20 @@ public class AdminMemberController {
 			model.addAttribute("departmentList",departmentList);
 			model.addAttribute("positionList",positionList);
 		}
-		
+
 		if(officialNo.substring(4,5).equals("1")) {
 			List<AuthorityVO> authorityList = authorityService.selectAuthority();
 			Map<String, Object> empMap= employeeService.selectViewByEmpNo(officialNo);
 			model.addAttribute("authorityList", authorityList);
 			model.addAttribute("empMap", empMap);
 		}
-		
+
 		model.addAttribute("bankList", bankList);
 		model.addAttribute("facultyList", facultyList);
 		model.addAttribute("officialNo", officialNo);
 		return "/admin/member/adminEditMember";
 	}
-	
+
 	/**
 	 * 학생 수정 - 전공 변경
 	 * @param stuNo
@@ -790,19 +790,19 @@ public class AdminMemberController {
 	@RequestMapping(value = "/adminManageMajor", method = RequestMethod.GET)
 	public void adminManageMajor_get(String stuNo, Model model) {
 		logger.info("adminManageMajor_get, stuNo={}", stuNo);
-		
+
 		Map<String, Object> map = studentService.selectViewByStuNo(stuNo);
 		logger.info("{}",map);
-	
+
 		int facultyNo=Integer.parseInt(map.get("FACULTY_NO").toString());
-		List<DepartmentVO> departmentList2 = null; 
+		List<DepartmentVO> departmentList2 = null;
 		if(map.get("minor_faculty_no") != null && map.get("minor_faculty_no")!="") {
 			int minorFacultyNo=Integer.parseInt(map.get("minor_faculty_no").toString());
 			departmentList2 = departmentService.selectDepartmentByFaculty(minorFacultyNo);
 		}
 		List<FacultyVO> facultyList = facultyService.selectFaculty();
 		List<DepartmentVO> departmentList = departmentService.selectDepartmentByFaculty(facultyNo);
-		
+
 		model.addAttribute("facultyList",facultyList);
 		model.addAttribute("departmentList",departmentList);
 		model.addAttribute("departmentList2",departmentList2);
@@ -825,7 +825,7 @@ public class AdminMemberController {
 			@RequestParam (required = false) String position,
 			@RequestParam (required = false) String authCode) {
 		logger.info("member 수정 처리 파라미터 officialNo={},offiVo={}",officialNo,offiVo);
-		
+
 		boolean bool = false;
 
 		accInfoVo.setOfficialNo(officialNo);
@@ -839,7 +839,7 @@ public class AdminMemberController {
 		offiVo.setHp1(hp1);
 		offiVo.setHp2(hp2);
 		offiVo.setHp3(hp3);
-		
+
 		// 파일 업로드 처리
 		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_IMAGE);
 
@@ -891,7 +891,7 @@ public class AdminMemberController {
 				bool = true;
 			}
 		}
-		
+
 		logger.info("oldFileName = {}", oldFileName);
 		logger.info("bool = {}", bool);
 		return bool;
@@ -958,32 +958,32 @@ public class AdminMemberController {
 		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images
 		// C:\lecture\java\workspace_list\final_ws\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\portal\pd_images\hsLogo_20200731160018585.png
 	}
-	
+
 	@RequestMapping(value = "/insertByExcel", produces = "application/text; charset=utf8", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String insertByExcel(MultipartHttpServletRequest request)throws Exception{
 		MultipartFile excelFile  = request.getFile("excelFile");
 		logger.info("excel로 학생 일괄 등록 페이지");
-		
+
 		String result = "입력실패";
 		if(excelFile == null || excelFile.isEmpty()) {
 			throw new RuntimeException("엑셀파일을 선택해주세요");
 		}
-		
+
 		File destFile = new File(excelFile.getOriginalFilename());
-		
+
 		try{
 			excelFile.transferTo(destFile);
 		}catch(IllegalStateException | IOException e){
 			throw new RuntimeException(e.getMessage(),e);
 		}
-		
-		
+
+
 		List<Map<String, Object>> list = excelUpload(destFile);
 		logger.info("읽어들인 excel file, list,size={}", list.size());
-		
+
 		boolean bool = destFile.delete();
-		
+
 		logger.info("file삭제 결과 bool={}", bool);
 		int cnt = 0;
 		for(Map<String, Object> map : list) {
@@ -1000,27 +1000,27 @@ public class AdminMemberController {
 			oVo.setEmail1((String)map.get("F"));
 			oVo.setEmail2((String)map.get("G"));
 			oVo.setSsn((String)map.get("H"));
-			
+
 			cnt = studentService.insertStudent(sVo, oVo, 3);
 		}
-		
+
 		if(cnt > 0) {
 			result = "입력성공!";
 		}
-		
+
 		return result;
 	}
-	
+
 	public List<Map<String, Object>> excelUpload(File destFile) throws Exception{
 		ExcelReadOption excelReadOption = new ExcelReadOption();
 		excelReadOption.setFilePath(destFile.getAbsolutePath());
 		excelReadOption.setOutputColumns("A","B","C","D","E","F","G","H");
 		excelReadOption.setStartRow(2);
-		
-		
+
+
 		List<Map<String, Object>> excelContent = ExcelRead.read(excelReadOption);
-	
+
 		return excelContent;
 	}
-		
+
 }
