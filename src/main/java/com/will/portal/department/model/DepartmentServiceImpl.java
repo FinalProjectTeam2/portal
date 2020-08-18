@@ -37,6 +37,11 @@ public class DepartmentServiceImpl implements DepartmentService{
 	public int updateDepartment(DepartmentVO departmentVo) {
 		return departmentDao.updateDepartment(departmentVo);
 	}
+
+	@Override
+	public int insertDepartment(DepartmentVO departmentVo) {
+		return departmentDao.insertDepartment(departmentVo);
+	}
 	
 	
 }

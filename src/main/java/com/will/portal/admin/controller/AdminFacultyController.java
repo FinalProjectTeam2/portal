@@ -48,11 +48,10 @@ public class AdminFacultyController {
 		model.addAttribute("flist",flist);
 		model.addAttribute("facultyList",facultyList);
 		return "admin/faculty/adminManageFaculty";
-		
 	}
 	
 	/**
-	 * 학부관리 수정팝업 페이지 열기
+	 * 학과관리 수정팝업 페이지 열기
 	 * @param facultyNo
 	 * @param depNo
 	 * @param model
@@ -133,4 +132,74 @@ public class AdminFacultyController {
 		logger.info("cnt={}, result={}",cnt,result);
 		return result;
 	}
+	
+	/**
+	 * 학부 생성
+	 */
+	@RequestMapping("/adminCreateFaculty")
+	public void adminCreateFaculty() {
+		logger.info("adminCreateFaculty, popup");
+	}
+	
+	/**
+	 * 학부 생성 완료  ajax
+	 * @param departmentVo
+	 * @param tel1
+	 * @param tel2
+	 * @param tel3
+	 * @return
+	 */
+	@RequestMapping("/adminCreateFacultyAjax")
+	@ResponseBody
+	public boolean adminCreateFacultyAjax(@ModelAttribute FacultyVO facultyVo) {
+		logger.info("adminCreateFacultyAjax, {}",facultyVo);
+		
+		int cnt=facultyService.insertFaculty(facultyVo);
+		boolean result=false;
+		if(cnt>0) {
+			result=true;
+		}
+		return result;
+	}
+	
+	/**
+	 * 학과 생성
+	 * @param model
+	 */
+	@RequestMapping("/adminCreateDep")
+	public void adminCreateDep(Model model) {
+		logger.info("adminCreateDep, popup");
+		List<FacultyVO> facultyList = facultyService.selectFaculty();
+		
+		List<BuildingVO> blist = buildingService.selectAllBuilding();
+		
+		model.addAttribute("blist",blist);
+		model.addAttribute("facultyList",facultyList);
+	}
+	/**
+	 * 학과 생성 완료 ajax
+	 * @param departmentVo
+	 * @param tel1
+	 * @param tel2
+	 * @param tel3
+	 * @return
+	 */
+	@RequestMapping("/adminCreateDepAjax")
+	@ResponseBody
+	public boolean adminCreateDepAjax(@ModelAttribute DepartmentVO departmentVo,
+			@RequestParam String tel1, @RequestParam String tel2, @RequestParam String tel3) {
+		logger.info("adminCreateDepAjax, {}",departmentVo);
+		
+		String tel=tel1+"-"+tel2+"-"+tel3;
+		departmentVo.setTel(tel);
+		
+		int cnt=departmentService.insertDepartment(departmentVo);
+		boolean result=false;
+		if(cnt>0) {
+			result=true;
+		}
+		return result;
+	}
+	
+
 }

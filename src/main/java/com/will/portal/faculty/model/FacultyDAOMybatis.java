@@ -32,8 +32,9 @@ public class FacultyDAOMybatis implements FacultyDAO{
 	public int updateFacultyName(FacultyVO facultyVo) {
 		return sqlSession.update(namespace+"updateFacultyName",facultyVo);
 	}
-	
-	
-	
+	@Override
+	public int insertFaculty(FacultyVO facultyVo) {
+		return sqlSession.insert(namespace+"insertFaculty",facultyVo);
+	}
 	
 }

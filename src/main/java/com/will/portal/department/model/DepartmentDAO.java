@@ -12,4 +12,5 @@ public interface DepartmentDAO {
 	List<Map<String, Object>>selectDepartmentView(SearchVO searchVo);
 	int selectTotalRecord(SearchVO searchVo);
 	int updateDepartment(DepartmentVO departmentVo);
+	int insertDepartment(DepartmentVO departmentVo);
 }

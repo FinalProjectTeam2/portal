@@ -39,5 +39,11 @@ public class DepartmentDAOMybatis implements DepartmentDAO{
 	public int updateDepartment(DepartmentVO departmentVo) {
 		return sqlSession.update(namespace+"updateDepartment",departmentVo);
 	}
+
+	@Override
+	public int insertDepartment(DepartmentVO departmentVo) {
+		return sqlSession.insert(namespace+"insertDepartment",departmentVo);
+	}
+	
 	
 }
