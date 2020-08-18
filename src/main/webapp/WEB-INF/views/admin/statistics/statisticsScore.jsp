@@ -208,9 +208,9 @@ button#search {
 					</select> <br>
 					<h5 class="typeh5">학적</h5>
 					<label class="radio"><input type="radio" name="state"
-						value="1,2,3,4" checked>재학생</label> <label class="radio"><input
-						type="radio" name="state" value="5">졸업생</label> <label
-						class="radio"><input type="radio" name="state" value="1,2,3,4,5">전체</label>
+						value="1" checked>재학생</label> <label class="radio"><input
+						type="radio" name="state" value="2">졸업생</label> <label
+						class="radio"><input type="radio" name="state" value="3">전체</label>
 					<h5 class="typeh5">정렬 기준</h5>
 					<label class="radio"><input type="radio" name="type"
 						value="avg" checked>평균</label> <label class="radio"><input
