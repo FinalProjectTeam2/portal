@@ -10,5 +10,7 @@ public interface StatisticsDAO {
 	List<Map<String, Object>> selectScoreMain();
 	List<Map<String, Object>> selectBoardMain();
 	List<Map<String, Object>> selectScoreAvg(ScoreChartSearchVO scoreChartSearchVo);
+	List<Map<String, Object>> selectScoreMed(ScoreChartSearchVO scoreChartSearchVo);
 	List<String> selectChartSemester();
+	
 }

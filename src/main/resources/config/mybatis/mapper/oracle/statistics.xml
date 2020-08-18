@@ -41,19 +41,28 @@
 		score_stat_view
 		where state in
 		(
-		<if test="state == null or state=='' or state.equals('1,2,3,4')">
-		1,2,3,4
+		<if test="state == null or state== ''">
+			1,2,3,4
 		</if>
-		<if test="state.equals('')">
-		
+		<if test="state != null and state!= ''">
+			<if test='state.equals("1")'>
+				1,2,3,4
+			</if>
+			<if test='state.equals("2")'>
+				5
+			</if>
+			<if test='state.equals("3")'>
+				1,2,3,4,5
+			</if>
 		</if>
 		)
-		<if test="semester !=null and semester!=''">
-			and and TO_CHAR(open_date,'YYYYMM') = #{semester}
+		<if test="semester !=0 and semester !=null and semester!=''">
+			and extract(year from open_date) || extract(month from
+			open_date)=#{semester}
 		</if>
 		group by dep_name
 		order by
-		avg(total_grade) desc)s
+		avg(total_grade) desc, median(total_grade) desc)s
 		<![CDATA[
 		where rownum<=10]]>
 	</select>
@@ -66,19 +75,36 @@
 		from
 		score_stat_view
 		where state in
-		(1,2,3,4)
-		<if test="semester !=null and semester!=''">
-			and and TO_CHAR(open_date,'YYYYMM') = #{semester}
+		(
+		<if test="state == null or state== ''">
+			1,2,3,4
+		</if>
+		<if test="state != null and state!= ''">
+			<if test='state.equals("1")'>
+				1,2,3,4
+			</if>
+			<if test='state.equals("2")'>
+				5
+			</if>
+			<if test='state.equals("3")'>
+				1,2,3,4,5
+			</if>
+		</if>
+		)
+		<if test="semester !=0 and semester !=null and semester!=''">
+			and extract(year from open_date) || extract(month from
+			open_date)=#{semester}
 		</if>
 		group by dep_name
 		order by
-		median(total_grade) desc)s
+		median(total_grade) desc, avg(total_grade) desc)s
 		<![CDATA[
 		where rownum<=10]]>
 	</select>
 	<select id="selectChartSemester" resultType="string">
-		select distinct TO_CHAR(open_date,'YYYYMM') as semester
-		from score_stat_view order by semester
+		select distinct extract(year from open_date) || extract(month from
+		open_date) as semester from score_stat_view order by
+		semester
 	</select>
 </mapper>
 

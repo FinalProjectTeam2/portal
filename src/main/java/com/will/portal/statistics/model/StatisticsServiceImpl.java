@@ -28,6 +28,12 @@ public class StatisticsServiceImpl implements StatisticsService{
 	public List<Map<String, Object>> selectScoreAvg(ScoreChartSearchVO scoreChartSearchVo) {
 		return statisticsDao.selectScoreAvg(scoreChartSearchVo);
 	}
+	
+
+	@Override
+	public List<Map<String, Object>> selectScoreMed(ScoreChartSearchVO scoreChartSearchVo) {
+		return statisticsDao.selectScoreMed(scoreChartSearchVo);
+	}
 
 	@Override
 	public List<String> selectChartSemester() {

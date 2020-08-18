@@ -39,7 +39,7 @@
 
 table {
 	border-collapse: collapse;
-	margin: 100px 0 15% 50px;
+	margin: 100px 0 26% 50px;
 	width: 800px;
 	float: left;
 }
@@ -166,13 +166,20 @@ button#search {
 						<th scope="col">학과명</th>
 						<th scope="col">평균</th>
 						<th scope="col">중간값</th>
-						<th scope="col">if순위</th>
+						<th scope="col">
+						<c:if test="${empty param.type || param.type==1 }">
+						평균값 순위
+						</c:if>
+						<c:if test="${param.type==2 }">
+						중간값 순위
+						</c:if>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:if test="${empty scoreList }">
 						<tr>
-							<td colspan="4">결과가 없습니다.</td>
+							<td colspan="4" style="padding: 5%;">결과가 없습니다.</td>
 						</tr>
 					</c:if>
 					<c:if test="${!empty scoreList }">
@@ -191,12 +198,10 @@ button#search {
 			</table>
 			<div class="condition">
 				<form name="frm" method="post">
-					<input type="hidden" name="" value=""> <input type="hidden"
-						name="" value="">
 					<h4 style="color: #4bafed">조건 설정</h4>
 					<h5 class="typeh5">학기</h5>
 					<select name="semester" id="searchSelect">
-						<option value="">전체학기</option>
+						<option value="0">전체학기</option>
 						<c:if test="${!empty slist }">
 							<c:forEach var="i" begin="0" step="1" end="${fn:length(slist)-1}">
 								<option value="${slist[i] }"
@@ -208,13 +213,33 @@ button#search {
 					</select> <br>
 					<h5 class="typeh5">학적</h5>
 					<label class="radio"><input type="radio" name="state"
-						value="1" checked>재학생</label> <label class="radio"><input
-						type="radio" name="state" value="2">졸업생</label> <label
-						class="radio"><input type="radio" name="state" value="3">전체</label>
+						value="1" 
+						<c:if test="${empty param.state || param.state==1}">
+						checked
+						</c:if>
+						>재학생</label> <label class="radio"><input
+						type="radio" name="state" value="2"
+						<c:if test="${param.state==2}">
+						checked
+						</c:if>
+						>졸업생</label> <label
+						class="radio"><input type="radio" name="state" value="3"
+						<c:if test="${param.state==3}">
+						checked
+						</c:if>
+						>전체</label>
 					<h5 class="typeh5">정렬 기준</h5>
 					<label class="radio"><input type="radio" name="type"
-						value="avg" checked>평균</label> <label class="radio"><input
-						type="radio" name="type" value="med">중간값</label>
+						value="1" 
+						<c:if test="${empty param.type || param.type==1}">
+						checked
+						</c:if>
+						>평균</label> <label class="radio"><input
+						type="radio" name="type" value="2"
+						<c:if test="${param.type==2}">
+						checked
+						</c:if>
+						>중간값</label>
 					<button class="btn btn-primary" id="search">조회</button>
 				</form>
 			</div>
