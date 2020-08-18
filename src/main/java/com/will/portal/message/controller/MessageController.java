@@ -18,11 +18,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.will.portal.common.MemberDetails;
 import com.will.portal.common.PaginationInfo;
 import com.will.portal.common.Utility;
+import com.will.portal.employee.model.EmployService;
+import com.will.portal.employee.model.EmployeeVO;
 import com.will.portal.message.model.InboxVO;
 import com.will.portal.message.model.MessageAllVO;
 import com.will.portal.message.model.MessageSearchVO;
 import com.will.portal.message.model.MessageService;
 import com.will.portal.message.model.OutboxVO;
+import com.will.portal.professor.model.ProfessorService;
+import com.will.portal.professor.model.ProfessorVO;
+import com.will.portal.student.model.StudentService;
+import com.will.portal.student.model.StudentVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +39,12 @@ public class MessageController {
 	
 	@Autowired
 	MessageService service;
+	@Autowired
+	EmployService empServ;
+	@Autowired
+	ProfessorService profServ;
+	@Autowired
+	StudentService stuServ;
 	
 	@GetMapping("/messageBox")
 	public void messageBox(@RequestParam(defaultValue = "in") String type, Model model) {
@@ -197,5 +209,50 @@ public class MessageController {
 	@RequestMapping("/addrList")
 	public void addrList() {
 		log.info("주소록 검색");
+	}
+	
+	@RequestMapping("/empList")
+	@ResponseBody
+	public List<EmployeeVO> empList(@RequestParam(required = false) String name) {
+		if(name == null) {
+			name = "";
+		}
+		log.info("임직원 주소록 파라미터 name={}",name);
+		
+		List<EmployeeVO> list = empServ.selectListByName(name);
+		return list;
+	}
+	@RequestMapping("/profList")
+	@ResponseBody
+	public List<ProfessorVO> profList(@RequestParam(required = false) String name) {
+		if(name == null) {
+			name = "";
+		}
+		log.info("교수 주소록 파라미터 name={}",name);
+		
+		List<ProfessorVO> list = profServ.selectListByName(name);
+		return list;
+	}
+	@RequestMapping("/stuList")
+	@ResponseBody
+	public List<StudentVO> stuList(@RequestParam(required = false) String name) {
+		if(name == null) {
+			name = "";
+		}
+		log.info("학생 주소록 파라미터 name={}",name);
+		
+		List<StudentVO> list = stuServ.selectListByName(name);
+		return list;
+	}
+	
+	@RequestMapping("/selectMainList")
+	@ResponseBody
+	public List<MessageAllVO> selectMainList(Authentication authentication) {
+		MemberDetails user = (MemberDetails) authentication.getPrincipal();
+		log.info("index 쪽지 보여주기 user={}",user);
+		
+		List<MessageAllVO> list = service.selectMainList(user.getOfficialNo());
+		log.info("결과 list.size={}",list.size());
+		return list;
 	}
 }

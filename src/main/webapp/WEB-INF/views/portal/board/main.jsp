@@ -86,9 +86,6 @@ a.more {
 					$('#box').append(boxByBdcode);
 					$('.more').html(img);
 				}
-			},
-			error:function(xhr,status,error){
-				alert(status + ", " + error);
 			}
 		});
 		

@@ -68,6 +68,8 @@ span.fontLar {
 		});
 		var ctx = document.getElementById('myChart').getContext('2d');
 		var str = ${slistCh};
+		Chart.defaults.global.defaultFontSize = 17;
+        Chart.defaults.global.defaultFontStyle = 'bold';
 		var chart = new Chart(ctx, {
 			// The type of chart we want to create
 			type : 'line',
@@ -96,7 +98,13 @@ span.fontLar {
 			                display: true,
 			                stacked: true,
 			                ticks: {
-			                    min: ${min}, // minimum value
+			                    min: 
+			                    	<c:if test="${min-0.5<0}">
+			                    	${min}
+			                    	</c:if>
+			                    	<c:if test="${min-0.5>=0}">
+			                    	${min-0.5}
+			                    	</c:if>, // minimum value
 			                    max: 4.5 // maximum value
 			                }
 			            }]

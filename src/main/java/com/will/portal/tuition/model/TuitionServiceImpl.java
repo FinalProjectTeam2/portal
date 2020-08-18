@@ -12,25 +12,17 @@ public class TuitionServiceImpl implements TuitionService {
 
 	@Override
 	public List<TuitionStuVO> selectStuView(String officicalNo) {
-		
 		return tuitionDao.selectStuView(officicalNo);
 	}
 
 	@Override
 	public List<TuitionViewVO> selectTuitionView(String officicalNo) {
-		
 		return tuitionDao.selectTuitionView(officicalNo);
 	}
 
 	@Override
 	public List<TuitionDetailVO> selectTuitionDView(String officicalNo) {
-		
 		return tuitionDao.selectTuitionDView(officicalNo);
-	}
-
-	@Override
-	public int insertTuition(TuitionDetailVO dVo) {
-		return tuitionDao.insertTuition(dVo);
 	}
 
 	@Override
@@ -44,7 +36,16 @@ public class TuitionServiceImpl implements TuitionService {
 	}
 
 	@Override
-	public int selectByNo(int no) {
+	public TuitionDetailVO selectByNo(int no) {
 		return tuitionDao.selectByNo(no);
 	}
+
+	@Override
+	public int insertTuition(TuitionDetailVO vo) {
+		return tuitionDao.insertTuition(vo);
+	}
+
+
+
+
 }

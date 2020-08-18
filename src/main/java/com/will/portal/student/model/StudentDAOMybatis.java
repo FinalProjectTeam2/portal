@@ -90,8 +90,10 @@ public class StudentDAOMybatis implements StudentDAO{
 	public List<StudentTimeTableVO> selectTimetable(String stuNo) {
 		return sqlSession.selectList(namespace+"selectTimetable", stuNo);
 	}
-	
-	
 
+	@Override
+	public List<StudentVO> selectListByName(String name) {
+		return sqlSession.selectList(namespace+"selectListByName", name);
+	}
 	
 }

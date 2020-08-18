@@ -7,7 +7,7 @@ import com.will.portal.common.EmployeeSearchVO;
 import com.will.portal.official_info.model.Official_infoVO;
 
 public interface EmployService {
-	
+
 	int LOGIN_OK=1;
 	int PWD_DISAGREE=2;
 	int ID_NONE=3;
@@ -23,5 +23,9 @@ public interface EmployService {
 	int deleteEmployee(String empNo);
 	int multiUpdatePosition(List<EmployeeVO> list,String positionCode);
 	int multiDelete(List<EmployeeVO> list);
+
+	List<EmployeeVO> selectListByName(String name);
+
 	public int updateAuthcode(EmployeeVO empvo);
+
 }

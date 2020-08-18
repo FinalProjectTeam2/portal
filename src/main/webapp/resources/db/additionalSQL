@@ -294,7 +294,16 @@ NOCACHE;
 /*학과 관리 뷰*/
 create or replace view faculty_view
 as
-select d.*,dd.dep_count,f.faculty_name, b.building_name from department d join 
+select d.*,dd.dep_count,f.faculty_name, b.building_name from (department d full outer join 
 (select faculty_no, count(dep_no) as dep_count from department group by faculty_no)dd
-on d.faculty_no=dd.faculty_no join faculty f on d.faculty_no=f.faculty_no 
-join building b on b.BUILDING_CODE = d.BUILDING_CODE;
+on d.faculty_no=dd.faculty_no join building b on b.BUILDING_CODE = d.BUILDING_CODE)
+full outer join faculty f on d.faculty_no=f.faculty_no;
+
+/*성적 통계 뷰*/
+create or replace view score_stat_view as
+select s.stu_no,s.major,s.semester,s.state,
+d.dep_no,d.dep_name,e.sub_code,e.classification,
+e.total_grade,op.open_date,ty.type from evaluation e join open_subj op
+on e.SUB_CODE=op.open_sub_code join student s on e.STU_NO = s.STU_NO
+join department d on s.MAJOR=d.DEP_NO join subj_type ty on
+e.classification=ty.TYPE_CODE;

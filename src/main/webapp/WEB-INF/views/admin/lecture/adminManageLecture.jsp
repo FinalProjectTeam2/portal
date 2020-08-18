@@ -11,7 +11,34 @@
 </style>
 <script type="text/javascript">
 	$(function(){
-		subjList(1);
+		subjList();
+		//학부 선택시 해당되는 학과만 나오도록 함
+		$('#faculty').change(function(){
+			var facultyNo=$('#faculty option:selected').val();
+			console.log(facultyNo);
+			$.ajax({
+				url:"<c:url value='/admin/lecture/adminManageLecture'/>",
+				type:"post",
+				data:{"facultyNo":facultyNo},
+				success:function(res){
+					var str="<option value='0'>---All---</option>";
+					$.each(res.dList, function(index, item){
+						str+="<option value='"+item.depNo+"'>"+item.depName+"</option>";
+					});
+						
+						$('#major').html(str);
+				}
+
+			});
+		});
+		
+		$('#btSearch').click(function(){
+			subjList();
+		});
+		
+		
+		
+		
 		$('#btMultiDel').click(function(){
 			var len=$('tbody input[type=checkbox]:checked').length;
 			if(len==0){
@@ -47,12 +74,29 @@
 	}
 	
 	
-	function subjList(curPage){
+	function subjList(){
+		var typeCode=$('#subjType').val();
+		var facultyNo=$('#faculty').val();
+		var depNo=$('major').val();
+		var subjName='';
+		var profName='';
+		var openSubCode='';
+		if($('#searchSelect').val()=='subjName'){
+			subjName=$('#searchKeyword').val();
+		}else if($('#searchSelect').val()=='profName'){
+			profName=$('#searchKeyword').val();
+		}else if($('searchSelect').val()=='openSubCode'){
+			openSubCode=$('#searchKeyword').val();
+		}
 		$.ajax({
-			url:"<c:url value='/registration/openSubjList'/>",
+			url:"<c:url value='/admin/lecture/openSubjList'/>",
 			data:{
-				"facultyNo":"0",
-				"depNo":"111"
+				"typeCode":typeCode,
+				"facultyNo":facultyNo,
+				"depNo":depNo,
+				"subjName":subjName,
+				"profName":profName,
+				"openSubCode":openSubCode
 			},
 			dataType:"json",
 			type:"post",
@@ -92,7 +136,6 @@
 						str+="</tbody></table>"
 
 					}else if(checkNull=='N'){
-						$.each(res.list, function(idx, item){
 							str+="<table class='box2' summary='강의 목록'>";
 							str+="<caption>강의 목록</caption>";
 							str+="<colgroup>";
@@ -118,26 +161,25 @@
 							str+="</tr>";
 							str+="</thead>";
 							str+="<tbody>";
+						$.each(res.mList, function(idx, item){
 							str+="<tr class='align_center'>";
 							str+="<td><input type='checkbox' name='' value='"+num+"'>";
 							str+="<td>"+item.openSubCode+"</td>";
 							str+="<td>"+item.subjName+"</td>";
 							str+="<td>"+item.profName+"</td>";
-							str+="<td></td>";
-							str+="<td></td>";
+							str+="<td>"+item.facultyName+"</td>";
+							str+="<td>"+item.depName+"</td>";
 							str+="<td><a href='#''>수정</a></td>";
 							str+="<td><a href='#''>삭제</a></td>";
 							str+="</tr>";
+							num++;
+						});
 							str+="</tbody>";
 							str+="</table>"
-						});
 					}
 
 				$('#divList').html(str);
-
-				$('#meta_1').find('em').text(res.count);
-
-
+				$('#meta_1').find('em').text(count);
 
 
 			}
@@ -159,7 +201,7 @@
 
 		<div id="adminMngMem">
 			<h2>강의 관리</h2>
-			<p>조회결과 : {}건</p>
+			<p>조회결과 :<span class="item" id="meta_1">총 조회건수<em>0</em> 건</span></p>
 
 
 			<!-- 페이징 처리를 위한 form 시작-->
@@ -171,28 +213,38 @@
 
 			<form name="frmList" method="post" action="<c:url value='/admin'/>">
 				<div class="divRight">
-					과목 <select name="">
-						<option disabled selected>&nbsp;--</option>
-						<option value="">전공</option>
-						<option value="">교양</option>
+					과목 <select name="subjType" id="subjType">
+						<option value="all">----All----</option>
+						<c:if test="${!empty sList }">
+							<c:forEach var="sVo" items="${sList }">
+								<option value=${sVo.typeCode }>${sVo.type }</option>
+							</c:forEach>
+						
+						</c:if>
 					</select>
-					학부 <select name="">
-						<option disabled selected>&nbsp;--</option>
-						<option value="">공대</option>
-						<option value="">미대</option>
+					학부 <select name="faculty" id="faculty">
+						<option value="0">---All---</option>
+						<c:if test="${!empty fList }">
+							<c:forEach var="fVo" items="${fList }">
+								<option value="${fVo.facultyNo }">${fVo.facultyName }</option>
+							</c:forEach>
+						</c:if>
 					</select>
-					학과 <select name="">
-						<option disabled selected>&nbsp;--</option>
-						<option value="">경제</option>
-						<option value="">컴공</option>
+					학과 <select name="major" id="major">
+						<option value="0">---All---</option>
+							<c:if test="${!empty dList }">
+								<c:forEach var="dVo" items="${dList }">
+									<option value="${dVo.depNo }">${dVo.depName }</option>
+								</c:forEach>
+							</c:if>
 					</select>
 					<select name="" id="searchSelect">
-						<option value="">과목명</option>
-						<option value="">교수명</option>
-						<option value="">강의번호</option>
+						<option value="subjName">과목명</option>
+						<option value="profName">교수명</option>
+						<option value="openSubCode">강의번호</option>
 					</select>
-					<input type="text" size="8" name="searchKeyword">
-					<button class="btCustom btn btn-primary btn-lg login-button" id="btSearch">검색</button>
+					<input type="text" size="8" name="searchKeyword" id="searchKeyword">
+					<button type="button" class="btCustom btn btn-primary btn-lg login-button" id="btSearch">검색</button>
 				
 				<div id="divList">
 					
@@ -225,7 +277,7 @@
 				</div>
 
 				<div class="btdiv">
-					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="강의 추가"><br>
+					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btAdd" value="강의 추가"><br>
 				</div>
 				<div class="btdiv">
 					<input type="button" class="btCustom btn btn-primary btn-lg login-button" id="btMultiDel" value="선택한 강의 삭제"><br>

@@ -102,13 +102,11 @@ $(function(){
 					});
 					
 					
-					
 					$('.assignLine').click(function(){
 						var assignNo=$(this).children().eq(0).html();
 						var assignName=$(this).children().eq(1).html();
 						var regDate=$(this).children().eq(2).html();
 						var openSubCode=$('#subjCode option:selected').val();
-						
 						$.ajax({
 							url:"<c:url value='/assignment/assignStuList'/>",
 							type:"post",
@@ -158,6 +156,7 @@ $(function(){
 											}
 											
 									});
+									
 								}else{
 									str+="<tr>"+
 											"<td colspan='4'>수강신청 인원이 없습니다.</td></tr>";
@@ -166,6 +165,7 @@ $(function(){
 								
 								
 								$('#rightDiv').html(str);
+								$('#rightDiv').show();
 							}
 							
 						});
@@ -197,7 +197,7 @@ function btDelClick(no, name){
 		},
 		success:function(res){
 			$('#rightDiv').hide();
-			if(res.length > 0){
+			if(res.cnt > 0){
 				var str =  "<span style='color: red;font-size=0.7em'>※과제등록취소, 확인 마친과제 삭제를 원하시면 완료버튼을 누르세요</span>" +
 					"<table class='assignTable' border='1'>"+
 				"<colgroup>"+
@@ -212,9 +212,9 @@ function btDelClick(no, name){
 					"<th>등록일</th>"+
 					"<th>확인완료</th>"+
 				"</tr>";
-				var len = res.length;
+				var len = res.list.length;
 				if(len>0){
-					$.each(res, function(idx, item){
+					$.each(res.list, function(idx, item){
 						str+="<tr class='assignLine'>"+
 							"<td>"+item.assignNo+"</td>"+
 							"<td>"+item.assignName+"</td>"+
@@ -250,7 +250,6 @@ function btDelClick(no, name){
 					var assignName=$(this).children().eq(1).html();
 					var regDate=$(this).children().eq(2).html();
 					var openSubCode=$('#subjCode option:selected').val();
-					
 					$.ajax({
 						url:"<c:url value='/assignment/assignStuList'/>",
 						type:"post",
@@ -308,6 +307,7 @@ function btDelClick(no, name){
 							
 							
 							$('#rightDiv').html(str);
+							$('#rightDiv').show();
 						}
 						
 					});
@@ -316,6 +316,7 @@ function btDelClick(no, name){
 				});
 			}else{
 				alert('삭제 실패');
+				location.reload();
 			}	
 		}
 		
@@ -456,6 +457,7 @@ function btnClick(){
 							
 							
 							$('#rightDiv').html(str);
+							$('#rightDiv').show();
 						}
 						
 					});

@@ -15,33 +15,6 @@
 	color: black;
 	text-align: center;
 }
-
-.filebox label {
-	display: inline-block; 
-	padding: .5em .75em; 
-	color: #999; 
-	font-size: inherit; 
-	line-height: normal; 
-	vertical-align: middle; 
-	background-color: #fdfdfd; 
-	cursor: pointer; 
-	border: 1px solid #ebebeb; 
-	border-bottom-color: #e2e2e2; 
-	border-radius: .25em; 
-} 
-
-.filebox input[type="file"] {
- /* 파일 필드 숨기기 */ 
-	position: absolute; 
-	width: 1px; 
-	height: 1px; 
-	padding: 0; 
-	margin: -1px; 
-	overflow: hidden; 
-	clip:rect(0,0,0,0); 
-	border: 0; 
-}
-
 #btUpdate{
   position: relative;
   margin: 0;
@@ -58,6 +31,9 @@
   margin-top:5%;
   margin-left: 82%;
 }
+
+
+
 #btUpdate:hover{
   background: #149174;
 	color: #0C5645;
@@ -66,14 +42,73 @@
   border:0;
 }
 
+input.upload-name {
+    float: left;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    padding: 4px 0;
+    margin: 2px 0;
+    border-color: #aeaeae;
+}
 
+.filebox > * {
+    /* margin: 0 0; */
+}
+
+.filebox label {
+  float:left;
+  display: inline-block;
+  padding: .46em .75em;
+  color: #fff;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #5cb85c;
+  cursor: pointer;
+  border: 1px solid #4cae4c;
+  border-radius: .25em;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+}
+
+.filebox label:hover {
+  background-color: #6ed36e;
+}
+
+.filebox label:active {
+  background-color: #367c36;
+}
+
+.filebox input[type="file"] {
+float:left;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
 </style>
 
 <script type="text/javascript">
 	var code=${openSubCode};
 	$('#subjCode').val(code);
 	showList();
+	
 	$(function(){
+		
+		var fileTarget = $('#excelFile'); 
+		  fileTarget.on('change', function(){ // 값이 변경되면
+			  var fName = $(".filebox input[type='file']").val();
+		  	  var index = fName.lastIndexOf('\\')+1;
+		      var cur= fName.substr(index);
+		    $(".upload-name").val(cur);
+		  }); 
+		
+		
+		
 		$('#addExcelImportBtn').click(function(){
 			inputScoreByExcel();
 			return false;
@@ -115,6 +150,12 @@
 		
 		$('#btUpdate').click(function(){
 			
+			if($('.firsttd').length < 2){
+				alert('수강생 1명인 경우에는 테이블의 입력버튼을 이용하세요.');
+				return;
+			}
+		
+			
 			var srt = "";
 			var tdArr= [];
 			$.each($('.firsttd'), function(idx, item){
@@ -134,7 +175,6 @@
 				
 				var str=subCode+","+stuNo+","+classification+","+midterm+","+finals+","+assignment
 				+","+attendance+","+etc+","+totalGrade;
-				
 				tdArr.push(str);
 				
 			});
@@ -296,6 +336,11 @@ function inputScoreByExcel(){
         alert("엑셀 파일만 업로드 가능합니다.");
         return false;
     }
+    if($('#subjCode').val()=='none'){
+		alert('성적을 입력할 강의를 선택해야합니다.');
+		return;
+	}
+    
 	var form = $('#excelUploadForm')[0];
 	
 	var data = new FormData(form);
@@ -323,6 +368,7 @@ function inputScoreByExcel(){
 	        		
 	        	});
 	        	alert('성적입력 완료');
+	        	$('.upload-name').val('');
 	        },
 	        error:function(xhr, status, error){
 	        	alert(error);
@@ -340,15 +386,15 @@ function inputScoreByExcel(){
 	
 	<form id="excelUploadForm" name="excelUploadForm" enctype="multipart/form-data" method="post" 
                                 action= "">
-        <div class="contents">
-        <dl class="vm_name">
-                <dt class="down w90">첨부 파일</dt>
-                <dd><input id="excelFile" type="file" name="excelFile" /></dd>
-        </dl>  <button type="button" id="addExcelImportBtn" class="btn" ><span>추가</span></button>      
-    </div>
-	<input type="button" id="btXls" value="excel로 다운받기" style="float: right; margin-right: 100px;">
+        <div class="filebox">
+         <label for="excelFile">파일선택</label>
+            <input id="excelFile" type="file" name="excelFile" />
+     	  	<input class="upload-name" value="" disabled="disabled">
+     	  <button type="button" id="addExcelImportBtn" class="btn btn-primary" style="margin-bottom: 7px" ><span>추가</span></button>      
+  		  </div>
+	<input type="button" id="btXls" value="excel로 다운받기" class="btn btn-primary" style="float: right; margin-right: 100px;">
 	</form>
-	<select class="form-control" id="subjCode" style="width: 72%;">
+	<select class="form-control" id="subjCode" style="width: 72%;clear: both">
 		<c:if test="${empty sList }">
 			<option value="none">교수님께서 개설하신 과목이 없습니다.</option>
 		</c:if>
@@ -359,7 +405,7 @@ function inputScoreByExcel(){
 			</c:forEach>
 		</c:if>
 	</select>
-	<hr style="border: solid 2px lightgreen">
+	<hr style="border: solid 2px lightgray">
 	<h4 id="listTitle"></h4>
 	
 	<div id="tableDiv">

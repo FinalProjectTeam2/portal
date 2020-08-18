@@ -154,8 +154,8 @@
 					$('#pop div:eq(2) .popProfName').html($(this).children().children('span:eq(1)').html());
 					$('#pop div:eq(3) .popClassroom').html($(this).children().children('input:eq(1)').val());
 					$('#pop div:eq(4) .popTime').html($(this).parent().parent().children('.time').children('span').html());
-					$('#pop div:eq(5) .popExplanation').html($(this).children().children('input:eq(2)').val());
-					$('#pop div:eq(6) .subjectCode').val($(this).children().children('input:eq(3)').val());
+					$('#pop div:eq(5) .popExplanation').html($(this).children().children('input:eq(3)').val());
+					$('#pop div:eq(6) .subjectCode').val($(this).children().children('input:eq(4)').val());
 					$('#pop').toggleClass("hidden");
 				});
 				
@@ -163,7 +163,7 @@
 					var sendSubCode = $(this).parent().children('input').val();
 					$.ajax({
 						url : "<c:url value='/lecture/ajax/evalCheck'/>",
-						type : "get",
+						type : "post",
 						data : "subjCode=" + sendSubCode,
 						success : function(res) {
 							console.log(res);

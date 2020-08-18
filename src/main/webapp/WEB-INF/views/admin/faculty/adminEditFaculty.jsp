@@ -95,29 +95,88 @@ span.telSlash {
 </style>
 <script>
 	$(function() {
-
 		$("#boardFrm").submit(function() {
-			/*유효성  */
-			var formData = $("#boardFrm").serialize();
-			$.ajax({
-				url : "/portal/admin/faculty/adminEditFacultyAjax",
-				data : formData,
-				type : "get",
-				success : function(res) {
-					if (res) {
-						alert("수정 성공!");
-						self.close();
-						opener.location.reload();
-					} else {
-						alert("수정 실패!");
+			if(check()){
+				var formData = $("#boardFrm").serialize();
+				$.ajax({
+					url : "/portal/admin/faculty/adminEditFacultyAjax",
+					data : formData,
+					type : "get",
+					success : function(res) {
+						if (res) {
+							alert("수정 성공!");
+							self.close();
+							opener.location.reload();
+						} else {
+							alert("수정 실패!");
+						}
 					}
-				}
-			});
-
+				});
+				
+			}
+			return false;
 		});
 		$("#cancel").click(function() {
 			self.close();
 		});
+		function check() {
+			if ($('#faculty').val() == "") {
+				alert('학부를 선택해주세요');
+				$('#faculty').focus();
+				event.preventDefault();
+				return false;
+			} else if ($('#depName').val() == "") {
+				alert('학과명을 입력해주세요');
+				$('#depName').focus();
+				event.preventDefault();
+				return false;
+			} else if ($('#totalCredit').val() == "") {
+				alert('총 학점을 입력해주세요');
+				$('#depName').focus();
+				event.preventDefault();
+				return false;
+			}else if ($('#tel1').val() == "") {
+				alert('전화번호를 입력해주세요');
+				$('#tel1').focus();
+				event.preventDefault();
+				return false;
+			} else if ($('#tel2').val() == "") {
+				alert('전화번호를 모두 입력해주세요');
+				$('#tel2').focus();
+				event.preventDefault();
+				return false;
+			} else if ($('#tel3').val() == "") {
+				alert('전화번호를 모두 입력해주세요');
+				$('#tel3').focus();
+				event.preventDefault();
+				return false;
+			} else if ($('#buildingCode').val() == "") {
+				alert('학과 건물을 입력해주세요');
+				$('#buildingCode').focus();
+				event.preventDefault();
+				return false;
+			}else if(!validate_number($('#totalCredit').val())){
+				alert('총 학점은 숫자만 입력 가능합니다.');
+				$('#totalCredit').focus();
+				event.preventDefault();
+				return false;
+			}else if (!validate_number($('#tel1').val())
+					|| !validate_number($('#tel2').val())
+					|| !validate_number($('#tel3').val())) {
+				alert('전화번호는 숫자만 가능합니다.');
+				$('#tel1').focus();
+				event.preventDefault();
+				return false;
+			} else{
+				return true;
+			}
+		}
+		// 숫자만 입력가능
+		function validate_number(number) {
+			var pattern = new RegExp(/^[0-9]*$/);
+			return pattern.test(number);
+		}
+
 	});
 </script>
 </head>

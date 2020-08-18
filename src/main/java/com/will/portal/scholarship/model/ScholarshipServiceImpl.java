@@ -17,11 +17,6 @@ public class ScholarshipServiceImpl implements ScholarshipService {
 	}
 
 	@Override
-	public int selectByNo(int no) {
-		return scholarshipDao.selectByNo(no);
-	}
-
-	@Override
 	public int insertscholarship(ScholarshipAllVO vo) {
 		return scholarshipDao.insertscholarship(vo);
 	}
@@ -32,11 +27,6 @@ public class ScholarshipServiceImpl implements ScholarshipService {
 	}
 
 	@Override
-	public int deleteScholarship(String officicalNo) {
-		return scholarshipDao.deleteScholarship(officicalNo);
-	}
-
-	@Override
 	public List<ScholarshipAllVO> selectAll(SearchVO searchVo) {
 		return scholarshipDao.selectAll(searchVo);
 	}
@@ -44,6 +34,16 @@ public class ScholarshipServiceImpl implements ScholarshipService {
 	@Override
 	public int selectTotalRecord(SearchVO searchVo) {
 		return scholarshipDao.selectTotalRecord(searchVo);
+	}
+
+	@Override
+	public ScholarshipAllVO selectByNo(int no) {
+		return scholarshipDao.selectByNo(no);
+	}
+
+	@Override
+	public int deleteScholarship(int no) {
+		return scholarshipDao.deleteScholarship(no);
 	}
 
 

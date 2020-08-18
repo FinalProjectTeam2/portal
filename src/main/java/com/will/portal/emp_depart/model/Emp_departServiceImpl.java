@@ -13,4 +13,9 @@ public class Emp_departServiceImpl implements Emp_departService{
 	public List<Emp_departVO> selectEmpDepart(){
 		return dao.selectEmpDepart();
 	}
+
+	@Override
+	public Emp_departVO selectEmpDepartByCode(String Code) {
+		return dao.selectEmpDepartByCode(Code);
+	}
 }

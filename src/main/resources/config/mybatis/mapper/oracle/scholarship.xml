@@ -1,49 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.scholarship">
 	<select id="selectAllScholarship" resultType="ScholarshipAllVO">
-		select * from scholarshipView
+		select * from scholarshipD_view
 		where stu_no=#{officicalNo}
 	</select>
-	
+
 	<select id="selectByNo" parameterType="int" resultType="ScholarshipAllVO">
-		select * from scholarshipView 
-		where no=#{no} 
+		select * from scholarship_view
+		where no=#{no}
 	</select>
-	
-<!-- 	<insert id="insertscholarship" parameterType="ScholarshipAllVO">
-		insert into scholarshipView
+
+	<insert id="inserAaward" parameterType="ScholarshipAllVO">
+		Insert into award (no, stu_no, scholarship_no, awardingDate, aayment_or_not, approval_date, APPROVAL)
+   		VALUES(award_seq.nextval, #{stuNo}, #{scholarshipNo}, #{awardingDate}, #{aaymentOrNot}, #{approval_date}, #{approval})
 	</insert>
- -->
+
+	<insert id="insertScholarship" parameterType="ScholarshipAllVO">
+		Insert INTO scholarship (scholarship_no, scholarship_type, scholarship, scholarship_name)
+		VALUES(#{scholarshipNo}, #{scholarshipType}, #{scholarship}, #{scholarshipName})
+	</insert>
+
 	<update id="updatescholarship" parameterType="ScholarshipAllVO">
-		update scholarshipView
-		set 
+		update /*+ bypass_ujvc */  (
+			select a.no, a.stu_no, a.scholarship_no, a.awarding_date, a.aayment_or_not,
+				a.approval, a.approval_date, s.scholarship_name,s.SCHOLARSHIP
+    		from award a join scholarship s
+    		on a.SCHOLARSHIP_NO = s.SCHOLARSHIP_NO
+   		 )
+		set aayment_or_not=#{aaymentOrNot},
+    		approval=#{approval},
+   		    approval_date=#{approvalDate}
 		where stu_no=#{officicalNo}
 	</update>
-	
+
 	<delete id="deleteScholarship" parameterType="ScholarshipAllVO">
-		delete from scholarshsipView
-		where stu_no=#{officicalNo}
+		delete from scholarship_view
+		where no=#{no}
 	</delete>
-	
-	
-	
+
+
 	<select parameterType="searchVo" id="selectAll" resultType="ScholarshipAllVO">
 		select *from(
 			select rownum as RNUM, A.*from(
-				select * form scholarshipView 
+				select * form scholarshipView
 		<if test="searchKeyword!=null and searchKeyword !=''">
 		where ${searchCondition} like '%'|| #{searchKeyword} || '%' </if>
-		order by no desc)A) 
-		-<![CDATA[ 
+		order by no desc)A)
+		-<![CDATA[
 				where RNUM>#{firstRecordIndex}
 				and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
 
 	<select parameterType="searchVo" id="selectTotalRecord" resultType="int">
-		select count(*) from scholarshipView 
+		select count(*) from scholarship_view
 		<if test="searchKeyword!=null and searchKeyword !=''">
 		where ${searchCondition} like '%'|| #{searchKeyword} || '%' </if>
 	</select>

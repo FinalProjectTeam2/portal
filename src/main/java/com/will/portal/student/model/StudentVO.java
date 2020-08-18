@@ -29,8 +29,16 @@ public class StudentVO extends MemberDetails {
 	private int minor;
 	private String identifyCode;
 	
+	private String majorName;
 	
-	
+	public String getMajorName() {
+		return majorName;
+	}
+
+	public void setMajorName(String majorName) {
+		this.majorName = majorName;
+	}
+
 	public StudentVO() {
 		super();
 		type = "STUDENT";

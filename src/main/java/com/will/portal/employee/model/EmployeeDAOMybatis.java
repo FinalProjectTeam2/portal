@@ -29,7 +29,7 @@ public class EmployeeDAOMybatis implements EmployeeDAO{
 		return sqlSession.selectOne(namespace + "selectByEmpNo", empNo);
 	}
 
-	
+
 	@Override
 	public String selectSsn(String officialNo) {
 		return sqlSession.selectOne(namespace+"selectSsn", officialNo);
@@ -61,10 +61,15 @@ public class EmployeeDAOMybatis implements EmployeeDAO{
 	}
 
 	@Override
+
+	public List<EmployeeVO> selectListByName(String name) {
+		return sqlSession.selectList(namespace+"selectListByName", name);
+	}
+	@Override
 	public int updateAuthcode(EmployeeVO empvo) {
 		return sqlSession.update(namespace+"updateAuthcode",empvo);
-	}
-	
-	
-}
 
+	}
+
+
+}
