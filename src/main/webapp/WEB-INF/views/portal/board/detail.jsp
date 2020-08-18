@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/board/detail.css'/>" />
 <style>
-#others a{
+#others a {
 	color: black;
 }
 </style>
@@ -45,24 +45,24 @@
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-end">
 					<c:if test="${empty prev }">
-					<li class="page-item disabled">
-						<a class="page-link" href="#" tabindex="-1" aria-disabled="true">이전글</a>
-					</li>
+						<li class="page-item disabled"><a class="page-link" href="#"
+							tabindex="-1" aria-disabled="true">이전글</a></li>
 					</c:if>
 					<c:if test="${!empty prev }">
-					<li class="page-item">
-						<a class="page-link" title="${prev[0].title }" href="<c:url value='/portal/board/detail?postNo=${prev[0].postNo }'/>">이전글</a>
-					</li>
+						<li class="page-item"><a class="page-link"
+							title="${prev[0].title }"
+							href="<c:url value='/portal/board/detail?postNo=${prev[0].postNo }'/>">이전글</a>
+						</li>
 					</c:if>
 					<c:if test="${empty next }">
-					<li class="page-item disabled">
-						<a class="page-link" href="#" tabindex="-1" aria-disabled="true">다음글</a>
-					</li>
+						<li class="page-item disabled"><a class="page-link" href="#"
+							tabindex="-1" aria-disabled="true">다음글</a></li>
 					</c:if>
 					<c:if test="${!empty next }">
-					<li class="page-item">
-						<a class="page-link" title="${next[0].title }" href="<c:url value='/portal/board/detail?postNo=${next[0].postNo }'/>">다음글</a>
-					</li>
+						<li class="page-item"><a class="page-link"
+							title="${next[0].title }"
+							href="<c:url value='/portal/board/detail?postNo=${next[0].postNo }'/>">다음글</a>
+						</li>
 					</c:if>
 				</ul>
 			</nav>
@@ -125,83 +125,209 @@
 				<%@include file="re.jsp"%>
 			</c:if>
 		</div>
-		<div id="others" style="width: 90%; margin: 0 auto; border: 1px solid #e5e5e5; border-radius: 5px; padding: 10px 15px;">
-		<label style="color: gray; font-size: 0.9em;">
-			<a href="<c:url value='/portal/board/main?categoryCode=${cateVo.categoryCode }'/>">${cateVo.categoryName }</a> > 
-			<a href="<c:url value='/portal/board/list?bdCode=${vo.boardVo.bdCode }'/>">${vo.boardVo.bdName}</a>
-			카테고리의 다른글
-		</label>
-		<hr style="margin: 5px 0;">
-		<ol style="margin: 5px; display: inline-block;">
-		<c:set value="0" var="cnt"></c:set>
-		<c:set value="${fn:length(prev) }" var="prevLen"></c:set>
-		<c:set value="${fn:length(next) }" var="nextLen"></c:set>
-		<c:if test="${nextLen >= 2 }">
-			<c:if test="${prevLen >= 2 }">
-			<fmt:formatDate value="${prev[1].regDate }" pattern="yyyy.MM.dd" var="date1"/>
-			<fmt:formatDate value="${prev[0].regDate }" pattern="yyyy.MM.dd" var="date0"/>
-				<li><a href="<c:url value='/portal/board/detail?postNo=${prev[1].postNo }'/>">${prev[1].title } (${date1 })</a></li>
-				<li><a href="<c:url value='/portal/board/detail?postNo=${prev[0].postNo }'/>">${prev[0].title } (${date0 })</a></li>
-				<c:set var="cnt" value="2"></c:set>
-			</c:if>
-			<c:if test="${prevLen < 2 }">
-				<c:forEach items="${prev }" var="p">
-				<fmt:formatDate value="${p.regDate }" pattern="yyyy.MM.dd" var="date"/>
-					<li><a href="<c:url value='/portal/board/detail?postNo=${p.postNo }'/>">${p.title } (${date })</a></li>
-					<c:set var="cnt" value="${cnt + 1 }"></c:set>
-				</c:forEach>
-			</c:if>
-			<li style="color: #28a745; font-weight: bold;">${vo.postsVo.title }</li>
-			<c:if test="${nextLen < (4-cnt) }">
-				<c:forEach var="n" items="${next }">
-				<fmt:formatDate value="${n.regDate }" pattern="yyyy.MM.dd" var="date"/>
-					<li><a href="<c:url value='/portal/board/detail?postNo=${n.postNo }'/>">${n.title } (${date })</a></li>
-				</c:forEach>
-			</c:if>
-			<c:if test="${nextLen >= (4-cnt) }">
-				<c:forEach begin="0" end="${4 - cnt -1 }" var="i">
-				<fmt:formatDate value="${next[i].regDate }" pattern="yyyy.MM.dd" var="date"/>
-				<li><a href="<c:url value='/portal/board/detail?postNo=${next[i].postNo }'/>">${next[i].title } (${date })</a></li>
-				</c:forEach>
-			</c:if>
-		</c:if>
-		<c:if test="${nextLen == 1 }">
-			<c:if test="${prevLen < 3 }">
-				<c:forEach var="p" items="${prev }">
-				<fmt:formatDate value="${p.regDate }" pattern="yyyy.MM.dd" var="date"/>
-					<li><a href="<c:url value='/portal/board/detail?postNo=${p.postNo }'/>">${p.title } (${date })</a></li>
-				</c:forEach>
-			</c:if>
-			<c:if test="${prevLen >= 3 }">
-				<c:forEach begin="0" end="2" var="i">
-				<fmt:formatDate value="${prev[2-i].regDate }" pattern="yyyy.MM.dd" var="date"/>
-				<li><a href="<c:url value='/portal/board/detail?postNo=${prev[2-i].postNo }'/>">${prev[2-i].title } (${date })</a></li>
-				</c:forEach>
-			</c:if>
-			<li style="color: #28a745; font-weight: bold;">${vo.postsVo.title }</li>
-			<c:if test="${nextLen < (4-cnt) }">
-				<c:forEach var="n" items="${next }">
-				<fmt:formatDate value="${n.regDate }" pattern="yyyy.MM.dd" var="date"/>
-					<li><a href="<c:url value='/portal/board/detail?postNo=${n.postNo }'/>">${n.title } (${date })</a></li>
-				</c:forEach>
-			</c:if>
-		</c:if>
-		<c:if test="${nextLen < 1 }">
-			<c:if test="${prevLen < 4 and prevLen > 0 }">
-				<c:forEach var="p" begin="0" end="${prevLen -1 }">
-				<fmt:formatDate value="${prev[(prevLen - 1 - p)].regDate }" pattern="yyyy.MM.dd" var="date"/>
-					<li><a href="<c:url value='/portal/board/detail?postNo=${prev[(prevLen - 1 - p)].postNo }'/>">${prev[(prevLen - 1 - p)].title } (${date })</a></li>
-				</c:forEach>
-			</c:if>
-			<c:if test="${prevLen >= 4 }">
-				<c:forEach begin="0" end="3" var="i">
-				<fmt:formatDate value="${prev[3-i].regDate }" pattern="yyyy.MM.dd" var="date"/>
-				<li><a href="<c:url value='/portal/board/detail?postNo=${prev[3-i].postNo }'/>">${prev[3-i].title } (${date})</a></li>
-				</c:forEach>
-			</c:if>
-			<li style="color: #28a745; font-weight: bold;">${vo.postsVo.title }</li>
-		</c:if>
-		</ol>
+		<div id="others"
+			style="width: 90%; margin: 0 auto; border: 1px solid #e5e5e5; border-radius: 5px; padding: 10px 15px;">
+			<label style="color: gray; font-size: 0.9em;"> <a
+				href="<c:url value='/portal/board/main?categoryCode=${cateVo.categoryCode }'/>">${cateVo.categoryName }</a>
+				> <a
+				href="<c:url value='/portal/board/list?bdCode=${vo.boardVo.bdCode }'/>">${vo.boardVo.bdName}</a>
+				카테고리의 다른글
+			</label>
+			<hr style="margin: 5px 0;">
+			<ol style="margin: 5px; display: inline-block;">
+				<c:set value="0" var="cnt"></c:set>
+				<c:set value="${fn:length(prev) }" var="prevLen"></c:set>
+				<c:set value="${fn:length(next) }" var="nextLen"></c:set>
+				<c:if test="${nextLen >= 2 }">
+					<c:if test="${prevLen >= 2 }">
+						<fmt:formatDate value="${prev[1].regDate }" pattern="yyyy.MM.dd"
+							var="date1" />
+						<fmt:formatDate value="${prev[0].regDate }" pattern="yyyy.MM.dd"
+							var="date0" />
+						<c:if test="${fn:length(prev[1].postNo) > 40 }">
+							<li><a
+								href="<c:url value='/portal/board/detail?postNo=${prev[1].postNo }'/>">${fn:substring(prev[1].title,0,40) }...
+									(${date1 })</a></li>
+						</c:if>
+						<c:if test="${fn:length(prev[1].postNo) <= 40 }">
+							<li><a
+								href="<c:url value='/portal/board/detail?postNo=${prev[1].postNo }'/>">${prev[1].title }
+									(${date1 })</a></li>
+						</c:if>
+						<c:if test="${fn:length(prev[0].postNo) > 40 }">
+							<li><a
+								href="<c:url value='/portal/board/detail?postNo=${prev[0].postNo }'/>">${fn:substring(prev[0].title,0,40) }...
+									(${date0 })</a></li>
+						</c:if>
+						<c:if test="${fn:length(prev[0].postNo) <= 40 }">
+							<li><a
+								href="<c:url value='/portal/board/detail?postNo=${prev[0].postNo }'/>">${prev[0].title }
+									(${date0 })</a></li>
+						</c:if>
+
+						<c:set var="cnt" value="2"></c:set>
+					</c:if>
+					<c:if test="${prevLen < 2 }">
+						<c:forEach items="${prev }" var="p">
+							<fmt:formatDate value="${p.regDate }" pattern="yyyy.MM.dd"
+								var="date" />
+							<c:if test="${fn:length(p.title) > 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${n.postNo }'/>">${fn:substring(p.title,0,40) }...
+										(${date })</a></li>
+							</c:if>
+							<c:if test="${fn:length(p.title) <= 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${p.postNo }'/>">${p.title }
+										(${date })</a></li>
+							</c:if>
+
+							<c:set var="cnt" value="${cnt + 1 }"></c:set>
+						</c:forEach>
+					</c:if>
+					<c:if test="${fn:length(vo.postsVo.title) > 40 }">
+								<li style="color: #28a745; font-weight: bold;">${fn:substring(vo.postsVo.title,0,40) }...</li>
+							</c:if>
+							<c:if test="${fn:length(vo.postsVo.title) <= 40 }">
+								<li style="color: #28a745; font-weight: bold;">${vo.postsVo.title }</li>
+							</c:if>
+					<c:if test="${nextLen < (4-cnt) }">
+						<c:forEach var="n" items="${next }">
+							<fmt:formatDate value="${n.regDate }" pattern="yyyy.MM.dd"
+								var="date" />
+							<c:if test="${fn:length(n.title) > 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${n.postNo }'/>">${fn:substring(n.title,0,40) }...
+										(${date })</a></li>
+							</c:if>
+							<c:if test="${fn:length(n.title) <= 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${n.postNo }'/>">${n.title }
+										(${date })</a></li>
+							</c:if>
+
+						</c:forEach>
+					</c:if>
+					<c:if test="${nextLen >= (4-cnt) }">
+						<c:forEach begin="0" end="${4 - cnt -1 }" var="i">
+							<fmt:formatDate value="${next[i].regDate }" pattern="yyyy.MM.dd"
+								var="date" />
+							<c:if test="${fn:length(next[i].title) > 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${next[i].postNo }'/>">${fn:substring(next[i].title,0,40) }...
+										(${date })</a></li>
+							</c:if>
+							<c:if test="${fn:length(next[i].title) <= 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${next[i].postNo }'/>">${next[i].title }
+										(${date })</a></li>
+							</c:if>
+
+						</c:forEach>
+					</c:if>
+				</c:if>
+				<c:if test="${nextLen == 1 }">
+					<c:if test="${prevLen < 3 }">
+						<c:forEach var="p" items="${prev }">
+							<fmt:formatDate value="${p.regDate }" pattern="yyyy.MM.dd"
+								var="date" />
+							<c:if test="${fn:length(p.title) > 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${p.postNo }'/>">${fn:substring(p.title,0,40) }...
+										(${date })</a></li>
+							</c:if>
+							<c:if test="${fn:length(p.title) <= 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${p.postNo }'/>">${p.title }
+										(${date })</a></li>
+							</c:if>
+
+						</c:forEach>
+					</c:if>
+					<c:if test="${prevLen >= 3 }">
+						<c:forEach begin="0" end="2" var="i">
+							<fmt:formatDate value="${prev[2-i].regDate }"
+								pattern="yyyy.MM.dd" var="date" />
+							<c:if test="${fn:length(prev[2-i].title) > 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${prev[2-i].postNo }'/>">${fn:substring(prev[2-i].title,0,40) }...
+										(${date })</a></li>
+							</c:if>
+							<c:if test="${fn:length(prev[2-i].title) <= 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${prev[2-i].postNo }'/>">${prev[2-i].title }
+										(${date })</a></li>
+							</c:if>
+
+						</c:forEach>
+					</c:if>
+					<c:if test="${fn:length(vo.postsVo.title) > 40 }">
+								<li style="color: #28a745; font-weight: bold;">${fn:substring(vo.postsVo.title,0,40) }...</li>
+							</c:if>
+							<c:if test="${fn:length(vo.postsVo.title) <= 40 }">
+								<li style="color: #28a745; font-weight: bold;">${vo.postsVo.title }</li>
+							</c:if>
+					
+					<c:if test="${nextLen < (4-cnt) }">
+						<c:forEach var="n" items="${next }">
+							<fmt:formatDate value="${n.regDate }" pattern="yyyy.MM.dd"
+								var="date" />
+							<c:if test="${fn:length(n.title) > 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${n.postNo }'/>">${fn:substring(n.title,0,40) }...
+										(${date })</a></li>
+							</c:if>
+							<c:if test="${fn:length(n.title) <= 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${n.postNo }'/>">${n.title }
+										(${date })</a></li>
+							</c:if>
+
+						</c:forEach>
+					</c:if>
+				</c:if>
+				<c:if test="${nextLen < 1 }">
+					<c:if test="${prevLen < 4 and prevLen > 0 }">
+						<c:forEach var="p" begin="0" end="${prevLen -1 }">
+							<fmt:formatDate value="${prev[(prevLen - 1 - p)].regDate }"
+								pattern="yyyy.MM.dd" var="date" />
+							<c:if test="${fn:length(prev[(prevLen - 1 - p)].title) > 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${prev[(prevLen - 1 - p)].postNo }'/>">${fn:substring(prev[(prevLen - 1 - p)].title,0,40) }...
+										(${date })</a></li>
+							</c:if>
+							<c:if test="${fn:length(prev[(prevLen - 1 - p)].title) <= 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${prev[(prevLen - 1 - p)].postNo }'/>">${prev[(prevLen - 1 - p)].title }
+										(${date })</a></li>
+							</c:if>
+
+						</c:forEach>
+					</c:if>
+					<c:if test="${prevLen >= 4 }">
+						<c:forEach begin="0" end="3" var="i">
+							<fmt:formatDate value="${prev[3-i].regDate }"
+								pattern="yyyy.MM.dd" var="date" />
+							<c:if test="${fn:length(prev[3-i].title) > 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${prev[3-i].postNo }'/>">${fn:substring(prev[3-i].title,0,40) }...
+										(${date})</a></li>
+							</c:if>
+							<c:if test="${fn:length(prev[3-i].title) <= 40 }">
+								<li><a
+									href="<c:url value='/portal/board/detail?postNo=${prev[3-i].postNo }'/>">${prev[3-i].title }
+										(${date})</a></li>
+							</c:if>
+						</c:forEach>
+					</c:if>
+					<c:if test="${fn:length(vo.postsVo.title) > 40 }">
+						<li style="color: #28a745; font-weight: bold;">${fn:substring(vo.postsVo.title,0,40) }...</li>
+					</c:if>
+					<c:if test="${fn:length(vo.postsVo.title) <= 40 }">
+						<li style="color: #28a745; font-weight: bold;">${vo.postsVo.title }</li>
+					</c:if>
+				</c:if>
+			</ol>
 		</div>
 		<!-- bottom -->
 		<%@ include file="../../inc/bottom.jsp"%>

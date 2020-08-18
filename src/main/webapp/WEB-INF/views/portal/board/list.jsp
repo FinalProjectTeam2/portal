@@ -150,7 +150,6 @@ ul.pagination {
 								str += "<tr>";
 								str += "<td>" + item.postNo + "</td>";
 								if (item.delFlag == 'N') {
-									console.log('비밀글?'+item.isPrivate);
 									if(item.isPrivate == 'N'){
 										str += "<td class='title'><a href=\"<c:url value='/portal/board/detailCount'/>?postNo="
 											+ item.postNo
@@ -168,8 +167,8 @@ ul.pagination {
 									}
 									
 									str += '<span style="margin-right: 5px;">'
-									if (item.title.length >= 60) {
-										str += item.title.substring(0, 60)
+									if (item.title.length >= 50) {
+										str += item.title.substring(0, 50)
 												+ "...";
 									} else {
 										str += item.title

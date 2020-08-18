@@ -206,5 +206,14 @@
 		select e.*, (select dep_name from department d where d.dep_no=e.dep_no) dep_name 
 		from professor e where e.prof_name like '%'|| #{name} ||'%'
 	</select>
-	
+	<select id="selectUpList" parameterType="String" resultType="subjectAllVo">
+		select s.*,(select count(*)
+   				from subj_time
+   				 where open_sub_code=(select open_sub_code from open_subj
+       			where  prof_no=#{profNo} and SUBJ_CODE=s.subj_code)) count
+		from subject s
+		where prof_no=#{profNo}
+		and (select count(*) from syllabus sy where sy.open_sub_code = (select open_sub_code from open_subj
+		       		where  prof_no=#{profNo} and SUBJ_CODE=s.subj_code)) = 0
+	</select>
 </mapper>

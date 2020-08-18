@@ -307,3 +307,8 @@ e.total_grade,op.open_date,ty.type from evaluation e join open_subj op
 on e.SUB_CODE=op.open_sub_code join student s on e.STU_NO = s.STU_NO
 join department d on s.MAJOR=d.DEP_NO join subj_type ty on
 e.classification=ty.TYPE_CODE;
+
+/*게시판 통계 뷰*/
+create or replace view board_stat_view as
+select b.bd_code,b.bd_name,p.reg_date,p.read_count
+from board b join posts p on b.BD_CODE = p.BD_CODE;
