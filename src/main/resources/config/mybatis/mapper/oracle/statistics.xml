@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.statistics">
+
+	<select id="selectScoreMain" resultType="map">
+		select s.*,rownum
+		from
+		(select dep_name,avg(total_grade) as "avg"
+		from
+		score_stat_view
+		where state in (1,2,3,4)
+		group by dep_name
+		order by
+		avg(total_grade) desc)s
+		<![CDATA[
+		where rownum<=5]]>
+	</select>
+
+	<select id="selectBoardMain" resultType="map">
+		select b.*,rownum
+		from
+		(SELECT bd_name, count(*) as "COUNT" FROM board_stat_view
+		WHERE reg_date between trunc(sysdate) - 30 and trunc(sysdate)
+		group by bd_name
+		order by count(*) desc)b
+		<![CDATA[
+		where rownum<=5]]>
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
