@@ -117,6 +117,12 @@
 		delete from employee
 		where EMP_NO=#{empNo}
 	</delete>
+	
+	<update id="updateAuthcode" parameterType="employeeVo">
+		update employee
+		set auth_code =#{authCode}
+		where emp_no=#{empNo}
+	</update>
 
 	<select id="selectListByName" parameterType="String" resultType="employeeVO">
 		select e.*, (select dep_name from emp_depart d where d.dep_code=e.dep_code) dep_name 

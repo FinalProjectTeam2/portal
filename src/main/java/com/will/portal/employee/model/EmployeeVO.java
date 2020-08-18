@@ -30,6 +30,13 @@ public class EmployeeVO extends MemberDetails {
 		this.depName = depName;
 	}
 
+	@Override
+	public String toString() {
+		return "EmployeeVO [empNo=" + empNo + ", pwd=" + pwd + ", startDate=" + startDate + ", depCode=" + depCode
+				+ ", authCode=" + authCode + ", empName=" + empName + ", resignationDate=" + resignationDate
+				+ ", identityState=" + identityState + ", positionCode=" + positionCode + "]";
+	}
+
 	public EmployeeVO() {
 		super();
 		type = "ADMIN";

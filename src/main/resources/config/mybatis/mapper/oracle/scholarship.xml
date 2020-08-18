@@ -17,7 +17,7 @@
 		insert into scholarshipView()
 
 	</insert>
-
+ -->
 	<update id="updatescholarship" parameterType="ScholarshipAllVO">
 		update scholarshipView
 		set

@@ -155,22 +155,22 @@ $(function() {
 						<table class="box2" summary="교수 목록">
 							<caption>교수 목록</caption>
 							<colgroup>
-								<col style="width: 5%" />
+								<col style="width: 6%" />
 								<!-- 체크박스 -->
-								<col style="width: 10%" />
+								<col style="width: 11%" />
 								<!-- 번호 -->
-								<col style="width: 15%" />
+								<col style="width: 16%" />
 								<!-- 이름 -->
-								<col style="width: 10%" />
+								<col style="width: 11%" />
 								<!-- 학부 -->
-								<col style="width: 20%" />
+								<col style="width: 21%" />
 								<!-- 학과 -->
-								<col style="width: 10%" />
+								<col style="width: 11%" />
 								<!-- 학기 -->
-								<col style="width: 14%" />
+								<col style="width: 15%" />
 								<!-- 학적 -->
-								<col style="width: 8%" />
-								<col style="width: 8%" />
+								<col style="width: 9%" />
+								<!-- <col style="width: 8%" /> -->
 							</colgroup>
 							<thead>
 								<tr>
@@ -182,7 +182,7 @@ $(function() {
 									<th scope="col">교수직급</th>
 									<th scope="col">부임일</th>
 									<th scope="col">수정</th>
-									<th scope="col">삭제</th>
+									<!-- <th scope="col">삭제</th> -->
 								</tr>
 							</thead>
 							<tbody>
@@ -206,8 +206,8 @@ $(function() {
 													pattern="yyyy-MM-dd" /></td>
 											<td><a
 												href="<c:url value='/admin/member/memberEdit?officialNo=${map["PROF_NO"] }'/>">수정</a></td>
-											<td><a id="deleteBt"
-												href="<c:url value='/admin/member/deleteProfessor?profNo=${map["PROF_NO"] }'/>">삭제</a></td>
+											<%-- <td><a id="deleteBt"
+												href="<c:url value='/admin/member/deleteProfessor?profNo=${map["PROF_NO"] }'/>">삭제</a></td> --%>
 										</tr>
 										<c:set var="idx" value="${idx+1 }"></c:set>
 									</c:forEach>
@@ -265,11 +265,11 @@ $(function() {
 							onclick="location.href='<c:url value="/admin/member/adminRegisterMember?sort=2"/>'"
 							id="btInsert" value="회원 추가"><br>
 					</div>
-					<div class="btdiv">
+	<!-- 				<div class="btdiv">
 						<input type="button"
 							class="btCustom btn btn-primary btn-lg login-button"
 							id="btMultiDel" value="선택한 교수 삭제"><br>
-					</div>
+					</div> -->
 				</div>
 			</form>
 		</div>

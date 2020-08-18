@@ -13,6 +13,9 @@ public class StudentListVO {
 		this.stuList = stuList;
 	}
 
+	@Override
+	public String toString() {
+		return "StudentListVO [stuList=" + stuList + "]";
+	}
 
-	
 }

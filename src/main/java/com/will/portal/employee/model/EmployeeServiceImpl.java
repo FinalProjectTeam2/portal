@@ -70,21 +70,21 @@ public class EmployeeServiceImpl implements EmployService {
 				if(BCrypt.checkpw(pwd, dbPwd)){
 					result = LOGIN_OK;
 				}else if(!BCrypt.checkpw(pwd, dbPwd)){
-					result = PWD_DISAGREE;	
+					result = PWD_DISAGREE;
 				}
 			}
 		}else {
 			result = ID_NONE;
 		}
-		
+
 		return result;
 
 	}
-	
+
 	public boolean loginCheckSec(String loginPwd, String password, String officialNo) {
 
 		boolean result = false;
-		
+
 		String birthDay = employeeDao.selectSsn(officialNo).substring(0, 6) ;
 		if(password != null && !password.isEmpty() ) {
 			//최초로그인은 생년월일이 패스워드기 때문에 pdPwd말고 birthDay로 로그인체크
@@ -149,7 +149,7 @@ public class EmployeeServiceImpl implements EmployService {
 			e.printStackTrace();
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
-		
+
 		return cnt;
 	}
 
@@ -161,12 +161,18 @@ public class EmployeeServiceImpl implements EmployService {
 				cnt=employeeDao.deleteEmployee(vo.getEmpNo());
 			}
 		}
-		
+
 		return cnt;
 	}
 
 	@Override
+
 	public List<EmployeeVO> selectListByName(String name) {
 		return employeeDao.selectListByName(name);
+	}
+@Override
+	public int updateAuthcode(EmployeeVO empvo) {
+		return employeeDao.updateAuthcode(empvo);
+
 	}
 }
