@@ -31,8 +31,10 @@
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 <script type="text/javascript">
 	$(function() {
+
 		/*첫번째 */
 		var ctx1 = document.getElementById('myChart1').getContext('2d');
 		var myChart1 = new Chart(ctx1, {
@@ -75,11 +77,24 @@
 			                    max: 100 // maximum value
 			                }
 			            }]
+			        },
+			        plugins: {
+			            datalabels: {
+			                color: '#111',
+			                textAlign: 'center',
+			                font: {
+			                    lineHeight: 1.6
+			                },
+			                formatter: function(value, ctx1) {
+			                    return ctx1.chart.data.labels[ctx1.dataIndex] + '\n' + value;
+			                }
+			            }
 			        }
 			}
 			
 		});
 
+		
 		/*두번째 doughnut  */
 		var ctx2 = document.getElementById('myChart2').getContext('2d');
 		var myChart2 = new Chart(ctx2, {
@@ -118,6 +133,9 @@
 			                textAlign: 'center',
 			                font: {
 			                    lineHeight: 1.6
+			                },
+			                formatter: function(value, ctx2) {
+			                    return ctx2.chart.data.labels[ctx2.dataIndex] + '\n' + value+"개";
 			                }
 			            }
 			        }
@@ -247,7 +265,9 @@
 				<canvas id="myChart1" class="chart"></canvas>
 			</div>
 			<div class="indexDOM_large">
-				<p class="title">인기 게시판<span class="pSpan">(최근 1달 게시물 수)</span></p>
+				<p class="title">
+					인기 게시판 <span class="pSpan">(최근 1달 게시물 수)</span>
+				</p>
 				<canvas id="myChart2" class="chart"></canvas>
 			</div>
 			<div class="indexDOM_large">
