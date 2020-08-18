@@ -32,7 +32,6 @@
 					type:"post",
 					data : "officialNo=" +  $('#officialNo').val(),
 					success:function(res){
-						alert(res);
 	 					if(res){
 							$('#errorId').html('본인인증을 완료해주세요');
 							$("#chkId").val("Y");
