@@ -144,22 +144,22 @@
 							var="date1" />
 						<fmt:formatDate value="${prev[0].regDate }" pattern="yyyy.MM.dd"
 							var="date0" />
-						<c:if test="${fn:length(prev[1].postNo) > 40 }">
+						<c:if test="${fn:length(prev[1].title) > 40 }">
 							<li><a
 								href="<c:url value='/portal/board/detail?postNo=${prev[1].postNo }'/>">${fn:substring(prev[1].title,0,40) }...
 									(${date1 })</a></li>
 						</c:if>
-						<c:if test="${fn:length(prev[1].postNo) <= 40 }">
+						<c:if test="${fn:length(prev[1].title) <= 40 }">
 							<li><a
 								href="<c:url value='/portal/board/detail?postNo=${prev[1].postNo }'/>">${prev[1].title }
 									(${date1 })</a></li>
 						</c:if>
-						<c:if test="${fn:length(prev[0].postNo) > 40 }">
+						<c:if test="${fn:length(prev[0].title) > 40 }">
 							<li><a
 								href="<c:url value='/portal/board/detail?postNo=${prev[0].postNo }'/>">${fn:substring(prev[0].title,0,40) }...
 									(${date0 })</a></li>
 						</c:if>
-						<c:if test="${fn:length(prev[0].postNo) <= 40 }">
+						<c:if test="${fn:length(prev[0].title) <= 40 }">
 							<li><a
 								href="<c:url value='/portal/board/detail?postNo=${prev[0].postNo }'/>">${prev[0].title }
 									(${date0 })</a></li>

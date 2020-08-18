@@ -71,6 +71,9 @@ a.more {
 					for(var j  =0; j < postsList.length ; j++){
 						var PostsVO = postsList[j];
 						var title= PostsVO.title;
+						if(title.length > 30){
+							title = title.substring(0,30) + '...';
+						}
 						var postIsPrivate = PostsVO.isPrivate;
  				 		if(postIsPrivate=='Y'){
 							continue;

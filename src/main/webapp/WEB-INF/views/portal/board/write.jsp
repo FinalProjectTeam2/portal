@@ -66,7 +66,10 @@ div#isPrivate {
 				+ '</svg>' + '</button>'
 				+'</div>';
 			$("#fileList").append(fileTag);
-			
+			$("input[type=file]").change(function(){
+				var fileName = $(this).val().substr( $(this).val().lastIndexOf( "\\" ) + 1);
+				$(this).next().html(fileName);
+			});
 			return false;
 		});
 		
