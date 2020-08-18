@@ -53,21 +53,22 @@ a#goMap:hover {
 	color: #007bff;
 }
 </style>
-<script>
+<script type="text/javascript">
+var img = '<svg width="1.7em" height="1.7em" viewBox="0 0 16 16"'+
+'class="bi bi-file-plus" fill="currentColor"'+
+	'xmlns="http://www.w3.org/2000/svg">'
+	+ '<path fill-rule="evenodd"'+
+			'd="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z" />'
+	+ '<path fill-rule="evenodd"'+
+		'd="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z" />'
+	+ '</svg>';
 function detail(no) {
 	var win = window.open("<c:url value='/message/messageDetail?no='/>"+no, "_blank",
 	"toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=500,height=390");
 	return false;
 }
 $(function() {
-	var img = '<svg width="1.7em" height="1.7em" viewBox="0 0 16 16"'+
-	'class="bi bi-file-plus" fill="currentColor"'+
-		'xmlns="http://www.w3.org/2000/svg">'
-		+ '<path fill-rule="evenodd"'+
-				'd="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z" />'
-		+ '<path fill-rule="evenodd"'+
-			'd="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z" />'
-		+ '</svg>';
+	
 	$.ajax({
 		url : "<c:url value = '/portal/board/ajax/main'/>",
 		type : "get",
@@ -109,6 +110,11 @@ $(function() {
 			}
 		}
 	});
+});
+</script>
+<sec:authorize access="isAuthenticated()">
+<script type="text/javascript">
+$(function() {
 	$.ajax({
 		url : "<c:url value = '/message/selectMainList'/>",
 		type : "get",
@@ -136,13 +142,13 @@ $(function() {
 			
 			boxByBdcode+='</ul><a href=\'<c:url value=""/>/message/messageBox\' class="more"></a></div>';
 			
-			$('#box').append(boxByBdcode);
+			$('#campMap').after(boxByBdcode);
 			$('.more').html(img);
 		}
 	});
 });
 </script>
-
+</sec:authorize>
 <!-- main 시작 -->
 <main role="main" class="flex-shrink-0">
 
@@ -153,7 +159,7 @@ $(function() {
 				<%@include file="chat/chatRooms.jsp" %>
 			</div>
 			
-			<div class="indexDOM_small">
+			<div class="indexDOM_small" id="campMap">
 				<p class="title">캠퍼스 맵</p>
 				<div style="text-align: center; margin: 50px 0;">
 					<img id="map" alt="mapIcon" src="<c:url value='/resources/images/mapIcon.png'/>">
