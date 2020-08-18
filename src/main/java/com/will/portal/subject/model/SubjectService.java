@@ -10,4 +10,5 @@ public interface SubjectService {
 	int subjectSeq();
 	int insertSubject(SubjectVO vo);
 	int insertOpenSubj(Open_subjVO vo);
+	int updateMultiCloseDate(List<Open_subjVO> openSubjList);
 }

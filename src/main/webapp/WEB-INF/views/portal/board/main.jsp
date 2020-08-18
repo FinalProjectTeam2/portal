@@ -54,7 +54,6 @@ a.more {
 			data : "categoryCode=" + categoryCode,
 			dataType:"json",	
 			success:function(res){
-				console.log(res);
 				for(var i  =0; i < res.length ; i++){
 					var bdCode = res[i].bdCode; 
 					var bdName = res[i].bdName;
@@ -69,16 +68,16 @@ a.more {
 					var boxByBdcode = '<div class="indexDOM_large"><p class="title">'+bdName +'</p>'
 									+ '<ul class="list-group list-group-flush" id="writingsList">';
 									
-					console.log("bdCode : " + bdCode +", postsList.length : " +postsList.length);
 					for(var j  =0; j < postsList.length ; j++){
 						var PostsVO = postsList[j];
 						var title= PostsVO.title;
+						if(title.length > 30){
+							title = title.substring(0,30) + '...';
+						}
 						var postIsPrivate = PostsVO.isPrivate;
-						console.log(postIsPrivate);
  				 		if(postIsPrivate=='Y'){
 							continue;
 						}  
-						console.log(title);
 						boxByBdcode += '<li class="list-group-item"><a href=\'<c:url value=""/>/portal/portal/board/detail?postNo='+PostsVO.postNo+'\'>'+ title +'</a></li>';
 					}
 					

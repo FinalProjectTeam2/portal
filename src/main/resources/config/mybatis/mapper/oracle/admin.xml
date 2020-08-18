@@ -59,14 +59,13 @@
 		on rt.open_sub_code=o.open_sub_code
 		join subj_type st
 		on st.type_code=s.type_code
-		<where>
+		where o.close_date is null
 			<if test="facultyNo!=0">and d.faculty_no=#{facultyNo}</if>
 			<if test="typeCode!='all'">and st.type_code=#{typeCode}</if>
 			<if test="depNo!=0">and d.dep_no=#{depNo}</if>
 			<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
 			<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
 			<if test="openSubCode!=null">and substr(s.subj_code, 5) like '%' || #{openSubCode} || '%'</if>
-		</where>
 	</select>
 
 </mapper>

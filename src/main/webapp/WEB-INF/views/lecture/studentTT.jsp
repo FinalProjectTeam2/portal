@@ -84,7 +84,7 @@
 	left:100px; 
 	top:100px; 
 	width: 400px;
-	height: 450px;
+	height: 450px; 
 	z-index:1;
 	text-align: left;
 	border: 1px solid #ccc;
@@ -128,6 +128,9 @@
 					var subjCode=item.subjCode;
 					var profName=item.profName;
 					var explanation=item.explanation;
+					if(explanation.length > 30){
+						explanation = explanation.substr(0,29) + "...";	
+					}
 					var classroomName=item.classroomName;
 					var credit=item.credit;
 					var tdId=item.timetableCode;

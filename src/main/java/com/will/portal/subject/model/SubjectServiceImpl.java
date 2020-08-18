@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.will.portal.open_subj.model.Open_subjVO;
+import com.will.portal.student.model.StudentVO;
 import com.will.portal.subj_type.model.Subj_typeVO;
 
 @Service
@@ -32,6 +33,20 @@ public class SubjectServiceImpl implements SubjectService{
 	public int insertOpenSubj(Open_subjVO vo) {
 		return subjectDao.insertOpenSubj(vo);
 	}
+
+	@Override
+	public int updateMultiCloseDate(List<Open_subjVO> openSubjList) {
+		int cnt = 0;
+		
+		for (Open_subjVO open_subjVO : openSubjList) {
+			if(open_subjVO.getOpenSubCode()!=null) {
+				cnt = subjectDao.updateCloseDate(open_subjVO.getOpenSubCode());
+			}
+		}
+		
+		return cnt;
+	}
+
 	
 	
 	

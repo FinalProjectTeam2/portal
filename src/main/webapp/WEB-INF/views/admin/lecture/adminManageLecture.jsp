@@ -35,9 +35,9 @@
 		$('#btSearch').click(function(){
 			subjList();
 		});
-		
-		
-		
+		$('form[name=frmList]').submit(function(){
+			subjList();
+		});
 		
 		$('#btMultiDel').click(function(){
 			var len=$('tbody input[type=checkbox]:checked').length;
@@ -45,8 +45,7 @@
 				alert('삭제하려는 강의를 먼저 체크하세요');
 				return;
 			}
-			$('form[name=frmList]')
-	.prop("action","<c:url value='/admin/product/deleteMulti.do'/>");
+			$('form[name=frmList]').prop("action","<c:url value='/admin/lecture/deleteMultiLecture'/>");
 			$('form[name=frmList]').submit();
 		});	
 		
@@ -104,7 +103,7 @@
 				var str = "";
 				var count=res.count;
 				var checkNull=res.checkNull;
-				var num=1;
+				
 				console.log(checkNull);
 					if(checkNull=='Y'){
 						str+="<table class='box2' summary='강의 목록'>";
@@ -127,8 +126,6 @@
 						str+="<th scope='col'>교수명</th>";
 						str+="<th scope='col'>학부</th>";
 						str+="<th scope='col'>학과</th>";
-						str+="<th scope='col'>수정</th>";
-						str+="<th scope='col'>삭제</th>";
 						str+="</tr>";
 						str+="</thead>";
 						str+="<tbody><tr>";
@@ -156,21 +153,18 @@
 							str+="<th scope='col'>교수명</th>";
 							str+="<th scope='col'>학부</th>";
 							str+="<th scope='col'>학과</th>";
-							str+="<th scope='col'>수정</th>";
-							str+="<th scope='col'>삭제</th>";
 							str+="</tr>";
 							str+="</thead>";
 							str+="<tbody>";
+						var num=0;
 						$.each(res.mList, function(idx, item){
 							str+="<tr class='align_center'>";
-							str+="<td><input type='checkbox' name='' value='"+num+"'>";
+							str+="<td><input type='checkbox' name='openSubList["+num+"].openSubCode' value='"+item.openSubCode+"'>";
 							str+="<td>"+item.openSubCode+"</td>";
 							str+="<td>"+item.subjName+"</td>";
 							str+="<td>"+item.profName+"</td>";
 							str+="<td>"+item.facultyName+"</td>";
 							str+="<td>"+item.depName+"</td>";
-							str+="<td><a href='#''>수정</a></td>";
-							str+="<td><a href='#''>삭제</a></td>";
 							str+="</tr>";
 							num++;
 						});
@@ -181,17 +175,11 @@
 				$('#divList').html(str);
 				$('#meta_1').find('em').text(count);
 
-
 			}
-
-
 
 		});
 		
 	}
-	
-	
-	
 	
 	
 </script>
@@ -205,13 +193,13 @@
 
 
 			<!-- 페이징 처리를 위한 form 시작-->
-			<form name="frmPage" method="post" action="<c:url value='/admin'/>">
+			<form name="frmPage" method="post">
 				<input type="hidden" name="" value="${param.eventName }"> <input
 					type="hidden" name="">
 			</form>
 			<!-- 페이징 처리 form 끝 -->
 
-			<form name="frmList" method="post" action="<c:url value='/admin'/>">
+			<form name="frmList" method="post" >
 				<div class="divRight">
 					과목 <select name="subjType" id="subjType">
 						<option value="all">----All----</option>

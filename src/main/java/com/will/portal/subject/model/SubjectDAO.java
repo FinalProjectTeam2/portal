@@ -10,4 +10,5 @@ public interface SubjectDAO {
 	int subjectSeq();
 	int insertSubject(SubjectVO vo);
 	int insertOpenSubj(Open_subjVO vo);
+	int updateCloseDate(String openSubCode);
 }
