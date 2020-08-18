@@ -58,9 +58,7 @@
 			},
 			options : {
 				 legend: {
-			            labels: {
-			                fontSize: 17
-			            }
+			            labels: false
 			        },
 			        scales: {
 			            yAxes: [{
@@ -119,7 +117,7 @@
 			options : {
 				 legend: {
 			            labels: {
-			                fontSize: 17
+			                fontSize: 14
 			            }
 			        },
 			       circumference : Math.PI,
@@ -261,6 +259,7 @@
 			<div class="indexDOM_large">
 				<p class="title">
 					학과별 성적 <span class="pSpan">(평균 백분율 상위 학과)</span>
+					<a href="/portal/admin/statistics/statisticsScore" style="float: right;">더보기</a>
 				</p>
 				<canvas id="myChart1" class="chart"></canvas>
 			</div>
