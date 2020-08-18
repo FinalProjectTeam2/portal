@@ -815,16 +815,15 @@ public class AdminMemberController {
 		studentService.updateMajor(studentVo);
 		return edit_get(studentVo.getStuNo(),model);
 	}
-	
 
 	@RequestMapping(value = "/memberEdit", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean edit_post(@RequestParam String officialNo, Model model, @ModelAttribute Account_infoVO accInfoVo,
 			@ModelAttribute Official_infoVO offiVo, @RequestParam String hp, @RequestParam String email,
 			@RequestParam(required = false) String oldFileName, HttpServletRequest request,
-			@RequestParam(defaultValue = "0") int department,
-			@RequestParam(defaultValue = "0") int position,
-			@RequestParam String authCode) {
+			@RequestParam (required = false) String department,
+			@RequestParam (required = false) String position,
+			@RequestParam (required = false) String authCode) {
 		logger.info("member 수정 처리 파라미터 officialNo={},offiVo={}",officialNo,offiVo);
 		
 		boolean bool = false;
@@ -864,9 +863,10 @@ public class AdminMemberController {
 		int cnt = 0;
 		if(officialNo.substring(4,5).equals("2")) {
 			ProfessorVO profVo = new ProfessorVO();
-			profVo.setDepNo(department);
-			profVo.setPositionNo(position);
+			profVo.setDepNo(Integer.parseInt(department));
+			profVo.setPositionNo(Integer.parseInt(position));
 			profVo.setProfNo(officialNo);
+			logger.info("profVo={}",profVo);
 			cnt = bankService.updateAccount(accInfoVo);
 			cnt = offiService.updateOfficialInfo(offiVo);
 			cnt = professorService.updateProfessor(profVo);

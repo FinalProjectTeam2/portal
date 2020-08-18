@@ -122,18 +122,15 @@
 					alert('학부를 선택하세요');
 					return false;
 				}
+				
 				formData.append("department", $("#department").val());
 				formData.append("position", $("#position").val());
 			}
 			
 			if($("#officialNo").val().substring(4,5)=='1'){
-				
 				formData.append("authCode", $("#authCode").val());
 			}
 			
-			
-			
-
 			$.ajax({
 				url : "<c:url value='/admin/member/memberEdit' />",
 				type : "post",
@@ -180,7 +177,6 @@
 				$('#zipcode').val(res.ZIPCODE);
 				$('#address').val(res.ADDRESS);
 				$('#addrDetail').val(res.ADDR_DETAIL);
-
 
 				var imgDiv = "<img id='studentImg' alt='사진' src='${ pageContext.request.contextPath }/common/image?img=" +res.IMAGE_URL+ "'/>"
 						+'<div class="rowa" style=" margin-top: 20px;"> <label for="upfile">사진수정</label>'
