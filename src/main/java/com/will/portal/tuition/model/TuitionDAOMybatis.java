@@ -29,11 +29,6 @@ public class TuitionDAOMybatis implements TuitionDAO {
 	}
 
 	@Override
-	public int insertTuition(TuitionDetailVO dVo) {
-		return sqlSession.insert(namespace+"insertTuition", dVo);
-	}
-
-	@Override
 	public int updateTuition(TuitionDetailVO dVo) {
 		return sqlSession.update(namespace+"updateTuition", dVo);
 	}
@@ -44,9 +39,15 @@ public class TuitionDAOMybatis implements TuitionDAO {
 	}
 
 	@Override
-	public int selectByNo(int no) {
+	public TuitionDetailVO selectByNo(int no) {
 		return sqlSession.selectOne(namespace+"selectByNo", no);
 	}
+
+	@Override
+	public int insertTuition(TuitionDetailVO vo) {
+		return sqlSession.insert(namespace+"insertTuition", vo);
+	}
+
 
 
 }

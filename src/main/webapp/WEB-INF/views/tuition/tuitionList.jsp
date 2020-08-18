@@ -1,0 +1,343 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/mainSidebar.jsp"%>
+<link href="<c:url value='/resources/css/admin/adminManageMember.css'/>" rel="stylesheet">
+<script type="text/javascript" src="<c:url value='/resources/js/admin/adminManageMember.js'/>"></script>
+<script>
+   $(function() {
+	   $('#deleteBt').click(function() {
+			if(!confirm('정말로 삭제하시겠습니까?')){
+				event.preventDefault();
+			}
+		});
+	   
+      $('#btMultiUpdateState').click(function() {
+         var len=$('tbody input[type=checkbox]:checked').length;
+         if(len==0){
+            alert('지급상태를 변경하려는 학생부터 선택하세요');
+            return;
+         }else if($('#states').val() == '0'){
+            alert('변경하려는 상태를 선택하세요');
+            return;
+         }
+         
+         $('form[name=frmList]').prop("action","<c:url value='/tuition/tuitionEdit'/>");
+         $('form[name=frmList]').submit();
+      });
+   
+      $('#btMultiDel').click(function() {
+         var len=$('tbody input[type=checkbox]:checked').length;
+         if(len==0){
+            alert('지급상태를 변경하려는 학생부터 선택하세요');
+            return;
+      
+         }
+         
+         $('form[name=frmList]').prop("action","<c:url value='/tuition/tuitionDel'/>");
+         $('form[name=frmList]').submit();
+      
+      });
+   
+   
+   });
+
+</script>
+<div class="container">
+		<div id="adminMngMem">
+			<div class="divTop">
+				<h2>등록금 관리</h2>
+
+				<!-- 페이징 처리를 위한 form 시작-->
+				<form name="frmPage" method="post" action="<c:url value='/tuition/tuitionList'/>">
+					<input type="hidden" name="name" value="${studentSearchVo.name}">
+					<input type="hidden" name="facultyNo" value="${studentSearchVo.facultyNo}"> 
+					<input type="hidden" name="major" value="${studentSearchVo.major}"> 
+					<input type="hidden" name="state1" value="${studentSearchVo.state1}">
+					<input type="hidden" name="state2" value="${studentSearchVo.state2}"> 
+					<input type="hidden" name="state3" value="${studentSearchVo.state3}"> 
+					<input type="hidden" name="state4" value="${studentSearchVo.state4}">
+					<input type="hidden" name="state5" value="${studentSearchVo.state5}"> 
+					<input type="hidden" name="state6" value="${studentSearchVo.state6}"> 
+					<input type="hidden" name="startNo" value="${studentSearchVo.startNo}">
+					<input type="hidden" name="endNo" value="${studentSearchVo.endNo}">
+					<input type="hidden" name="currentPage">
+				</form>
+			</div>
+			<!-- 페이징 처리 form 끝 -->
+
+			<form name="frmList" method="post" action="<c:url value='/tuition/tuitionWrite'/>">
+				<div class="divRight">
+					<div class="divTop">
+						<div class="stud">
+							<label for="faculty"><span>학부</span></label> 
+							<select name="facultyNo" id="faculty">
+								<option value="0">선택</option>
+								<c:forEach var="facVo" items="${facultyList }">
+									<option value="${facVo.facultyNo }"
+										<c:if test="${facVo.facultyNo==param.facultyNo }">
+									 selected="selected"
+									</c:if>>${facVo.facultyName }</option>
+								</c:forEach>
+							</select> 
+							<label for="department"><span>학과</span></label> 
+							<select name="major" class="rightEnd" id="department">
+								<c:if test="${empty param.facultyNo || param.facultyNo==0}">
+									<option value="0">학부를 선택하세요</option>
+								</c:if>
+								<c:if test="${!empty param.facultyNo}">
+									<option value='0'>선택</option>
+									<c:forEach var="vo" items="${departmentList}">
+										<option value="${vo.depNo}"
+											<c:if test="${param.major==vo.depNo }">
+									 			selected="selected" 
+											</c:if>
+										> ${vo.depName }</option>
+									</c:forEach>
+								</c:if>
+							</select>
+						</div>
+						<div class="ckState stud">
+							<input type="checkbox" name="stateAll" value="0" id="selectAll">
+							<label for="selectAll">전체</label>
+
+							<c:set var="stateCB"
+								value="${studentSearchVo.state1} ${studentSearchVo.state2} ${studentSearchVo.state3} ${studentSearchVo.state4}
+							${studentSearchVo.state5} ${studentSearchVo.state6}" />
+							<c:forEach var="vo" items="${stateList}">
+								<input type="checkbox" name="state" value="${vo.state }"
+									id="${vo.state }"
+									<c:if test="${fn:indexOf(stateCB,vo.state)>-1}">
+										checked="checked"							
+									</c:if>>
+								<label for="${vo.state }"> ${vo.stateName }</label>
+							</c:forEach>
+						</div>
+						<jsp:useBean id="now" class="java.util.Date" />
+						<fmt:formatDate value="${now }" var="year" pattern="yyyy" />
+						학번<select name="startNo" class="date">
+							<c:forEach var="i" begin="1990" end="${year }">
+								<option value="${i }"
+									<c:if test="${i==param.startNo }">
+									 selected="selected"
+									</c:if>>${i }</option>
+							</c:forEach>
+						</select>~<select name="endNo" class="date">
+							<c:forEach var="j" begin="0" end="39">
+								<option value="${year-j }"
+									<c:if test="${year-j==param.endNo }">
+									 selected="selected"
+									</c:if>>${year-j }</option>
+							</c:forEach>
+						</select> 이름 <input type="text" name="name" value="${studentSearchVo.name}">
+						<button class="btCustom btn btn-primary btn-lg login-button"
+							id="btSearch">검색</button>
+						<p style="float: left">조회결과 : ${pagingInfo.totalRecord }건</p>
+					</div>
+					<div class="divList">
+						<table class="box2" summary="학생 목록">
+							<caption>학생 목록</caption>
+							<colgroup>
+								<col style="width: 5%" />
+								<!-- 체크박스 -->
+								<col style="width: 10%" />
+								<!-- 번호 -->
+								<col style="width: 15%" />
+								<!-- 이름 -->
+								<col style="width: 10%" />
+								<!-- 학부 -->
+								<col style="width: 20%" />
+								<!-- 학과 -->
+								<col style="width: 10%" />
+								<!-- 학기 -->
+								<col style="width: 14%" />
+							</colgroup>
+							<thead>
+								<tr>
+									<th><input type="checkbox" name="chkAll"></th>
+									<th scope="col">번호</th>
+									<th scope="col">이름</th>
+									<th scope="col">학부</th>
+									<th scope="col">학과</th>
+									<th scope="col">학기</th>
+									
+									<th scope="col">수정</th>
+									<th scope="col">삭제</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${empty list }">
+									<tr>
+										<td colspan="9">결과가 없습니다.</td>
+									</tr>
+								</c:if>
+								<c:if test="${!empty list }">
+									<!--반복시작-->
+									<c:set var="idx" value="0" />
+									<c:forEach var="map" items="${list }">
+										<tr>
+											<td><input type="checkbox" name="stuList[${idx }].stuNo"
+												value="${map['STU_NO']}"></td>
+											<td>${map['STU_NO']}</td>
+											<td>${map['NAME']}</td>
+											<td>${map['FACULTY_NAME']}</td>
+											<td>${map['DEP_NAME']}</td>
+											<td>${map['SEMESTER']}</td>
+											<td>${map['STATE_NAME']}</td>
+											<td><a
+												href="<c:url value='/tuition/tuitionEdit?officialNo=${map["STU_NO"] }'/>">수정</a></td>
+											<td><a id="deleteBt"
+												href="<c:url value='/tuition/tuitionDel?stuNo=${map["STU_NO"] }'/>">삭제</a></td>
+										</tr>
+										<c:set var="idx" value="${idx+1 }"/>
+									</c:forEach>
+									<!-- 반복 끝 -->
+								</c:if>
+							</tbody>
+						</table>
+					</div>
+					
+					<!-- 등록금 내역 -->
+					<div class="divList">
+						<table class="box2" summary="등록금 목록">
+							<caption>등록금 내역</caption>
+							<colgroup>
+								<col style="width: 5%" />
+								<!-- 체크박스 -->
+								<col style="width: 10%" />
+								<!-- 번호 -->
+								<col style="width: 15%" />
+								<!-- 학번 -->
+								<col style="width: 10%" />
+								<!-- 학기 -->
+								<col style="width: 10%" />
+								<!-- 입학금 -->
+								<col style="width: 20%" />
+								<!-- 등록금 -->
+								<col style="width: 10%" />
+								<!-- 실습비 -->
+								<col style="width: 14%" />
+								<!-- 학생회비 -->
+								<col style="width: 10%" />
+								<!-- 장학금 -->
+								<col style="width: 20%" />
+								<!-- 감면액 -->
+								<col style="width: 10%" />
+								<!-- 총액 -->
+								<col style="width: 14%" />
+								<!-- 납부 여부 -->
+								<col style="width: 10%" />
+								<!-- 납부한 날짜 -->
+								<col style="width: 20%" />
+								
+							</colgroup>
+							<thead>
+								<tr>
+									<th><input type="checkbox" name="chkAll"></th>
+									<th scope="col">번호</th>
+									<th scope="col">학번</th>
+									<th scope="col">학기</th>
+									<th scope="col">입학금</th>
+									<th scope="col">등록금</th>
+									<th scope="col">실습비</th>
+									<th scope="col">학생회비</th>
+									<th scope="col">장학금</th>
+									<th scope="col">감면액</th>
+									<th scope="col">총액</th>
+									<th scope="col">납부 여부</th>
+									<th scope="col">납부한 날짜</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${empty tlist }">
+									<tr>
+										<td colspan="9">결과가 없습니다.</td>
+									</tr>
+								</c:if>
+								<c:if test="${!empty tlist }">
+									<!--반복시작-->
+									<c:set var="idx" value="0" />
+									<c:forEach var="vo" items="${tlist }">
+										<tr>
+											<td><input type="checkbox" name="tlist[${idx }].no" value="${vo.no}"></td>
+											<td>${vo.stuNo}</td>
+											<td>${vo.semester}</td>
+											<td>${vo.admissionfee}</td>
+											<td>${vo.tuition}</td>
+											<td>${vo.practicecost}</td>
+											<td>${vo.studentfee}</td>
+											<td>${vo.scholarship}</td>
+											<td>${vo.reduction}</td>
+											<td>${vo.total}</td>
+											<td>${vo.depositState}</td>
+											<td>${vo.datepaid}</td>
+											<td><a
+												href="<c:url value='/tuition/tuitionEdit?no=${vo.no}'/>">수정</a></td>
+											<td><a id="deleteBt"
+												href="<c:url value='/tuition/tuitionDel?no=${vo.no }'/>">삭제</a></td>
+										</tr>
+										<c:set var="idx" value="${idx+1 }"/>
+									</c:forEach>
+									<!-- 반복 끝 -->
+								</c:if>
+							</tbody>
+						</table>
+					</div>
+					<div class="divPage">
+						<!-- 페이지 번호 추가 -->
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a href="#" onclick="boardList(${pagingInfo.firstPage-1})"
+								class="imgNext"> <img
+								src='<c:url value="/resources/images/first.JPG" />' border="0">
+							</a>
+							<a href="#" style="color: #3333339c" onclick="boardList(1)">
+								1 </a>
+							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
+						</c:if>
+
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagingInfo.firstPage }"
+							end="${pagingInfo.lastPage }">
+							<c:if test="${i==pagingInfo.currentPage }">
+								<span class="pageA">${i }</span>
+							</c:if>
+							<c:if test="${i!=pagingInfo.currentPage }">
+								<a href="#" style="color: #3333339c" onclick="boardList(${i})">
+									${i } </a>
+							</c:if>
+						</c:forEach>
+
+						<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
+							<span style="color: #3333339c">&nbsp; ... &nbsp;</span>
+							<a href="#" style="color: #3333339c"
+								onclick="boardList(${pagingInfo.totalPage})">
+								${pagingInfo.totalPage } </a>
+							<a href="#" onclick="boardList(${pagingInfo.lastPage+1})"
+								class="imgNext"> <img
+								src="<c:url value="/resources/images/last.JPG" />" border="0">
+							</a>
+						</c:if>
+						<!--  페이지 번호 끝 -->
+					</div>
+					<div class="divRight">
+						<select name="states" id="states">
+							<option value="0">납부여부 변경</option>
+							<option value="1">납부</option>
+							<option value="2">미납</option>
+						</select> <input type="button" id="btMultiUpdateState" value="변경">
+					</div>
+					<div class="btdiv">
+						<input type="button"
+							class="btCustom btn btn-primary btn-lg login-button"
+							onclick="location.href='<c:url value="/tuition/tuitionWrite?sort=3"/>'"
+							id="btInsert" value="등록금 추가"><br>
+					</div>
+					<div class="btdiv">
+						<input type="button"
+							class="btCustom btn btn-primary btn-lg login-button"
+							id="btMultiDel" value="선택한 학생 삭제"><br>
+					</div>
+				</div>
+			</form>
+		</div>
+<%@ include file="../inc/bottom.jsp"%>

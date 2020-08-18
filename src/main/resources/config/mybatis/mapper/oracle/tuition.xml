@@ -24,13 +24,25 @@
 	</select>
 
 	<insert id="insertTuition" parameterType="TuitionDetailVO">
-		insert into tuitionD_view(stuNo, admissionfee, tuition, practicecost, studentfee, scholarship, reduction, total)  
-		values(#{stuNo}, #{admissionfee}, #{tuition}, #{practicecost}, #{studentfee}, #{scholarship}, #{reduction}, #{total})
+		<selectKey order="BEFORE" keyProperty="no" resultType="int">
+			select tuition_seq.nextval from dual 
+		</selectKey>
+		insert into tuition(no, stu_no, semester, admissionfee, tuition, practicecost, 
+							studentfee, reduction, total, datepaid, deposit_state)
+		values(#{no}, #{stuNo}, #{semester}, #{admissionfee}, #{tuition}, #{practicecost},
+				#{studentfee}, #{reduction}, #{total}, #{datepaid}, #{depositState})
 	</insert>
 
 	<update id="updateTuition" parameterType="TuitionDetailVO">
-		update tuitionD_view
-		set #{stuNo}, #{admissionfee}, #{tuition}, #{practicecost}, #{studentfee}, #{scholarship}, #{reduction}, #{total}
+		update tuition
+		set  SEMESTER=#{SEMESTER}, 
+     		 TUITION=#{TUITION},
+     		 ADMISSIONFEE=#{ADMISSIONFEE},
+     		 PRACTICECOST=#{PRACTICECOST},
+     		 STUDENTFEE=#{STUDENTFEE},
+    		 REDUCTION=#{REDUCTION},
+     		 DEPOSIT_STATE=#{DEPOSIT_STATE},
+     		 TOTAL=#{TOTAL}
 		where stu_no=#{officicalNo}
 	</update>
 	

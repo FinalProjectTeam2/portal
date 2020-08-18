@@ -7,8 +7,9 @@ public interface TuitionDAO {
 	List<TuitionViewVO> selectTuitionView(String officicalNo);
 	List<TuitionDetailVO> selectTuitionDView(String officicalNo);
 	
-	int selectByNo(int no);
-	int insertTuition(TuitionDetailVO dVo);
+	TuitionDetailVO selectByNo(int no);
+	
+	int insertTuition(TuitionDetailVO vo);
 	int updateTuition(TuitionDetailVO dVo);
 	int deleteTuition(String officicalNo);
 }

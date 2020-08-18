@@ -20,11 +20,6 @@ public class ScholarshipDAOMybatis implements ScholarshipDAO {
 	}
 
 	@Override
-	public int selectByNo(int no) {
-		return sqlSession.selectOne(namespace+"selectByNo", no);
-	}
-
-	@Override
 	public int insertscholarship(ScholarshipAllVO vo) {
 		return sqlSession.insert(namespace+"insertscholarship", vo);
 	}
@@ -35,11 +30,6 @@ public class ScholarshipDAOMybatis implements ScholarshipDAO {
 	}
 
 	@Override
-	public int deleteScholarship(String officicalNo) {
-		return sqlSession.delete(namespace+"deleteScholarship", officicalNo);
-	}
-
-	@Override
 	public List<ScholarshipAllVO> selectAll(SearchVO searchVo) {
 		return  sqlSession.selectList(namespace+"selectAll", searchVo);
 	}
@@ -47,6 +37,16 @@ public class ScholarshipDAOMybatis implements ScholarshipDAO {
 	@Override
 	public int selectTotalRecord(SearchVO searchVo) {
 		return sqlSession.selectOne(namespace+"selectTotalRecord", searchVo);
+	}
+
+	@Override
+	public ScholarshipAllVO selectByNo(int no) {
+		return sqlSession.selectOne(namespace+"selectByNo", no);
+	}
+
+	@Override
+	public int deleteScholarship(int no) {
+		return sqlSession.delete(namespace+"deleteScholarship", no);
 	}
 
 	

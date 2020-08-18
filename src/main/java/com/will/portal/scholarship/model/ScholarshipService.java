@@ -7,10 +7,11 @@ import com.will.portal.common.SearchVO;
 public interface ScholarshipService {
 	List<ScholarshipAllVO> selectAllScholarship(String officicalNo);
 
-	int selectByNo(int no);
+	ScholarshipAllVO selectByNo(int no);
+	
 	int insertscholarship(ScholarshipAllVO vo);
 	int updatescholarship(ScholarshipAllVO vo);
-	int deleteScholarship(String officicalNo);
+	int deleteScholarship(int no);
 	
 	public List<ScholarshipAllVO> selectAll(SearchVO searchVo);
 	public int selectTotalRecord(SearchVO searchVo);
