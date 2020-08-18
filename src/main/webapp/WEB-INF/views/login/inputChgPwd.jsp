@@ -83,7 +83,6 @@
 								<label for="pwdConfirm">새 비밀번호 확인</label>
 								<input type="password" name="pwdConfirm" id="pwdConfirm"  class="form-control">
 								<hr>
-								
 								<div id="bt">
 									<button type="submit" class="btn btn-dark" id="changeBt">비밀번호 변경</button>
 									<button type="reset" class="btn btn-dark" >다시입력</button>
