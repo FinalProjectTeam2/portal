@@ -103,7 +103,7 @@
 				var str = "";
 				var count=res.count;
 				var checkNull=res.checkNull;
-				var num=0;
+				
 				console.log(checkNull);
 					if(checkNull=='Y'){
 						str+="<table class='box2' summary='강의 목록'>";
@@ -126,8 +126,6 @@
 						str+="<th scope='col'>교수명</th>";
 						str+="<th scope='col'>학부</th>";
 						str+="<th scope='col'>학과</th>";
-						str+="<th scope='col'>수정</th>";
-						str+="<th scope='col'>삭제</th>";
 						str+="</tr>";
 						str+="</thead>";
 						str+="<tbody><tr>";
@@ -155,21 +153,18 @@
 							str+="<th scope='col'>교수명</th>";
 							str+="<th scope='col'>학부</th>";
 							str+="<th scope='col'>학과</th>";
-							str+="<th scope='col'>수정</th>";
-							str+="<th scope='col'>삭제</th>";
 							str+="</tr>";
 							str+="</thead>";
 							str+="<tbody>";
+						var num=0;
 						$.each(res.mList, function(idx, item){
 							str+="<tr class='align_center'>";
-							str+="<td><input type='checkbox' name='OpenSubList["+num+"].openSubCode' value='"+item.openSubCode+"'>";
+							str+="<td><input type='checkbox' name='openSubList["+num+"].openSubCode' value='"+item.openSubCode+"'>";
 							str+="<td>"+item.openSubCode+"</td>";
 							str+="<td>"+item.subjName+"</td>";
 							str+="<td>"+item.profName+"</td>";
 							str+="<td>"+item.facultyName+"</td>";
 							str+="<td>"+item.depName+"</td>";
-							str+="<td><a href='#''>수정</a></td>";
-							str+="<td><a href='#''>삭제</a></td>";
 							str+="</tr>";
 							num++;
 						});
@@ -180,17 +175,11 @@
 				$('#divList').html(str);
 				$('#meta_1').find('em').text(count);
 
-
 			}
-
-
 
 		});
 		
 	}
-	
-	
-	
 	
 	
 </script>
