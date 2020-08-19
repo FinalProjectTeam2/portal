@@ -21,12 +21,90 @@
 	<select id="selectBoardMain" resultType="map">
 		select b.*,rownum
 		from
-		(SELECT bd_name, count(*) as "COUNT" FROM board_stat_view
-		WHERE reg_date between trunc(sysdate) - 30 and trunc(sysdate)
+		(SELECT bd_name, count(*) as "COUNT" FROM
+		board_stat_view
+		WHERE reg_date between trunc(sysdate) - 30 and
+		trunc(sysdate)
 		group by bd_name
 		order by count(*) desc)b
 		<![CDATA[
 		where rownum<=5]]>
+	</select>
+
+	<select id="selectScoreAvg" parameterType="scoreChartSearchVO"
+		resultType="map">
+		select s.*,rownum
+		from
+		(select dep_name,avg(total_grade) as "avg",
+		median(total_grade) as "med"
+		from
+		score_stat_view
+		where state in
+		(
+		<if test="state == null or state== ''">
+			1,2,3,4
+		</if>
+		<if test="state != null and state!= ''">
+			<if test='state.equals("1")'>
+				1,2,3,4
+			</if>
+			<if test='state.equals("2")'>
+				5
+			</if>
+			<if test='state.equals("3")'>
+				1,2,3,4,5
+			</if>
+		</if>
+		)
+		<if test="semester !=0 and semester !=null and semester!=''">
+			and extract(year from open_date) || extract(month from
+			open_date)=#{semester}
+		</if>
+		group by dep_name
+		order by
+		avg(total_grade) desc, median(total_grade) desc)s
+		<![CDATA[
+		where rownum<=10]]>
+	</select>
+	<select id="selectScoreMed" parameterType="scoreChartSearchVO"
+		resultType="map">
+		select s.*,rownum
+		from
+		(select dep_name,avg(total_grade) as "avg",
+		median(total_grade) as "med"
+		from
+		score_stat_view
+		where state in
+		(
+		<if test="state == null or state== ''">
+			1,2,3,4
+		</if>
+		<if test="state != null and state!= ''">
+			<if test='state.equals("1")'>
+				1,2,3,4
+			</if>
+			<if test='state.equals("2")'>
+				5
+			</if>
+			<if test='state.equals("3")'>
+				1,2,3,4,5
+			</if>
+		</if>
+		)
+		<if test="semester !=0 and semester !=null and semester!=''">
+			and extract(year from open_date) || extract(month from
+			open_date)=#{semester}
+		</if>
+		group by dep_name
+		order by
+		median(total_grade) desc, avg(total_grade) desc)s
+		<![CDATA[
+		where rownum<=10]]>
+	</select>
+	<select id="selectChartSemester" resultType="string">
+		select distinct extract(year from open_date) || extract(month from
+		open_date) as semester from score_stat_view order by
+		semester
 	</select>
 </mapper>
 

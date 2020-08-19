@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.will.portal.common.ScoreChartSearchVO;
+
 @Service
 public class StatisticsServiceImpl implements StatisticsService{
 
@@ -21,6 +23,21 @@ public class StatisticsServiceImpl implements StatisticsService{
 	public List<Map<String, Object>> selectBoardMain() {
 		return statisticsDao.selectBoardMain();
 	}
+
+	@Override
+	public List<Map<String, Object>> selectScoreAvg(ScoreChartSearchVO scoreChartSearchVo) {
+		return statisticsDao.selectScoreAvg(scoreChartSearchVo);
+	}
 	
+
+	@Override
+	public List<Map<String, Object>> selectScoreMed(ScoreChartSearchVO scoreChartSearchVo) {
+		return statisticsDao.selectScoreMed(scoreChartSearchVo);
+	}
+
+	@Override
+	public List<String> selectChartSemester() {
+		return statisticsDao.selectChartSemester();
+	}
 	
 }
