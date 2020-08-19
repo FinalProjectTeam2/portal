@@ -88,7 +88,7 @@ public class Official_infoController {
 			offiVo.setImageUrl(NewfileName);
 		}		
 		
-		if(offiVo.getImageUrl()!= null && !offiVo.getImageUrl().isEmpty() && "default.jpg".equals(offiVo.getImageUrl())) {
+		if(offiVo.getImageUrl()!= null && !offiVo.getImageUrl().isEmpty() && !"default.jpg".equals(offiVo.getImageUrl())) {
 			if(oldFileName != null && !oldFileName.isEmpty()) {
 				File oldFile = new File(fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_IMAGE),oldFileName);
 				logger.info("oldFile={}",oldFile.getName());

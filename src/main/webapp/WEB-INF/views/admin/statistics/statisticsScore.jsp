@@ -211,7 +211,9 @@ h2#none{
 						<c:forEach var="map" items="${scoreList }">
 							<tr>
 								<td>${map['DEP_NAME']}</td>
-								<td>${map['avg']}</td>
+								<td>
+								<fmt:formatNumber value="${map['avg']}" pattern=".00"/>
+								</td>
 								<td>${map['med']}</td>
 								<td>${map['ROWNUM']}</td>
 							</tr>
