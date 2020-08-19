@@ -499,7 +499,6 @@
 							<li><a href="<c:url value='/admin/member/adminRegisterMember'/>">회원등록</a></li>
 							<li><a href="<c:url value='/admin/member/adminManageStudent'/>">회원관리</a></li>
 							<li><a href="<c:url value='/admin/lecture/adminManageLecture'/>">강의관리</a></li>
-							<li><a href="<c:url value='/assignment/assignment1'/>">과제관리</a></li>
 							<%-- <li><a href="<c:url value='/tuition/tuitionList'/>">등록금관리</a></li>
 							<li><a href="<c:url value='/scholarship/scholarshipList'/>">장학금관리</a></li> --%>
 							<li><a href="<c:url value='/admin/faculty/adminManageFaculty'/>">학부관리</a></li>

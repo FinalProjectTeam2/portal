@@ -36,21 +36,30 @@ public class AdminStatisticsController {
 
 		// 첫번째 통계 - 학과별 점수 랭킹
 		List<Map<String, Object>> scoreList = statisticsService.selectScoreMain();
-		logger.info("{}", scoreList);
+		logger.info("scoreList={}", scoreList);
 
 		List<String> depListCh = new ArrayList<String>();
-		for (Map<String, Object> map : scoreList) {
-			depListCh.add("\"" + (String) map.get("DEP_NAME") + "\"");
-		}
-		logger.info("depListCh={}", depListCh);
-
 		List<Double> scoreListCh = new ArrayList<Double>();
-		for (Map<String, Object> map : scoreList) {
-			scoreListCh.add(Double.parseDouble(map.get("avg").toString()));
-		}
-		logger.info("scoreListCh={}", scoreListCh);
+		double min = 0.0;
 
-		double min = Collections.min(scoreListCh);
+		if (scoreList.size() > 0) {
+
+			for (Map<String, Object> map : scoreList) {
+				depListCh.add("\"" + (String) map.get("DEP_NAME") + "\"");
+			}
+			logger.info("depListCh={}", depListCh);
+
+			for (Map<String, Object> map : scoreList) {
+				String avg = (String) map.get("AVG");
+				if(avg == null || avg.isEmpty()) {
+					avg = "0";
+				}
+				scoreListCh.add(Double.parseDouble(avg));
+			}
+			logger.info("scoreListCh={}", scoreListCh);
+
+			min = Collections.min(scoreListCh);
+		}
 
 		model.addAttribute("scoreList", scoreList);
 		model.addAttribute("depListCh", depListCh);
@@ -80,6 +89,7 @@ public class AdminStatisticsController {
 
 	/**
 	 * 학과별 통계
+	 * 
 	 * @param scoreChartSearchVo
 	 * @param model
 	 */
@@ -108,7 +118,11 @@ public class AdminStatisticsController {
 			logger.info("depListCh={}", depListCh);
 
 			for (Map<String, Object> map : scoreList) {
-				scoreListCh.add(Double.parseDouble(map.get("avg").toString()));
+				String avg = (String) map.get("AVG");
+				if(avg == null || avg.isEmpty()) {
+					avg = "0";
+				}
+				scoreListCh.add(Double.parseDouble(avg));
 			}
 			logger.info("scoreListCh={}", scoreListCh);
 
@@ -141,10 +155,10 @@ public class AdminStatisticsController {
 
 	//
 	@RequestMapping("/statisticsBoard")
-	public void statisticsBoard(@RequestParam(defaultValue = "0") int time ,Model model) {
-		//첫번째 그래프
+	public void statisticsBoard(@RequestParam(defaultValue = "0") int time, Model model) {
+		// 첫번째 그래프
 		List<Map<String, Object>> boardList = statisticsService.selectBoardChart(time);
-		logger.info("statisticsBoard: time={},{}",time, boardList);
+		logger.info("statisticsBoard: time={},{}", time, boardList);
 
 		List<String> boardListCh = new ArrayList<String>();
 		for (Map<String, Object> map : boardList) {
@@ -161,23 +175,23 @@ public class AdminStatisticsController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardListCh", boardListCh);
 		model.addAttribute("countListCh", countListCh);
-		
-		//두번째 그래프
+
+		// 두번째 그래프
 		List<Map<String, Object>> boardList2 = statisticsService.selectBoardChartReadCount(time);
-		logger.info("{}",boardList2);
-		
+		logger.info("{}", boardList2);
+
 		List<String> boardListCh2 = new ArrayList<String>();
 		for (Map<String, Object> map : boardList2) {
 			boardListCh2.add("\"" + (String) map.get("BD_NAME") + "\"");
 		}
 		logger.info("boardListCh2={}", boardListCh2);
-		
+
 		List<Integer> countListCh2 = new ArrayList<Integer>();
 		for (Map<String, Object> map : boardList2) {
 			countListCh2.add(Integer.parseInt(map.get("SUM").toString()));
 		}
 		logger.info("countListCh2", countListCh2);
-		
+
 		model.addAttribute("boardList2", boardList2);
 		model.addAttribute("boardListCh2", boardListCh2);
 		model.addAttribute("countListCh2", countListCh2);
