@@ -212,7 +212,7 @@
 	
 	<update id="updateProfessor" parameterType="professorVo">
 		update professor
-		set dep_no = #{depNo}, position_no=#{positionNo}
+		set dep_no = #{depNo}, position_no=#{positionNo}, prof_name=#{profName}
 		where prof_no = #{profNo}
 	</update>
 	

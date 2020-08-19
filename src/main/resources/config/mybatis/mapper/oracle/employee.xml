@@ -120,7 +120,7 @@
 	
 	<update id="updateAuthcode" parameterType="employeeVo">
 		update employee
-		set auth_code =#{authCode}
+		set auth_code =#{authCode}, emp_name=#{empName}
 		where emp_no=#{empNo}
 	</update>
 
