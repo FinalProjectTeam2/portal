@@ -823,7 +823,8 @@ public class AdminMemberController {
 			@RequestParam(required = false) String oldFileName, HttpServletRequest request,
 			@RequestParam (required = false) String department,
 			@RequestParam (required = false) String position,
-			@RequestParam (required = false) String authCode) {
+			@RequestParam (required = false) String authCode,
+			@RequestParam (required = false) String name) {
 		logger.info("member 수정 처리 파라미터 officialNo={},offiVo={}",officialNo,offiVo);
 
 		boolean bool = false;
@@ -865,7 +866,9 @@ public class AdminMemberController {
 			ProfessorVO profVo = new ProfessorVO();
 			profVo.setDepNo(Integer.parseInt(department));
 			profVo.setPositionNo(Integer.parseInt(position));
+			profVo.setProfName(name);
 			profVo.setProfNo(officialNo);
+			
 			logger.info("profVo={}",profVo);
 			cnt = bankService.updateAccount(accInfoVo);
 			cnt = offiService.updateOfficialInfo(offiVo);
@@ -878,6 +881,7 @@ public class AdminMemberController {
 			logger.info("authCode= {}", authCode);
 			empVo.setAuthCode(authCode);
 			empVo.setEmpNo(officialNo);
+			empVo.setEmpName(name);
 			cnt = employeeService.updateAuthcode(empVo);
 			cnt = bankService.updateAccount(accInfoVo);
 			cnt = offiService.updateOfficialInfo(offiVo);
@@ -885,6 +889,10 @@ public class AdminMemberController {
 				bool = true;
 			}
 		}else {
+			StudentVO stuVo = new StudentVO();
+			stuVo.setStuNo(officialNo);
+			stuVo.setName(name);
+			cnt = studentService.updateStudent(stuVo);
 			cnt = bankService.updateAccount(accInfoVo);
 			cnt = offiService.updateOfficialInfo(offiVo);
 			if(cnt> 0 ) {

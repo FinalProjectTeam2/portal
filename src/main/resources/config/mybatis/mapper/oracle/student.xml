@@ -152,7 +152,7 @@
 	<update id="updateStudent" parameterType="studentVO">
 		update student
 		set
-		name=#{name}, major=#{major}
+		name=#{name}
 		where stu_no=#{stuNo}
 	</update>
 	<update id="updateMajor" parameterType="studentVO">

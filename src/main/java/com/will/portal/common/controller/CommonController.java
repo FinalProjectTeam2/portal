@@ -135,7 +135,6 @@ public class CommonController {
 
 	      return mediaMap.get(type);
 
-
 	   }
 	   
 	   @RequestMapping("/chart")
