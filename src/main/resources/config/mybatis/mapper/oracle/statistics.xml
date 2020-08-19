@@ -30,6 +30,37 @@
 		<![CDATA[
 		where rownum<=5]]>
 	</select>
+	<select id="selectBoardChart" resultType="map"
+		parameterType="int">
+		select b.*,rownum
+		from
+		(SELECT bd_name, count(*) as "COUNT" FROM
+		board_stat_view
+		<if test="_parameter != 0 and _parameter != null and _parameter !=''">
+			WHERE reg_date between trunc(sysdate) -
+			#{time}
+			and
+			trunc(sysdate)
+		</if>
+		group by bd_name
+		order by count(*) desc)b
+	</select>
+	
+	<select id="selectBoardChartReadCount" resultType="map"
+		parameterType="int">
+		select b.*,rownum
+		from
+		(SELECT bd_name, sum(read_count) as "SUM" FROM
+		board_stat_view
+		<if test="_parameter != 0 and _parameter != null and _parameter !=''">
+			WHERE reg_date between trunc(sysdate) -
+			#{time}
+			and
+			trunc(sysdate)
+		</if>
+		group by bd_name
+		order by sum(read_count) desc)b
+	</select>
 
 	<select id="selectScoreAvg" parameterType="scoreChartSearchVO"
 		resultType="map">
@@ -62,7 +93,8 @@
 		</if>
 		group by dep_name
 		order by
-		avg(total_grade) desc, median(total_grade) desc)s
+		avg(total_grade) desc, median(total_grade)
+		desc)s
 		<![CDATA[
 		where rownum<=10]]>
 	</select>
@@ -97,13 +129,16 @@
 		</if>
 		group by dep_name
 		order by
-		median(total_grade) desc, avg(total_grade) desc)s
+		median(total_grade) desc, avg(total_grade)
+		desc)s
 		<![CDATA[
 		where rownum<=10]]>
 	</select>
 	<select id="selectChartSemester" resultType="string">
-		select distinct extract(year from open_date) || extract(month from
-		open_date) as semester from score_stat_view order by
+		select distinct
+		extract(year from open_date) || extract(month from
+		open_date) as
+		semester from score_stat_view order by
 		semester
 	</select>
 </mapper>

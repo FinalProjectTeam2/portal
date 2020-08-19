@@ -87,6 +87,10 @@ button#back {
     float: right;
     margin: 1% 14px 2% 0;
 }
+h2#none{
+	margin: 30px 0;
+	text-align: center;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script
@@ -152,7 +156,12 @@ button#back {
 				<p class="title">
 					학과별 성적 <span class="pSpan">(평균 백분율 상위 학과)</span>
 				</p>
-				<canvas id="myChart1" class="chart"></canvas>
+				<c:if test="${empty scoreListCh}">
+					<h2 id="none">결과가 없습니다</h2>
+				</c:if>
+				<c:if test="${!empty scoreListCh}">
+					<canvas id="myChart1" class="chart"></canvas>
+				</c:if>
 			</div>
 		</div>
 		<div style="overflow: hidden;" id="box">

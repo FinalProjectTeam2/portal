@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.portal.common.ScoreChartSearchVO;
 import com.will.portal.statistics.model.StatisticsService;
@@ -138,4 +139,47 @@ public class AdminStatisticsController {
 		model.addAttribute("slist2", slist2);
 	}
 
+	//
+	@RequestMapping("/statisticsBoard")
+	public void statisticsBoard(@RequestParam(defaultValue = "0") int time ,Model model) {
+		//첫번째 그래프
+		List<Map<String, Object>> boardList = statisticsService.selectBoardChart(time);
+		logger.info("statisticsBoard: time={},{}",time, boardList);
+
+		List<String> boardListCh = new ArrayList<String>();
+		for (Map<String, Object> map : boardList) {
+			boardListCh.add("\"" + (String) map.get("BD_NAME") + "\"");
+		}
+		logger.info("boardListCh={}", boardListCh);
+
+		List<Integer> countListCh = new ArrayList<Integer>();
+		for (Map<String, Object> map : boardList) {
+			countListCh.add(Integer.parseInt(map.get("COUNT").toString()));
+		}
+		logger.info("countListCh", countListCh);
+
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("boardListCh", boardListCh);
+		model.addAttribute("countListCh", countListCh);
+		
+		//두번째 그래프
+		List<Map<String, Object>> boardList2 = statisticsService.selectBoardChartReadCount(time);
+		logger.info("{}",boardList2);
+		
+		List<String> boardListCh2 = new ArrayList<String>();
+		for (Map<String, Object> map : boardList2) {
+			boardListCh2.add("\"" + (String) map.get("BD_NAME") + "\"");
+		}
+		logger.info("boardListCh2={}", boardListCh2);
+		
+		List<Integer> countListCh2 = new ArrayList<Integer>();
+		for (Map<String, Object> map : boardList2) {
+			countListCh2.add(Integer.parseInt(map.get("SUM").toString()));
+		}
+		logger.info("countListCh2", countListCh2);
+		
+		model.addAttribute("boardList2", boardList2);
+		model.addAttribute("boardListCh2", boardListCh2);
+		model.addAttribute("countListCh2", countListCh2);
+	}
 }

@@ -39,5 +39,14 @@ public class StatisticsServiceImpl implements StatisticsService{
 	public List<String> selectChartSemester() {
 		return statisticsDao.selectChartSemester();
 	}
-	
+
+	@Override
+	public List<Map<String, Object>> selectBoardChart(int time) {
+		return statisticsDao.selectBoardChart(time);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBoardChartReadCount(int time) {
+		return statisticsDao.selectBoardChartReadCount(time);
+	}
 }
