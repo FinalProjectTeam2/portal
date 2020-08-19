@@ -466,7 +466,6 @@
 					<c:if test="${principal.type=='STUDENT' }">
 					<li><a class="nav-link" href="#"> 학사서비스 </a>
 						<ul>
-							<li><a href="<c:url value='/board_calender/calendarDetail'/>">학사정보</a></li>
 							<li><a href="<c:url value='/registration/main'/>">수강신청</a></li>
 							<li><a href="<c:url value='/member/memberEdit'/>">정보조회</a></li>
 							<li><a href="<c:url value='/login/inputChgPwd'/>">비밀번호 번경</a></li>
