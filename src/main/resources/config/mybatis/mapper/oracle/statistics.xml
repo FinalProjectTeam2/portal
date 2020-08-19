@@ -11,6 +11,7 @@
 		from
 		score_stat_view
 		where state in (1,2,3,4)
+		and TOTAL_GRADE is not null
 		group by dep_name
 		order by
 		avg(total_grade) desc)s
@@ -37,7 +38,7 @@
 		(SELECT bd_name, count(*) as "COUNT" FROM
 		board_stat_view
 		<if test="_parameter != 0 and _parameter != null and _parameter !=''">
-			WHERE reg_date between trunc(sysdate) -
+			where reg_date between trunc(sysdate) -
 			#{time}
 			and
 			trunc(sysdate)
@@ -53,7 +54,7 @@
 		(SELECT bd_name, sum(read_count) as "SUM" FROM
 		board_stat_view
 		<if test="_parameter != 0 and _parameter != null and _parameter !=''">
-			WHERE reg_date between trunc(sysdate) -
+			where reg_date between trunc(sysdate) -
 			#{time}
 			and
 			trunc(sysdate)
@@ -87,6 +88,7 @@
 			</if>
 		</if>
 		)
+		and TOTAL_GRADE is not null
 		<if test="semester !=0 and semester !=null and semester!=''">
 			and extract(year from open_date) || extract(month from
 			open_date)=#{semester}
@@ -123,6 +125,7 @@
 			</if>
 		</if>
 		)
+		and TOTAL_GRADE is not null
 		<if test="semester !=0 and semester !=null and semester!=''">
 			and extract(year from open_date) || extract(month from
 			open_date)=#{semester}
@@ -138,8 +141,8 @@
 		select distinct
 		extract(year from open_date) || extract(month from
 		open_date) as
-		semester from score_stat_view order by
-		semester
+		semester from score_stat_view
+		where TOTAL_GRADE is not null order by semester
 	</select>
 </mapper>
 

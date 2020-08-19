@@ -50,11 +50,13 @@ public class AdminStatisticsController {
 			logger.info("depListCh={}", depListCh);
 
 			for (Map<String, Object> map : scoreList) {
-				String avg = (String) map.get("AVG");
-				if(avg == null || avg.isEmpty()) {
+				Object avg = map.get("avg");
+
+				if (avg == null) {
 					avg = "0";
 				}
-				scoreListCh.add(Double.parseDouble(avg));
+				scoreListCh.add(Double.parseDouble(avg.toString()));
+
 			}
 			logger.info("scoreListCh={}", scoreListCh);
 
@@ -118,11 +120,13 @@ public class AdminStatisticsController {
 			logger.info("depListCh={}", depListCh);
 
 			for (Map<String, Object> map : scoreList) {
-				String avg = (String) map.get("AVG");
-				if(avg == null || avg.isEmpty()) {
+				Object avg = map.get("avg");
+
+				if (avg == null) {
 					avg = "0";
 				}
-				scoreListCh.add(Double.parseDouble(avg));
+				scoreListCh.add(Double.parseDouble(avg.toString()));
+
 			}
 			logger.info("scoreListCh={}", scoreListCh);
 
