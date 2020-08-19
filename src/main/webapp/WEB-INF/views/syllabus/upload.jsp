@@ -298,7 +298,7 @@ form p{
 	    		</c:if>
 	    	</select><br>
 	    	<span class="input-group-text" style="float: left;width:21%">이론시간 :</span> <input type="text" class="form-control"  id="theoryTime" style="width: 70%" style="float: left">
-	    	<span class="input-group-text" style="float: left;width:21%">이론시간 :</span><input type="text" class="form-control"  id="trainingTime" style="float: left;width: 70%">
+	    	<span class="input-group-text" style="float: left;width:21%">실습시간 :</span><input type="text" class="form-control"  id="trainingTime" style="float: left;width: 70%">
 	    	
     	</div>
     <form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">

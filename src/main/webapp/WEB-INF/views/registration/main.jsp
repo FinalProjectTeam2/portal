@@ -174,20 +174,38 @@
 					 	return;
 					}else{
 						$.ajax({
-							url:"<c:url value='/registration/insertReg'/>",
+							url:"<c:url value='/registration/checkDupTime'/>",
 							data:{
-								"type":type,
-								"openSubCode":openSubCode
+								"shortName":shortName
 							},
 							type:"post",
 							success:function(res){
-								alert(res);
-								getRegistList();
-							},
-							error:function(xhr, status, error){
-								alert(error);
+								if(res=='N'){
+									$.ajax({
+										url:"<c:url value='/registration/insertReg'/>",
+										data:{
+											"type":type,
+											"openSubCode":openSubCode
+										},
+										type:"post",
+										success:function(res){
+											alert(res);
+											getRegistList();
+										},
+										error:function(xhr, status, error){
+											alert(error);
+										}
+									});
+									
+								}else{
+									alert('해당 시간 중복되는 과목이 있습니다.');
+									return;
+								}
 							}
 						});
+						
+						
+						
 					}
 
 				});

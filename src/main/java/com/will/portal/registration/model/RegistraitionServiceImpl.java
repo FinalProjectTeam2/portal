@@ -69,6 +69,16 @@ public class RegistraitionServiceImpl implements RegistrationService{
 	public int openSubjCount(RegistrationSearchVO vo) {
 		return registrationDao.openSubjCount(vo);
 	}
+
+	@Override
+	public List<String> codeListByStuNo(String stuNo) {
+		return registrationDao.codeListByStuNo(stuNo);
+	}
+
+	@Override
+	public String shortNameByCode(String openSubCode) {
+		return registrationDao.shortNameByCode(openSubCode);
+	}
 	
 	
 	
