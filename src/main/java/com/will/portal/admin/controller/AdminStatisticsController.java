@@ -127,6 +127,7 @@ public class AdminStatisticsController {
 				}
 				scoreListCh.add(Double.parseDouble(avg.toString()));
 
+
 			}
 			logger.info("scoreListCh={}", scoreListCh);
 
