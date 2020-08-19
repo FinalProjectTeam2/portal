@@ -159,8 +159,8 @@
 					var openSubCode=td.eq(1).text();
 					var subjName=td.eq(2).text();
 					var col1=td.eq(3).text().split("/");
-					var count=col1[0];
-					var personnel=col1[1];
+					var count=col1[0]*1;
+					var personnel=col1[1]*1;
 					var profName=td.eq(4).text();
 					var credit=td.eq(5).text();
 					var col2=td.eq(6).text().split("/");
@@ -168,9 +168,9 @@
 					var classroomName = col2[1];
 					var type = td.eq(7).text();
 					var syllabus=td.eq(9).text();
+					
 					if(count>=personnel){
-
-					alert('정원초과 다른 강의를 선택하세요.');
+						alert('정원초과 다른 강의를 선택하세요.');
 					 	return;
 					}else{
 						$.ajax({
