@@ -39,6 +39,17 @@ public class StatisticsDAOMybatis implements StatisticsDAO{
 		return sqlSession.selectList(namespace+"selectChartSemester");
 	}
 
+	@Override
+	public List<Map<String, Object>> selectBoardChart(int time) {
+		return sqlSession.selectList(namespace+"selectBoardChart",time);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBoardChartReadCount(int time) {
+		return sqlSession.selectList(namespace+"selectBoardChartReadCount",time);
+	}
+	
+
 	
 	
 	

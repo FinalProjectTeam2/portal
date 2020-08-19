@@ -266,7 +266,7 @@
 			<div class="indexDOM_large">
 				<p class="title">
 					인기 게시판 <span class="pSpan">(최근 1달 게시물 수)</span>
-					<a href="#" style="float: right;">자세히</a>
+					<a href="/portal/admin/statistics/statisticsBoard" style="float: right;">자세히</a>
 				</p>
 				<canvas id="myChart2" class="chart"></canvas>
 			</div>

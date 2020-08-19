@@ -12,4 +12,6 @@ public interface StatisticsService {
 	List<Map<String, Object>> selectScoreAvg(ScoreChartSearchVO scoreChartSearchVo);
 	List<Map<String, Object>> selectScoreMed(ScoreChartSearchVO scoreChartSearchVo);
 	List<String> selectChartSemester();
+	List<Map<String,Object>> selectBoardChart(int time);
+	List<Map<String,Object>> selectBoardChartReadCount(int time);
 }
