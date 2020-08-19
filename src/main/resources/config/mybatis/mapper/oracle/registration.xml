@@ -189,6 +189,14 @@
 		delete from evaluation
 		where stu_no=#{stuNo} and sub_code=#{openSubCode}
 	</delete>
+	
+	<select id="codeListByStuNo" parameterType="string" resultType="string">
+		select sub_code from registration where stu_no=#{stuNo}
+	</select>
+	
+	<select id="shortNameByCode" parameterType="String" resultType="String">
+		select short_names from regi_timetable where open_sub_code=#{openSubCode}
+	</select>
 
 </mapper>
 

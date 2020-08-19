@@ -157,6 +157,41 @@ public class RegistrationController {
 		
 	}
 	
+	@RequestMapping(value = "/registration/checkDupTime", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String checkDupTime(Principal principal,@RequestParam String shortName) {
+		MemberDetails user = (MemberDetails)((Authentication)principal).getPrincipal();
+		String stuNo=user.getOfficialNo();
+		logger.info("수강신청 시 겹치는 시간이 있는지 체크 처리 shortName={}, stuNo={}", shortName, stuNo);
+		String isDup="";
+		String[]timeArr=shortName.split(",");
+		String shortTimeNames = "";
+		List<String> codeList = registServ.codeListByStuNo(stuNo);
+		if(codeList.size() < 1) {
+			return "N";
+		}else {
+			for(int i=0; i< codeList.size(); i++) {
+				String openSubCode = codeList.get(i);
+				shortTimeNames +=  registServ.shortNameByCode(openSubCode)+",";
+			}
+		}
+		for(int i = 0; i< timeArr.length; i++) {
+			int result = shortTimeNames.indexOf(timeArr[i]);
+			if(result != -1) {
+				return "Y";
+			}else {
+				isDup="N";
+			}
+		}
+		
+		return isDup;
+	}
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/registration/insertReg", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String insertReg(Principal principal, @RequestParam String type, 

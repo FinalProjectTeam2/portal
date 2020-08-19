@@ -20,4 +20,6 @@ public interface RegistrationDAO {
 	int insertEval(Map<String, Object> map);
 	int deleteEval(Map<String, Object> map);
 	int openSubjCount(RegistrationSearchVO vo);
+	List<String> codeListByStuNo(String stuNo);
+	String shortNameByCode(String openSubCode);
 }
