@@ -17,4 +17,6 @@ public interface RegistrationService {
 	int insertReg(Map<String, Object> map);
 	int deleteReg(Map<String, Object> map);
 	int openSubjCount(RegistrationSearchVO vo);
+	List<String> codeListByStuNo(String stuNo);
+	String shortNameByCode(String openSubCode);
 }

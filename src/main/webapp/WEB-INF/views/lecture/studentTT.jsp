@@ -84,7 +84,7 @@
 	left:100px; 
 	top:100px; 
 	width: 400px;
-	height: 450px; 
+	height: 500px; 
 	z-index:1;
 	text-align: left;
 	border: 1px solid #ccc;
@@ -354,7 +354,7 @@
 					</div>
 					</fieldset>
 					<div style="text-align: center; margin-top: 5px;">
-						<button type="button" id="evalBt" class="btn btn-outline-primary" style="padding: 3px;">강의평가</button>
+						<button type="button" id="evalBt" class="btn btn-outline-primary" style="padding: 3px; margin-top: 8px;">강의평가</button>
 						<input type="hidden" class="subjectCode" value="">
 					</div>
 				

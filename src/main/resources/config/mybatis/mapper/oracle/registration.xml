@@ -51,7 +51,7 @@
 		on r.sub_code=o.open_sub_code
 		join department d
 		on d.dep_no=substr(o.open_sub_code, 1, 3)
-		<where>
+		where o.close_date is null
 			<if test="facultyNo!=0">and d.faculty_no=#{facultyNo}</if>
 			<if test="depNo!=0">and d.dep_no=#{depNo}</if>
 			<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
@@ -61,7 +61,6 @@
 			<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
 			<if test="openSubCode!=null">and o.open_sub_code like '%' || #{openSubCode} || '%'
 			</if>
-		</where>
 		group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name,
 		s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus)A)B
 		where credit = char_count + 1)C)
@@ -103,7 +102,7 @@
 		on r.sub_code=o.open_sub_code
 		join department d
 		on d.dep_no=substr(o.open_sub_code, 1, 3)
-		<where>
+		where o.close_date is null
 			<if test="facultyNo!=0">and d.faculty_no=#{facultyNo}</if>
 			<if test="depNo!=0">and d.dep_no=#{depNo}</if>
 			<if test="subjName!=null">and s.subj_name like '%' || #{subjName} || '%'</if>
@@ -113,7 +112,6 @@
 			<if test="profName!=null">and p.prof_name like '%' || #{profName} || '%'</if>
 			<if test="openSubCode!=null">and o.open_sub_code like '%' || #{openSubCode} || '%'
 			</if>
-		</where>
 		group by o.open_sub_code, s.subj_name, s.personnel, p.prof_name,
 		s.credit, rt.short_names, cr.classroom_name, st.type, sy.syllabus)A)B
 		where credit = char_count + 1)C)
@@ -150,7 +148,8 @@
 			on sy.open_sub_code=o.open_sub_code
 			left join registration r
 			on r.sub_code=o.open_sub_code
-			where r.sub_code in
+			where o.close_date is null
+			and r.sub_code in
 			<foreach collection="list" item="item" index="index" open="("
 				separator="," close=")">
 				#{item}
@@ -189,6 +188,14 @@
 		delete from evaluation
 		where stu_no=#{stuNo} and sub_code=#{openSubCode}
 	</delete>
+	
+	<select id="codeListByStuNo" parameterType="string" resultType="string">
+		select sub_code from registration where stu_no=#{stuNo}
+	</select>
+	
+	<select id="shortNameByCode" parameterType="String" resultType="String">
+		select short_names from regi_timetable where open_sub_code=#{openSubCode}
+	</select>
 
 </mapper>
 

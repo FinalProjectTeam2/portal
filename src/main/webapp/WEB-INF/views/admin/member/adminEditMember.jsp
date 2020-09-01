@@ -117,6 +117,8 @@
 
 			formData.append("upfile", $("#upfile")[0].files[0]);
 			
+			formData.append("name", $("#name").val());
+			
 			if($("#officialNo").val().substring(4,5)=='2'){
 				if($("#department").val()==''){
 					alert('학부를 선택하세요');
@@ -130,6 +132,8 @@
 			if($("#officialNo").val().substring(4,5)=='1'){
 				formData.append("authCode", $("#authCode").val());
 			}
+			
+			
 			
 			$.ajax({
 				url : "<c:url value='/admin/member/memberEdit' />",
@@ -199,7 +203,7 @@
 	      			+ '</tr>'
 	      			+ '<tr>'
 	      			+ '<th>소속</th>'
-	      			+ '<td>'+res.FACULTY_NAME+'/ 제1전공 : '+res.DEP_NAME+' / 부전공 : ' + res.minor_dep_name
+	      			+ '<td> 제1전공 : '+res.FACULTY_NAME+' / '+res.DEP_NAME+' | 부전공 : ' + res.minor_dep_name
 	      			+ '<input type="button"'
 					+ 'class="btCustom btn btn-primary btn-lg login-button"'
 					+' onclick="location.href=\'/portal/admin/member/adminManageMajor?stuNo='+res.STU_NO+'\'"'

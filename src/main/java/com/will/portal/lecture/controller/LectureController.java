@@ -664,7 +664,7 @@ public class LectureController {
 			EvaluationVO vo = new EvaluationVO();
 			logger.info("arrList.get({})={}",i,arrList.get(i));
 			String[] arr= arrList.get(i).split(",");
-			if(arr[i]!=null) {
+			if(arrList.get(i) != null) {
 				vo.setSubCode(arr[0]);
 				vo.setStuNo(arr[1]);
 				vo.setClassification(arr[2]);

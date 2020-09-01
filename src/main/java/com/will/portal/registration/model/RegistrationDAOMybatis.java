@@ -71,6 +71,18 @@ public class RegistrationDAOMybatis implements RegistrationDAO{
 	public int openSubjCount(RegistrationSearchVO vo) {
 		return sqlSession.selectOne(namespace+"openSubjCount", vo);
 	}
+
+	@Override
+	public List<String> codeListByStuNo(String stuNo) {
+		return sqlSession.selectList(namespace+"codeListByStuNo", stuNo);
+	}
+
+	@Override
+	public String shortNameByCode(String openSubCode) {
+		return sqlSession.selectOne(namespace+"shortNameByCode", openSubCode);
+		
+		
+	}
 	
 	
 	

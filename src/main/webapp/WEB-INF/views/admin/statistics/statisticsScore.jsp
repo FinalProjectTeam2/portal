@@ -87,6 +87,10 @@ button#back {
     float: right;
     margin: 1% 14px 2% 0;
 }
+h2#none{
+	margin: 30px 0;
+	text-align: center;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script
@@ -107,11 +111,20 @@ button#back {
 							'rgba(153, 102, 255, 0.2)',
 							'rgba(75, 192, 192, 0.2)',
 							'rgba(255, 159, 64, 0.2)',
-							'rgba(255, 99, 132, 0.2)' ],
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(255, 159, 64, 0.2)',
+							'rgba(255, 99, 132, 0.2)'],
 					borderColor : [ 'rgba(54, 162, 235, 1)',
 							'rgba(153, 102, 255, 1)', 
 							'rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)',
-							'rgba(255, 99, 132, 1)' ],
+							'rgba(255, 99, 132, 1)',
+							 'rgba(54, 162, 235, 1)',
+								'rgba(153, 102, 255, 1)', 
+								'rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)',
+								'rgba(255, 99, 132, 1)'],
 					borderWidth : 1
 				} ]
 			},
@@ -152,7 +165,12 @@ button#back {
 				<p class="title">
 					학과별 성적 <span class="pSpan">(평균 백분율 상위 학과)</span>
 				</p>
-				<canvas id="myChart1" class="chart"></canvas>
+				<c:if test="${empty scoreListCh}">
+					<h2 id="none">결과가 없습니다</h2>
+				</c:if>
+				<c:if test="${!empty scoreListCh}">
+					<canvas id="myChart1" class="chart"></canvas>
+				</c:if>
 			</div>
 		</div>
 		<div style="overflow: hidden;" id="box">
@@ -193,7 +211,9 @@ button#back {
 						<c:forEach var="map" items="${scoreList }">
 							<tr>
 								<td>${map['DEP_NAME']}</td>
-								<td>${map['avg']}</td>
+								<td>
+								<fmt:formatNumber value="${map['avg']}" pattern=".00"/>
+								</td>
 								<td>${map['med']}</td>
 								<td>${map['ROWNUM']}</td>
 							</tr>

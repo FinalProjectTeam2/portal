@@ -69,6 +69,7 @@ public class FileUploadUtil {
 			//업로드 한 경우에 파일크기, 이름 구하기
 			if(!tempFile.isEmpty()) {
 				String originalFName = tempFile.getOriginalFilename();
+				originalFName = originalFName.toLowerCase();
 				long fileSize = tempFile.getSize();
 				//변경된 파일 명 구하기
 				String fileName = getUniqueFileName(originalFName);
