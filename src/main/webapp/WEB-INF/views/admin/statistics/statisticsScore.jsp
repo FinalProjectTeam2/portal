@@ -47,6 +47,7 @@ table {
 table * {
 	padding: 2%;
 	text-align: center;
+	vertical-align: middle;
 }
 
 table td {
@@ -176,28 +177,29 @@ h2#none{
 		<div style="overflow: hidden;" id="box">
 			<table class="box2">
 				<colgroup>
-					<col style="width: 25%" />
+					<col style="width: 20%" />
+					<!-- 학과 -->
+					<col style="width: 30%" />
 					<!-- 번호 -->
 					<col style="width: 25%" />
 					<!-- 이름 -->
 					<col style="width: 25%" />
 					<!-- 학부 -->
-					<col style="width: 25%" />
-					<!-- 학과 -->
 				</colgroup>
 				<thead>
 					<tr>
+						<th scope="col">
+						순위<br>
+						<c:if test="${empty param.type || param.type==1 }">
+						(평균값)
+						</c:if>
+						<c:if test="${param.type==2 }">
+						(중간값)
+						</c:if>
+						</th>
 						<th scope="col">학과명</th>
 						<th scope="col">평균</th>
 						<th scope="col">중간값</th>
-						<th scope="col">
-						<c:if test="${empty param.type || param.type==1 }">
-						평균값 순위
-						</c:if>
-						<c:if test="${param.type==2 }">
-						중간값 순위
-						</c:if>
-						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -210,12 +212,12 @@ h2#none{
 						<!--반복시작-->
 						<c:forEach var="map" items="${scoreList }">
 							<tr>
+								<td>${map['ROWNUM']}</td>
 								<td>${map['DEP_NAME']}</td>
 								<td>
 								<fmt:formatNumber value="${map['avg']}" pattern=".00"/>
 								</td>
 								<td>${map['med']}</td>
-								<td>${map['ROWNUM']}</td>
 							</tr>
 						</c:forEach>
 						<!-- 반복 끝 -->

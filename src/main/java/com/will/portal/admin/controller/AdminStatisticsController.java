@@ -51,7 +51,6 @@ public class AdminStatisticsController {
 
 			for (Map<String, Object> map : scoreList) {
 				Object avg = map.get("avg");
-
 				if (avg == null) {
 					avg = "0";
 				}
@@ -120,13 +119,19 @@ public class AdminStatisticsController {
 			logger.info("depListCh={}", depListCh);
 
 			for (Map<String, Object> map : scoreList) {
-				Object avg = map.get("avg");
-
-				if (avg == null) {
-					avg = "0";
+				Object raw = null;
+				if (type == null || type.isEmpty() || type.equals("1")) {
+					raw = map.get("avg");
+					if (raw == null) {
+						raw = "0";
+					}
+				} else if (type.equals("2")) {
+					raw = map.get("med");
+					if (raw == null) {
+						raw = "0";
+					}
 				}
-				scoreListCh.add(Double.parseDouble(avg.toString()));
-
+				scoreListCh.add(Double.parseDouble(raw.toString()));
 
 			}
 			logger.info("scoreListCh={}", scoreListCh);
