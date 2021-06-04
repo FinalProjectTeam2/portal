@@ -309,7 +309,7 @@
 
 			<artifactId>spring-security-web</artifactId>
 
-			<version>3.2.3.RELEASE</version>
+			<version>5.3.0.RELEASE</version>
 
 		</dependency>
 
